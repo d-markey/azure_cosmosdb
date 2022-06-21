@@ -1,8 +1,7 @@
+import '_client.dart';
 import '_context.dart';
 
 import 'base_document.dart';
-import 'client.dart';
-import 'collection.dart';
 import 'collections.dart';
 import 'users.dart';
 

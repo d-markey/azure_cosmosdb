@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
-import 'debug_http_overrides_web.dart'
-    if (dart.library.io) 'debug_http_overrides_vm.dart';
+import '_debug_http_overrides_web.dart'
+    if (dart.library.io) '_debug_http_overrides_vm.dart';
 
 class DebugHttpClient extends http.BaseClient {
   DebugHttpClient({this.trace = false}) {

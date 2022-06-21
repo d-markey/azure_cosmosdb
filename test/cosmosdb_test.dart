@@ -1,9 +1,5 @@
 import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmosdb;
-import 'package:azure_cosmosdb/azure_cosmosdb.dart';
 import 'package:azure_cosmosdb/src/_extensions.dart';
-
-import 'package:azure_cosmosdb/src/debug_http_overrides_web.dart'
-    if (dart.library.io) 'package:azure_cosmosdb/src/debug_http_overrides_vm.dart';
 
 import 'package:test/test.dart';
 
@@ -11,8 +7,6 @@ const _masterKey =
     'C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==';
 
 void main() async {
-  allowSelfSignedCertificates();
-
   final httpClient = cosmosdb.DebugHttpClient(trace: false);
   final server = cosmosdb.Server(
     'https://localhost:8081',
@@ -45,7 +39,7 @@ void main() async {
 
     test('Delete a non-existing database fails when throwOnNotFound is true',
         () async {
-      final database = Database(server.client, dbName);
+      final database = cosmosdb.Database(server.client, dbName);
       expect(database.exists, isNull);
       expect(server.databases.delete(database, throwOnNotFound: true),
           throwsA(isA<cosmosdb.NotFoundException>()));
@@ -54,7 +48,7 @@ void main() async {
     test(
         'Delete a non-existing database succeeds when throwOnNotFound is false',
         () async {
-      final database = Database(server.client, dbName);
+      final database = cosmosdb.Database(server.client, dbName);
       expect(database.exists, isNull);
       await server.databases.delete(database, throwOnNotFound: false);
       expect(database.exists, isFalse);
@@ -102,7 +96,7 @@ void main() async {
     final collName1 = 'test_1';
     final collName2 = 'test_2';
 
-    Database? database;
+    cosmosdb.Database? database;
 
     setUpAll(() async {
       database = await server.databases.create(dbName);
@@ -128,7 +122,7 @@ void main() async {
 
     test('Delete a non-existing collection fails when throwOnNotFound is true',
         () async {
-      final collection = Collection(database!, collName1);
+      final collection = cosmosdb.Collection(database!, collName1);
       expect(collection.exists, isNull);
       expect(database!.collections.delete(collection, throwOnNotFound: true),
           throwsA(isA<cosmosdb.NotFoundException>()));
@@ -137,7 +131,7 @@ void main() async {
     test(
         'Delete a non-existing collection succeeds when throwOnNotFound is false',
         () async {
-      final collection = Collection(database!, collName1);
+      final collection = cosmosdb.Collection(database!, collName1);
       expect(collection.exists, isNull);
       await database!.collections.delete(collection, throwOnNotFound: false);
       expect(collection.exists, isFalse);

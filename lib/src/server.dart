@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 
-import 'client.dart';
+import '_client.dart';
+
 import 'databases.dart';
 
 typedef FutureCallback<T> = Future<T> Function();

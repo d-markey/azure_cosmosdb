@@ -1,6 +1,6 @@
+import '_client.dart';
 import '_context.dart';
 
-import 'client.dart';
 import 'database.dart';
 import 'exceptions.dart';
 
