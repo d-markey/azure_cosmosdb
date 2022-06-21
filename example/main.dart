@@ -35,28 +35,24 @@ void main() async {
 
   print('Added new task ${task.id} - ${task.label}');
 
-  try {
-    final tasks = await todoCollection.query<ToDo>(cosmosdb.Query(
-        'SELECT * FROM c WHERE c.label = @improvetests',
-        params: {'@improvetests': task.label}));
+  final tasks = await todoCollection.query<ToDo>(cosmosdb.Query(
+      'SELECT * FROM c WHERE c.label = @improvetests',
+      params: {'@improvetests': task.label}));
 
-    print('Other tasks:');
-    for (var t in tasks.where((_) => _.id != task.id)) {
-      String status = 'still pending';
-      final dueDate = t.dueDate;
-      if (t.done) {
-        status = 'done';
-      } else if (dueDate != null) {
-        if (dueDate.isBefore(DateTime.now())) {
-          status = 'overdue since $dueDate';
-        } else {
-          status = 'expected for $dueDate';
-        }
+  print('Other tasks:');
+  for (var t in tasks.where((_) => _.id != task.id)) {
+    String status = 'still pending';
+    final dueDate = t.dueDate;
+    if (t.done) {
+      status = 'done';
+    } else if (dueDate != null) {
+      if (dueDate.isBefore(DateTime.now())) {
+        status = 'overdue since $dueDate';
+      } else {
+        status = 'expected for $dueDate';
       }
-      print('* ${t.id} - ${t.label} - $status');
     }
-  } on cosmosdb.Exception catch (e) {
-    print(e.message);
+    print('* ${t.id} - ${t.label} - $status');
   }
 }
 
