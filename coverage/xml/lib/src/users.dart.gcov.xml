@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="users.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="21" package="/lib/src" testname="lcov.info" version="1.5">
+    <lines>
+        <line>
+            <code>import '_client.dart';</code>
+        </line>
+        <line>
+            <code>import '_context.dart';</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>import 'database.dart';</code>
+        </line>
+        <line>
+            <code>import 'exceptions.dart';</code>
+        </line>
+        <line>
+            <code>import 'permission.dart';</code>
+        </line>
+        <line>
+            <code>import 'permissions.dart';</code>
+        </line>
+        <line>
+            <code>import 'user.dart';</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>/// Class used to manage [User]s in a CosmosDB [Database].</code>
+        </line>
+        <line>
+            <code>class Users {</code>
+        </line>
+        <line hits="0">
+            <code>  Users(Database db)</code>
+        </line>
+        <line>
+            <code>      : database = db,</code>
+        </line>
+        <line hits="0">
+            <code>        url = '${db.url}/users';</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  final Database database;</code>
+        </line>
+        <line>
+            <code>  final String url;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Provides access to permissions associated with [User]s.</code>
+        </line>
+        <line>
+            <code>  late final Permissions permissions = Permissions(this);</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  String? _token;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Use this [Permission] when invoking the CosmosDB API. Using [Permission] is a way to</code>
+        </line>
+        <line>
+            <code>  /// avoid disclosing the master key in client applications; to retrieve or create a</code>
+        </line>
+        <line>
+            <code>  /// permission, you should implement some additional API to be used by your client app.</code>
+        </line>
+        <line>
+            <code>  /// This API will protect your master keys. Most methods from [Users] support an</code>
+        </line>
+        <line>
+            <code>  /// optional [permission] argument, to allow for overriding this collection-wide</code>
+        </line>
+        <line>
+            <code>  /// [permission].</code>
+        </line>
+        <line hits="0">
+            <code>  void usePermission(Permission permission) {</code>
+        </line>
+        <line hits="0">
+            <code>    _token = permission.token;</code>
+        </line>
+        <line>
+            <code>  }</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Deletes the user identified by [id]. By default, this method returns `true` if</code>
+        </line>
+        <line>
+            <code>  /// the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a</code>
+        </line>
+        <line>
+            <code>  /// [NotFoundException] instead.</code>
+        </line>
+        <line hits="0">
+            <code>  Future&lt;bool&gt; delete(String id,</code>
+        </line>
+        <line>
+            <code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code>
+        </line>
+        <line hits="0">
+            <code>      database.client.delete(</code>
+        </line>
+        <line hits="0">
+            <code>        '$url/$id',</code>
+        </line>
+        <line hits="0">
+            <code>        Context(</code>
+        </line>
+        <line>
+            <code>          type: 'users',</code>
+        </line>
+        <line>
+            <code>          throwOnNotFound: throwOnNotFound,</code>
+        </line>
+        <line>
+            <code>          builder: User.build,</code>
+        </line>
+        <line hits="0">
+            <code>          token: permission?.token ?? _token,</code>
+        </line>
+        <line>
+            <code>        ),</code>
+        </line>
+        <line>
+            <code>      );</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Finds the user identified by [id]. By default, this method returns `null` if</code>
+        </line>
+        <line>
+            <code>  /// the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a</code>
+        </line>
+        <line>
+            <code>  /// [NotFoundException] instead.</code>
+        </line>
+        <line hits="0">
+            <code>  Future&lt;User?&gt; find(String id,</code>
+        </line>
+        <line>
+            <code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code>
+        </line>
+        <line hits="0">
+            <code>      database.client.get&lt;User&gt;(</code>
+        </line>
+        <line hits="0">
+            <code>        '$url/$id',</code>
+        </line>
+        <line hits="0">
+            <code>        Context(</code>
+        </line>
+        <line>
+            <code>          type: 'users',</code>
+        </line>
+        <line>
+            <code>          throwOnNotFound: throwOnNotFound,</code>
+        </line>
+        <line>
+            <code>          builder: User.build,</code>
+        </line>
+        <line hits="0">
+            <code>          token: permission?.token ?? _token,</code>
+        </line>
+        <line>
+            <code>        ),</code>
+        </line>
+        <line>
+            <code>      );</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Adds [user] to the [database] the user identified by [id]. By default, this method returns `null` if</code>
+        </line>
+        <line>
+            <code>  /// the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a</code>
+        </line>
+        <line>
+            <code>  /// [NotFoundException] instead.</code>
+        </line>
+        <line hits="0">
+            <code>  Future&lt;User&gt; add(User user, {Permission? permission}) =&gt;</code>
+        </line>
+        <line hits="0">
+            <code>      database.client.post&lt;User&gt;(</code>
+        </line>
+        <line hits="0">
+            <code>        url,</code>
+        </line>
+        <line>
+            <code>        user,</code>
+        </line>
+        <line hits="0">
+            <code>        Context(</code>
+        </line>
+        <line hits="0">
+            <code>          resId: database.url,</code>
+        </line>
+        <line>
+            <code>          type: 'users',</code>
+        </line>
+        <line>
+            <code>          builder: User.build,</code>
+        </line>
+        <line hits="0">
+            <code>          token: permission?.token ?? _token,</code>
+        </line>
+        <line>
+            <code>        ),</code>
+        </line>
+        <line>
+            <code>      );</code>
+        </line>
+        <line>
+            <code>}</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>// internal use</code>
+        </line>
+        <line>
+            <code>extension UsersExt on Users {</code>
+        </line>
+        <line hits="0">
+            <code>  Client get client =&gt; database.client;</code>
+        </line>
+        <line>
+            <code>}</code>
+        </line>
+    </lines>
+    <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+    <base href="../../"/>
+    <base href="../../"/>
+</coverage>

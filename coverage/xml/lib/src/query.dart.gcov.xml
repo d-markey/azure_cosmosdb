@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="query.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="14" package="/lib/src" testname="lcov.info" version="1.5">
+    <lines>
+        <line>
+            <code>import 'base_document.dart';</code>
+        </line>
+        <line>
+            <code>import 'paging.dart';</code>
+        </line>
+        <line>
+            <code>import 'partition.dart';</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>/// Class representing CosmosDB SQL query.</code>
+        </line>
+        <line>
+            <code>class Query extends Paging implements BaseDocument {</code>
+        </line>
+        <line>
+            <code>  /// Builds a new CosmosDB SQL query with [command] and [params].</code>
+        </line>
+        <line hits="0">
+            <code>  Query(this.command, {Partition? partition, Map&lt;String, dynamic&gt;? params})</code>
+        </line>
+        <line>
+            <code>      : _partition = partition,</code>
+        </line>
+        <line hits="0">
+            <code>        super() {</code>
+        </line>
+        <line>
+            <code>    if (params != null) {</code>
+        </line>
+        <line hits="0">
+            <code>      _params.addAll(params);</code>
+        </line>
+        <line>
+            <code>    }</code>
+        </line>
+        <line>
+            <code>  }</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line hits="0">
+            <code>  @override</code>
+        </line>
+        <line>
+            <code>  String get id =&gt; '';</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// The query's SQL [command].</code>
+        </line>
+        <line>
+            <code>  final String command;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  final Map&lt;String, dynamic&gt; _params = &lt;String, dynamic&gt;{};</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// The partition where the query should be executed; by default, the query will be</code>
+        </line>
+        <line>
+            <code>  /// executed against all partitions.</code>
+        </line>
+        <line hits="0">
+            <code>  Partition get partition =&gt; _partition ?? Partition.all;</code>
+        </line>
+        <line>
+            <code>  Partition? _partition;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Force the query to execute in all partitions.</code>
+        </line>
+        <line hits="0">
+            <code>  void crossPartition() =&gt; _partition = Partition.all;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Restrict the query to the partition identified by [key].</code>
+        </line>
+        <line hits="0">
+            <code>  void onPartition(String key) =&gt; _partition = Partition(key);</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Registers a paramater/value to the query.</code>
+        </line>
+        <line hits="0">
+            <code>  void withParam(String name, dynamic value) =&gt; _params[name] = value;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line hits="0">
+            <code>  @override</code>
+        </line>
+        <line hits="0">
+            <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+        </line>
+        <line hits="0">
+            <code>        'query': command,</code>
+        </line>
+        <line hits="0">
+            <code>        'parameters': _params.entries</code>
+        </line>
+        <line hits="0">
+            <code>            .map((e) =&gt; {'name': e.key, 'value': e.value})</code>
+        </line>
+        <line hits="0">
+            <code>            .toList()</code>
+        </line>
+        <line>
+            <code>      };</code>
+        </line>
+        <line>
+            <code>}</code>
+        </line>
+    </lines>
+    <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+    <base href="../../"/>
+    <base href="../../"/>
+</coverage>

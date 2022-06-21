@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.5040816" lines-covered="247" lines-valid="490" package="/lib/src" testname="lcov.info" version="1.5">
+    <sources>
+        <source branches-hit="0" branches-valid="0" filename="server.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="8" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="8" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="exceptions.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="12" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="6" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="base_document.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="2" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="user.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="6" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="debug_http_client.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="20" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="collection.dart" functions-hit="0" functions-valid="0" lines-hit="16" lines-valid="79" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="16" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="_extensions.dart" functions-hit="0" functions-valid="0" lines-hit="7" lines-valid="15" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="7" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="permissions.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="39" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="_debug_http_overrides_vm.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="10" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="query.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="14" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="users.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="21" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="_context.dart" functions-hit="0" functions-valid="0" lines-hit="15" lines-valid="34" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="15" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="_imf_fixdate.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="9" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="permission.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="7" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="databases.dart" functions-hit="0" functions-valid="0" lines-hit="45" lines-valid="47" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="45" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="database.dart" functions-hit="0" functions-valid="0" lines-hit="11" lines-valid="14" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="11" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="collections.dart" functions-hit="0" functions-valid="0" lines-hit="43" lines-valid="45" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="43" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="paging.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="5" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="_authorization.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="12" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="8" name="&lt;unnamed&gt;"/>
+        </source>
+        <source branches-hit="0" branches-valid="0" filename="partition.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="5" prefix="/_Projects/github/azure_cosmosdb"/>
+        <source branches-hit="0" branches-valid="0" filename="_client.dart" functions-hit="0" functions-valid="0" lines-hit="61" lines-valid="86" prefix="/_Projects/github/azure_cosmosdb">
+            <testCase branch-hit="0" function-hit="0" line-hit="61" name="&lt;unnamed&gt;"/>
+        </source>
+    </sources>
+    <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+    <base href="../../"/>
+    <base href="../../"/>
+</coverage>

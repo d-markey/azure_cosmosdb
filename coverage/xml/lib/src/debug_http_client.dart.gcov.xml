@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.45" lines-covered="9" lines-valid="20" package="/lib/src" testname="lcov.info" version="1.5">
+    <lines>
+        <line>
+            <code>import 'package:http/http.dart' as http;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>import '_debug_http_overrides_web.dart'</code>
+        </line>
+        <line>
+            <code>    if (dart.library.io) '_debug_http_overrides_vm.dart';</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>/// Debug HTTP client that can be used to trace request/responses. This client also</code>
+        </line>
+        <line>
+            <code>/// installs a global HTTP override object to accept self-signed certificates.</code>
+        </line>
+        <line>
+            <code>/// DO NOT USE IN PRODUCTION.</code>
+        </line>
+        <line>
+            <code>class DebugHttpClient extends http.BaseClient {</code>
+        </line>
+        <line hits="1">
+            <code>  DebugHttpClient({this.trace = false}) {</code>
+            <hit count="1" name="&lt;unnamed&gt;"/>
+        </line>
+        <line hits="1">
+            <code>    allowSelfSignedCertificates();</code>
+            <hit count="1" name="&lt;unnamed&gt;"/>
+        </line>
+        <line>
+            <code>  }</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  /// Enable/disable request/response tracing.</code>
+        </line>
+        <line>
+            <code>  bool trace;</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  final _http = http.Client();</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line hits="0">
+            <code>  @override</code>
+        </line>
+        <line hits="0">
+            <code>  void close() =&gt; _http.close();</code>
+        </line>
+        <line>
+            <code/>
+        </line>
+        <line>
+            <code>  @override</code>
+        </line>
+        <line hits="2">
+            <code>  Future&lt;http.StreamedResponse&gt; send(http.BaseRequest request) async {</code>
+            <hit count="2" name="&lt;unnamed&gt;"/>
+        </line>
+        <line hits="1">
+            <code>    String? ts;</code>
+            <hit count="1" name="&lt;unnamed&gt;"/>
+        </line>
+        <line hits="1">
+            <code>    if (trace) {</code>
+            <hit count="1" name="&lt;unnamed&gt;"/>
+        </line>
+        <line hits="0">
+            <code>      ts = DateTime.now().toUtc().toIso8601String();</code>
+        </line>
+        <line hits="0">
+            <code>      print('&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;');</code>
+        </line>
+        <line hits="0">
+            <code>      print('[$ts] --&gt; ${request.method} ${request.url}');</code>
+        </line>
+        <line hits="0">
+            <code>      for (var h in request.headers.entries) {</code>
+        </line>
+        <line hits="0">
+            <code>        print('[$ts] --&gt; ${h.key} = ${h.value}');</code>
+        </line>
+        <line>
+            <code>      }</code>
+        </line>
+        <line>
+            <code>    }</code>
+        </line>
+        <line hits="4">
+            <code>    final response = await _http.send(request);</code>
+            <hit count="4" name="&lt;unnamed&gt;"/>
+        </line>
+        <line hits="1">
+            <code>    if (trace) {</code>
+            <hit count="1" name="&lt;unnamed&gt;"/>
+        </line>
+        <line hits="0">
+            <code>      print('[$ts] &lt;-- status code ${response.statusCode}');</code>
+        </line>
+        <line hits="0">
+            <code>      for (var h in response.headers.entries) {</code>
+        </line>
+        <line hits="0">
+            <code>        print('[$ts] &lt;-- ${h.key} = ${h.value}');</code>
+        </line>
+        <line>
+            <code>      }</code>
+        </line>
+        <line hits="0">
+            <code>      print('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code>
+        </line>
+        <line>
+            <code>    }</code>
+        </line>
+        <line hits="1">
+            <code>    return response;</code>
+            <hit count="1" name="&lt;unnamed&gt;"/>
+        </line>
+        <line hits="1">
+            <code>  }</code>
+            <hit count="1" name="&lt;unnamed&gt;"/>
+        </line>
+        <line>
+            <code>}</code>
+        </line>
+    </lines>
+    <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+    <base href="../../"/>
+    <base href="../../"/>
+</coverage>
