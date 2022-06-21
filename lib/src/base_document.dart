@@ -1,3 +1,5 @@
+typedef DocumentBuilder<T extends BaseDocument> = T Function(Map json);
+
 abstract class BaseDocument {
   String get id;
   Map<String, dynamic> toJson();

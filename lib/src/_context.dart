@@ -1,8 +1,9 @@
-import 'client.dart';
+import 'base_document.dart';
 import 'paging.dart';
 import 'partition.dart';
 import 'permission.dart';
 import 'query.dart';
+import 'server.dart';
 
 class Context {
   Context({
@@ -14,6 +15,7 @@ class Context {
     this.partition,
     this.token,
     this.onForbidden,
+    this.builder,
   }) {
     if (headers != null) {
       _headers ??= {};
@@ -28,6 +30,7 @@ class Context {
   final Partition? partition;
   final String? token;
   final FutureCallback<Permission?>? onForbidden;
+  final DocumentBuilder? builder;
 
   Map<String, String>? _headers;
 

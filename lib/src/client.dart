@@ -10,29 +10,14 @@ import 'base_document.dart';
 import 'database.dart';
 import 'exceptions.dart' as errors;
 import 'paging.dart';
-import 'permission.dart';
 import 'query.dart';
-import 'user.dart';
 
-typedef DocumentBuilder<T extends BaseDocument> = T Function(Map json);
 typedef _DocumentBuilder = DocumentBuilder<BaseDocument>;
-typedef FutureCallback<T> = Future<T> Function();
 
 class Client {
-  Client(String urlOrAccount, {String? masterKey, http.Client? httpClient})
-      : _url = _buildUrl(urlOrAccount),
-        _http = httpClient ?? http.Client(),
-        _key =
-            (masterKey == null) ? null : Hmac(sha256, base64Decode(masterKey)) {
-    registerBuilder<User>(User.build);
-    registerBuilder<Permission>(Permission.build);
-  }
-
-  static String _buildUrl(String url) {
-    if (!url.contains('://')) url = 'https://$url.documents.azure.com/';
-    if (!url.endsWith('/')) url += '/';
-    return url;
-  }
+  Client(this._url, {String? masterKey, http.Client? httpClient})
+      : _http = httpClient ?? http.Client(),
+        _key = masterKey?.deriveHmac(sha256);
 
   final String _url;
   final Hmac? _key;
@@ -44,19 +29,19 @@ class Client {
     _builders[T] = builder;
   }
 
-  DocumentBuilder<T> _getBuilder<T extends BaseDocument>() {
-    final builder = _builders[T];
+  DocumentBuilder<T> _getBuilder<T extends BaseDocument>(Context context) {
+    final builder = context.builder ?? _builders[T];
     if (builder == null) throw Exception('Unknown document type $T');
     return (data) => builder(data) as T;
   }
 
-  T? _build<T extends BaseDocument>(Map? item) {
-    final builder = _getBuilder<T>();
+  T? _build<T extends BaseDocument>(Context context, Map? item) {
+    final builder = _getBuilder<T>(context);
     return (item == null || item.isEmpty) ? null : builder(item);
   }
 
-  Iterable<T> _buildMany<T extends BaseDocument>(List? items) {
-    final builder = _getBuilder<T>();
+  Iterable<T> _buildMany<T extends BaseDocument>(Context context, List? items) {
+    final builder = _getBuilder<T>(context);
     return (items ?? []).map((item) => builder(item));
   }
 
@@ -89,10 +74,7 @@ class Client {
     BaseDocument? body,
     Context context,
   ) async {
-    String resId = context.resId ?? '';
-    if (resId.isEmpty) {
-      resId = path;
-    }
+    String resId = context.resId ?? path;
 
     var auth = (context.token != null)
         ? Authorization.fromToken(context.token!)
@@ -149,16 +131,18 @@ class Client {
       _send('GET', path, null, context);
 
   Future<T?> get<T extends BaseDocument>(String path, Context context) =>
-      _send('GET', path, null, context).then((data) => _build<T>(data));
+      _send('GET', path, null, context)
+          .then((data) => _build<T>(context, data));
 
   Future<Iterable<T>> getMany<T extends BaseDocument>(
           String path, String resultSet, Context context) =>
       _send('GET', path, null, context)
-          .then((result) => _buildMany<T>(result[resultSet]));
+          .then((result) => _buildMany<T>(context, result[resultSet]));
 
   Future<T> post<T extends BaseDocument>(
           String path, BaseDocument doc, Context context) =>
-      _send('POST', path, doc, context).then((data) => _build<T>(data)!);
+      _send('POST', path, doc, context)
+          .then((data) => _build<T>(context, data)!);
 
   Future<Iterable<T>> query<T extends BaseDocument>(
           String path, Query query, String resultSet, Context context) =>
@@ -173,14 +157,19 @@ class Client {
             'x-ms-documentdb-isquery': 'true',
           },
         ),
-      ).then((result) => _buildMany<T>(result[resultSet]));
+      ).then((result) => _buildMany<T>(context, result[resultSet]));
 
   Future<T> put<T extends BaseDocument>(
           String path, BaseDocument doc, Context context) =>
-      _send('PUT', path, doc, context).then((data) => _build<T>(data)!);
+      _send('PUT', path, doc, context)
+          .then((data) => _build<T>(context, data)!);
 
-  Future<bool> delete<T extends BaseDocument>(String path, Context context) =>
-      _send('DELETE', path, null, context).then((data) => true);
+  Future<bool> delete(String path, Context context) =>
+      _send('DELETE', path, null, context).then((result) => true);
 
   Database getDatabase(String db) => Database(this, db);
+}
+
+extension _HmacExt on String {
+  Hmac deriveHmac(Hash hash) => Hmac(hash, base64Decode(this));
 }

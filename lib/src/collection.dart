@@ -1,17 +1,33 @@
 import '_context.dart';
 
 import 'base_document.dart';
-import 'client.dart';
 import 'database.dart';
 import 'partition.dart';
 import 'permission.dart';
 import 'query.dart';
+import 'server.dart';
 
-class Collection {
-  Collection(this.database, String name) : url = '${database.url}/colls/$name';
+class Collection extends BaseDocument {
+  Collection(this.database, this.id, {this.partitionKeys})
+      : url = '${database.url}/colls/$id';
 
   final Database database;
   final String url;
+
+  bool? _exists;
+  bool? get exists => _exists;
+
+  @override
+  final String id;
+
+  final List<String>? partitionKeys;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        if (partitionKeys != null && partitionKeys!.isNotEmpty)
+          'partitionKey': {"paths": partitionKeys, "kind": "Hash", "Version": 2}
+      };
 
   String? _token;
   FutureCallback<Permission?>? onForbidden;
@@ -31,6 +47,9 @@ class Collection {
     }
     return permission;
   }
+
+  void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) =>
+      database.registerBuilder<T>(builder);
 
   Future<Map<String, dynamic>?> getInfo() =>
       database.client.getJson(url, Context(type: 'colls'));
@@ -139,4 +158,9 @@ class Collection {
           onForbidden: _refreshPermission,
         ),
       );
+}
+
+// internal use
+extension CollExistsExt on Collection {
+  void setExists(bool exists) => _exists = exists;
 }

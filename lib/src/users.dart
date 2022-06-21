@@ -20,6 +20,7 @@ class Users {
         Context(
           type: 'users',
           throwOnNotFound: throwOnNotFound,
+          builder: User.build,
         ),
       );
 
@@ -29,6 +30,7 @@ class Users {
         Context(
           type: 'users',
           throwOnNotFound: throwOnNotFound,
+          builder: User.build,
         ),
       );
 
@@ -38,6 +40,7 @@ class Users {
         Context(
           resId: database.url,
           type: 'users',
+          builder: User.build,
         ),
       );
 }

@@ -19,6 +19,7 @@ class Permissions {
         Context(
           type: 'permissions',
           resId: '$url/${user.id}',
+          builder: Permission.build,
         ),
       );
 
@@ -31,6 +32,7 @@ class Permissions {
     final context = Context(
       type: 'permissions',
       throwOnNotFound: throwOnNotFound,
+      builder: Permission.build,
     );
     final seconds = expiry?.inSeconds ?? 0;
     if (seconds > 0) {
@@ -50,6 +52,7 @@ class Permissions {
     final context = Context(
       type: 'permissions',
       resId: '$url/${user.id}',
+      builder: Permission.build,
     );
     final seconds = expiry?.inSeconds ?? 0;
     if (seconds > 0) {
@@ -69,6 +72,7 @@ class Permissions {
   }) {
     final context = Context(
       type: 'permissions',
+      builder: Permission.build,
     );
     final seconds = expiry?.inSeconds ?? 0;
     if (seconds > 0) {
@@ -87,6 +91,7 @@ class Permissions {
         Context(
           type: 'permissions',
           throwOnNotFound: throwOnNotFound,
+          builder: Permission.build,
         ),
       );
 }

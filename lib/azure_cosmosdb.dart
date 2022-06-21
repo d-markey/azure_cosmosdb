@@ -2,9 +2,11 @@
 library azure_cosmosdb;
 
 export 'src/base_document.dart';
-export 'src/client.dart';
+export 'src/server.dart';
 export 'src/collection.dart';
+export 'src/collections.dart';
 export 'src/database.dart';
+export 'src/databases.dart';
 export 'src/exceptions.dart';
 export 'src/debug_http_client.dart';
 export 'src/paging.dart' show Paging;

@@ -20,7 +20,7 @@ var _installed = false;
 
 void allowSelfSignedCertificates() {
   if (!_installed) {
+    _installed == true;
     HttpOverrides.global = LocalhostHttpOverrides();
-    dev.log('LocalhostHttpOverrides installed');
   }
 }
