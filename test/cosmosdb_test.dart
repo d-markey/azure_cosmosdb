@@ -1,12 +1,16 @@
+import 'package:test/test.dart';
+
 import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmosdb;
 import 'package:azure_cosmosdb/src/_extensions.dart';
 
-import 'package:test/test.dart';
+import 'package:azure_cosmosdb/src/_debug_http_overrides_web.dart'
+    if (dart.library.io) 'package:azure_cosmosdb/src/_debug_http_overrides_vm.dart';
 
 const _masterKey =
     'C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==';
 
 void main() async {
+  allowSelfSignedCertificates();
   final httpClient = cosmosdb.DebugHttpClient(trace: false);
   final server = cosmosdb.Server(
     'https://localhost:8081',
@@ -39,7 +43,7 @@ void main() async {
 
     test('Delete a non-existing database fails when throwOnNotFound is true',
         () async {
-      final database = cosmosdb.Database(server.client, dbName);
+      final database = cosmosdb.Database(server, dbName);
       expect(database.exists, isNull);
       expect(server.databases.delete(database, throwOnNotFound: true),
           throwsA(isA<cosmosdb.NotFoundException>()));
@@ -48,7 +52,7 @@ void main() async {
     test(
         'Delete a non-existing database succeeds when throwOnNotFound is false',
         () async {
-      final database = cosmosdb.Database(server.client, dbName);
+      final database = cosmosdb.Database(server, dbName);
       expect(database.exists, isNull);
       await server.databases.delete(database, throwOnNotFound: false);
       expect(database.exists, isFalse);

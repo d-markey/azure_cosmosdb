@@ -3,16 +3,24 @@ import '_context.dart';
 
 import 'base_document.dart';
 import 'collections.dart';
+import 'permission.dart';
+import 'server.dart';
 import 'users.dart';
 
+/// Class representing a CosmosDB database.
 class Database extends BaseDocument {
-  Database(this.client, this.id) : url = 'dbs/$id';
+  Database(this.server, this.id) : url = 'dbs/$id';
 
-  final Client client;
+  /// The [server] hosting this database.
+  final Server server;
+
+  /// The database's base [url].
   final String url;
 
-  bool? _exists;
+  /// Flag indicating whether the database exists in CosmosDB.
+  /// `null` if no check has been made yet.
   bool? get exists => _exists;
+  bool? _exists;
 
   @override
   final String id;
@@ -20,18 +28,28 @@ class Database extends BaseDocument {
   @override
   Map<String, dynamic> toJson() => {'id': id};
 
-  Future<Map<String, dynamic>?> getInfo() =>
-      client.getJson(url, Context(type: 'dbs'));
-
   void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) =>
       client.registerBuilder<T>(builder);
 
-  late final collections = Collections(this);
+  /// Gets information for this [Database].
+  Future<Map<String, dynamic>?> getInfo({Permission? permission}) =>
+      client.getJson(
+          url,
+          Context(
+            type: 'dbs',
+            token: permission?.token,
+          ));
 
+  /// Provides access to collections in this [Database].
+  late final Collections collections = Collections(this);
+
+  /// Provides access to users in this [Database].
   late final Users users = Users(this);
 }
 
 // internal use
-extension DbExistsExt on Database {
+extension DatabaseExt on Database {
   void setExists(bool exists) => _exists = exists;
+
+  Client get client => server.client;
 }

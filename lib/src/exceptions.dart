@@ -1,5 +1,6 @@
 import 'dart:core' as core;
 
+/// Base [Exception] class for CosmosDB errors.
 class Exception implements core.Exception {
   Exception(core.String method, this.url, this.statusCode, this.message)
       : method = method.toUpperCase();

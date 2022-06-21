@@ -1,25 +1,34 @@
+import '_client.dart';
 import '_context.dart';
 
 import 'base_document.dart';
 import 'database.dart';
+import 'exceptions.dart';
 import 'partition.dart';
 import 'permission.dart';
 import 'query.dart';
 import 'server.dart';
 
+/// Class representing a CosmosDB collection.
 class Collection extends BaseDocument {
   Collection(this.database, this.id, {this.partitionKeys})
       : url = '${database.url}/colls/$id';
 
+  /// The collection's parent [Database].
   final Database database;
+
+  /// The collection's base [url].
   final String url;
 
-  bool? _exists;
+  /// Flag indicating whether the collection exists in CosmosDB.
+  /// `null` if no check has been made yet.
   bool? get exists => _exists;
+  bool? _exists;
 
   @override
   final String id;
 
+  /// The collection's list of partition keys; mandatory when creating a new [Collection].
   final List<String>? partitionKeys;
 
   @override
@@ -29,12 +38,22 @@ class Collection extends BaseDocument {
           'partitionKey': {"paths": partitionKeys, "kind": "Hash", "Version": 2}
       };
 
-  String? _token;
-  FutureCallback<Permission?>? onForbidden;
-
+  /// Use this [Permission] when invoking the CosmosDB API. Using [Permission] is a way to
+  /// avoid disclosing the master key in client applications; to retrieve or create a
+  /// permission, you should implement some additional API to be used by your client app.
+  /// This API will protect your master keys. Most methods from [Collection] support an
+  /// optional [permission] argument, to allow for overriding this collection-wide
+  /// [permission].
   void usePermission(Permission permission) {
     _token = permission.token;
   }
+
+  /// Callback to refresh a permission. When the collection-wide [Permission] expires and
+  /// and a CosmosDB API replies with a [ForbiddenException] (HTTP error 403), this callback
+  /// will be invoked to obtain a new, valid [Permission] that will replace the expired one.
+  FutureCallback<Permission?>? onForbidden;
+
+  String? _token;
 
   Future<Permission?> _refreshPermission() async {
     Permission? permission;
@@ -48,17 +67,27 @@ class Collection extends BaseDocument {
     return permission;
   }
 
+  /// Register a [DocumentBuilder] for specified type `T`.
   void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) =>
       database.registerBuilder<T>(builder);
 
-  Future<Map<String, dynamic>?> getInfo() =>
-      database.client.getJson(url, Context(type: 'colls'));
+  /// Gets information for this [Collection].
+  Future<Map<String, dynamic>?> getInfo({Permission? permission}) =>
+      client.getJson(
+          url,
+          Context(
+            type: 'colls',
+            token: permission?.token ?? _token,
+          ));
 
+  /// Finds the document with [id] in this collection. If the document does not exist,
+  /// this method returns `null` by default. If `throwOnNotFound` is set to `true`, it
+  /// will instead throw a [NotFoundException].
   Future<T?> find<T extends BaseDocument>(String id,
           {bool throwOnNotFound = false,
           Partition? partition,
           Permission? permission}) =>
-      database.client.get<T>(
+      client.get<T>(
         '$url/docs/$id',
         Context(
           type: 'docs',
@@ -69,9 +98,10 @@ class Collection extends BaseDocument {
         ),
       );
 
+  /// Lists all documents from this collection.
   Future<Iterable<T>> list<T extends BaseDocument>(
           {Partition? partition, Permission? permission}) =>
-      database.client.getMany<T>(
+      client.getMany<T>(
         '$url/docs',
         'Documents',
         Context(
@@ -83,9 +113,10 @@ class Collection extends BaseDocument {
         ),
       );
 
+  /// Loads documents from this collection matching the provided [query].
   Future<Iterable<T>> query<T extends BaseDocument>(Query query,
           {Permission? permission}) =>
-      database.client.query<T>(
+      client.query<T>(
         '$url/docs',
         query,
         'Documents',
@@ -97,58 +128,65 @@ class Collection extends BaseDocument {
         ),
       );
 
-  Future<T> add<T extends BaseDocument>(T data,
+  /// Adds a new [document] to this collection.
+  Future<T> add<T extends BaseDocument>(T document,
           {Partition? partition, Permission? permission}) =>
-      database.client.post(
+      client.post(
         '$url/docs',
-        data,
+        document,
         Context(
           type: 'docs',
           resId: url,
-          partition: partition ?? Partition(data.id),
+          partition: partition ?? Partition(document.id),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
       );
 
-  Future<T> upsert<T extends BaseDocument>(T data,
+  /// Adds or updates (replaces) a [document] in this collection.
+  Future<T> upsert<T extends BaseDocument>(T document,
           {Partition? partition, Permission? permission}) =>
-      database.client.post(
+      client.post(
         '$url/docs',
-        data,
+        document,
         Context(
           type: 'docs',
           resId: url,
           headers: {
             'x-ms-documentdb-is-upsert': 'true',
           },
-          partition: partition ?? Partition(data.id),
+          partition: partition ?? Partition(document.id),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
       );
 
-  Future<T> replace<T extends BaseDocumentWithEtag>(T data,
+  /// Updates (replaces) a [document] in this collection. The [document] must be a
+  /// [BaseDocumentWithEtag] and its [BaseDocumentWithEtag.etag] must be known.
+  Future<T> replace<T extends BaseDocumentWithEtag>(T document,
           {Partition? partition, Permission? permission}) =>
-      database.client.put(
-        '$url/docs/${data.id}',
-        data,
+      client.put(
+        '$url/docs/${document.id}',
+        document,
         Context(
           type: 'docs',
           headers: {
-            'if-match': data.etag,
+            'if-match': document.etag,
           },
-          partition: partition ?? Partition(data.id),
+          partition: partition ?? Partition(document.id),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
       );
 
+  /// Deletes the document with [id] from this collection. If the document does not
+  /// exist, this method returns `true` by default. If [throwOnNotFound] is set to
+  /// `true`, it will instead throw a [NotFoundException].
   Future<bool> delete(String id,
           {bool throwOnNotFound = false,
           Partition? partition,
           Permission? permission}) =>
-      database.client.delete(
+      client.delete(
         '$url/docs/$id',
         Context(
           type: 'docs',
@@ -161,6 +199,8 @@ class Collection extends BaseDocument {
 }
 
 // internal use
-extension CollExistsExt on Collection {
+extension CollectionExt on Collection {
   void setExists(bool exists) => _exists = exists;
+
+  Client get client => database.client;
 }

@@ -7,7 +7,6 @@ import '_authorization.dart';
 import '_context.dart';
 
 import 'base_document.dart';
-import 'database.dart';
 import 'exceptions.dart' as errors;
 import 'paging.dart';
 import 'query.dart';
@@ -85,9 +84,10 @@ class Client {
     if (result.statusCode == 403) {
       // try to get a new permission from the onForbidden callback
       final permission = await context.onForbidden?.call();
-      if (permission != null) {
+      final token = permission?.token;
+      if (token != null) {
         // try again with this permission
-        auth = Authorization.fromToken(permission.token);
+        auth = Authorization.fromToken(token);
         result = await _sendWithAuth(method, path, body, context, auth);
       }
     }
@@ -166,8 +166,6 @@ class Client {
 
   Future<bool> delete(String path, Context context) =>
       _send('DELETE', path, null, context).then((result) => true);
-
-  Database getDatabase(String db) => Database(this, db);
 }
 
 extension _HmacExt on String {

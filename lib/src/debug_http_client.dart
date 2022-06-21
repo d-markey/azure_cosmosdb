@@ -3,12 +3,17 @@ import 'package:http/http.dart' as http;
 import '_debug_http_overrides_web.dart'
     if (dart.library.io) '_debug_http_overrides_vm.dart';
 
+/// Debug HTTP client that can be used to trace request/responses. This client also
+/// installs a global HTTP override object to accept self-signed certificates.
+/// DO NOT USE IN PRODUCTION.
 class DebugHttpClient extends http.BaseClient {
   DebugHttpClient({this.trace = false}) {
     allowSelfSignedCertificates();
   }
 
+  /// Enable/disable request/response tracing.
   bool trace;
+
   final _http = http.Client();
 
   @override

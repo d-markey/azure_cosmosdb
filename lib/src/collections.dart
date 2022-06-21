@@ -3,12 +3,16 @@ import '_context.dart';
 import 'collection.dart';
 import 'database.dart';
 import 'exceptions.dart';
+import 'permission.dart';
 
+/// Class used to manage [Collection]s in a [Database].
 class Collections {
-  Collections(this.database) : url = '${database.url}/colls';
+  Collections(this.database) : _url = '${database.url}/colls';
 
+  /// The owner [Database].
   final Database database;
-  final String url;
+
+  final String _url;
 
   Collection _build(Map json) {
     final coll = Collection(database, json['id']);
@@ -16,33 +20,45 @@ class Collections {
     return coll;
   }
 
-  Future<Iterable<Collection>> list() => database.client.getMany<Collection>(
-        url,
+  /// Lists all collections from this [database].
+  Future<Iterable<Collection>> list({Permission? permission}) =>
+      database.client.getMany<Collection>(
+        _url,
         'DocumentCollections',
         Context(
           type: 'colls',
           resId: database.url,
           builder: _build,
+          token: permission?.token,
         ),
       );
 
-  Future<bool> delete(Collection coll, {bool throwOnNotFound = false}) =>
+  /// Deletes the specified [collection] from this [database]. All documents in this
+  /// [collection] will be lost. If the [collection] does not exists, this method
+  /// returns `true` by default. if [throwOnNotFound] is set to `true`, it will throw
+  /// a [NotFoundException] instead. Upon success, the [Collection.exists] flag will
+  /// be set to `false`.
+  Future<bool> delete(Collection collection,
+          {bool throwOnNotFound = false, Permission? permission}) =>
       database.client
           .delete(
-        '$url/${coll.id}',
+        '$_url/${collection.id}',
         Context(
           type: 'colls',
           throwOnNotFound: throwOnNotFound,
+          token: permission?.token,
         ),
       )
           .then((value) {
-        coll.setExists(false);
+        collection.setExists(false);
         return true;
       });
 
-  Future<Collection> create(String name, {List<String>? partitionKeys}) =>
+  /// Creates a new [Collection] with the specified `name` and `partitionKeys`.
+  Future<Collection> create(String name,
+          {List<String>? partitionKeys, Permission? permission}) =>
       database.client.post<Collection>(
-        url,
+        _url,
         Collection(database, name, partitionKeys: partitionKeys),
         Context(
           type: 'colls',
@@ -54,6 +70,7 @@ class Collections {
         ),
       );
 
+  /// Opens an existing [Collection] with id [name].
   Future<Collection> open(String name) async {
     final coll = Collection(database, name);
     await coll.getInfo();
@@ -61,6 +78,7 @@ class Collections {
     return coll;
   }
 
+  /// Opens or creates a [Collection] with id [name].
   Future<Collection> openOrCreate(String name,
       {List<String>? partitionKeys}) async {
     try {
