@@ -1,5 +1,5 @@
 name: azure_cosmosdb
-description: Azure CosmosDB SQL Rest API.
+description: Azure Cosmos DB SQL API for Dart and Flutter
 version: 0.9.0
 homepage: https://www.github.com/d-markey/azure_cosmosdb
 
