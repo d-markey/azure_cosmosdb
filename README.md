@@ -21,18 +21,21 @@ Azure Cosmos DB SQL API for Dart & Flutter
 * [Features](#features)
 * [Getting Started](#started)
 * [Usage](#usage)
+* [Users and Permissions](#permissions)
 
 ## <a name="features"></a>Features
 
-`Server`: the main class used to communicate with your Cosmos DB instance.
+`Server`: the main class used to communicate with your Azure Cosmos DB instance.
 
-`Database`: class representing a CosmosDB database hosted in `Server`.
+`Database`: class representing a Azure Cosmos DB database hosted in `Server`.
 
-`Collection`: class representing a CosmosDB collection from a `Database`.
+`Collection`: class representing a Azure Cosmos DB collection from a `Database`.
 
-`BaseDocument`: class representing a CosmosDB document stored in a `Collection`.
+`BaseDocument`: class representing a Azure Cosmos DB document stored in a `Collection`.
 
-`Query`: class representing a CosmosDB SQL query to search documents in a `Collection`.
+`Query`: class representing a Azure Cosmos DB SQL query to search documents in a `Collection`.
+
+`Users` and `Permissions`: to manage users and rights in the Azure Cosmos DB database.
 
 ## <a name="started"></a>Getting Started
 
@@ -45,11 +48,14 @@ dependencies:
 
 ## <a name="usage"></a>Usage
 
-You should first define a class deriving from `BaseDocument`or `BaseDocumentWithEtag` to model the data you need to store in CosmosDB.
+You should first define a class deriving from `BaseDocument`or `BaseDocumentWithEtag` to
+model the data you need to store in Azure Cosmos DB.
 
-This class must have an `id` and a `toJson()` method returning a `Map<String, dynamic>` JSON object.
+This class must have an `id` and a `toJson()` method returning a `Map<String, dynamic>`
+JSON object.
 
-It should also implement a static `fromJson(Map json)` method to build instances from a `Map` JSON objects returned by CosmosDB.
+It should also implement a static `fromJson(Map json)` method to build instances from a
+`Map` JSON objects returned by Azure Cosmos DB.
 
 For instance:
 
@@ -100,9 +106,10 @@ class ToDo extends cosmosdb.BaseDocumentWithEtag {
 }
 ```
 
-To manage your documents in CosmosDB:
-* establish a connection to get hold of the CosmosDB collection
-* register the static `fromJson()` methods with the collection to enable deserialization of your documents
+To manage your documents in Azure Cosmos DB:
+* establish a connection to get hold of the Azure Cosmos DB collection
+* register the static `fromJson()` methods with the collection to enable deserialization of
+your documents
 * then add or query your documents!
 
 For instance:
@@ -151,3 +158,20 @@ void main() async {
   }
 }
 ```
+
+## <a name="permissions"></a>Users and Permissions
+
+Most APIs implemented in `azure_cosmosdb` support an optional `Permission` parameter when
+calling Azure Cosmos DB.
+
+This makes it possible open a connection to Azure Cosmos DB without providing the master
+key. The master key should be kept secret and should not be provided in Web apps or even
+mobile apps.
+
+Azure Cosmos DB manages a list of users and permissions at the database level. If you need
+to implement direct access from a Web or mobile app to Azure Cosmos DB, you should create
+a user for your app and grant permissions as necessary.
+
+To retrieve the permission in your app, you should implement a REST API, e.g. an Azure
+Function, that your app will call to get the required set of permissions. Only the REST
+API will need to know the master key to retrieve the permissions.
