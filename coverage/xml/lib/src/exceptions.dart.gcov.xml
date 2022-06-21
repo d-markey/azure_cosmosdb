@@ -1,131 +1,131 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="exceptions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.5" lines-covered="6" lines-valid="12" package="/lib/src" testname="lcov.info" version="1.5">
-    <lines>
-        <line>
-            <code>import 'dart:core' as core;</code>
-        </line>
-        <line>
-            <code/>
-        </line>
-        <line>
-            <code>/// Base [Exception] class for CosmosDB errors.</code>
-        </line>
-        <line>
-            <code>class Exception implements core.Exception {</code>
-        </line>
-        <line hits="2">
-            <code>  Exception(core.String method, this.url, this.statusCode, this.message)</code>
-            <hit count="2" name="&lt;unnamed&gt;"/>
-        </line>
-        <line hits="2">
-            <code>      : method = method.toUpperCase();</code>
-            <hit count="2" name="&lt;unnamed&gt;"/>
-        </line>
-        <line>
-            <code/>
-        </line>
-        <line>
-            <code>  final core.String method;</code>
-        </line>
-        <line>
-            <code>  final core.String url;</code>
-        </line>
-        <line>
-            <code>  final core.int statusCode;</code>
-        </line>
-        <line>
-            <code>  final core.String message;</code>
-        </line>
-        <line>
-            <code/>
-        </line>
-        <line hits="0">
-            <code>  @core.override</code>
-        </line>
-        <line hits="0">
-            <code>  core.String toString() =&gt; '$method $url: $runtimeType ($statusCode)';</code>
-        </line>
-        <line>
-            <code>}</code>
-        </line>
-        <line>
-            <code/>
-        </line>
-        <line>
-            <code>class UnauthorizedException extends Exception {</code>
-        </line>
-        <line hits="0">
-            <code>  UnauthorizedException(core.String method, core.String url,</code>
-        </line>
-        <line>
-            <code>      {core.int statusCode = 401, core.String? message})</code>
-        </line>
-        <line hits="0">
-            <code>      : super(method, url, statusCode, message ?? '');</code>
-        </line>
-        <line>
-            <code>}</code>
-        </line>
-        <line>
-            <code/>
-        </line>
-        <line>
-            <code>class ForbiddenException extends Exception {</code>
-        </line>
-        <line hits="0">
-            <code>  ForbiddenException(core.String method, core.String url,</code>
-        </line>
-        <line>
-            <code>      {core.int statusCode = 403, core.String? message})</code>
-        </line>
-        <line hits="0">
-            <code>      : super(method, url, statusCode, message ?? '');</code>
-        </line>
-        <line>
-            <code>}</code>
-        </line>
-        <line>
-            <code/>
-        </line>
-        <line>
-            <code>class ConflictException extends Exception {</code>
-        </line>
-        <line hits="1">
-            <code>  ConflictException(core.String method, core.String url,</code>
-            <hit count="1" name="&lt;unnamed&gt;"/>
-        </line>
-        <line>
-            <code>      {core.int statusCode = 409, core.String? message})</code>
-        </line>
-        <line hits="1">
-            <code>      : super(method, url, statusCode, message ?? '');</code>
-            <hit count="1" name="&lt;unnamed&gt;"/>
-        </line>
-        <line>
-            <code>}</code>
-        </line>
-        <line>
-            <code/>
-        </line>
-        <line>
-            <code>class NotFoundException extends Exception {</code>
-        </line>
-        <line hits="1">
-            <code>  NotFoundException(core.String method, core.String url,</code>
-            <hit count="1" name="&lt;unnamed&gt;"/>
-        </line>
-        <line>
-            <code>      {core.int statusCode = 404, core.String? message})</code>
-        </line>
-        <line hits="1">
-            <code>      : super(method, url, statusCode, message ?? '');</code>
-            <hit count="1" name="&lt;unnamed&gt;"/>
-        </line>
-        <line>
-            <code>}</code>
-        </line>
-    </lines>
-    <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
-    <base href="../../"/>
-    <base href="../../"/>
+<lines>
+<line>
+<code>import 'dart:core' as core;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Base [Exception] class for CosmosDB errors.</code>
+</line>
+<line>
+<code>class Exception implements core.Exception {</code>
+</line>
+<line hits="2">
+<code>  Exception(core.String method, this.url, this.statusCode, this.message)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : method = method.toUpperCase();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final core.String method;</code>
+</line>
+<line>
+<code>  final core.String url;</code>
+</line>
+<line>
+<code>  final core.int statusCode;</code>
+</line>
+<line>
+<code>  final core.String message;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @core.override</code>
+</line>
+<line hits="0">
+<code>  core.String toString() =&gt; '$method $url: $runtimeType ($statusCode)';</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class UnauthorizedException extends Exception {</code>
+</line>
+<line hits="0">
+<code>  UnauthorizedException(core.String method, core.String url,</code>
+</line>
+<line>
+<code>      {core.int statusCode = 401, core.String? message})</code>
+</line>
+<line hits="0">
+<code>      : super(method, url, statusCode, message ?? '');</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class ForbiddenException extends Exception {</code>
+</line>
+<line hits="0">
+<code>  ForbiddenException(core.String method, core.String url,</code>
+</line>
+<line>
+<code>      {core.int statusCode = 403, core.String? message})</code>
+</line>
+<line hits="0">
+<code>      : super(method, url, statusCode, message ?? '');</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class ConflictException extends Exception {</code>
+</line>
+<line hits="1">
+<code>  ConflictException(core.String method, core.String url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      {core.int statusCode = 409, core.String? message})</code>
+</line>
+<line hits="1">
+<code>      : super(method, url, statusCode, message ?? '');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class NotFoundException extends Exception {</code>
+</line>
+<line hits="1">
+<code>  NotFoundException(core.String method, core.String url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      {core.int statusCode = 404, core.String? message})</code>
+</line>
+<line hits="1">
+<code>      : super(method, url, statusCode, message ?? '');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
 </coverage>
