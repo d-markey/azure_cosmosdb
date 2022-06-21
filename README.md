@@ -1,39 +1,42 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+[![Pub Package](https://badgen.net/pub/v/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb)
+[![Dart Platforms](https://badgen.net/pub/dart-platform/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb)
+[![Flutter Platforms](https://badgen.net/pub/flutter-platform/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+[![License](https://badgen.net/pub/license/azure_cosmosdb)](https://github.com/d-markey/azure_cosmosdb/blob/master/LICENSE)
+[![Null Safety](https://img.shields.io/badge/null-safety-brightgreen)](https://dart.dev/null-safety)
+[![Dart Style](https://img.shields.io/badge/style-lints-40c4ff)](https://pub.dev/packages/lints)
+[![Pub Points](https://badgen.net/pub/points/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb/score)
+[![Likes](https://badgen.net/pub/likes/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb/score)
+[![Popularity](https://badgen.net/pub/popularity/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb/score)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+[![Last Commit](https://img.shields.io/github/last-commit/d-markey/azure_cosmosdb?logo=git&logoColor=white)](https://github.com/d-markey/azure_cosmosdb/commits)
+[![Dart Workflow](https://github.com/d-markey/azure_cosmosdb/actions/workflows/dart.yml/badge.svg?logo=dart)](https://github.com/d-markey/azure_cosmosdb/actions/workflows/dart.yml)
+[![Code Lines](https://img.shields.io/badge/dynamic/json?color=blue&label=code%20lines&query=%24.linesValid&url=https%3A%2F%2Fraw.githubusercontent.com%2Fd-markey%2Fazure_cosmosdb%2Fmain%2Fcoverage.json)](https://github.com/d-markey/azure_cosmosdb/tree/main/coverage/html)
+[![Code Coverage](https://img.shields.io/badge/dynamic/json?color=blue&label=code%20coverage&query=%24.lineRate&suffix=%25&url=https%3A%2F%2Fraw.githubusercontent.com%2Fd-markey%2Fazure_cosmosdb%2Fmain%2Fcoverage.json)](https://github.com/d-markey/azure_cosmosdb/tree/main/coverage/html)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Dart API for Cosmos DB SQL.
 
-## Features
+## Summary
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* [Features](#features)
+* [Getting Started](#started)
 
-## Getting started
+## <a name="features"></a>Features
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+`Worker`: a base worker class managing a platform thread (Isolate or Web Worker) and the communication between
+clients and  workers.
 
-## Usage
+`WorkerPool<W>`: a worker pool for `W` workers. The number of workers is configurable as well as the degree of
+concurrent workloads distributed to workers in the pool. Tasks posted to the worker pool can be cancelled.
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+## <a name="started"></a>Getting Started
 
-```dart
-const like = 'sample';
+Import `azure_cosmosdb` from your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+   azure_cosmosdb: ^0.9.0
 ```
 
-## Additional information
+## <a name="usage"></a>Usage
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
