@@ -1,14 +1,34 @@
+import 'package:azure_cosmosdb/src/_http_status_codes.dart';
+
+import 'exceptions.dart' as errors;
 import 'base_document.dart';
+
+/// Permission modes
+class PermissionMode {
+  const PermissionMode._(this.name);
+
+  final String name;
+
+  static const read = PermissionMode._('Read');
+  static const all = PermissionMode._('All');
+
+  static PermissionMode parse(String name) {
+    if (name == read.name) return read;
+    if (name == all.name) return all;
+    throw errors.Exception(
+        '', '', HttpStatusCode.serverError, 'Unsupported permission mode');
+  }
+}
 
 /// Class representing a CosmosDB permission.
 class Permission extends BaseDocumentWithEtag {
-  Permission(this.id, this.mode, this.resource, this.token);
+  Permission(this.id, this.mode, this.resource, [this.token]);
 
   @override
   final String id;
 
-  /// The permission's mode (`Read` or `All`).
-  final String mode;
+  /// The permission's mode (see [PermissionMode]).
+  final PermissionMode mode;
 
   /// The resource covered by this permission.
   final String resource;
@@ -17,13 +37,19 @@ class Permission extends BaseDocumentWithEtag {
   final String? token;
 
   @override
-  Map<String, dynamic> toJson() =>
-      {'id': id, 'permissionMode': mode, 'resource': resource};
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'permissionMode': mode.name,
+        'resource': resource,
+      };
 
   /// Builds a [Permission] from a CosmosDB JSON object.
   static Permission build(Map json) {
     final permission = Permission(
-        json['id'], json['permissionMode'], json['resource'], json['_token']);
+        json['id'],
+        PermissionMode.parse(json['permissionMode']),
+        json['resource'],
+        json['_token']);
     permission.setEtag(json);
     return permission;
   }

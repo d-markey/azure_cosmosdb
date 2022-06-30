@@ -9,9 +9,5 @@ class Paging {
 
 // internal use
 extension ContinuationExt on Paging {
-  void setContinuation(String? value) {
-    if (value != null && value.isNotEmpty) {
-      _continuation = value;
-    }
-  }
+  void setContinuation(String value) => _continuation = value;
 }

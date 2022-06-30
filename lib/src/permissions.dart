@@ -39,13 +39,12 @@ class Permissions {
   Future<Permission?> get(
     User user,
     String name, {
-    bool throwOnNotFound = false,
     Duration? expiry,
     Permission? permission,
   }) {
     final context = Context(
       type: 'permissions',
-      throwOnNotFound: throwOnNotFound,
+      throwOnNotFound: true,
       builder: Permission.build,
       token: permission?.token ?? _token,
     );

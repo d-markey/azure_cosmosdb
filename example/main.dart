@@ -10,7 +10,7 @@ const masterKey =
 
 void main() async {
   HttpOverrides.global = LocalhostHttpOverrides();
-  final cosmosDB = cosmosdb.Server(cosmosDbUrl, masterKey: masterKey);
+  final cosmosDB = cosmosdb.Instance(cosmosDbUrl, masterKey: masterKey);
 
   try {
     await cosmosDB.databases.list();

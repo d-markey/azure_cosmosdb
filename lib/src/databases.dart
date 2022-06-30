@@ -6,12 +6,12 @@ import 'exceptions.dart';
 import 'permission.dart';
 import 'server.dart';
 
-/// Class used to manage [Database]s in a [Server].
+/// Class used to manage [Database]s in a [Instance].
 class Databases {
   Databases(this.server) : _url = 'dbs';
 
-  /// The hosting [Server].
-  final Server server;
+  /// The hosting [Instance].
+  final Instance server;
 
   final String _url;
 

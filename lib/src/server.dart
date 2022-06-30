@@ -7,14 +7,14 @@ import 'databases.dart';
 typedef FutureCallback<T> = Future<T> Function();
 
 /// Class representing a CosmosDB instance
-class Server {
-  /// Builds a new [Server] instance with the provided [urlOrAccount], [masterKey] and
+class Instance {
+  /// Builds a new Cosmos DB [Instance] with the provided [urlOrAccount], [masterKey] and
   /// [httpClient]. [urlOrAccount] can be a full URL (eg. `https://localhost:8081/`) or the
   /// Azure CosmosDB account name, in which case the url will be constructed as
-  /// `https://${urlOrAccount}.documents.azure.com/`. Passing the `masterKey` is discouraged
+  /// `https://${urlOrAccount}.documents.azure.com/`. Passing the [masterKey] is discouraged
   /// in client apps to prevent from theft; instead, a proxy should be implemented for client
   /// apps, especially Web apps, in order to protect the master key.
-  Server(String urlOrAccount, {String? masterKey, http.Client? httpClient})
+  Instance(String urlOrAccount, {String? masterKey, http.Client? httpClient})
       : _client = Client(
           _buildUrl(urlOrAccount),
           masterKey: masterKey,
@@ -23,7 +23,7 @@ class Server {
 
   final Client _client;
 
-  /// Provides access to databases in this [Server].
+  /// Provides access to databases in this [Instance].
   late final Databases databases = Databases(this);
 
   static String _buildUrl(String url) {
@@ -34,6 +34,6 @@ class Server {
 }
 
 // internal use
-extension ServerExt on Server {
+extension InstanceExt on Instance {
   Client get client => _client;
 }

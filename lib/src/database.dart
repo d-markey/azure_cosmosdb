@@ -12,7 +12,7 @@ class Database extends BaseDocument {
   Database(this.server, this.id) : url = 'dbs/$id';
 
   /// The [server] hosting this database.
-  final Server server;
+  final Instance server;
 
   /// The database's base [url].
   final String url;

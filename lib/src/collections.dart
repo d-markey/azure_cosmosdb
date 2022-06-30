@@ -7,12 +7,12 @@ import 'permission.dart';
 
 /// Class used to manage [Collection]s in a [Database].
 class Collections {
-  Collections(this.database) : _url = '${database.url}/colls';
+  Collections(this.database) : url = '${database.url}/colls';
 
   /// The owner [Database].
   final Database database;
 
-  final String _url;
+  final String url;
 
   Collection _build(Map json) {
     final coll = Collection(database, json['id']);
@@ -23,7 +23,7 @@ class Collections {
   /// Lists all collections from this [database].
   Future<Iterable<Collection>> list({Permission? permission}) =>
       database.client.getMany<Collection>(
-        _url,
+        url,
         'DocumentCollections',
         Context(
           type: 'colls',
@@ -42,7 +42,7 @@ class Collections {
           {bool throwOnNotFound = false, Permission? permission}) =>
       database.client
           .delete(
-        '$_url/${collection.id}',
+        '$url/${collection.id}',
         Context(
           type: 'colls',
           throwOnNotFound: throwOnNotFound,
@@ -58,7 +58,7 @@ class Collections {
   Future<Collection> create(String name,
           {List<String>? partitionKeys, Permission? permission}) =>
       database.client.post<Collection>(
-        _url,
+        url,
         Collection(database, name, partitionKeys: partitionKeys),
         Context(
           type: 'colls',

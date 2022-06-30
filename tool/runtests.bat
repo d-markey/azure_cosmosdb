@@ -4,25 +4,26 @@ SET __COV__=1
 SET __COMMIT__=1
 
 :parse
-IF "%~1"=="" GOTO endparse
-IF "%~1"=="/nocov" (
-    set __COV__=0
+IF "%~1"=="" (
+    GOTO endparse
+) ELSE IF "%~1"=="/nocov" (
+    SET __COV__=0
 ) ELSE IF "%~1"=="--nocov" (
-    set __COV__=0
+    SET __COV__=0
 ) ELSE IF "%~1"=="-nc" (
-    set __COV__=0
+    SET __COV__=0
 ) ELSE IF "%~1"=="/nc" (
-    set __COV__=0
-IF "%~1"=="/nocommit" (
-    set __COMMIT__=0
+    SET __COV__=0
+) ELSE IF "%~1"=="/nocommit" (
+    SET __COMMIT__=0
 ) ELSE IF "%~1"=="--nocommit" (
-    set __COMMIT__=0
+    SET __COMMIT__=0
 ) ELSE IF "%~1"=="-ng" (
-    set __COMMIT__=0
+    SET __COMMIT__=0
 ) ELSE IF "%~1"=="/ng" (
-    set __COMMIT__=0
+    SET __COMMIT__=0
 ) ELSE (
-    set __ARGS__=%__ARGS__% "%~1"
+    SET __ARGS__=%__ARGS__% "%~1"
 )
 SHIFT
 GOTO parse

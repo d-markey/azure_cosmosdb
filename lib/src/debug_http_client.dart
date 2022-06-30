@@ -1,3 +1,4 @@
+import 'package:azure_cosmosdb/src/_http_status_codes.dart';
 import 'package:http/http.dart' as http;
 
 import '_debug_http_overrides_web.dart'
@@ -14,6 +15,12 @@ class DebugHttpClient extends http.BaseClient {
   /// Enable/disable request/response tracing.
   bool trace;
 
+  /// Enable/disable headers tracing.
+  bool traceHeaders = false;
+
+  /// Enable/disable forced forbidden (status code 403) response.
+  bool forceForbidden = false;
+
   final _http = http.Client();
 
   @override
@@ -26,15 +33,29 @@ class DebugHttpClient extends http.BaseClient {
       ts = DateTime.now().toUtc().toIso8601String();
       print('>>>>>>>>>>>>>>>>');
       print('[$ts] --> ${request.method} ${request.url}');
-      for (var h in request.headers.entries) {
-        print('[$ts] --> ${h.key} = ${h.value}');
+      if (traceHeaders) {
+        for (var h in request.headers.entries) {
+          print('[$ts] --> ${h.key} = ${h.value}');
+        }
       }
     }
-    final response = await _http.send(request);
+    http.StreamedResponse response;
+    if (forceForbidden) {
+      response = http.StreamedResponse(
+        Stream<List<int>>.fromIterable([]),
+        HttpStatusCode.forbidden,
+        reasonPhrase: 'Forced',
+      );
+    } else {
+      response = await _http.send(request);
+    }
     if (trace) {
-      print('[$ts] <-- status code ${response.statusCode}');
-      for (var h in response.headers.entries) {
-        print('[$ts] <-- ${h.key} = ${h.value}');
+      print(
+          '[$ts] <-- status code ${response.statusCode} ${response.reasonPhrase}');
+      if (traceHeaders) {
+        for (var h in response.headers.entries) {
+          print('[$ts] <-- ${h.key} = ${h.value}');
+        }
       }
       print('<<<<<<<<<<<<<<<<');
     }

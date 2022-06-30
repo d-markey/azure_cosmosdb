@@ -13,6 +13,6 @@ export 'src/partition.dart';
 export 'src/permission.dart';
 export 'src/permissions.dart' show Permissions;
 export 'src/query.dart';
-export 'src/server.dart' show Server;
+export 'src/server.dart' show Instance;
 export 'src/user.dart';
 export 'src/users.dart' show Users;

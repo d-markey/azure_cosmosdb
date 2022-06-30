@@ -31,6 +31,19 @@ class Users {
     _token = permission.token;
   }
 
+  /// Lists all collections from this [database].
+  Future<Iterable<User>> list({Permission? permission}) =>
+      database.client.getMany<User>(
+        url,
+        'Users',
+        Context(
+          type: 'users',
+          resId: database.url,
+          builder: User.build,
+          token: permission?.token,
+        ),
+      );
+
   /// Deletes the user identified by [id]. By default, this method returns `true` if
   /// the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a
   /// [NotFoundException] instead.

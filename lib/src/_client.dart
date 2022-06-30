@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:azure_cosmosdb/src/_http_status_codes.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
@@ -67,7 +68,7 @@ class Client {
     return _http.send(request);
   }
 
-  Future<Map<String, dynamic>> _send(
+  Future<Map<String, dynamic>?> _send(
     String method,
     String path,
     BaseDocument? body,
@@ -81,7 +82,7 @@ class Client {
 
     var result = await _sendWithAuth(method, path, body, context, auth);
 
-    if (result.statusCode == 403) {
+    if (result.statusCode == HttpStatusCode.forbidden) {
       // try to get a new permission from the onForbidden callback
       final permission = await context.onForbidden?.call();
       final token = permission?.token;
@@ -99,19 +100,19 @@ class Client {
     final response = await result.stream.bytesToString();
     Map<String, dynamic> data = response.isEmpty ? {} : jsonDecode(response);
 
-    if (result.statusCode < 200 || result.statusCode >= 300) {
+    if (!HttpStatusCode.success(result.statusCode)) {
       final msg = data['message'];
       switch (result.statusCode) {
-        case 401:
+        case HttpStatusCode.unauthorized:
           throw errors.UnauthorizedException(method, path, message: msg);
-        case 403:
+        case HttpStatusCode.forbidden:
           throw errors.ForbiddenException(method, path, message: msg);
-        case 404:
+        case HttpStatusCode.notFound:
           if (context.throwOnNotFound) {
             throw errors.NotFoundException(method, path, message: msg);
           }
-          return {};
-        case 409:
+          return null;
+        case HttpStatusCode.conflict:
           throw errors.ConflictException(method, path, message: msg);
         default:
           throw errors.Exception(
@@ -123,11 +124,11 @@ class Client {
       }
     }
 
-    context.paging?.setContinuation(result.headers['x-ms-continuation']);
+    context.paging?.setContinuation(result.headers['x-ms-continuation'] ?? '');
     return data;
   }
 
-  Future<Map<String, dynamic>> getJson(String path, Context context) =>
+  Future<Map<String, dynamic>?> getJson(String path, Context context) =>
       _send('GET', path, null, context);
 
   Future<T?> get<T extends BaseDocument>(String path, Context context) =>
@@ -137,7 +138,7 @@ class Client {
   Future<Iterable<T>> getMany<T extends BaseDocument>(
           String path, String resultSet, Context context) =>
       _send('GET', path, null, context)
-          .then((result) => _buildMany<T>(context, result[resultSet]));
+          .then((result) => _buildMany<T>(context, result![resultSet]));
 
   Future<T> post<T extends BaseDocument>(
           String path, BaseDocument doc, Context context) =>
@@ -157,7 +158,7 @@ class Client {
             'x-ms-documentdb-isquery': 'true',
           },
         ),
-      ).then((result) => _buildMany<T>(context, result[resultSet]));
+      ).then((result) => _buildMany<T>(context, result![resultSet]));
 
   Future<T> put<T extends BaseDocument>(
           String path, BaseDocument doc, Context context) =>
