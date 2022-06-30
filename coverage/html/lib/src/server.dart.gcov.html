@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-06-21</dd>
+<dd>2022-06-30</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -87,10 +87,10 @@
 <td>9</td><td></td><td></td><td><code>/// Class representing a CosmosDB instance</code></td>
 </tr>
 <tr class="noop" title="Line 10" id="line10">
-<td>10</td><td></td><td></td><td><code>class Server {</code></td>
+<td>10</td><td></td><td></td><td><code>class Instance {</code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>  /// Builds a new [Server] instance with the provided [urlOrAccount], [masterKey] and</code></td>
+<td>11</td><td></td><td></td><td><code>  /// Builds a new Cosmos DB [Instance] with the provided [urlOrAccount], [masterKey] and</code></td>
 </tr>
 <tr class="noop" title="Line 12" id="line12">
 <td>12</td><td></td><td></td><td><code>  /// [httpClient]. [urlOrAccount] can be a full URL (eg. `https://localhost:8081/`) or the</code></td>
@@ -99,7 +99,7 @@
 <td>13</td><td></td><td></td><td><code>  /// Azure CosmosDB account name, in which case the url will be constructed as</code></td>
 </tr>
 <tr class="noop" title="Line 14" id="line14">
-<td>14</td><td></td><td></td><td><code>  /// `https://${urlOrAccount}.documents.azure.com/`. Passing the `masterKey` is discouraged</code></td>
+<td>14</td><td></td><td></td><td><code>  /// `https://${urlOrAccount}.documents.azure.com/`. Passing the [masterKey] is discouraged</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
 <td>15</td><td></td><td></td><td><code>  /// in client apps to prevent from theft; instead, a proxy should be implemented for client</code></td>
@@ -108,7 +108,7 @@
 <td>16</td><td></td><td></td><td><code>  /// apps, especially Web apps, in order to protect the master key.</code></td>
 </tr>
 <tr class="lineCov" title="Line 17" id="line17">
-<td>17</td><td></td><td>1</td><td><code>  Server(String urlOrAccount, {String? masterKey, http.Client? httpClient})</code></td>
+<td>17</td><td></td><td>1</td><td><code>  Instance(String urlOrAccount, {String? masterKey, http.Client? httpClient})</code></td>
 </tr>
 <tr class="lineCov" title="Line 18" id="line18">
 <td>18</td><td></td><td>1</td><td><code>      : _client = Client(</code></td>
@@ -135,7 +135,7 @@
 <td>25</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 26" id="line26">
-<td>26</td><td></td><td></td><td><code>  /// Provides access to databases in this [Server].</code></td>
+<td>26</td><td></td><td></td><td><code>  /// Provides access to databases in this [Instance].</code></td>
 </tr>
 <tr class="lineCov" title="Line 27" id="line27">
 <td>27</td><td></td><td>3</td><td><code>  late final Databases databases = Databases(this);</code></td>
@@ -168,7 +168,7 @@
 <td>36</td><td></td><td></td><td><code>// internal use</code></td>
 </tr>
 <tr class="noop" title="Line 37" id="line37">
-<td>37</td><td></td><td></td><td><code>extension ServerExt on Server {</code></td>
+<td>37</td><td></td><td></td><td><code>extension InstanceExt on Instance {</code></td>
 </tr>
 <tr class="lineCov" title="Line 38" id="line38">
 <td>38</td><td></td><td>3</td><td><code>  Client get client =&gt; _client;</code></td>

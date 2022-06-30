@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="users.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="21" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="users.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9166667" lines-covered="33" lines-valid="36" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_client.dart';</code>
@@ -34,14 +34,16 @@
 <line>
 <code>class Users {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Users(Database db)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      : database = db,</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        url = '${db.url}/users';</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -58,8 +60,9 @@
 <line>
 <code>  /// Provides access to permissions associated with [User]s.</code>
 </line>
-<line>
+<line hits="3">
 <code>  late final Permissions permissions = Permissions(this);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -101,6 +104,52 @@
 <code/>
 </line>
 <line>
+<code>  /// Lists all collections from this [database].</code>
+</line>
+<line hits="2">
+<code>  Future&lt;Iterable&lt;User&gt;&gt; list({Permission? permission}) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      database.client.getMany&lt;User&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        'Users',</code>
+</line>
+<line hits="2">
+<code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          type: 'users',</code>
+</line>
+<line hits="3">
+<code>          resId: database.url,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          builder: User.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>          token: permission?.token,</code>
+</line>
+<line>
+<code>        ),</code>
+</line>
+<line hits="1">
+<code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
 <code>  /// Deletes the user identified by [id]. By default, this method returns `true` if</code>
 </line>
 <line>
@@ -109,20 +158,24 @@
 <line>
 <code>  /// [NotFoundException] instead.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;bool&gt; delete(String id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      database.client.delete(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        '$url/$id',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'users',</code>
@@ -130,17 +183,20 @@
 <line>
 <code>          throwOnNotFound: throwOnNotFound,</code>
 </line>
-<line>
+<line hits="1">
 <code>          builder: User.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line>
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -154,20 +210,24 @@
 <line>
 <code>  /// [NotFoundException] instead.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;User?&gt; find(String id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      database.client.get&lt;User&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        '$url/$id',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'users',</code>
@@ -175,17 +235,20 @@
 <line>
 <code>          throwOnNotFound: throwOnNotFound,</code>
 </line>
-<line>
+<line hits="1">
 <code>          builder: User.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line>
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -199,38 +262,46 @@
 <line>
 <code>  /// [NotFoundException] instead.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;User&gt; add(User user, {Permission? permission}) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      database.client.post&lt;User&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        user,</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          resId: database.url,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'users',</code>
 </line>
-<line>
+<line hits="1">
 <code>          builder: User.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line>
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -244,8 +315,9 @@
 <line>
 <code>extension UsersExt on Users {</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>  Client get client =&gt; database.client;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

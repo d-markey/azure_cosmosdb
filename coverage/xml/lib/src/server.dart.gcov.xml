@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="server.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="8" lines-valid="8" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="server.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="8" lines-valid="8" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'package:http/http.dart' as http;</code>
@@ -29,10 +29,10 @@
 <code>/// Class representing a CosmosDB instance</code>
 </line>
 <line>
-<code>class Server {</code>
+<code>class Instance {</code>
 </line>
 <line>
-<code>  /// Builds a new [Server] instance with the provided [urlOrAccount], [masterKey] and</code>
+<code>  /// Builds a new Cosmos DB [Instance] with the provided [urlOrAccount], [masterKey] and</code>
 </line>
 <line>
 <code>  /// [httpClient]. [urlOrAccount] can be a full URL (eg. `https://localhost:8081/`) or the</code>
@@ -41,7 +41,7 @@
 <code>  /// Azure CosmosDB account name, in which case the url will be constructed as</code>
 </line>
 <line>
-<code>  /// `https://${urlOrAccount}.documents.azure.com/`. Passing the `masterKey` is discouraged</code>
+<code>  /// `https://${urlOrAccount}.documents.azure.com/`. Passing the [masterKey] is discouraged</code>
 </line>
 <line>
 <code>  /// in client apps to prevent from theft; instead, a proxy should be implemented for client</code>
@@ -50,7 +50,7 @@
 <code>  /// apps, especially Web apps, in order to protect the master key.</code>
 </line>
 <line hits="1">
-<code>  Server(String urlOrAccount, {String? masterKey, http.Client? httpClient})</code>
+<code>  Instance(String urlOrAccount, {String? masterKey, http.Client? httpClient})</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -80,7 +80,7 @@
 <code/>
 </line>
 <line>
-<code>  /// Provides access to databases in this [Server].</code>
+<code>  /// Provides access to databases in this [Instance].</code>
 </line>
 <line hits="3">
 <code>  late final Databases databases = Databases(this);</code>
@@ -117,7 +117,7 @@
 <code>// internal use</code>
 </line>
 <line>
-<code>extension ServerExt on Server {</code>
+<code>extension InstanceExt on Instance {</code>
 </line>
 <line hits="3">
 <code>  Client get client =&gt; _client;</code>

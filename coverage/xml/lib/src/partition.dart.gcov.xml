@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="partition.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="5" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="partition.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="5" lines-valid="5" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -10,23 +10,27 @@
 <line>
 <code>class Partition {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Partition._(this.header);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Partition(String key)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      : this._(MapEntry(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          'x-ms-documentdb-partitionkey',</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          jsonEncode([key]),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ));</code>
@@ -34,8 +38,9 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="5">
 <code>  static final all = Partition._(MapEntry(</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    'x-ms-documentdb-query-enablecrosspartition',</code>

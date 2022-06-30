@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-06-21</dd>
+<dd>2022-06-30</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>11</td><td>14</td><td class="med">78.6%</td>
+<th scope="row">Lines</th><td>14</td><td>15</td><td class="high">93.3%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -102,7 +102,7 @@
 <td>14</td><td></td><td></td><td><code>  /// The [server] hosting this database.</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
-<td>15</td><td></td><td></td><td><code>  final Server server;</code></td>
+<td>15</td><td></td><td></td><td><code>  final Instance server;</code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
 <td>16</td><td></td><td></td><td><code></code></td>
@@ -149,11 +149,11 @@
 <tr class="noop" title="Line 30" id="line30">
 <td>30</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 31" id="line31">
-<td>31</td><td></td><td>0</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code></td>
+<tr class="lineCov" title="Line 31" id="line31">
+<td>31</td><td></td><td>2</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 32" id="line32">
-<td>32</td><td></td><td>0</td><td><code>      client.registerBuilder&lt;T&gt;(builder);</code></td>
+<tr class="lineCov" title="Line 32" id="line32">
+<td>32</td><td></td><td>3</td><td><code>      client.registerBuilder&lt;T&gt;(builder);</code></td>
 </tr>
 <tr class="noop" title="Line 33" id="line33">
 <td>33</td><td></td><td></td><td><code></code></td>
@@ -197,8 +197,8 @@
 <tr class="noop" title="Line 46" id="line46">
 <td>46</td><td></td><td></td><td><code>  /// Provides access to users in this [Database].</code></td>
 </tr>
-<tr class="noop" title="Line 47" id="line47">
-<td>47</td><td></td><td></td><td><code>  late final Users users = Users(this);</code></td>
+<tr class="lineCov" title="Line 47" id="line47">
+<td>47</td><td></td><td>3</td><td><code>  late final Users users = Users(this);</code></td>
 </tr>
 <tr class="noop" title="Line 48" id="line48">
 <td>48</td><td></td><td></td><td><code>}</code></td>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="databases.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9574468" lines-covered="45" lines-valid="47" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="databases.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9574468" lines-covered="45" lines-valid="47" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_client.dart';</code>
@@ -26,7 +26,7 @@
 <code/>
 </line>
 <line>
-<code>/// Class used to manage [Database]s in a [Server].</code>
+<code>/// Class used to manage [Database]s in a [Instance].</code>
 </line>
 <line>
 <code>class Databases {</code>
@@ -39,10 +39,10 @@
 <code/>
 </line>
 <line>
-<code>  /// The hosting [Server].</code>
+<code>  /// The hosting [Instance].</code>
 </line>
 <line>
-<code>  final Server server;</code>
+<code>  final Instance server;</code>
 </line>
 <line>
 <code/>
@@ -144,9 +144,9 @@
 <code>          builder: _build,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>

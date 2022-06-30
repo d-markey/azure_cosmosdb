@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.5040816" lines-covered="247" lines-valid="490" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.87341774" lines-covered="483" lines-valid="553" package="/lib/src" testname="lcov.info" version="1.5">
 <sources>
 <source branches-hit="0" branches-valid="0" filename="_extensions.dart" functions-hit="0" functions-valid="0" lines-hit="7" lines-valid="15" prefix="/a/azure_cosmosdb/azure_cosmosdb">
 <testCase branch-hit="0" function-hit="0" line-hit="7" name="&lt;unnamed&gt;"/>
@@ -7,24 +7,38 @@
 <source branches-hit="0" branches-valid="0" filename="server.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="8" prefix="/a/azure_cosmosdb/azure_cosmosdb">
 <testCase branch-hit="0" function-hit="0" line-hit="8" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="permission.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="7" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
-<source branches-hit="0" branches-valid="0" filename="exceptions.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="12" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<source branches-hit="0" branches-valid="0" filename="permission.dart" functions-hit="0" functions-valid="0" lines-hit="21" lines-valid="22" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="21" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="exceptions.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="12" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="8" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="partition.dart" functions-hit="0" functions-valid="0" lines-hit="5" lines-valid="5" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="5" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="paging.dart" functions-hit="0" functions-valid="0" lines-hit="3" lines-valid="3" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="3" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="base_document.dart" functions-hit="0" functions-valid="0" lines-hit="2" lines-valid="2" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="2" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="permissions.dart" functions-hit="0" functions-valid="0" lines-hit="37" lines-valid="45" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="37" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="query.dart" functions-hit="0" functions-valid="0" lines-hit="17" lines-valid="18" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="17" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="users.dart" functions-hit="0" functions-valid="0" lines-hit="33" lines-valid="36" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="33" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="_client.dart" functions-hit="0" functions-valid="0" lines-hit="82" lines-valid="88" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="82" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="_debug_http_overrides_vm.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="10" prefix="/a/azure_cosmosdb/azure_cosmosdb">
 <testCase branch-hit="0" function-hit="0" line-hit="6" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="paging.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="5" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
-<source branches-hit="0" branches-valid="0" filename="partition.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="5" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
-<source branches-hit="0" branches-valid="0" filename="base_document.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="2" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
-<source branches-hit="0" branches-valid="0" filename="permissions.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="39" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
-<source branches-hit="0" branches-valid="0" filename="query.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="14" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
-<source branches-hit="0" branches-valid="0" filename="users.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="21" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
-<source branches-hit="0" branches-valid="0" filename="_client.dart" functions-hit="0" functions-valid="0" lines-hit="61" lines-valid="86" prefix="/a/azure_cosmosdb/azure_cosmosdb">
-<testCase branch-hit="0" function-hit="0" line-hit="61" name="&lt;unnamed&gt;"/>
-</source>
-<source branches-hit="0" branches-valid="0" filename="_debug_http_overrides_vm.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="10" prefix="/a/azure_cosmosdb/azure_cosmosdb">
-<testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
-</source>
-<source branches-hit="0" branches-valid="0" filename="_context.dart" functions-hit="0" functions-valid="0" lines-hit="15" lines-valid="34" prefix="/a/azure_cosmosdb/azure_cosmosdb">
-<testCase branch-hit="0" function-hit="0" line-hit="15" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="_context.dart" functions-hit="0" functions-valid="0" lines-hit="31" lines-valid="36" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="31" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="_imf_fixdate.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="9" prefix="/a/azure_cosmosdb/azure_cosmosdb">
 <testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
@@ -32,22 +46,27 @@
 <source branches-hit="0" branches-valid="0" filename="collections.dart" functions-hit="0" functions-valid="0" lines-hit="43" lines-valid="45" prefix="/a/azure_cosmosdb/azure_cosmosdb">
 <testCase branch-hit="0" function-hit="0" line-hit="43" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="collection.dart" functions-hit="0" functions-valid="0" lines-hit="16" lines-valid="79" prefix="/a/azure_cosmosdb/azure_cosmosdb">
-<testCase branch-hit="0" function-hit="0" line-hit="16" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="collection.dart" functions-hit="0" functions-valid="0" lines-hit="71" lines-valid="89" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="71" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="debug_http_client.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="20" prefix="/a/azure_cosmosdb/azure_cosmosdb">
-<testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="debug_http_client.dart" functions-hit="0" functions-valid="0" lines-hit="20" lines-valid="26" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="20" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="database.dart" functions-hit="0" functions-valid="0" lines-hit="11" lines-valid="14" prefix="/a/azure_cosmosdb/azure_cosmosdb">
-<testCase branch-hit="0" function-hit="0" line-hit="11" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="database.dart" functions-hit="0" functions-valid="0" lines-hit="14" lines-valid="15" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="14" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="databases.dart" functions-hit="0" functions-valid="0" lines-hit="45" lines-valid="47" prefix="/a/azure_cosmosdb/azure_cosmosdb">
 <testCase branch-hit="0" function-hit="0" line-hit="45" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="_authorization.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="12" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<source branches-hit="0" branches-valid="0" filename="_authorization.dart" functions-hit="0" functions-valid="0" lines-hit="12" lines-valid="13" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="12" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="_http_status_codes.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="1" prefix="/a/azure_cosmosdb/azure_cosmosdb">
+<testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="user.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="8" prefix="/a/azure_cosmosdb/azure_cosmosdb">
 <testCase branch-hit="0" function-hit="0" line-hit="8" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="user.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="6" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
 </sources>
 <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
 <base href="../../"/>

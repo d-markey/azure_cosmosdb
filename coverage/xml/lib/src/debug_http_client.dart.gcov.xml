@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.45" lines-covered="9" lines-valid="20" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.7692308" lines-covered="20" lines-valid="26" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
+<line>
+<code>import 'package:azure_cosmosdb/src/_http_status_codes.dart';</code>
+</line>
 <line>
 <code>import 'package:http/http.dart' as http;</code>
 </line>
@@ -52,6 +55,24 @@
 <code/>
 </line>
 <line>
+<code>  /// Enable/disable headers tracing.</code>
+</line>
+<line>
+<code>  bool traceHeaders = false;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Enable/disable forced forbidden (status code 403) response.</code>
+</line>
+<line>
+<code>  bool forceForbidden = false;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
 <code>  final _http = http.Client();</code>
 </line>
 <line>
@@ -81,20 +102,30 @@
 <code>    if (trace) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      ts = DateTime.now().toUtc().toIso8601String();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      print('&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="5">
 <code>      print('[$ts] --&gt; ${request.method} ${request.url}');</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      if (traceHeaders) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
-<code>      for (var h in request.headers.entries) {</code>
+<code>        for (var h in request.headers.entries) {</code>
 </line>
 <line hits="0">
-<code>        print('[$ts] --&gt; ${h.key} = ${h.value}');</code>
+<code>          print('[$ts] --&gt; ${h.key} = ${h.value}');</code>
+</line>
+<line>
+<code>        }</code>
 </line>
 <line>
 <code>      }</code>
@@ -102,28 +133,71 @@
 <line>
 <code>    }</code>
 </line>
+<line>
+<code>    http.StreamedResponse response;</code>
+</line>
+<line hits="1">
+<code>    if (forceForbidden) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      response = http.StreamedResponse(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        HttpStatusCode.forbidden,</code>
+</line>
+<line>
+<code>        reasonPhrase: 'Forced',</code>
+</line>
+<line>
+<code>      );</code>
+</line>
+<line>
+<code>    } else {</code>
+</line>
 <line hits="4">
-<code>    final response = await _http.send(request);</code>
+<code>      response = await _http.send(request);</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
 </line>
 <line hits="1">
 <code>    if (trace) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
-<code>      print('[$ts] &lt;-- status code ${response.statusCode}');</code>
+<line hits="2">
+<code>      print(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>          '[$ts] &lt;-- status code ${response.statusCode} ${response.reasonPhrase}');</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      if (traceHeaders) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
-<code>      for (var h in response.headers.entries) {</code>
+<code>        for (var h in response.headers.entries) {</code>
 </line>
 <line hits="0">
-<code>        print('[$ts] &lt;-- ${h.key} = ${h.value}');</code>
+<code>          print('[$ts] &lt;-- ${h.key} = ${h.value}');</code>
+</line>
+<line>
+<code>        }</code>
 </line>
 <line>
 <code>      }</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      print('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>

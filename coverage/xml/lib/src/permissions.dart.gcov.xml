@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="permissions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="39" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="permissions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.82222223" lines-covered="37" lines-valid="45" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_context.dart';</code>
@@ -25,8 +25,9 @@
 <line>
 <code>class Permissions {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Permissions(this._users);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -76,32 +77,39 @@
 <line>
 <code>  /// Lists permissions for a [user].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Future&lt;Iterable&lt;Permission&gt;&gt; list(User user, {Permission? permission}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      _users.client.getMany&lt;Permission&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>        '${_users.url}/${user.id}/permissions',</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        'Permissions',</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'permissions',</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>          resId: '${_users.url}/${user.id}',</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>          builder: Permission.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
@@ -115,17 +123,15 @@
 <line>
 <code>  /// Retrieves permission with id [name] for the specified [user].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;Permission?&gt; get(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    User user,</code>
 </line>
 <line>
 <code>    String name, {</code>
-</line>
-<line>
-<code>    bool throwOnNotFound = false,</code>
 </line>
 <line>
 <code>    Duration? expiry,</code>
@@ -136,20 +142,23 @@
 <line>
 <code>  }) {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    final context = Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      type: 'permissions',</code>
 </line>
 <line>
-<code>      throwOnNotFound: throwOnNotFound,</code>
+<code>      throwOnNotFound: true,</code>
 </line>
-<line>
+<line hits="1">
 <code>      builder: Permission.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    );</code>
@@ -157,8 +166,9 @@
 <line hits="0">
 <code>    final seconds = expiry?.inSeconds ?? 0;</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    if (seconds &gt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());</code>
@@ -166,11 +176,13 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>    return _users.client.get&lt;Permission&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="5">
 <code>      '${_users.url}/${user.id}/permissions/$name',</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      context,</code>
@@ -178,8 +190,9 @@
 <line>
 <code>    );</code>
 </line>
-<line>
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -187,8 +200,9 @@
 <line>
 <code>  /// Grants the [user] the specified [userPermission].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Future&lt;Permission&gt; grant(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    User user,</code>
@@ -205,20 +219,24 @@
 <line>
 <code>  }) {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    final context = Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      type: 'permissions',</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      resId: '${_users.url}/${user.id}',</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>      builder: Permission.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    );</code>
@@ -226,8 +244,9 @@
 <line hits="0">
 <code>    final seconds = expiry?.inSeconds ?? 0;</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    if (seconds &gt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());</code>
@@ -235,11 +254,13 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>    return _users.client.post&lt;Permission&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      '${_users.url}/${user.id}/permissions',</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      userPermission,</code>
@@ -259,8 +280,9 @@
 <line>
 <code>  /// Updates the [userPermission] for the specified [user].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Future&lt;Permission&gt; replace(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    User user,</code>
@@ -277,17 +299,20 @@
 <line>
 <code>  }) {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    final context = Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      type: 'permissions',</code>
 </line>
-<line>
+<line hits="1">
 <code>      builder: Permission.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    );</code>
@@ -295,8 +320,9 @@
 <line hits="0">
 <code>    final seconds = expiry?.inSeconds ?? 0;</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    if (seconds &gt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());</code>
@@ -304,11 +330,13 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>    return _users.client.put&lt;Permission&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="5">
 <code>      '${_users.url}/${user.id}/permissions/${userPermission.id}',</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      userPermission,</code>
@@ -328,20 +356,24 @@
 <line>
 <code>  /// Revokes permission with `id` for the specified [user].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Future&lt;bool&gt; revoke(User user, String name,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      _users.client.delete(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>        '${_users.url}/${user.id}/permissions/$name',</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'permissions',</code>
@@ -349,11 +381,13 @@
 <line>
 <code>          throwOnNotFound: throwOnNotFound,</code>
 </line>
-<line>
+<line hits="1">
 <code>          builder: Permission.build,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>

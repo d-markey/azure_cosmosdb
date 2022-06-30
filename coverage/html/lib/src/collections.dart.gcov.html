@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-06-21</dd>
+<dd>2022-06-30</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -87,7 +87,7 @@
 <td>9</td><td></td><td></td><td><code>class Collections {</code></td>
 </tr>
 <tr class="lineCov" title="Line 10" id="line10">
-<td>10</td><td></td><td>4</td><td><code>  Collections(this.database) : _url = '${database.url}/colls';</code></td>
+<td>10</td><td></td><td>4</td><td><code>  Collections(this.database) : url = '${database.url}/colls';</code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
 <td>11</td><td></td><td></td><td><code></code></td>
@@ -102,7 +102,7 @@
 <td>14</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
-<td>15</td><td></td><td></td><td><code>  final String _url;</code></td>
+<td>15</td><td></td><td></td><td><code>  final String url;</code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
 <td>16</td><td></td><td></td><td><code></code></td>
@@ -135,7 +135,7 @@
 <td>25</td><td></td><td>4</td><td><code>      database.client.getMany&lt;Collection&gt;(</code></td>
 </tr>
 <tr class="lineCov" title="Line 26" id="line26">
-<td>26</td><td></td><td>2</td><td><code>        _url,</code></td>
+<td>26</td><td></td><td>2</td><td><code>        url,</code></td>
 </tr>
 <tr class="noop" title="Line 27" id="line27">
 <td>27</td><td></td><td></td><td><code>        'DocumentCollections',</code></td>
@@ -192,7 +192,7 @@
 <td>44</td><td></td><td>1</td><td><code>          .delete(</code></td>
 </tr>
 <tr class="lineCov" title="Line 45" id="line45">
-<td>45</td><td></td><td>4</td><td><code>        '$_url/${collection.id}',</code></td>
+<td>45</td><td></td><td>4</td><td><code>        '$url/${collection.id}',</code></td>
 </tr>
 <tr class="lineCov" title="Line 46" id="line46">
 <td>46</td><td></td><td>2</td><td><code>        Context(</code></td>
@@ -240,7 +240,7 @@
 <td>60</td><td></td><td>4</td><td><code>      database.client.post&lt;Collection&gt;(</code></td>
 </tr>
 <tr class="lineCov" title="Line 61" id="line61">
-<td>61</td><td></td><td>2</td><td><code>        _url,</code></td>
+<td>61</td><td></td><td>2</td><td><code>        url,</code></td>
 </tr>
 <tr class="lineCov" title="Line 62" id="line62">
 <td>62</td><td></td><td>3</td><td><code>        Collection(database, name, partitionKeys: partitionKeys),</code></td>

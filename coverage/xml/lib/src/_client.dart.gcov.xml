@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-21" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.7093023" lines-covered="61" lines-valid="86" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9318182" lines-covered="82" lines-valid="88" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
 </line>
 <line>
 <code/>
+</line>
+<line>
+<code>import 'package:azure_cosmosdb/src/_http_status_codes.dart';</code>
 </line>
 <line>
 <code>import 'package:crypto/crypto.dart';</code>
@@ -82,11 +85,13 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>    _builders[T] = builder;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  }</code>
@@ -98,9 +103,9 @@
 <code>  DocumentBuilder&lt;T&gt; _getBuilder&lt;T extends BaseDocument&gt;(Context context) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="4">
 <code>    final builder = context.builder ?? _builders[T];</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    if (builder == null) throw Exception('Unknown document type $T');</code>
@@ -117,9 +122,9 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>  T? _build&lt;T extends BaseDocument&gt;(Context context, Map? item) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>    final builder = _getBuilder&lt;T&gt;(context);</code>
@@ -129,8 +134,9 @@
 <code>    return (item == null || item.isEmpty) ? null : builder(item);</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -235,7 +241,7 @@
 <code/>
 </line>
 <line hits="2">
-<code>  Future&lt;Map&lt;String, dynamic&gt;&gt; _send(</code>
+<code>  Future&lt;Map&lt;String, dynamic&gt;?&gt; _send(</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -264,8 +270,9 @@
 <code>    var auth = (context.token != null)</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        ? Authorization.fromToken(context.token!)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>        : Authorization(_key, method.toLowerCase(), context.type, resId);</code>
@@ -282,29 +289,34 @@
 <code/>
 </line>
 <line hits="3">
-<code>    if (result.statusCode == 403) {</code>
+<code>    if (result.statusCode == HttpStatusCode.forbidden) {</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      // try to get a new permission from the onForbidden callback</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      final permission = await context.onForbidden?.call();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      final token = permission?.token;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>      if (token != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        // try again with this permission</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        auth = Authorization.fromToken(token);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        result = await _sendWithAuth(method, path, body, context, auth);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
@@ -340,9 +352,9 @@
 <line>
 <code/>
 </line>
-<line hits="4">
-<code>    if (result.statusCode &lt; 200 || result.statusCode &gt;= 300) {</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>    if (!HttpStatusCode.success(result.statusCode)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>      final msg = data['message'];</code>
@@ -353,21 +365,22 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>        case 401:</code>
+<code>        case HttpStatusCode.unauthorized:</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          throw errors.UnauthorizedException(method, path, message: msg);</code>
 </line>
 <line hits="1">
-<code>        case 403:</code>
+<code>        case HttpStatusCode.forbidden:</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          throw errors.ForbiddenException(method, path, message: msg);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>        case 404:</code>
+<code>        case HttpStatusCode.notFound:</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -381,12 +394,12 @@
 <line>
 <code>          }</code>
 </line>
-<line hits="2">
-<code>          return {};</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="1">
+<code>          return null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>        case 409:</code>
+<code>        case HttpStatusCode.conflict:</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
@@ -423,9 +436,9 @@
 <line>
 <code/>
 </line>
-<line hits="1">
-<code>    context.paging?.setContinuation(result.headers['x-ms-continuation']);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="5">
+<code>    context.paging?.setContinuation(result.headers['x-ms-continuation'] ?? '');</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    return data;</code>
@@ -439,7 +452,7 @@
 <code/>
 </line>
 <line hits="1">
-<code>  Future&lt;Map&lt;String, dynamic&gt;&gt; getJson(String path, Context context) =&gt;</code>
+<code>  Future&lt;Map&lt;String, dynamic&gt;?&gt; getJson(String path, Context context) =&gt;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
@@ -449,14 +462,17 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(String path, Context context) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      _send('GET', path, null, context)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>          .then((data) =&gt; _build&lt;T&gt;(context, data));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -473,7 +489,7 @@
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="5">
-<code>          .then((result) =&gt; _buildMany&lt;T&gt;(context, result[resultSet]));</code>
+<code>          .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]));</code>
 <hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -497,14 +513,16 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          String path, Query query, String resultSet, Context context) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      _send(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        'POST',</code>
@@ -515,14 +533,16 @@
 <line>
 <code>        query,</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>        context.copyWith(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          query: query,</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          headers: {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            'content-type': 'application/query+json',</code>
@@ -536,23 +556,27 @@
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
-<code>      ).then((result) =&gt; _buildMany&lt;T&gt;(context, result[resultSet]));</code>
+<line hits="5">
+<code>      ).then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          String path, BaseDocument doc, Context context) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      _send('PUT', path, doc, context)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>          .then((data) =&gt; _build&lt;T&gt;(context, data)!);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
