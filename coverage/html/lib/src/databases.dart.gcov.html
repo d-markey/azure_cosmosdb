@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-06-30</dd>
+<dd>2022-10-12</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>45</td><td>47</td><td class="high">95.7%</td>
+<th scope="row">Lines</th><td>9</td><td>47</td><td class="low">19.1%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -110,20 +110,20 @@
 <tr class="noop" title="Line 17" id="line17">
 <td>17</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 18" id="line18">
-<td>18</td><td></td><td>2</td><td><code>  Database _build(Map json) {</code></td>
+<tr class="lineNoCov" title="Line 18" id="line18">
+<td>18</td><td></td><td>0</td><td><code>  Database _build(Map json) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 19" id="line19">
-<td>19</td><td></td><td>4</td><td><code>    final db = Database(server, json['id']);</code></td>
+<tr class="lineNoCov" title="Line 19" id="line19">
+<td>19</td><td></td><td>0</td><td><code>    final db = Database(server, json['id']);</code></td>
 </tr>
-<tr class="lineCov" title="Line 20" id="line20">
-<td>20</td><td></td><td>1</td><td><code>    db.setExists(true);</code></td>
+<tr class="lineNoCov" title="Line 20" id="line20">
+<td>20</td><td></td><td>0</td><td><code>    db.setExists(true);</code></td>
 </tr>
-<tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>1</td><td><code>    return db;</code></td>
+<tr class="lineNoCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>0</td><td><code>    return db;</code></td>
 </tr>
-<tr class="lineCov" title="Line 22" id="line22">
-<td>22</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 22" id="line22">
+<td>22</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 23" id="line23">
 <td>23</td><td></td><td></td><td><code></code></td>
@@ -192,7 +192,7 @@
 <td>44</td><td></td><td>2</td><td><code>          builder: _build,</code></td>
 </tr>
 <tr class="lineCov" title="Line 45" id="line45">
-<td>45</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<td>45</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 46" id="line46">
 <td>46</td><td></td><td></td><td><code>        ),</code></td>
@@ -218,23 +218,23 @@
 <tr class="noop" title="Line 53" id="line53">
 <td>53</td><td></td><td></td><td><code>  /// be set to `false`.</code></td>
 </tr>
-<tr class="lineCov" title="Line 54" id="line54">
-<td>54</td><td></td><td>2</td><td><code>  Future&lt;bool&gt; delete(Database database,</code></td>
+<tr class="lineNoCov" title="Line 54" id="line54">
+<td>54</td><td></td><td>0</td><td><code>  Future&lt;bool&gt; delete(Database database,</code></td>
 </tr>
 <tr class="noop" title="Line 55" id="line55">
 <td>55</td><td></td><td></td><td><code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 56" id="line56">
-<td>56</td><td></td><td>2</td><td><code>      client</code></td>
+<tr class="lineNoCov" title="Line 56" id="line56">
+<td>56</td><td></td><td>0</td><td><code>      client</code></td>
 </tr>
-<tr class="lineCov" title="Line 57" id="line57">
-<td>57</td><td></td><td>1</td><td><code>          .delete(</code></td>
+<tr class="lineNoCov" title="Line 57" id="line57">
+<td>57</td><td></td><td>0</td><td><code>          .delete(</code></td>
 </tr>
-<tr class="lineCov" title="Line 58" id="line58">
-<td>58</td><td></td><td>4</td><td><code>        '$_url/${database.id}',</code></td>
+<tr class="lineNoCov" title="Line 58" id="line58">
+<td>58</td><td></td><td>0</td><td><code>        '$_url/${database.id}',</code></td>
 </tr>
-<tr class="lineCov" title="Line 59" id="line59">
-<td>59</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 59" id="line59">
+<td>59</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 60" id="line60">
 <td>60</td><td></td><td></td><td><code>          type: 'dbs',</code></td>
@@ -242,8 +242,8 @@
 <tr class="noop" title="Line 61" id="line61">
 <td>61</td><td></td><td></td><td><code>          throwOnNotFound: throwOnNotFound,</code></td>
 </tr>
-<tr class="lineCov" title="Line 62" id="line62">
-<td>62</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 62" id="line62">
+<td>62</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 63" id="line63">
 <td>63</td><td></td><td></td><td><code>        ),</code></td>
@@ -251,17 +251,17 @@
 <tr class="noop" title="Line 64" id="line64">
 <td>64</td><td></td><td></td><td><code>      )</code></td>
 </tr>
-<tr class="lineCov" title="Line 65" id="line65">
-<td>65</td><td></td><td>3</td><td><code>          .then((value) {</code></td>
+<tr class="lineNoCov" title="Line 65" id="line65">
+<td>65</td><td></td><td>0</td><td><code>          .then((value) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 66" id="line66">
-<td>66</td><td></td><td>2</td><td><code>        database.setExists(false);</code></td>
+<tr class="lineNoCov" title="Line 66" id="line66">
+<td>66</td><td></td><td>0</td><td><code>        database.setExists(false);</code></td>
 </tr>
-<tr class="lineCov" title="Line 67" id="line67">
-<td>67</td><td></td><td>1</td><td><code>        return true;</code></td>
+<tr class="lineNoCov" title="Line 67" id="line67">
+<td>67</td><td></td><td>0</td><td><code>        return true;</code></td>
 </tr>
-<tr class="lineCov" title="Line 68" id="line68">
-<td>68</td><td></td><td>1</td><td><code>      });</code></td>
+<tr class="lineNoCov" title="Line 68" id="line68">
+<td>68</td><td></td><td>0</td><td><code>      });</code></td>
 </tr>
 <tr class="noop" title="Line 69" id="line69">
 <td>69</td><td></td><td></td><td><code></code></td>
@@ -269,20 +269,20 @@
 <tr class="noop" title="Line 70" id="line70">
 <td>70</td><td></td><td></td><td><code>  /// Creates a new [Database] with the specified `name`.</code></td>
 </tr>
-<tr class="lineCov" title="Line 71" id="line71">
-<td>71</td><td></td><td>2</td><td><code>  Future&lt;Database&gt; create(String name, {Permission? permission}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 71" id="line71">
+<td>71</td><td></td><td>0</td><td><code>  Future&lt;Database&gt; create(String name, {Permission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 72" id="line72">
-<td>72</td><td></td><td>3</td><td><code>      client.post&lt;Database&gt;(</code></td>
+<tr class="lineNoCov" title="Line 72" id="line72">
+<td>72</td><td></td><td>0</td><td><code>      client.post&lt;Database&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 73" id="line73">
-<td>73</td><td></td><td>1</td><td><code>        _url,</code></td>
+<tr class="lineNoCov" title="Line 73" id="line73">
+<td>73</td><td></td><td>0</td><td><code>        _url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 74" id="line74">
-<td>74</td><td></td><td>3</td><td><code>        Database(server, name),</code></td>
+<tr class="lineNoCov" title="Line 74" id="line74">
+<td>74</td><td></td><td>0</td><td><code>        Database(server, name),</code></td>
 </tr>
-<tr class="lineCov" title="Line 75" id="line75">
-<td>75</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 75" id="line75">
+<td>75</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 76" id="line76">
 <td>76</td><td></td><td></td><td><code>          type: 'dbs',</code></td>
@@ -290,20 +290,20 @@
 <tr class="noop" title="Line 77" id="line77">
 <td>77</td><td></td><td></td><td><code>          resId: '',</code></td>
 </tr>
-<tr class="lineCov" title="Line 78" id="line78">
-<td>78</td><td></td><td>2</td><td><code>          headers: {'x-ms-offer-throughput': '400'},</code></td>
+<tr class="lineNoCov" title="Line 78" id="line78">
+<td>78</td><td></td><td>0</td><td><code>          headers: {'x-ms-offer-throughput': '400'},</code></td>
 </tr>
-<tr class="lineCov" title="Line 79" id="line79">
-<td>79</td><td></td><td>2</td><td><code>          builder: _build,</code></td>
+<tr class="lineNoCov" title="Line 79" id="line79">
+<td>79</td><td></td><td>0</td><td><code>          builder: _build,</code></td>
 </tr>
-<tr class="lineCov" title="Line 80" id="line80">
-<td>80</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 80" id="line80">
+<td>80</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 81" id="line81">
 <td>81</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 82" id="line82">
-<td>82</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 82" id="line82">
+<td>82</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 83" id="line83">
 <td>83</td><td></td><td></td><td><code></code></td>
@@ -311,23 +311,23 @@
 <tr class="noop" title="Line 84" id="line84">
 <td>84</td><td></td><td></td><td><code>  /// Opens an existing [Database] with the specified `name`.</code></td>
 </tr>
-<tr class="lineCov" title="Line 85" id="line85">
-<td>85</td><td></td><td>2</td><td><code>  Future&lt;Database&gt; open(String name, {Permission? permission}) async {</code></td>
+<tr class="lineNoCov" title="Line 85" id="line85">
+<td>85</td><td></td><td>0</td><td><code>  Future&lt;Database&gt; open(String name, {Permission? permission}) async {</code></td>
 </tr>
-<tr class="lineCov" title="Line 86" id="line86">
-<td>86</td><td></td><td>3</td><td><code>    final db = Database(server, name);</code></td>
+<tr class="lineNoCov" title="Line 86" id="line86">
+<td>86</td><td></td><td>0</td><td><code>    final db = Database(server, name);</code></td>
 </tr>
-<tr class="lineCov" title="Line 87" id="line87">
-<td>87</td><td></td><td>3</td><td><code>    await db.getInfo(permission: permission);</code></td>
+<tr class="lineNoCov" title="Line 87" id="line87">
+<td>87</td><td></td><td>0</td><td><code>    await db.getInfo(permission: permission);</code></td>
 </tr>
-<tr class="lineCov" title="Line 88" id="line88">
-<td>88</td><td></td><td>1</td><td><code>    db.setExists(true);</code></td>
+<tr class="lineNoCov" title="Line 88" id="line88">
+<td>88</td><td></td><td>0</td><td><code>    db.setExists(true);</code></td>
 </tr>
-<tr class="lineCov" title="Line 89" id="line89">
-<td>89</td><td></td><td>1</td><td><code>    return db;</code></td>
+<tr class="lineNoCov" title="Line 89" id="line89">
+<td>89</td><td></td><td>0</td><td><code>    return db;</code></td>
 </tr>
-<tr class="lineCov" title="Line 90" id="line90">
-<td>90</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 90" id="line90">
+<td>90</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 91" id="line91">
 <td>91</td><td></td><td></td><td><code></code></td>
@@ -335,26 +335,26 @@
 <tr class="noop" title="Line 92" id="line92">
 <td>92</td><td></td><td></td><td><code>  /// Opens or creates a [Database] with the specified `name`.</code></td>
 </tr>
-<tr class="lineCov" title="Line 93" id="line93">
-<td>93</td><td></td><td>2</td><td><code>  Future&lt;Database&gt; openOrCreate(String name, {Permission? permission}) async {</code></td>
+<tr class="lineNoCov" title="Line 93" id="line93">
+<td>93</td><td></td><td>0</td><td><code>  Future&lt;Database&gt; openOrCreate(String name, {Permission? permission}) async {</code></td>
 </tr>
-<tr class="lineCov" title="Line 94" id="line94">
-<td>94</td><td></td><td>1</td><td><code>    try {</code></td>
+<tr class="lineNoCov" title="Line 94" id="line94">
+<td>94</td><td></td><td>0</td><td><code>    try {</code></td>
 </tr>
-<tr class="lineCov" title="Line 95" id="line95">
-<td>95</td><td></td><td>3</td><td><code>      return await open(name, permission: permission);</code></td>
+<tr class="lineNoCov" title="Line 95" id="line95">
+<td>95</td><td></td><td>0</td><td><code>      return await open(name, permission: permission);</code></td>
 </tr>
-<tr class="lineCov" title="Line 96" id="line96">
-<td>96</td><td></td><td>2</td><td><code>    } on NotFoundException {</code></td>
+<tr class="lineNoCov" title="Line 96" id="line96">
+<td>96</td><td></td><td>0</td><td><code>    } on NotFoundException {</code></td>
 </tr>
-<tr class="lineCov" title="Line 97" id="line97">
-<td>97</td><td></td><td>3</td><td><code>      return await create(name, permission: permission);</code></td>
+<tr class="lineNoCov" title="Line 97" id="line97">
+<td>97</td><td></td><td>0</td><td><code>      return await create(name, permission: permission);</code></td>
 </tr>
 <tr class="noop" title="Line 98" id="line98">
 <td>98</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="lineCov" title="Line 99" id="line99">
-<td>99</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 99" id="line99">
+<td>99</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 100" id="line100">
 <td>100</td><td></td><td></td><td><code>}</code></td>

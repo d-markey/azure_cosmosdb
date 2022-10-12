@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="collections.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95555556" lines-covered="43" lines-valid="45" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-12" filename="collections.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="45" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_context.dart';</code>
@@ -28,9 +28,8 @@
 <line>
 <code>class Collections {</code>
 </line>
-<line hits="4">
+<line hits="0">
 <code>  Collections(this.database) : url = '${database.url}/colls';</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -50,25 +49,20 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Collection _build(Map json) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>    final coll = Collection(database, json['id']);</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    coll.setExists(true);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    return coll;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -76,35 +70,29 @@
 <line>
 <code>  /// Lists all collections from this [database].</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Iterable&lt;Collection&gt;&gt; list({Permission? permission}) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>      database.client.getMany&lt;Collection&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        url,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        'DocumentCollections',</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>          resId: database.url,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          builder: _build,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          token: permission?.token,</code>
@@ -112,9 +100,8 @@
 <line>
 <code>        ),</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      );</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -134,28 +121,23 @@
 <line>
 <code>  /// be set to `false`.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;bool&gt; delete(Collection collection,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      database.client</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>          .delete(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>        '$url/${collection.id}',</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
@@ -172,21 +154,17 @@
 <line>
 <code>      )</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>          .then((value) {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        collection.setExists(false);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>        return true;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      });</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -194,39 +172,32 @@
 <line>
 <code>  /// Creates a new [Collection] with the specified `name` and `partitionKeys`.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Collection&gt; create(String name,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {List&lt;String&gt;? partitionKeys, Permission? permission}) =&gt;</code>
 </line>
-<line hits="4">
+<line hits="0">
 <code>      database.client.post&lt;Collection&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        url,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>        Collection(database, name, partitionKeys: partitionKeys),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          resId: database.url,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          headers: {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            'x-ms-offer-throughput': '400',</code>
@@ -234,16 +205,14 @@
 <line>
 <code>          },</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          builder: _build,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      );</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -251,29 +220,23 @@
 <line>
 <code>  /// Opens an existing [Collection] with id [name].</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Collection&gt; open(String name) async {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>    final coll = Collection(database, name);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>    await coll.getInfo();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    coll.setExists(true);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    return coll;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -281,35 +244,29 @@
 <line>
 <code>  /// Opens or creates a [Collection] with id [name].</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Collection&gt; openOrCreate(String name,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      {List&lt;String&gt;? partitionKeys}) async {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    try {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      return await open(name);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    } on NotFoundException {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      return await create(name, partitionKeys: partitionKeys);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

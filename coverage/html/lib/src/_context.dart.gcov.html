@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-06-30</dd>
+<dd>2022-10-12</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>31</td><td>36</td><td class="med">86.1%</td>
+<th scope="row">Lines</th><td>12</td><td>36</td><td class="low">33.3%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -119,11 +119,11 @@
 <tr class="lineCov" title="Line 20" id="line20">
 <td>20</td><td></td><td>1</td><td><code>    if (headers != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>3</td><td><code>      _headers ??= {};</code></td>
+<tr class="lineNoCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>0</td><td><code>      _headers ??= {};</code></td>
 </tr>
-<tr class="lineCov" title="Line 22" id="line22">
-<td>22</td><td></td><td>3</td><td><code>      _headers!.addAll(headers);</code></td>
+<tr class="lineNoCov" title="Line 22" id="line22">
+<td>22</td><td></td><td>0</td><td><code>      _headers!.addAll(headers);</code></td>
 </tr>
 <tr class="noop" title="Line 23" id="line23">
 <td>23</td><td></td><td></td><td><code>    }</code></td>
@@ -161,8 +161,8 @@
 <tr class="noop" title="Line 34" id="line34">
 <td>34</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 35" id="line35">
-<td>35</td><td></td><td>1</td><td><code>  Map&lt;String, String&gt;? _headers;</code></td>
+<tr class="lineNoCov" title="Line 35" id="line35">
+<td>35</td><td></td><td>0</td><td><code>  Map&lt;String, String&gt;? _headers;</code></td>
 </tr>
 <tr class="noop" title="Line 36" id="line36">
 <td>36</td><td></td><td></td><td><code></code></td>
@@ -182,32 +182,32 @@
 <tr class="noop" title="Line 41" id="line41">
 <td>41</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 42" id="line42">
-<td>42</td><td></td><td>1</td><td><code>  Context copyWith({Query? query, Map&lt;String, String&gt;? headers}) {</code></td>
+<tr class="lineNoCov" title="Line 42" id="line42">
+<td>42</td><td></td><td>0</td><td><code>  Context copyWith({Query? query, Map&lt;String, String&gt;? headers}) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 43" id="line43">
-<td>43</td><td></td><td>2</td><td><code>    final copy = Context(</code></td>
+<tr class="lineNoCov" title="Line 43" id="line43">
+<td>43</td><td></td><td>0</td><td><code>    final copy = Context(</code></td>
 </tr>
-<tr class="lineCov" title="Line 44" id="line44">
-<td>44</td><td></td><td>2</td><td><code>        type: type,</code></td>
+<tr class="lineNoCov" title="Line 44" id="line44">
+<td>44</td><td></td><td>0</td><td><code>        type: type,</code></td>
 </tr>
-<tr class="lineCov" title="Line 45" id="line45">
-<td>45</td><td></td><td>2</td><td><code>        resId: resId,</code></td>
+<tr class="lineNoCov" title="Line 45" id="line45">
+<td>45</td><td></td><td>0</td><td><code>        resId: resId,</code></td>
 </tr>
-<tr class="lineCov" title="Line 46" id="line46">
-<td>46</td><td></td><td>2</td><td><code>        paging: paging ?? query,</code></td>
+<tr class="lineNoCov" title="Line 46" id="line46">
+<td>46</td><td></td><td>0</td><td><code>        paging: paging ?? query,</code></td>
 </tr>
-<tr class="lineCov" title="Line 47" id="line47">
-<td>47</td><td></td><td>3</td><td><code>        partition: partition ?? query?.partition,</code></td>
+<tr class="lineNoCov" title="Line 47" id="line47">
+<td>47</td><td></td><td>0</td><td><code>        partition: partition ?? query?.partition,</code></td>
 </tr>
-<tr class="lineCov" title="Line 48" id="line48">
-<td>48</td><td></td><td>2</td><td><code>        token: token,</code></td>
+<tr class="lineNoCov" title="Line 48" id="line48">
+<td>48</td><td></td><td>0</td><td><code>        token: token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 49" id="line49">
-<td>49</td><td></td><td>2</td><td><code>        onForbidden: onForbidden);</code></td>
+<tr class="lineNoCov" title="Line 49" id="line49">
+<td>49</td><td></td><td>0</td><td><code>        onForbidden: onForbidden);</code></td>
 </tr>
-<tr class="lineCov" title="Line 50" id="line50">
-<td>50</td><td></td><td>2</td><td><code>    if (_headers != null) {</code></td>
+<tr class="lineNoCov" title="Line 50" id="line50">
+<td>50</td><td></td><td>0</td><td><code>    if (_headers != null) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 51" id="line51">
 <td>51</td><td></td><td>0</td><td><code>      copy._headers ??= {};</code></td>
@@ -218,14 +218,14 @@
 <tr class="noop" title="Line 53" id="line53">
 <td>53</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="lineCov" title="Line 54" id="line54">
-<td>54</td><td></td><td>1</td><td><code>    if (headers != null) {</code></td>
+<tr class="lineNoCov" title="Line 54" id="line54">
+<td>54</td><td></td><td>0</td><td><code>    if (headers != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 55" id="line55">
-<td>55</td><td></td><td>3</td><td><code>      copy._headers ??= {};</code></td>
+<tr class="lineNoCov" title="Line 55" id="line55">
+<td>55</td><td></td><td>0</td><td><code>      copy._headers ??= {};</code></td>
 </tr>
-<tr class="lineCov" title="Line 56" id="line56">
-<td>56</td><td></td><td>3</td><td><code>      copy._headers!.addAll(headers);</code></td>
+<tr class="lineNoCov" title="Line 56" id="line56">
+<td>56</td><td></td><td>0</td><td><code>      copy._headers!.addAll(headers);</code></td>
 </tr>
 <tr class="noop" title="Line 57" id="line57">
 <td>57</td><td></td><td></td><td><code>    }</code></td>
@@ -248,44 +248,44 @@
 <tr class="lineCov" title="Line 63" id="line63">
 <td>63</td><td></td><td>2</td><td><code>    if (_headers != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 64" id="line64">
-<td>64</td><td></td><td>3</td><td><code>      headers.addAll(_headers!);</code></td>
+<tr class="lineNoCov" title="Line 64" id="line64">
+<td>64</td><td></td><td>0</td><td><code>      headers.addAll(_headers!);</code></td>
 </tr>
 <tr class="noop" title="Line 65" id="line65">
 <td>65</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 66" id="line66">
-<td>66</td><td></td><td>3</td><td><code>    final partitionHeader = partition?.header;</code></td>
+<td>66</td><td></td><td>2</td><td><code>    final partitionHeader = partition?.header;</code></td>
 </tr>
 <tr class="lineCov" title="Line 67" id="line67">
 <td>67</td><td></td><td>1</td><td><code>    if (partitionHeader != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 68" id="line68">
-<td>68</td><td></td><td>4</td><td><code>      headers[partitionHeader.key] = partitionHeader.value;</code></td>
+<tr class="lineNoCov" title="Line 68" id="line68">
+<td>68</td><td></td><td>0</td><td><code>      headers[partitionHeader.key] = partitionHeader.value;</code></td>
 </tr>
 <tr class="noop" title="Line 69" id="line69">
 <td>69</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 70" id="line70">
-<td>70</td><td></td><td>4</td><td><code>    final maxCount = (paging?.maxCount ?? -1);</code></td>
+<td>70</td><td></td><td>3</td><td><code>    final maxCount = (paging?.maxCount ?? -1);</code></td>
 </tr>
 <tr class="lineCov" title="Line 71" id="line71">
 <td>71</td><td></td><td>2</td><td><code>    if (maxCount &gt; 0) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 72" id="line72">
-<td>72</td><td></td><td>3</td><td><code>      headers['x-ms-max-item-count'] = maxCount.toString();</code></td>
+<tr class="lineNoCov" title="Line 72" id="line72">
+<td>72</td><td></td><td>0</td><td><code>      headers['x-ms-max-item-count'] = maxCount.toString();</code></td>
 </tr>
 <tr class="noop" title="Line 73" id="line73">
 <td>73</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 74" id="line74">
-<td>74</td><td></td><td>3</td><td><code>    final continuation = paging?.continuation ?? '';</code></td>
+<td>74</td><td></td><td>2</td><td><code>    final continuation = paging?.continuation ?? '';</code></td>
 </tr>
 <tr class="lineCov" title="Line 75" id="line75">
 <td>75</td><td></td><td>1</td><td><code>    if (continuation.isNotEmpty) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 76" id="line76">
-<td>76</td><td></td><td>2</td><td><code>      headers['x-ms-continuation'] = continuation;</code></td>
+<tr class="lineNoCov" title="Line 76" id="line76">
+<td>76</td><td></td><td>0</td><td><code>      headers['x-ms-continuation'] = continuation;</code></td>
 </tr>
 <tr class="noop" title="Line 77" id="line77">
 <td>77</td><td></td><td></td><td><code>    }</code></td>
