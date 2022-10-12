@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:azure_cosmosdb/src/_http_status_codes.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
+import 'package:retry/retry.dart';
 
 import '_authorization.dart';
 import '_context.dart';
@@ -22,6 +25,7 @@ class Client {
   final String _url;
   final Hmac? _key;
   final http.Client _http;
+  final RetryOptions _retry = RetryOptions();
 
   final _builders = <Type, _DocumentBuilder>{};
 
@@ -65,7 +69,10 @@ class Client {
     request.headers['x-ms-date'] = authorization.date;
     request.headers['x-ms-version'] = '2018-12-31';
 
-    return _http.send(request);
+    return _retry.retry(
+      () => _http.send(request).timeout(Duration(seconds: 5)),
+      retryIf: (e) => e is SocketException || e is TimeoutException,
+    );
   }
 
   Future<Map<String, dynamic>?> _send(

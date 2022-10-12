@@ -1,3 +1,7 @@
+## 0.9.1
+
+- Added default retry policy from package https://pub.dev/packages/retry.
+
 ## 0.9.0
 
 - Initial release.
