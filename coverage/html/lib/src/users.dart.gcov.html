@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-06-30</dd>
+<dd>2022-10-12</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>33</td><td>36</td><td class="high">91.7%</td>
+<th scope="row">Lines</th><td>0</td><td>36</td><td class="low">0.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -92,14 +92,14 @@
 <tr class="noop" title="Line 11" id="line11">
 <td>11</td><td></td><td></td><td><code>class Users {</code></td>
 </tr>
-<tr class="lineCov" title="Line 12" id="line12">
-<td>12</td><td></td><td>2</td><td><code>  Users(Database db)</code></td>
+<tr class="lineNoCov" title="Line 12" id="line12">
+<td>12</td><td></td><td>0</td><td><code>  Users(Database db)</code></td>
 </tr>
 <tr class="noop" title="Line 13" id="line13">
 <td>13</td><td></td><td></td><td><code>      : database = db,</code></td>
 </tr>
-<tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>3</td><td><code>        url = '${db.url}/users';</code></td>
+<tr class="lineNoCov" title="Line 14" id="line14">
+<td>14</td><td></td><td>0</td><td><code>        url = '${db.url}/users';</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
 <td>15</td><td></td><td></td><td><code></code></td>
@@ -116,8 +116,8 @@
 <tr class="noop" title="Line 19" id="line19">
 <td>19</td><td></td><td></td><td><code>  /// Provides access to permissions associated with [User]s.</code></td>
 </tr>
-<tr class="lineCov" title="Line 20" id="line20">
-<td>20</td><td></td><td>3</td><td><code>  late final Permissions permissions = Permissions(this);</code></td>
+<tr class="lineNoCov" title="Line 20" id="line20">
+<td>20</td><td></td><td>0</td><td><code>  late final Permissions permissions = Permissions(this);</code></td>
 </tr>
 <tr class="noop" title="Line 21" id="line21">
 <td>21</td><td></td><td></td><td><code></code></td>
@@ -161,29 +161,29 @@
 <tr class="noop" title="Line 34" id="line34">
 <td>34</td><td></td><td></td><td><code>  /// Lists all collections from this [database].</code></td>
 </tr>
-<tr class="lineCov" title="Line 35" id="line35">
-<td>35</td><td></td><td>2</td><td><code>  Future&lt;Iterable&lt;User&gt;&gt; list({Permission? permission}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 35" id="line35">
+<td>35</td><td></td><td>0</td><td><code>  Future&lt;Iterable&lt;User&gt;&gt; list({Permission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 36" id="line36">
-<td>36</td><td></td><td>4</td><td><code>      database.client.getMany&lt;User&gt;(</code></td>
+<tr class="lineNoCov" title="Line 36" id="line36">
+<td>36</td><td></td><td>0</td><td><code>      database.client.getMany&lt;User&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 37" id="line37">
-<td>37</td><td></td><td>2</td><td><code>        url,</code></td>
+<tr class="lineNoCov" title="Line 37" id="line37">
+<td>37</td><td></td><td>0</td><td><code>        url,</code></td>
 </tr>
 <tr class="noop" title="Line 38" id="line38">
 <td>38</td><td></td><td></td><td><code>        'Users',</code></td>
 </tr>
-<tr class="lineCov" title="Line 39" id="line39">
-<td>39</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 39" id="line39">
+<td>39</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 40" id="line40">
 <td>40</td><td></td><td></td><td><code>          type: 'users',</code></td>
 </tr>
-<tr class="lineCov" title="Line 41" id="line41">
-<td>41</td><td></td><td>3</td><td><code>          resId: database.url,</code></td>
+<tr class="lineNoCov" title="Line 41" id="line41">
+<td>41</td><td></td><td>0</td><td><code>          resId: database.url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 42" id="line42">
-<td>42</td><td></td><td>1</td><td><code>          builder: User.build,</code></td>
+<tr class="lineNoCov" title="Line 42" id="line42">
+<td>42</td><td></td><td>0</td><td><code>          builder: User.build,</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 43" id="line43">
 <td>43</td><td></td><td>0</td><td><code>          token: permission?.token,</code></td>
@@ -191,8 +191,8 @@
 <tr class="noop" title="Line 44" id="line44">
 <td>44</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 45" id="line45">
-<td>45</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 45" id="line45">
+<td>45</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 46" id="line46">
 <td>46</td><td></td><td></td><td><code></code></td>
@@ -206,20 +206,20 @@
 <tr class="noop" title="Line 49" id="line49">
 <td>49</td><td></td><td></td><td><code>  /// [NotFoundException] instead.</code></td>
 </tr>
-<tr class="lineCov" title="Line 50" id="line50">
-<td>50</td><td></td><td>2</td><td><code>  Future&lt;bool&gt; delete(String id,</code></td>
+<tr class="lineNoCov" title="Line 50" id="line50">
+<td>50</td><td></td><td>0</td><td><code>  Future&lt;bool&gt; delete(String id,</code></td>
 </tr>
 <tr class="noop" title="Line 51" id="line51">
 <td>51</td><td></td><td></td><td><code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 52" id="line52">
-<td>52</td><td></td><td>4</td><td><code>      database.client.delete(</code></td>
+<tr class="lineNoCov" title="Line 52" id="line52">
+<td>52</td><td></td><td>0</td><td><code>      database.client.delete(</code></td>
 </tr>
-<tr class="lineCov" title="Line 53" id="line53">
-<td>53</td><td></td><td>3</td><td><code>        '$url/$id',</code></td>
+<tr class="lineNoCov" title="Line 53" id="line53">
+<td>53</td><td></td><td>0</td><td><code>        '$url/$id',</code></td>
 </tr>
-<tr class="lineCov" title="Line 54" id="line54">
-<td>54</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 54" id="line54">
+<td>54</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 55" id="line55">
 <td>55</td><td></td><td></td><td><code>          type: 'users',</code></td>
@@ -227,17 +227,17 @@
 <tr class="noop" title="Line 56" id="line56">
 <td>56</td><td></td><td></td><td><code>          throwOnNotFound: throwOnNotFound,</code></td>
 </tr>
-<tr class="lineCov" title="Line 57" id="line57">
-<td>57</td><td></td><td>1</td><td><code>          builder: User.build,</code></td>
+<tr class="lineNoCov" title="Line 57" id="line57">
+<td>57</td><td></td><td>0</td><td><code>          builder: User.build,</code></td>
 </tr>
-<tr class="lineCov" title="Line 58" id="line58">
-<td>58</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 58" id="line58">
+<td>58</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 59" id="line59">
 <td>59</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 60" id="line60">
-<td>60</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 60" id="line60">
+<td>60</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 61" id="line61">
 <td>61</td><td></td><td></td><td><code></code></td>
@@ -251,20 +251,20 @@
 <tr class="noop" title="Line 64" id="line64">
 <td>64</td><td></td><td></td><td><code>  /// [NotFoundException] instead.</code></td>
 </tr>
-<tr class="lineCov" title="Line 65" id="line65">
-<td>65</td><td></td><td>2</td><td><code>  Future&lt;User?&gt; find(String id,</code></td>
+<tr class="lineNoCov" title="Line 65" id="line65">
+<td>65</td><td></td><td>0</td><td><code>  Future&lt;User?&gt; find(String id,</code></td>
 </tr>
 <tr class="noop" title="Line 66" id="line66">
 <td>66</td><td></td><td></td><td><code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 67" id="line67">
-<td>67</td><td></td><td>4</td><td><code>      database.client.get&lt;User&gt;(</code></td>
+<tr class="lineNoCov" title="Line 67" id="line67">
+<td>67</td><td></td><td>0</td><td><code>      database.client.get&lt;User&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 68" id="line68">
-<td>68</td><td></td><td>3</td><td><code>        '$url/$id',</code></td>
+<tr class="lineNoCov" title="Line 68" id="line68">
+<td>68</td><td></td><td>0</td><td><code>        '$url/$id',</code></td>
 </tr>
-<tr class="lineCov" title="Line 69" id="line69">
-<td>69</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 69" id="line69">
+<td>69</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 70" id="line70">
 <td>70</td><td></td><td></td><td><code>          type: 'users',</code></td>
@@ -272,17 +272,17 @@
 <tr class="noop" title="Line 71" id="line71">
 <td>71</td><td></td><td></td><td><code>          throwOnNotFound: throwOnNotFound,</code></td>
 </tr>
-<tr class="lineCov" title="Line 72" id="line72">
-<td>72</td><td></td><td>1</td><td><code>          builder: User.build,</code></td>
+<tr class="lineNoCov" title="Line 72" id="line72">
+<td>72</td><td></td><td>0</td><td><code>          builder: User.build,</code></td>
 </tr>
-<tr class="lineCov" title="Line 73" id="line73">
-<td>73</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 73" id="line73">
+<td>73</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 74" id="line74">
 <td>74</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 75" id="line75">
-<td>75</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 75" id="line75">
+<td>75</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 76" id="line76">
 <td>76</td><td></td><td></td><td><code></code></td>
@@ -296,38 +296,38 @@
 <tr class="noop" title="Line 79" id="line79">
 <td>79</td><td></td><td></td><td><code>  /// [NotFoundException] instead.</code></td>
 </tr>
-<tr class="lineCov" title="Line 80" id="line80">
-<td>80</td><td></td><td>2</td><td><code>  Future&lt;User&gt; add(User user, {Permission? permission}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 80" id="line80">
+<td>80</td><td></td><td>0</td><td><code>  Future&lt;User&gt; add(User user, {Permission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 81" id="line81">
-<td>81</td><td></td><td>4</td><td><code>      database.client.post&lt;User&gt;(</code></td>
+<tr class="lineNoCov" title="Line 81" id="line81">
+<td>81</td><td></td><td>0</td><td><code>      database.client.post&lt;User&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 82" id="line82">
-<td>82</td><td></td><td>2</td><td><code>        url,</code></td>
+<tr class="lineNoCov" title="Line 82" id="line82">
+<td>82</td><td></td><td>0</td><td><code>        url,</code></td>
 </tr>
 <tr class="noop" title="Line 83" id="line83">
 <td>83</td><td></td><td></td><td><code>        user,</code></td>
 </tr>
-<tr class="lineCov" title="Line 84" id="line84">
-<td>84</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 84" id="line84">
+<td>84</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
-<tr class="lineCov" title="Line 85" id="line85">
-<td>85</td><td></td><td>3</td><td><code>          resId: database.url,</code></td>
+<tr class="lineNoCov" title="Line 85" id="line85">
+<td>85</td><td></td><td>0</td><td><code>          resId: database.url,</code></td>
 </tr>
 <tr class="noop" title="Line 86" id="line86">
 <td>86</td><td></td><td></td><td><code>          type: 'users',</code></td>
 </tr>
-<tr class="lineCov" title="Line 87" id="line87">
-<td>87</td><td></td><td>1</td><td><code>          builder: User.build,</code></td>
+<tr class="lineNoCov" title="Line 87" id="line87">
+<td>87</td><td></td><td>0</td><td><code>          builder: User.build,</code></td>
 </tr>
-<tr class="lineCov" title="Line 88" id="line88">
-<td>88</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 88" id="line88">
+<td>88</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 89" id="line89">
 <td>89</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 90" id="line90">
-<td>90</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 90" id="line90">
+<td>90</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 91" id="line91">
 <td>91</td><td></td><td></td><td><code>}</code></td>
@@ -341,8 +341,8 @@
 <tr class="noop" title="Line 94" id="line94">
 <td>94</td><td></td><td></td><td><code>extension UsersExt on Users {</code></td>
 </tr>
-<tr class="lineCov" title="Line 95" id="line95">
-<td>95</td><td></td><td>4</td><td><code>  Client get client =&gt; database.client;</code></td>
+<tr class="lineNoCov" title="Line 95" id="line95">
+<td>95</td><td></td><td>0</td><td><code>  Client get client =&gt; database.client;</code></td>
 </tr>
 <tr class="noop" title="Line 96" id="line96">
 <td>96</td><td></td><td></td><td><code>}</code></td>

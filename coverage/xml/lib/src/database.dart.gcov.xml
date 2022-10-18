@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="database.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.93333334" lines-covered="14" lines-valid="15" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-12" filename="database.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.06666667" lines-covered="1" lines-valid="15" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_client.dart';</code>
@@ -34,9 +34,8 @@
 <line>
 <code>class Database extends BaseDocument {</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  Database(this.server, this.id) : url = 'dbs/$id';</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -65,9 +64,8 @@
 <line>
 <code>  /// `null` if no check has been made yet.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  bool? get exists =&gt; _exists;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  bool? _exists;</code>
@@ -84,24 +82,21 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="1">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'id': id};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      client.registerBuilder&lt;T&gt;(builder);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -109,21 +104,17 @@
 <line>
 <code>  /// Gets information for this [Database].</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  Future&lt;Map&lt;String, dynamic&gt;?&gt; getInfo({Permission? permission}) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      client.getJson(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>          url,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            type: 'dbs',</code>
@@ -140,9 +131,8 @@
 <line>
 <code>  /// Provides access to collections in this [Database].</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  late final Collections collections = Collections(this);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -150,9 +140,8 @@
 <line>
 <code>  /// Provides access to users in this [Database].</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  late final Users users = Users(this);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -166,16 +155,14 @@
 <line>
 <code>extension DatabaseExt on Database {</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  void setExists(bool exists) =&gt; _exists = exists;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>  Client get client =&gt; server.client;</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

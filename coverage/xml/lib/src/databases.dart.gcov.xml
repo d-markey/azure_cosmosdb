@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-06-30" filename="databases.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9574468" lines-covered="45" lines-valid="47" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-12" filename="databases.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.19148937" lines-covered="9" lines-valid="47" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_client.dart';</code>
@@ -53,25 +53,20 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Database _build(Map json) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>    final db = Database(server, json['id']);</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    db.setExists(true);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    return db;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -144,9 +139,9 @@
 <code>          builder: _build,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>          token: permission?.token ?? _token,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
@@ -173,28 +168,23 @@
 <line>
 <code>  /// be set to `false`.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;bool&gt; delete(Database database,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, Permission? permission}) =&gt;</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      client</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>          .delete(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>        '$_url/${database.id}',</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'dbs',</code>
@@ -202,9 +192,8 @@
 <line>
 <code>          throwOnNotFound: throwOnNotFound,</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>          token: permission?.token ?? _token,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
@@ -212,21 +201,17 @@
 <line>
 <code>      )</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>          .then((value) {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        database.setExists(false);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>        return true;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      });</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -234,25 +219,20 @@
 <line>
 <code>  /// Creates a new [Database] with the specified `name`.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Database&gt; create(String name, {Permission? permission}) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      client.post&lt;Database&gt;(</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>        _url,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>        Database(server, name),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'dbs',</code>
@@ -260,24 +240,20 @@
 <line>
 <code>          resId: '',</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          headers: {'x-ms-offer-throughput': '400'},</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          builder: _build,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>          token: permission?.token ?? _token,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      );</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -285,29 +261,23 @@
 <line>
 <code>  /// Opens an existing [Database] with the specified `name`.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Database&gt; open(String name, {Permission? permission}) async {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>    final db = Database(server, name);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>    await db.getInfo(permission: permission);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    db.setExists(true);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    return db;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -315,32 +285,26 @@
 <line>
 <code>  /// Opens or creates a [Database] with the specified `name`.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Database&gt; openOrCreate(String name, {Permission? permission}) async {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    try {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      return await open(name, permission: permission);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    } on NotFoundException {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      return await create(name, permission: permission);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
