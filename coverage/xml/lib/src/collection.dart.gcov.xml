@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-12" filename="collection.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="89" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-18" filename="collection.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.7977528" lines-covered="71" lines-valid="89" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_client.dart';</code>
@@ -40,11 +40,13 @@
 <line>
 <code>class Collection extends BaseDocument {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Collection(this.database, this.id, {this.partitionKeys})</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      : url = '${database.url}/colls/$id';</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -73,8 +75,9 @@
 <line>
 <code>  /// `null` if no check has been made yet.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  bool? get exists =&gt; _exists;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  bool? _exists;</code>
@@ -100,23 +103,29 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        'id': id,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>        if (partitionKeys != null &amp;&amp; partitionKeys!.isNotEmpty)</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>          'partitionKey': {"paths": partitionKeys, "kind": "Hash", "Version": 2}</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -139,11 +148,13 @@
 <line>
 <code>  /// [permission].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void usePermission(Permission permission) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    _token = permission.token;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  }</code>
@@ -160,8 +171,9 @@
 <line>
 <code>  /// will be invoked to obtain a new, valid [Permission] that will replace the expired one.</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  FutureCallback&lt;Permission?&gt;? onForbidden;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -172,26 +184,32 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;Permission?&gt; _refreshPermission() async {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    Permission? permission;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    final callback = onForbidden;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    if (_token != null &amp;&amp; callback != null) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      permission = await callback();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      if (permission != null) {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        _token = permission.token;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
@@ -199,11 +217,13 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    return permission;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -211,11 +231,13 @@
 <line>
 <code>  /// Register a [DocumentBuilder] for specified type `T`.</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      database.registerBuilder&lt;T&gt;(builder);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -223,23 +245,28 @@
 <line>
 <code>  /// Gets information for this [Collection].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Future&lt;Map&lt;String, dynamic&gt;?&gt; getInfo({Permission? permission}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      client.getJson(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            type: 'colls',</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>            token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          ));</code>
@@ -256,8 +283,9 @@
 <line>
 <code>  /// will instead throw a [NotFoundException].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;T?&gt; find&lt;T extends BaseDocument&gt;(String id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false,</code>
@@ -268,14 +296,17 @@
 <line>
 <code>          Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      client.get&lt;T&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        '$url/docs/$id',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'docs',</code>
@@ -283,20 +314,24 @@
 <line>
 <code>          throwOnNotFound: throwOnNotFound,</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          partition: partition ?? Partition(id),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          onForbidden: _refreshPermission,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -304,44 +339,52 @@
 <line>
 <code>  /// Lists all documents from this collection.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;Iterable&lt;T&gt;&gt; list&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {Partition? partition, Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      client.getMany&lt;T&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        '$url/docs',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        'Documents',</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'docs',</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          partition: partition,</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          onForbidden: _refreshPermission,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -349,17 +392,20 @@
 <line>
 <code>  /// Loads documents from this collection matching the provided [query].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(Query query,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      client.query&lt;T&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        '$url/docs',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        query,</code>
@@ -367,26 +413,31 @@
 <line>
 <code>        'Documents',</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'docs',</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          onForbidden: _refreshPermission,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -394,44 +445,54 @@
 <line>
 <code>  /// Adds a new [document] to this collection.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;T&gt; add&lt;T extends BaseDocument&gt;(T document,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {Partition? partition, Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      client.post(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        '$url/docs',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>        document,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'docs',</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          partition: partition ?? Partition(document.id),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          onForbidden: _refreshPermission,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -553,8 +614,9 @@
 <line>
 <code>  /// `true`, it will instead throw a [NotFoundException].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;bool&gt; delete(String id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false,</code>
@@ -565,14 +627,17 @@
 <line>
 <code>          Permission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      client.delete(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        '$url/docs/$id',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'docs',</code>
@@ -580,20 +645,24 @@
 <line>
 <code>          throwOnNotFound: throwOnNotFound,</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          partition: partition ?? Partition(id),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          onForbidden: _refreshPermission,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -607,14 +676,16 @@
 <line>
 <code>extension CollectionExt on Collection {</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>  void setExists(bool exists) =&gt; _exists = exists;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>  Client get client =&gt; database.client;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

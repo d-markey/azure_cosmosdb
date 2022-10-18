@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-12" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.33333334" lines-covered="12" lines-valid="36" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-18" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8611111" lines-covered="31" lines-valid="36" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'base_document.dart';</code>
@@ -63,11 +63,13 @@
 <code>    if (headers != null) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      _headers ??= {};</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      _headers!.addAll(headers);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -106,8 +108,9 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Map&lt;String, String&gt;? _headers;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -127,32 +130,41 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Context copyWith({Query? query, Map&lt;String, String&gt;? headers}) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    final copy = Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        type: type,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        resId: resId,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        paging: paging ?? query,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        partition: partition ?? query?.partition,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        token: token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        onForbidden: onForbidden);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    if (_headers != null) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      copy._headers ??= {};</code>
@@ -163,14 +175,17 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    if (headers != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      copy._headers ??= {};</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      copy._headers!.addAll(headers);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -196,50 +211,54 @@
 <code>    if (_headers != null) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      headers.addAll(_headers!);</code>
-</line>
-<line>
-<code>    }</code>
-</line>
-<line hits="2">
-<code>    final partitionHeader = partition?.header;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>    if (partitionHeader != null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="0">
-<code>      headers[partitionHeader.key] = partitionHeader.value;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
 <line hits="3">
-<code>    final maxCount = (paging?.maxCount ?? -1);</code>
+<code>    final partitionHeader = partition?.header;</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    if (partitionHeader != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      headers[partitionHeader.key] = partitionHeader.value;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="4">
+<code>    final maxCount = (paging?.maxCount ?? -1);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>    if (maxCount &gt; 0) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      headers['x-ms-max-item-count'] = maxCount.toString();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="2">
+<line hits="3">
 <code>    final continuation = paging?.continuation ?? '';</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    if (continuation.isNotEmpty) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      headers['x-ms-continuation'] = continuation;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>

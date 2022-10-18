@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-12" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.16696589" lines-covered="93" lines-valid="557" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-18" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.87432677" lines-covered="487" lines-valid="557" testname="lcov.info" version="1.5">
 <sources>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="93" lines-valid="557" pathname="/lib/src" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="487" lines-valid="557" pathname="/lib/src" prefix="/a/azure_cosmosdb/azure_cosmosdb"/>
 </sources>
 <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
 </coverage>
