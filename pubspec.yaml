@@ -1,6 +1,6 @@
 name: azure_cosmosdb
-description: Azure Cosmos DB SQL API for Dart and Flutter
-version: 0.9.1
+description: NoSQL connector for Azure Cosmos DB, with a SQL twist! Supports Azure Cosmos DB SQL API on Dart and Flutter platforms
+version: 0.9.2
 homepage: https://www.github.com/d-markey/azure_cosmosdb
 
 environment:
