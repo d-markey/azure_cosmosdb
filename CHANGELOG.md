@@ -1,3 +1,7 @@
+## 0.9.3
+
+- Re-enable Web platforms support.
+
 ## 0.9.2
 
 - Improve description.

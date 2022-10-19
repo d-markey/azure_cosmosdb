@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:azure_cosmosdb/src/_http_status_codes.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
 import 'package:retry/retry.dart';
+
+import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';
 
 import '_authorization.dart';
 import '_context.dart';
@@ -19,7 +21,7 @@ typedef _DocumentBuilder = DocumentBuilder<BaseDocument>;
 
 class Client {
   Client(this._url, {String? masterKey, http.Client? httpClient})
-      : _http = httpClient ?? http.Client(),
+      : _http = (httpClient ?? http.Client()).withRetry(),
         _key = masterKey?.deriveHmac(sha256);
 
   final String _url;
@@ -71,7 +73,7 @@ class Client {
 
     return _retry.retry(
       () => _http.send(request).timeout(Duration(seconds: 5)),
-      retryIf: (e) => e is SocketException || e is TimeoutException,
+      retryIf: (e) => retryIf(_http, e),
     );
   }
 
@@ -178,4 +180,8 @@ class Client {
 
 extension _HmacExt on String {
   Hmac deriveHmac(Hash hash) => Hmac(hash, base64Decode(this));
+}
+
+extension RetryExt on http.Client {
+  http.Client withRetry() => (this is RetryClient) ? this : RetryClient(this);
 }
