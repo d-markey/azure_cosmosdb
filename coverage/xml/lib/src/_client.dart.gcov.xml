@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-18" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.93406594" lines-covered="85" lines-valid="91" package="/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-10-19" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9456522" lines-covered="87" lines-valid="92" package="/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
 </line>
 <line>
 <code>import 'dart:convert';</code>
-</line>
-<line>
-<code>import 'dart:io';</code>
 </line>
 <line>
 <code/>
@@ -23,7 +20,16 @@
 <code>import 'package:http/http.dart' as http;</code>
 </line>
 <line>
+<code>import 'package:http/retry.dart';</code>
+</line>
+<line>
 <code>import 'package:retry/retry.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';</code>
 </line>
 <line>
 <code/>
@@ -65,8 +71,9 @@
 <code>  Client(this._url, {String? masterKey, http.Client? httpClient})</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
-<code>      : _http = httpClient ?? http.Client(),</code>
+<line hits="1">
+<code>      : _http = (httpClient ?? http.Client()).withRetry(),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>        _key = masterKey?.deriveHmac(sha256);</code>
@@ -251,7 +258,7 @@
 <hit count="6" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>      retryIf: (e) =&gt; e is SocketException || e is TimeoutException,</code>
+<code>      retryIf: (e) =&gt; retryIf(_http, e),</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -624,6 +631,19 @@
 </line>
 <line hits="3">
 <code>  Hmac deriveHmac(Hash hash) =&gt; Hmac(hash, base64Decode(this));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>extension RetryExt on http.Client {</code>
+</line>
+<line hits="3">
+<code>  http.Client withRetry() =&gt; (this is RetryClient) ? this : RetryClient(this);</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
