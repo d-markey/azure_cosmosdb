@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-11-29" filename="indexing_policy.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.7222222" lines-covered="13" lines-valid="18" package="/src/indexing" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'index_path.dart';</code>
+</line>
+<line>
+<code>import 'indexing_enums.dart';</code>
+</line>
+<line>
+<code>import 'spatial_index_path.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class IndexingPolicy {</code>
+</line>
+<line hits="1">
+<code>  IndexingPolicy(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      {this.indexingMode = IndexingMode.consistent, this.automatic = true});</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String indexingMode;</code>
+</line>
+<line>
+<code>  final bool automatic;</code>
+</line>
+<line hits="1">
+<code>  final includedPaths = &lt;IndexPath&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  final excludedPaths = &lt;IndexPath&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  final compositeIndexes = &lt;List&lt;IndexPath&gt;&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  final spatialIndexes = &lt;SpatialIndexPath&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        'indexingMode': indexingMode,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        'automatic': automatic,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="7">
+<code>        'includedPaths': includedPaths.map((p) =&gt; p.toJson()).toList(),</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="7">
+<code>        'excludedPaths': excludedPaths.map((p) =&gt; p.toJson()).toList(),</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        if (compositeIndexes.isNotEmpty)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>          'compositeIndexes': compositeIndexes</code>
+</line>
+<line hits="0">
+<code>              .where((c) =&gt; c.isNotEmpty)</code>
+</line>
+<line hits="0">
+<code>              .map((c) =&gt; c.map((p) =&gt; p.toJson()).toList())</code>
+</line>
+<line hits="0">
+<code>              .toList(),</code>
+</line>
+<line hits="2">
+<code>        if (spatialIndexes.isNotEmpty)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>          'spatialIndexes': spatialIndexes.map((p) =&gt; p.toJson()).toList(),</code>
+</line>
+<line hits="1">
+<code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

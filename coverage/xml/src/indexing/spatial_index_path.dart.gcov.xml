@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-11-29" filename="spatial_index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="5" package="/src/indexing" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>class SpatialIndexPath {</code>
+</line>
+<line hits="0">
+<code>  SpatialIndexPath(this.path, {Iterable&lt;String&gt;? types}) {</code>
+</line>
+<line>
+<code>    if (types != null) {</code>
+</line>
+<line hits="0">
+<code>      this.types.addAll(types);</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String path;</code>
+</line>
+<line>
+<code>  final types = &lt;String&gt;[];</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+</line>
+<line hits="0">
+<code>        'path': path,</code>
+</line>
+<line hits="0">
+<code>        if (types.isNotEmpty) 'types': types,</code>
+</line>
+<line>
+<code>      };</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>
