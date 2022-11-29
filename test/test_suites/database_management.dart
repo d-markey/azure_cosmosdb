@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
 import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
-import 'package:azure_cosmosdb/src/_extensions.dart';
+import 'package:azure_cosmosdb/src/impl/_extensions.dart';
 
 import '../classes/cosmosdb_test_instance.dart';
 

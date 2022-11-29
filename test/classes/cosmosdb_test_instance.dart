@@ -2,8 +2,8 @@ import 'package:http/http.dart';
 
 import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
 
-import 'package:azure_cosmosdb/src/_debug_http_overrides_web.dart'
-    if (dart.library.io) 'package:azure_cosmosdb/src/_debug_http_overrides_vm.dart'
+import 'package:azure_cosmosdb/src/impl/_debug_http_overrides_web.dart'
+    if (dart.library.io) 'package:azure_cosmosdb/src/impl/_debug_http_overrides_vm.dart'
     as debug;
 
 const masterKey =

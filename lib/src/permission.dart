@@ -1,5 +1,4 @@
-import 'package:azure_cosmosdb/src/_http_status_codes.dart';
-
+import 'impl/_http_status_codes.dart';
 import 'exceptions.dart' as errors;
 import 'base_document.dart';
 

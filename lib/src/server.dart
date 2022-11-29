@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-import '_client.dart';
+import 'impl/_client.dart';
 
 import 'databases.dart';
 

@@ -20,8 +20,18 @@ void main() async {
   }
 
   final database = await cosmosDB.databases.openOrCreate('sample');
-  final todoCollection =
-      await database.collections.openOrCreate('todo', partitionKeys: ['/id']);
+
+  final indexingPolicy = cosmosdb.IndexingPolicy(
+      indexingMode: cosmosdb.IndexingMode.consistent, automatic: false);
+  indexingPolicy.excludedPaths.add(cosmosdb.IndexPath('/*'));
+  indexingPolicy.includedPaths.add(cosmosdb.IndexPath('/"due-date"/?'));
+  indexingPolicy.compositeIndexes.add([
+    cosmosdb.IndexPath('/label', order: cosmosdb.IndexOrder.ascending),
+    cosmosdb.IndexPath('/"due-date"', order: cosmosdb.IndexOrder.descending)
+  ]);
+
+  final todoCollection = await database.collections.openOrCreate('todo',
+      partitionKeys: ['/id'], indexingPolicy: indexingPolicy);
 
   todoCollection.registerBuilder<ToDo>(ToDo.build);
 

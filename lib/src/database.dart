@@ -1,5 +1,5 @@
-import '_client.dart';
-import '_context.dart';
+import 'impl/_client.dart';
+import 'impl/_context.dart';
 
 import 'base_document.dart';
 import 'collections.dart';

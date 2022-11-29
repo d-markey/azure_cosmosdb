@@ -1,4 +1,6 @@
-import '_context.dart';
+import 'package:azure_cosmosdb/src/indexing/indexing_policy.dart';
+
+import 'impl/_context.dart';
 
 import 'collection.dart';
 import 'database.dart';
@@ -55,11 +57,20 @@ class Collections {
       });
 
   /// Creates a new [Collection] with the specified `name` and `partitionKeys`.
-  Future<Collection> create(String name,
-          {List<String>? partitionKeys, Permission? permission}) =>
+  Future<Collection> create(
+    String name, {
+    List<String>? partitionKeys,
+    IndexingPolicy? indexingPolicy,
+    Permission? permission,
+  }) =>
       database.client.post<Collection>(
         url,
-        Collection(database, name, partitionKeys: partitionKeys),
+        Collection(
+          database,
+          name,
+          partitionKeys: partitionKeys,
+          indexingPolicy: indexingPolicy,
+        ),
         Context(
           type: 'colls',
           resId: database.url,
@@ -80,11 +91,12 @@ class Collections {
 
   /// Opens or creates a [Collection] with id [name].
   Future<Collection> openOrCreate(String name,
-      {List<String>? partitionKeys}) async {
+      {List<String>? partitionKeys, IndexingPolicy? indexingPolicy}) async {
     try {
       return await open(name);
     } on NotFoundException {
-      return await create(name, partitionKeys: partitionKeys);
+      return await create(name,
+          partitionKeys: partitionKeys, indexingPolicy: indexingPolicy);
     }
   }
 }

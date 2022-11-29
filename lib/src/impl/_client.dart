@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:azure_cosmosdb/src/_http_status_codes.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
@@ -9,13 +8,14 @@ import 'package:retry/retry.dart';
 
 import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';
 
+import '_http_status_codes.dart';
 import '_authorization.dart';
 import '_context.dart';
 
-import 'base_document.dart';
-import 'exceptions.dart' as errors;
-import 'paging.dart';
-import 'query.dart';
+import '../base_document.dart';
+import '../exceptions.dart' as errors;
+import '../paging.dart';
+import '../query.dart';
 
 typedef _DocumentBuilder = DocumentBuilder<BaseDocument>;
 

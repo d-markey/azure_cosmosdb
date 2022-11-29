@@ -1,6 +1,6 @@
 name: azure_cosmosdb
 description: NoSQL connector for Azure Cosmos DB, with a SQL twist! Supports Azure Cosmos DB SQL API on Dart and Flutter platforms
-version: 0.9.3
+version: 1.0.0
 homepage: https://www.github.com/d-markey/azure_cosmosdb
 repository: https://www.github.com/d-markey/azure_cosmosdb
 
@@ -10,8 +10,8 @@ environment:
 dependencies:
   crypto: ^3.0.2
   retry: ^3.1.0
-  http: ^0.13.4
+  http: ^0.13.5
 
 dev_dependencies:
-  lints: ^2.0.0
-  test: ^1.16.0
+  lints: ^2.0.1
+  test: ^1.22.0

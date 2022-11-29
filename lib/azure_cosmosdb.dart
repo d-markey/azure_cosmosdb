@@ -16,3 +16,8 @@ export 'src/query.dart';
 export 'src/server.dart' show Instance;
 export 'src/user.dart';
 export 'src/users.dart' show Users;
+
+export 'src/indexing/indexing_policy.dart';
+export 'src/indexing/indexing_enums.dart';
+export 'src/indexing/index_path.dart';
+export 'src/indexing/spatial_index_path.dart';

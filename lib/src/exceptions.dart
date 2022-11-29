@@ -1,6 +1,6 @@
 import 'dart:core' as core;
 
-import '_http_status_codes.dart';
+import 'impl/_http_status_codes.dart';
 
 /// Base [Exception] class for CosmosDB errors.
 class Exception implements core.Exception {

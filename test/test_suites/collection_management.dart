@@ -1,7 +1,9 @@
+import 'package:azure_cosmosdb/src/indexing/index_path.dart';
+import 'package:azure_cosmosdb/src/indexing/indexing_policy.dart';
 import 'package:test/test.dart';
 
 import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
-import 'package:azure_cosmosdb/src/_extensions.dart';
+import 'package:azure_cosmosdb/src/impl/_extensions.dart';
 
 import '../classes/cosmosdb_test_instance.dart';
 
@@ -24,8 +26,9 @@ void main() async {
 void run(cosmos_db.Instance cosmosDB) {
   final collName1 = 'test_1';
   final collName2 = 'test_2';
+  final idxCollName3 = 'idx_test_3';
 
-  final collNames = {collName1, collName2};
+  final collNames = {collName1, collName2, idxCollName3};
 
   late cosmos_db.Database database;
 
@@ -76,6 +79,16 @@ void run(cosmos_db.Instance cosmosDB) {
   test('Create collection with openOrCreate()', () async {
     final collection = await database.collections
         .openOrCreate(collName1, partitionKeys: ['/id']);
+    expect(collection, isNotNull);
+    expect(collection.exists, isTrue);
+  });
+
+  test('Create collection with openOrCreate() and index policy', () async {
+    final indexingPolicy = IndexingPolicy();
+    indexingPolicy.excludedPaths.add(IndexPath('/*'));
+    indexingPolicy.includedPaths.add(IndexPath('/gid/?'));
+    final collection = await database.collections.openOrCreate(idxCollName3,
+        partitionKeys: ['/gid'], indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });

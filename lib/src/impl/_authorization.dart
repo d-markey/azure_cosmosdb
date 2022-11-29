@@ -4,7 +4,7 @@ import 'package:crypto/crypto.dart';
 
 import '_imf_fixdate.dart';
 
-import 'exceptions.dart' as errors;
+import '../exceptions.dart' as errors;
 
 class Authorization {
   Authorization(Hmac? key, String method, String type, String resId) {

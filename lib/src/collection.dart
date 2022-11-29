@@ -1,5 +1,7 @@
-import '_client.dart';
-import '_context.dart';
+import 'package:azure_cosmosdb/src/indexing/indexing_policy.dart';
+
+import 'impl/_client.dart';
+import 'impl/_context.dart';
 
 import 'base_document.dart';
 import 'database.dart';
@@ -11,7 +13,7 @@ import 'server.dart';
 
 /// Class representing a CosmosDB collection.
 class Collection extends BaseDocument {
-  Collection(this.database, this.id, {this.partitionKeys})
+  Collection(this.database, this.id, {this.partitionKeys, this.indexingPolicy})
       : url = '${database.url}/colls/$id';
 
   /// The collection's parent [Database].
@@ -31,11 +33,19 @@ class Collection extends BaseDocument {
   /// The collection's list of partition keys; mandatory when creating a new [Collection].
   final List<String>? partitionKeys;
 
+  /// The collection's indexing policy.
+  final IndexingPolicy? indexingPolicy;
+
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         if (partitionKeys != null && partitionKeys!.isNotEmpty)
-          'partitionKey': {"paths": partitionKeys, "kind": "Hash", "Version": 2}
+          'partitionKey': {
+            "paths": partitionKeys,
+            "kind": "Hash",
+            "Version": 2,
+          },
+        if (indexingPolicy != null) 'indexingPolicy': indexingPolicy!.toJson(),
       };
 
   /// Use this [Permission] when invoking the CosmosDB API. Using [Permission] is a way to

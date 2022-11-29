@@ -1,3 +1,7 @@
+## 1.0.0
+
+- Add support for indexing policies when creating collections.
+
 ## 0.9.3
 
 - Re-enable Web platforms support.

@@ -1,9 +1,9 @@
-import 'base_document.dart';
-import 'paging.dart';
-import 'partition.dart';
-import 'permission.dart';
-import 'query.dart';
-import 'server.dart';
+import '../base_document.dart';
+import '../paging.dart';
+import '../partition.dart';
+import '../permission.dart';
+import '../query.dart';
+import '../server.dart';
 
 class Context {
   Context({
