@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-11-29" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9456522" lines-covered="87" lines-valid="92" package="/src/impl" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-11-30" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9456522" lines-covered="87" lines-valid="92" package="/src/impl" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -257,9 +257,9 @@
 <code>      () =&gt; _http.send(request).timeout(Duration(seconds: 5)),</code>
 <hit count="6" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="1">
 <code>      retryIf: (e) =&gt; retryIf(_http, e),</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    );</code>
