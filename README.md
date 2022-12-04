@@ -2,7 +2,7 @@
 [![Dart Platforms](https://badgen.net/pub/dart-platform/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb)
 [![Flutter Platforms](https://badgen.net/pub/flutter-platform/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb)
 
-[![License](https://badgen.net/pub/license/azure_cosmosdb)](https://github.com/d-markey/azure_cosmosdb/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/d-markey/azure_cosmosdb)](https://github.com/d-markey/azure_cosmosdb/blob/master/LICENSE)
 [![Null Safety](https://img.shields.io/badge/null-safety-brightgreen)](https://dart.dev/null-safety)
 [![Dart Style](https://img.shields.io/badge/style-lints-40c4ff)](https://pub.dev/packages/lints)
 [![Pub Points](https://badgen.net/pub/points/azure_cosmosdb)](https://pub.dev/packages/azure_cosmosdb/score)

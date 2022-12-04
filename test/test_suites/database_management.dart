@@ -1,28 +1,36 @@
+import 'dart:async';
+
+import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
+import 'package:azure_cosmosdb/src/_internal/_extensions.dart';
+import 'package:http/http.dart';
 import 'package:test/test.dart';
 
-import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
-import 'package:azure_cosmosdb/src/impl/_extensions.dart';
+import '../classes/socket_exception_mock.dart' if (dart.library.io) 'dart:io'
+    show SocketException;
 
-import '../classes/cosmosdb_test_instance.dart';
+import '../classes/test_helpers.dart';
 
 void main() async {
-  allowSelfSignedCertificates();
-  final cosmosDB = getTestInstance(cosmos_db.DebugHttpClient());
-
-  try {
-    await cosmosDB.databases.list();
-  } catch (e) {
-    test('! COSMOS DB IS OFFLINE - TESTS HAVE BEEN DISABLED', () {
-      print('Exception: $e');
-    });
-    return;
+  final cosmosDB = await getTestInstance();
+  if (cosmosDB != null) {
+    run(cosmosDB);
   }
-
-  run(cosmosDB);
 }
 
-void run(cosmos_db.Instance cosmosDB) {
-  final dbName = 'test_${DateTime.now().millisecondsSinceEpoch}';
+void run(CosmosDbServer cosmosDB) {
+  final dbName = getTempDbName();
+
+  test('Requests fail when master key and permission are missing', () async {
+    final server = CosmosDbServer('https://localhost:8081');
+    try {
+      await server.databases.list();
+      throw Exception('The request did not fail');
+    } on UnauthorizedException catch (ex) {
+      expect(ex.toString(), contains(ex.runtimeType.toString()));
+    } finally {
+      server.dbgHttpClient?.close();
+    }
+  });
 
   test('List databases before creation', () async {
     final list = await cosmosDB.databases.list();
@@ -30,26 +38,70 @@ void run(cosmos_db.Instance cosmosDB) {
     expect(db, isNull);
   });
 
+  test('Requests throwing a timeout exception must be retried', () async {
+    cosmosDB.dbgHttpClient?.forceException = TimeoutException('Test timeout');
+    expect(cosmosDB.dbgHttpClient?.forceException, isNotNull);
+    final list = await cosmosDB.databases.list();
+    expect(cosmosDB.dbgHttpClient?.forceException, isNull);
+    final db = list.singleOrDefault((db) => db.id == dbName);
+    expect(db, isNull);
+  });
+
+  test('Requests throwing a client exception must be retried', () async {
+    cosmosDB.dbgHttpClient?.forceException =
+        ClientException('Test client error');
+    expect(cosmosDB.dbgHttpClient?.forceException, isNotNull);
+    final list = await cosmosDB.databases.list();
+    expect(cosmosDB.dbgHttpClient?.forceException, isNull);
+    final db = list.singleOrDefault((db) => db.id == dbName);
+    expect(db, isNull);
+  });
+
+  test(
+      'Requests throwing a socket exception must be retried (native platforms only)',
+      () async {
+    cosmosDB.dbgHttpClient?.forceException =
+        SocketException('Test socket error');
+    expect(cosmosDB.dbgHttpClient?.forceException, isNotNull);
+    final list = await cosmosDB.databases.list();
+    expect(cosmosDB.dbgHttpClient?.forceException, isNull);
+    final db = list.singleOrDefault((db) => db.id == dbName);
+    expect(db, isNull);
+  }, testOn: '!js');
+
+  test('Requests throwing other errors must fail', () async {
+    final exception = 'No retry ${DateTime.now().millisecondsSinceEpoch}';
+    cosmosDB.dbgHttpClient?.forceException = exception;
+    expect(cosmosDB.dbgHttpClient?.forceException, isNotNull);
+    try {
+      await cosmosDB.databases.list();
+      throw Exception('The request did not fail');
+    } catch (ex) {
+      expect(ex, equals(exception));
+    }
+    expect(cosmosDB.dbgHttpClient?.forceException, isNull);
+  });
+
   test('Open a non-existing database fails', () async {
     await expectLater(
       cosmosDB.databases.open(dbName),
-      throwsA(isA<cosmos_db.NotFoundException>()),
+      throwsA(isA<NotFoundException>()),
     );
   });
 
   test('Delete a non-existing database fails when throwOnNotFound is true',
       () async {
-    final database = cosmos_db.Database(cosmosDB, dbName);
+    final database = CosmosDbDatabase(cosmosDB, dbName);
     expect(database.exists, isNull);
     await expectLater(
       cosmosDB.databases.delete(database, throwOnNotFound: true),
-      throwsA(isA<cosmos_db.NotFoundException>()),
+      throwsA(isA<NotFoundException>()),
     );
   });
 
   test('Delete a non-existing database succeeds when throwOnNotFound is false',
       () async {
-    final database = cosmos_db.Database(cosmosDB, dbName);
+    final database = CosmosDbDatabase(cosmosDB, dbName);
     expect(database.exists, isNull);
     await cosmosDB.databases.delete(database, throwOnNotFound: false);
     expect(database.exists, isFalse);
@@ -70,7 +122,7 @@ void run(cosmos_db.Instance cosmosDB) {
   test('Create duplicate database fails', () async {
     await expectLater(
       cosmosDB.databases.create(dbName),
-      throwsA(isA<cosmos_db.ConflictException>()),
+      throwsA(isA<ConflictException>()),
     );
   });
 

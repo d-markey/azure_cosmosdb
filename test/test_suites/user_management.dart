@@ -1,34 +1,24 @@
 import 'package:test/test.dart';
 
-import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
+import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 
-import '../classes/cosmosdb_test_instance.dart';
+import '../classes/test_helpers.dart';
 
 void main() async {
-  allowSelfSignedCertificates();
-  final cosmosDB = getTestInstance(cosmos_db.DebugHttpClient());
-
-  try {
-    await cosmosDB.databases.list();
-  } catch (e) {
-    test('! COSMOS DB IS OFFLINE - TESTS HAVE BEEN DISABLED', () {
-      print('Exception: $e');
-    });
-    return;
+  final cosmosDB = await getTestInstance();
+  if (cosmosDB != null) {
+    run(cosmosDB);
   }
-
-  run(cosmosDB);
 }
 
-void run(cosmos_db.Instance cosmosDB) {
-  final user = cosmos_db.User('UserID');
-  final otherUser = cosmos_db.User('Other');
+void run(CosmosDbServer cosmosDB) {
+  final user = CosmosDbUser('UserID');
+  final otherUser = CosmosDbUser('Other');
 
-  late cosmos_db.Database database;
+  late CosmosDbDatabase database;
 
   setUpAll(() async {
-    database = await cosmosDB.databases
-        .create('test_${DateTime.now().millisecondsSinceEpoch}');
+    database = await cosmosDB.databases.create(getTempDbName());
   });
 
   tearDownAll(() async {
@@ -44,7 +34,7 @@ void run(cosmos_db.Instance cosmosDB) {
 
     await expectLater(
       database.users.find(user.id, throwOnNotFound: true),
-      throwsA(isA<cosmos_db.NotFoundException>()),
+      throwsA(isA<NotFoundException>()),
     );
   });
 
@@ -66,8 +56,8 @@ void run(cosmos_db.Instance cosmosDB) {
     expect(await database.users.find(user.id), isNotNull);
 
     await expectLater(
-      database.users.add(cosmos_db.User(user.id)),
-      throwsA(isA<cosmos_db.ConflictException>()),
+      database.users.add(CosmosDbUser(user.id)),
+      throwsA(isA<ConflictException>()),
     );
   });
 
@@ -95,7 +85,7 @@ void run(cosmos_db.Instance cosmosDB) {
 
     await expectLater(
       database.users.delete(user.id, throwOnNotFound: true),
-      throwsA(isA<cosmos_db.NotFoundException>()),
+      throwsA(isA<NotFoundException>()),
     );
 
     final list = await database.users.list();

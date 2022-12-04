@@ -1,35 +1,30 @@
+import 'dart:math';
+
+import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
+import 'package:azure_cosmosdb/src/_internal/_extensions.dart';
 import 'package:test/test.dart';
 
-import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
-
 import '../classes/test_document.dart';
-import '../classes/cosmosdb_test_instance.dart';
+import '../classes/test_document_without_builder.dart';
+import '../classes/test_helpers.dart';
 
 void main() async {
-  allowSelfSignedCertificates();
-  final cosmosDB = getTestInstance(cosmos_db.DebugHttpClient());
-
-  try {
-    await cosmosDB.databases.list();
-  } catch (e) {
-    test('! COSMOS DB IS OFFLINE - TESTS HAVE BEEN DISABLED', () {
-      print('Exception: $e');
-    });
-    return;
+  final cosmosDB = await getTestInstance();
+  if (cosmosDB != null) {
+    run(cosmosDB);
   }
-
-  run(cosmosDB);
 }
 
-void run(cosmos_db.Instance cosmosDB) {
-  late final cosmos_db.Database database;
-  late final cosmos_db.Collection collection;
+void run(CosmosDbServer cosmosDB) {
+  late final CosmosDbDatabase database;
+  late final CosmosDbCollection collection;
 
   setUpAll(() async {
-    database = await cosmosDB.databases
-        .create('test_${DateTime.now().millisecondsSinceEpoch}');
-    collection =
-        await database.collections.create('items', partitionKeys: ['/id']);
+    database = await cosmosDB.databases.create(getTempDbName());
+    collection = await database.collections.create(
+      'items',
+      partitionKeys: ['/id'],
+    );
     collection.registerBuilder<TestDocument>(TestDocument.fromJson);
   });
 
@@ -40,8 +35,25 @@ void run(cosmos_db.Instance cosmosDB) {
   test('List documents before creation', () async {
     expect(await collection.list<TestDocument>(), isEmpty);
 
-    final query = cosmos_db.Query('SELECT * FROM docs WHERE docs.id=@id',
-        params: {'@id': '1'});
+    final query = Query(
+      'SELECT * FROM docs WHERE docs.id=@id',
+      params: {'@id': '1'},
+    );
+    query.onPartition('1');
+    expect(await collection.query<TestDocument>(query), isEmpty);
+
+    query.withParam('@id', '2');
+    query.crossPartition();
+    expect(await collection.query<TestDocument>(query), isEmpty);
+  });
+
+  test('List documents before creation', () async {
+    expect(await collection.list<TestDocument>(), isEmpty);
+
+    final query = Query(
+      'SELECT * FROM docs WHERE docs.id=@id',
+      params: {'@id': '1'},
+    );
     query.onPartition('1');
     expect(await collection.query<TestDocument>(query), isEmpty);
 
@@ -59,18 +71,70 @@ void run(cosmos_db.Instance cosmosDB) {
     expect(list.every((d) => d.etag.isNotEmpty), isTrue);
   });
 
+  test('Upsert a non-existing document', () async {
+    final before = await collection.list<TestDocument>();
+    final check = before.firstOrDefault((d) => d.id == '3');
+    expect(check, isNull);
+
+    await collection
+        .upsert(TestDocument('3', 'UPSERT/CREATE TEST #3', [7, 11, 13]));
+
+    final after = await collection.list<TestDocument>();
+    expect(after.length, equals(before.length + 1));
+
+    final doc = after.firstOrDefault((d) => d.id == '3');
+    expect(doc, isNotNull);
+    expect(doc!.label, equals('UPSERT/CREATE TEST #3'));
+  });
+
+  test('Upsert an existing document', () async {
+    final before = await collection.list<TestDocument>();
+    final check = before.firstOrDefault((d) => d.id == '2');
+    expect(check, isNotNull);
+
+    await collection
+        .upsert(TestDocument('2', 'UPSERT/REPLACE TEST #2', [7, 11, 13]));
+
+    final after = await collection.list<TestDocument>();
+    expect(after.length, equals(before.length));
+
+    final doc = after.firstOrDefault((d) => d.id == '2');
+    expect(doc, isNotNull);
+    expect(doc!.label, equals('UPSERT/REPLACE TEST #2'));
+  });
+
+  test('Replace a document', () async {
+    final before = await collection.list<TestDocument>();
+    final doc = before.skip(Random().nextInt(before.length - 1)).first;
+    doc.label = '${doc.label} (REPLACED)';
+    await collection.replace(doc);
+    final after = await collection.list<TestDocument>();
+    expect(after.length, equals(before.length));
+    expect(after.where((d) => d.id == doc.id), isNotEmpty);
+    expect(
+        after.where((d) => d.id == doc.id).first.label, endsWith('(REPLACED)'));
+  });
+
+  test('Trying to load documents with no associated builder must fail',
+      () async {
+    await expectLater(collection.list<TestDocumentWithoutBuilder>(),
+        throwsA(isA<UnknownDocumentTypeException>()));
+  });
+
   test('Delete document', () async {
+    final before = await collection.list<TestDocument>();
+
     expect(await collection.delete('1'), isTrue);
 
-    final list = await collection.list<TestDocument>();
-    expect(list.length, equals(1));
-    expect(list.every((d) => d.etag.isNotEmpty), isTrue);
+    final after = await collection.list<TestDocument>();
+    expect(after.length, equals(before.length - 1));
+    expect(after.every((d) => d.etag.isNotEmpty), isTrue);
 
     expect(await collection.delete('1'), isTrue);
 
     await expectLater(
       collection.delete('1', throwOnNotFound: true),
-      throwsA(isA<cosmos_db.NotFoundException>()),
+      throwsA(isA<NotFoundException>()),
     );
   });
 }

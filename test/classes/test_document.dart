@@ -6,7 +6,7 @@ class TestDocument extends BaseDocumentWithEtag {
   @override
   final String id;
 
-  final String label;
+  String label;
   final List<int> data;
 
   @override

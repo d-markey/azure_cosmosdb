@@ -31,7 +31,7 @@ GOTO parse
 
 rmdir .\test\coverage /s /q
 mkdir .\test\coverage
-CALL dart run test --coverage=.\test\coverage %__ARGS__%
+CALL dart test --coverage=.\test\coverage %__ARGS__%
 IF "%__COV__%" == "1" (
     CALL dart run coverage:format_coverage --packages=.dart_tool\package_config.json --report-on=lib --lcov -o .\test\coverage\lcov.info -i .\test\coverage
     rmdir .\coverage /s /q

@@ -1,39 +1,28 @@
-import 'package:http/http.dart';
 import 'package:test/test.dart';
 
-import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
+import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 
 import '../classes/test_document.dart';
-import '../classes/cosmosdb_test_instance.dart';
+import '../classes/test_helpers.dart';
 
 void main() async {
-  final httpClient = cosmos_db.DebugHttpClient();
-  final cosmosDB = getTestInstance(httpClient);
-
-  try {
-    await cosmosDB.databases.list();
-  } catch (e) {
-    test('! COSMOS DB IS OFFLINE - TESTS HAVE BEEN DISABLED', () {
-      print('Exception: $e');
-    });
-    return;
+  final cosmosDB = await getTestInstance();
+  if (cosmosDB != null) {
+    run(cosmosDB);
   }
-
-  run(cosmosDB, httpClient);
 }
 
-void run(cosmos_db.Instance cosmosDB, Client httpClient) {
-  final cosmos_db.User user = cosmos_db.User('UserID');
+void run(CosmosDbServer cosmosDB) {
+  final CosmosDbUser user = CosmosDbUser('UserID');
 
-  final permName = '${user.id}-items-perm';
+  final permName = '${user.id}-items-perm-$secondsSinceEpoch';
   final collName = 'items';
 
-  late cosmos_db.Database database;
+  late CosmosDbDatabase database;
   late String collectionUrl;
 
   setUpAll(() async {
-    database = await cosmosDB.databases
-        .create('test_${DateTime.now().millisecondsSinceEpoch}');
+    database = await cosmosDB.databases.create(getTempDbName());
     await database.users.add(user);
     database.registerBuilder<TestDocument>(TestDocument.fromJson);
     final collection =
@@ -52,25 +41,37 @@ void run(cosmos_db.Instance cosmosDB, Client httpClient) {
 
     await expectLater(
       database.users.permissions.get(user, permName),
-      throwsA(isA<cosmos_db.NotFoundException>()),
+      throwsA(isA<NotFoundException>()),
     );
   });
 
-  test('Grant READ permission on collection', () async {
-    try {
-      final granted = await database.users.permissions.grant(
-        user,
-        cosmos_db.Permission(
-          permName,
-          cosmos_db.PermissionMode.read,
-          collectionUrl,
+  test('Trying to grant a permission with invalid expiry duration must fail',
+      () async {
+    await expectLater(
+        database.users.permissions.grant(
+          user,
+          CosmosDbPermission(
+            permName,
+            PermissionMode.read,
+            collectionUrl,
+          ),
+          expiry: Duration(days: 366),
         ),
-      );
-      expect(granted, isNotNull);
-      expect(granted.token, isNotNull);
-    } on cosmos_db.Exception catch (ex) {
-      print(ex.message);
-    }
+        throwsA(isA<CosmosDbException>()));
+  });
+
+  test('Grant READ permission on collection', () async {
+    final granted = await database.users.permissions.grant(
+      user,
+      CosmosDbPermission(
+        permName,
+        PermissionMode.read,
+        collectionUrl,
+      ),
+      expiry: Duration(minutes: 30),
+    );
+    expect(granted, isNotNull);
+    expect(granted.token, isNotNull);
   });
 
   test('Read doc with read-only permission', () async {
@@ -96,18 +97,19 @@ void run(cosmos_db.Instance cosmosDB, Client httpClient) {
 
     await expectLater(
       roCOll.add(TestDocument('4', 'TEST #3', [11, 13, 17])),
-      throwsA(isA<cosmos_db.ForbiddenException>()),
+      throwsA(isA<ForbiddenException>()),
     );
   });
 
   test('Upgrade to ALL permission', () async {
     final granted = await database.users.permissions.replace(
       user,
-      cosmos_db.Permission(
+      CosmosDbPermission(
         permName,
-        cosmos_db.PermissionMode.all,
+        PermissionMode.all,
         collectionUrl,
       ),
+      expiry: Duration(minutes: 15),
     );
     expect(granted, isNotNull);
     expect(granted.token, isNotNull);
@@ -148,24 +150,31 @@ void run(cosmos_db.Instance cosmosDB, Client httpClient) {
     final coll = await database.collections.open(collName)
       ..usePermission(permission);
 
-    final dbgClient = httpClient as cosmos_db.DebugHttpClient;
+    // permissions have a resolution of 1 second with undocumented minimal
+    // delay... to avoid waiting that amount of time in tests, the debug HTTP
+    // client is forced into replying with "403 Forbidden" responses.
+    cosmosDB.dbgHttpClient?.forceForbidden = true;
 
-    bool extended = false;
+    bool handled = false;
     coll.onForbidden = () {
-      extended = true;
-      dbgClient.forceForbidden = false;
+      handled = true;
+      // disable forced "403 Forbidden" responses
+      cosmosDB.dbgHttpClient?.forceForbidden = false;
+      // update the permission
       return database.users.permissions.get(user, permName);
     };
 
-    dbgClient.forceForbidden = true;
-    dbgClient.trace = true;
-    final doc = await coll.find<TestDocument>('1');
-    dbgClient.forceForbidden = false;
-    dbgClient.trace = false;
-
-    expect(extended, isTrue);
-    expect(doc, isNotNull);
-    expect(doc!.id, equals('1'));
+    try {
+      final doc = await coll.find<TestDocument>('1');
+      // if the permission was properly refreshed, handled should be true
+      // and the document was found
+      expect(handled, isTrue);
+      expect(doc, isNotNull);
+      expect(doc!.id, equals('1'));
+    } finally {
+      // disable forced "403 Forbidden" responses
+      cosmosDB.dbgHttpClient?.forceForbidden = false;
+    }
   });
 
   test('Revoke permission', () async {
@@ -173,7 +182,7 @@ void run(cosmos_db.Instance cosmosDB, Client httpClient) {
 
     await expectLater(
       database.users.permissions.get(user, permName),
-      throwsA(isA<cosmos_db.NotFoundException>()),
+      throwsA(isA<NotFoundException>()),
     );
   });
 }

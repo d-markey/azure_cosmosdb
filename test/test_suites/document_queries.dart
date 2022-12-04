@@ -1,35 +1,22 @@
-import 'package:http/http.dart';
+import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 import 'package:test/test.dart';
 
-import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmos_db;
-
 import '../classes/test_document.dart';
-import '../classes/cosmosdb_test_instance.dart';
+import '../classes/test_helpers.dart';
 
 void main() async {
-  allowSelfSignedCertificates();
-  final httpClient = cosmos_db.DebugHttpClient();
-  final cosmosDB = getTestInstance(httpClient);
-
-  try {
-    await cosmosDB.databases.list();
-  } catch (e) {
-    test('! COSMOS DB IS OFFLINE - TESTS HAVE BEEN DISABLED', () {
-      print('Exception: $e');
-    });
-    return;
+  final cosmosDB = await getTestInstance();
+  if (cosmosDB != null) {
+    run(cosmosDB);
   }
-
-  run(cosmosDB, httpClient);
 }
 
-void run(cosmos_db.Instance cosmosDB, Client httpCLient) {
-  late final cosmos_db.Database database;
-  late final cosmos_db.Collection collection;
+void run(CosmosDbServer cosmosDB) {
+  late final CosmosDbDatabase database;
+  late final CosmosDbCollection collection;
 
   setUpAll(() async {
-    database = await cosmosDB.databases
-        .create('test_${DateTime.now().millisecondsSinceEpoch}');
+    database = await cosmosDB.databases.create(getTempDbName());
     collection =
         await database.collections.create('items', partitionKeys: ['/id']);
     collection.registerBuilder<TestDocument>(TestDocument.fromJson);
@@ -48,10 +35,35 @@ void run(cosmos_db.Instance cosmosDB, Client httpCLient) {
   });
 
   test('Query single documents', () async {
-    final query = cosmos_db.Query('SELECT * FROM doc WHERE doc.id=@id');
+    final query = Query(
+      'SELECT * FROM doc WHERE doc.id=@id',
+      partition: CosmosDbPartition('1'),
+      params: {'@id': '1'},
+    );
 
-    query.withParam('@id', '1');
-    query.onPartition('1');
+    var res = await collection.query<TestDocument>(query);
+    expect(res.length, equals(1));
+    expect(res.first.id, equals('1'));
+  });
+
+  test('Query on wrong partition yields no documents', () async {
+    final query = Query(
+      'SELECT * FROM doc WHERE doc.id=@id',
+      partition: CosmosDbPartition('2'),
+      params: {'@id': '1'},
+    );
+
+    var res = await collection.query<TestDocument>(query);
+    expect(res, isEmpty);
+  });
+
+  test('Cross-partition query', () async {
+    final query = Query(
+      'SELECT * FROM doc WHERE doc.id=@id1 OR doc.id=@id2',
+      partition: CosmosDbPartition('1'),
+      params: {'@id1': '1', '@id2': '3'},
+    );
+
     var res = await collection.query<TestDocument>(query);
     expect(res.length, equals(1));
     expect(res.first.id, equals('1'));
@@ -60,31 +72,31 @@ void run(cosmos_db.Instance cosmosDB, Client httpCLient) {
     res = await collection.query<TestDocument>(query);
     expect(res, isEmpty);
 
-    query.withParam('@id', '2');
+    query.onPartition('3');
     res = await collection.query<TestDocument>(query);
     expect(res.length, equals(1));
-    expect(res.first.id, equals('2'));
+    expect(res.first.id, equals('3'));
+
+    query.crossPartition();
+    res = await collection.query<TestDocument>(query);
+    expect(res.length, equals(2));
   });
 
   test('Query multiple documents', () async {
     // /!\ NOTE: TestDocuments serialize as { 'id': id , 'l': label, 'd': data}
     // /!\ NOTE: to match the label, the query must use 'doc.l'
-    final query = cosmos_db.Query(
-        'SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
-        params: {'@text': 'PRIME'},
-        partition: cosmos_db.Partition.all);
+    final query = Query('SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
+        params: {'@text': 'PRIME'}, partition: CosmosDbPartition.all);
     final res = await collection.query<TestDocument>(query);
     expect(res.length, equals(2));
     expect(query.continuation, isEmpty);
   });
 
   test('Query multiple documents with paging', () async {
-    final query = cosmos_db.Query(
-        'SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
+    final query = Query('SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
         params: {'@text': 'PRIME'},
-        partition: cosmos_db.Partition.all);
-
-    query.maxCount = 1;
+        partition: CosmosDbPartition.all,
+        maxCount: 1);
 
     final res1 = await collection.query<TestDocument>(query);
     expect(query.continuation, isNotEmpty);
