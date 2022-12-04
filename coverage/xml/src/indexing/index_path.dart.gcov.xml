@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-11-30" filename="index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="5" lines-valid="5" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="5" lines-valid="5" package="/src/indexing" testname="lcov.info" version="1.5">
 <lines>
+<line>
+<code>import 'index_order.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class representing an index.</code>
+</line>
 <line>
 <code>class IndexPath {</code>
 </line>
@@ -12,10 +21,19 @@
 <code/>
 </line>
 <line>
+<code>  /// JSON path to the field/nodes.</code>
+</line>
+<line>
 <code>  final String path;</code>
 </line>
 <line>
-<code>  final String? order;</code>
+<code/>
+</line>
+<line>
+<code>  /// Index order, see constants from [IndexOrder].</code>
+</line>
+<line>
+<code>  final IndexOrder? order;</code>
 </line>
 <line>
 <code/>
@@ -28,9 +46,9 @@
 <code>        'path': path,</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
-<code>        if (order != null) 'order': order,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="5">
+<code>        if (order != null) 'order': order!.name,</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>      };</code>

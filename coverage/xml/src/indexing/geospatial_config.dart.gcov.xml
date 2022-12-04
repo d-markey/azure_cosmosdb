@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="geospatial_config.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="9" lines-valid="9" package="/src/indexing" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'indexing_policy.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Constants for geo spatial config.</code>
+</line>
+<line>
+<code>class GeospatialConfig {</code>
+</line>
+<line hits="1">
+<code>  const GeospatialConfig._(this.name);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String name;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Geometry type.</code>
+</line>
+<line>
+<code>  static const geometry = GeospatialConfig._('Geometry');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Geography type.</code>
+</line>
+<line>
+<code>  static const geography = GeospatialConfig._('Geography');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Find proper geospatial config for the [indexingPolicy] if provided. `null`</code>
+</line>
+<line>
+<code>  /// if [indexingPolicy] or [IndexingPolicy.spatialIndexes] is `null`.</code>
+</line>
+<line hits="2">
+<code>  static GeospatialConfig? forPolicy(IndexingPolicy? indexingPolicy) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    final spatialIndexes = indexingPolicy?.spatialIndexes;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    if (spatialIndexes == null) return null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    if (spatialIndexes.any((index) =&gt; index.boundingBox != null)) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      return GeospatialConfig.geometry;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    } else {</code>
+</line>
+<line hits="1">
+<code>      return GeospatialConfig.geography;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'type': name};</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

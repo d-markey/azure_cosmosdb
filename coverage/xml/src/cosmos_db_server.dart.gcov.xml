@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="cosmos_db_server.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="11" lines-valid="11" package="/src" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'package:http/http.dart' as http;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'client/_client.dart';</code>
+</line>
+<line>
+<code>import 'client/debug_http_client.dart';</code>
+</line>
+<line>
+<code>import 'cosmos_db_databases.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>typedef FutureCallback&lt;T&gt; = Future&lt;T&gt; Function();</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>@Deprecated('Use CosmosDbServer instead.')</code>
+</line>
+<line>
+<code>typedef Instance = CosmosDbServer;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class representing a CosmosDB instance</code>
+</line>
+<line>
+<code>class CosmosDbServer {</code>
+</line>
+<line>
+<code>  /// Builds a new Cosmos DB [CosmosDbServer] with the provided [urlOrAccount],</code>
+</line>
+<line>
+<code>  /// [masterKey] and [httpClient]. [urlOrAccount] can be a full URL (eg.</code>
+</line>
+<line>
+<code>  /// `https://localhost:8081/`) or the Azure CosmosDB account name, in which case</code>
+</line>
+<line>
+<code>  /// the url will be constructed as `https://${urlOrAccount}.documents.azure.com/`.</code>
+</line>
+<line>
+<code>  /// Passing the [masterKey] is discouraged in client apps to prevent from theft;</code>
+</line>
+<line>
+<code>  /// instead, a proxy should be implemented in order to protect the master key.</code>
+</line>
+<line hits="1">
+<code>  CosmosDbServer(String urlOrAccount,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      {String? masterKey, http.Client? httpClient})</code>
+</line>
+<line hits="2">
+<code>      : _client = Client(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          _buildUrl(urlOrAccount),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          masterKey: masterKey,</code>
+</line>
+<line>
+<code>          httpClient: httpClient,</code>
+</line>
+<line>
+<code>        );</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final Client _client;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Provides access to databases in this [CosmosDbServer].</code>
+</line>
+<line hits="3">
+<code>  late final CosmosDbDatabases databases = CosmosDbDatabases(this);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  static String _buildUrl(String urlOrAccount) =&gt; !urlOrAccount.contains('://')</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      ? 'https://$urlOrAccount.documents.azure.com/'</code>
+</line>
+<line hits="2">
+<code>      : !urlOrAccount.endsWith('/')</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          ? '$urlOrAccount/'</code>
+</line>
+<line hits="2">
+<code>          : urlOrAccount;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>// debug use</code>
+</line>
+<line>
+<code>extension CosmosDbServerDbgExt on CosmosDbServer {</code>
+</line>
+<line>
+<code>  /// The underlying HTTP client used to communicate with the Cosmos DB server.</code>
+</line>
+<line hits="1">
+<code>  DebugHttpClient? get dbgHttpClient {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    final client = _client.httpClient;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    return (client is DebugHttpClient) ? client : null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// internal use</code>
+</line>
+<line>
+<code>extension CosmosDbServerExt on CosmosDbServer {</code>
+</line>
+<line>
+<code>  /// The CosmosDB client used for this instance.</code>
+</line>
+<line hits="3">
+<code>  Client get client =&gt; _client;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>
