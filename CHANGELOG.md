@@ -1,4 +1,4 @@
-## 1.1.0
+## 1.5.0
 
 - Supports bounding box in spatial indexes.
 - New class `Point` to represent spatial positions.
