@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="cosmos_db_database.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9285714" lines-covered="13" lines-valid="14" package="/src" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'base_document.dart';</code>
+</line>
+<line>
+<code>import 'client/_client.dart';</code>
+</line>
+<line>
+<code>import 'client/_context.dart';</code>
+</line>
+<line>
+<code>import 'cosmos_db_collections.dart';</code>
+</line>
+<line>
+<code>import 'permissions/cosmos_db_permission.dart';</code>
+</line>
+<line>
+<code>import 'permissions/cosmos_db_users.dart';</code>
+</line>
+<line>
+<code>import 'cosmos_db_server.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>@Deprecated('Use CosmosDbDatabase instead.')</code>
+</line>
+<line>
+<code>typedef Database = CosmosDbDatabase;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class representing a CosmosDB database.</code>
+</line>
+<line>
+<code>class CosmosDbDatabase extends BaseDocument {</code>
+</line>
+<line hits="3">
+<code>  CosmosDbDatabase(this.server, this.id) : url = 'dbs/$id';</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The [server] hosting this database.</code>
+</line>
+<line>
+<code>  final CosmosDbServer server;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The database's base [url].</code>
+</line>
+<line>
+<code>  final String url;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Flag indicating whether the database exists in CosmosDB.</code>
+</line>
+<line>
+<code>  /// `null` if no check has been made yet.</code>
+</line>
+<line hits="2">
+<code>  bool? get exists =&gt; _exists;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  bool? _exists;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  @override</code>
+</line>
+<line>
+<code>  final String id;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'id': id};</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      client.registerBuilder&lt;T&gt;(builder);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Gets information for this [CosmosDbDatabase].</code>
+</line>
+<line hits="4">
+<code>  Future&lt;dynamic&gt; getInfo({CosmosDbPermission? permission}) =&gt; client.getJson(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        type: 'dbs',</code>
+</line>
+<line hits="0">
+<code>        token: permission?.token,</code>
+</line>
+<line>
+<code>      ));</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Provides access to collections in this [CosmosDbDatabase].</code>
+</line>
+<line hits="3">
+<code>  late final CosmosDbCollections collections = CosmosDbCollections(this);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Provides access to users in this [CosmosDbDatabase].</code>
+</line>
+<line hits="3">
+<code>  late final CosmosDbUsers users = CosmosDbUsers(this);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>// internal use</code>
+</line>
+<line>
+<code>extension DatabaseExt on CosmosDbDatabase {</code>
+</line>
+<line hits="3">
+<code>  void setExists(bool exists) =&gt; _exists = exists;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>  Client get client =&gt; server.client;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

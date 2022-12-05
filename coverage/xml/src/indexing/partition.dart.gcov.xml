@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="partition.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="5" lines-valid="5" package="/src/indexing" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:convert';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>@Deprecated('Use CosmosDbPartition instead.')</code>
+</line>
+<line>
+<code>typedef Partition = CosmosDbPartition;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class representing a partition in a Cosmos DB collection.</code>
+</line>
+<line>
+<code>class CosmosDbPartition {</code>
+</line>
+<line hits="2">
+<code>  const CosmosDbPartition._(this.header);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Creates a partition for a composite key.</code>
+</line>
+<line hits="1">
+<code>  CosmosDbPartition.multi(Iterable&lt;String&gt; keys)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : this._(MapEntry(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          'x-ms-documentdb-partitionkey',</code>
+</line>
+<line hits="1">
+<code>          jsonEncode(keys),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        ));</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Creates a partition for a single key.</code>
+</line>
+<line hits="4">
+<code>  CosmosDbPartition(String key) : this.multi([key]);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Used for cross-partition queries.</code>
+</line>
+<line>
+<code>  static const all = CosmosDbPartition._(MapEntry(</code>
+</line>
+<line>
+<code>    'x-ms-documentdb-query-enablecrosspartition',</code>
+</line>
+<line>
+<code>    'true',</code>
+</line>
+<line>
+<code>  ));</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The HTTP header representing the target partition.</code>
+</line>
+<line>
+<code>  final MapEntry&lt;String, String&gt; header;</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="distance_calculator_3d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="12" lines-valid="12" package="/src/spatial" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:math';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'distance_calculator.dart';</code>
+</line>
+<line>
+<code>import 'distance_calculator_2d.dart';</code>
+</line>
+<line>
+<code>import 'line.dart';</code>
+</line>
+<line>
+<code>import 'point.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class DistanceCalculator3D extends DistanceCalculator {</code>
+</line>
+<line>
+<code>  /// Computes the distance between [from] and [to] positions. Returns a 3D</code>
+</line>
+<line>
+<code>  /// distance when [Point.altitude] are set in both positions, otherwise</code>
+</line>
+<line>
+<code>  /// a 2D distance is returned. [from] and [to] must have coordinate-based</code>
+</line>
+<line>
+<code>  /// positions; if this is not the case, the function returns `null`. See</code>
+</line>
+<line>
+<code>  /// also [DistanceCalculator2D].</code>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  double? distance(Point from, Point to) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    if (!from.isGeometry || !to.isGeometry) return null;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    var dx = to.x! - from.x!;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    var dy = to.y! - from.y!;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    var dz = (from.altitude != null &amp;&amp; to.altitude != null)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        ? (to.altitude! - from.altitude!)</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        : 0;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="7">
+<code>    return sqrt(dx * dx + dy * dy + dz * dz);</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Computes the 3D length of a line or polygon. `null` is returned iif any</code>
+</line>
+<line>
+<code>  /// [Point] in the line or polygon does not have a coordinate-based [Point].</code>
+</line>
+<line>
+<code>  /// If all points have a `null` `altitude`, returns a 2D distance. If some</code>
+</line>
+<line>
+<code>  /// points have their altitude set while some others do not, the resulting</code>
+</line>
+<line>
+<code>  /// distance may be inconsistent as some segments will be measured in 2D and</code>
+</line>
+<line>
+<code>  /// others in 3D.</code>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  double? measure(Line lineOrPolygon) =&gt; super.measure(lineOrPolygon);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="point.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9411765" lines-covered="16" lines-valid="17" package="/src/spatial" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import '../indexing/data_type.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class represengin a position</code>
+</line>
+<line>
+<code>class Point {</code>
+</line>
+<line>
+<code>  /// The position's X coordinate.</code>
+</line>
+<line>
+<code>  final double? x;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The position's Y coordinate.</code>
+</line>
+<line>
+<code>  final double? y;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The position's latitude.</code>
+</line>
+<line>
+<code>  final double? latitude;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The position's longitude.</code>
+</line>
+<line>
+<code>  final double? longitude;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The position's altitude.</code>
+</line>
+<line>
+<code>  final double? altitude;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `(x, y)` position.</code>
+</line>
+<line hits="2">
+<code>  const Point.geometry(this.x, this.y, [this.altitude])</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      : assert(x != null),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        assert(y != null),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        latitude = null,</code>
+</line>
+<line hits="1">
+<code>        longitude = null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `(lat, long)` position.</code>
+</line>
+<line hits="4">
+<code>  const Point.geography(this.latitude, this.longitude, [this.altitude])</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : assert(latitude != null),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        assert(longitude != null),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        x = null,</code>
+</line>
+<line hits="1">
+<code>        y = null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Coordinates pair, either `(x, y)` or `(lat, long)`.</code>
+</line>
+<line hits="2">
+<code>  List&lt;double&gt; get coordinates =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="8">
+<code>      isGeometry ? [x!, y!] : [latitude!, longitude!];</code>
+<hit count="8" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `true` iif [x] and [y] are non-null.</code>
+</line>
+<line hits="4">
+<code>  bool get isGeometry =&gt; (x != null &amp;&amp; y != null);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `true` iif [latitude] and [longitude] are non-null.</code>
+</line>
+<line hits="4">
+<code>  bool get isGeographic =&gt; (latitude != null &amp;&amp; longitude != null);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The position's Z coordinate. Returns the [altitude] (which may be `null`)</code>
+</line>
+<line>
+<code>  /// if the position is geometrical, `null` otherwise.</code>
+</line>
+<line hits="0">
+<code>  double? get z =&gt; isGeometry ? altitude : null;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        'type': DataType.point.name,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        'coordinates': coordinates,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

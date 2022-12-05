@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-04" filename="multi_polygon.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="8" lines-valid="8" package="/src/spatial" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import '../indexing/data_type.dart';</code>
+</line>
+<line>
+<code>import 'polygon.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class representing a list of polygons.</code>
+</line>
+<line>
+<code>class MultiPolygon {</code>
+</line>
+<line hits="1">
+<code>  MultiPolygon();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The list of polygons</code>
+</line>
+<line hits="1">
+<code>  final polygons = &lt;Polygon&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  bool get isEmpty =&gt; polygons.isEmpty;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  bool get isNotEmpty =&gt; polygons.isNotEmpty;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        'type': DataType.multiPolygon.name,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6">
+<code>        'coordinates': polygons.map((p) =&gt; p.coordinates).toList(),</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>
