@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'distance_calculator.dart';
 import 'distance_calculator_3d.dart';
-import 'line.dart';
 import 'point.dart';
+import 'shape.dart';
 
 class DistanceCalculator2D extends DistanceCalculator {
   /// Computes the 2D distance between [from] and [to] positions. This
   /// implementation ignores all [Point.altitude] values. [from] and [to]
-  /// must have coordinate-based positions; if this is not the case, the
+  /// must have geometry-based coordinates; if this is not the case, the
   /// function returns `null`. See also [DistanceCalculator3D].
   @override
   double? distance(Point from, Point to) {
@@ -18,8 +18,8 @@ class DistanceCalculator2D extends DistanceCalculator {
     return sqrt(dx * dx + dy * dy);
   }
 
-  /// Computes the 2D length of a line or polygon. `null` is returned iif any
-  /// [Point] in the line or polygon does not have a coordinate-based [Point].
+  /// Computes the 2D length of a line string or polygon. `null` is returned iif
+  /// any [Point] in the lines or polygon is not geometry-based.
   @override
-  double? measure(Line lineOrPolygon) => super.measure(lineOrPolygon);
+  double? measure(Shape shape) => super.measure(shape);
 }

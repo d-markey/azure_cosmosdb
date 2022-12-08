@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:crypto/crypto.dart';
+import 'package:crypto/crypto.dart' as crypto;
 import 'package:http/http.dart' as http;
 import 'package:retry/retry.dart';
 
@@ -21,7 +21,7 @@ class Client {
       : _baseHttpClient = httpClient ?? http.Client() {
     _http = _baseHttpClient;
     if (masterKey != null) {
-      _key = Hmac(sha256, base64Decode(masterKey));
+      _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));
     } else {
       _key = null;
     }
@@ -31,7 +31,7 @@ class Client {
   final http.Client _baseHttpClient;
   final RetryOptions _retry = RetryOptions();
 
-  late final Hmac? _key;
+  late final crypto.Hmac? _key;
   late final http.Client _http;
 
   final _builders = <Type, _DocumentBuilder>{};
@@ -177,6 +177,22 @@ class Client {
           .then((result) => _buildMany<T>(context, result![resultSet]))
           .onError<ContextualizedException>(
               (error, stackTrace) => throw error.withContext('POST', path));
+
+  Future<dynamic> rawQuery(
+          String path, Query query, String resultSet, Context context) =>
+      _send(
+        'POST',
+        path,
+        query,
+        context.copyWith(
+          query: query,
+          headers: {
+            'content-type': 'application/query+json',
+            'x-ms-documentdb-isquery': 'true',
+          },
+        ),
+      ).onError<ContextualizedException>(
+          (error, stackTrace) => throw error.withContext('POST', path));
 
   Future<T> put<T extends BaseDocument>(
           String path, BaseDocument doc, Context context) =>

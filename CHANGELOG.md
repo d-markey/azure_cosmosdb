@@ -1,3 +1,10 @@
+## 1.6.0
+
+- Renamed `Line` class to `LineString`.
+- Fix various issues in GeoJSON serialization (lat/long order in the JSON-array, serialization/deserialization...).
+- Added unit tests to validate the spatial data sets used in tests.
+- Added unit tests for spatial queries.
+
 ## 1.5.0
 
 - Supports bounding box in spatial indexes.

@@ -17,8 +17,8 @@ class DistanceCalculatorHaversine extends DistanceCalculator {
 
   /// Computes the distance between [from] and [to] positions. Returns the
   /// great-circle distance using 'haversine' formula. [Point.altitude]
-  /// values are ignored. [from] and [to] positions must have their latitude and
-  /// longitude set, otherwise `null` is returned.
+  /// values are ignored. [from] and [to] positions must be geography-based, i.e.
+  /// their latitude and longitude are both set; otherwise `null` is returned.
   @override
   double? distance(Point from, Point to) {
     if (!from.isGeographic || !to.isGeographic) return null;

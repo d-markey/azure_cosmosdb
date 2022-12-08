@@ -44,6 +44,38 @@ extension CosmosDbServerDbgExt on CosmosDbServer {
     final client = _client.httpClient;
     return (client is DebugHttpClient) ? client : null;
   }
+
+  /// Activate a logger. Typically used with a `try`/`finally` block, e.g.:
+  /// ```dart
+  /// server.useLogger(print);
+  /// try {
+  ///   // do something eg. create a collection, add a document, execute a query...
+  ///   // the request to CosmosDB will be logged
+  /// } finally {
+  ///   server.resetLogger();
+  /// }
+  /// ```
+  void useLogger(void Function(Object?) logger,
+      {bool withBody = true, bool withHeader = false}) {
+    final httpClient = dbgHttpClient;
+    if (httpClient != null) {
+      httpClient.log = logger;
+      httpClient.trace = true;
+      httpClient.traceBody = withBody;
+      httpClient.traceHeaders = withHeader;
+    }
+  }
+
+  /// Reset the logger.
+  void resetLogger() {
+    final httpClient = dbgHttpClient;
+    if (httpClient != null) {
+      httpClient.log = DebugHttpClient.defaultLog;
+      httpClient.trace = false;
+      httpClient.traceBody = false;
+      httpClient.traceHeaders = false;
+    }
+  }
 }
 
 /// internal use

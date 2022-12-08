@@ -1,67 +1,114 @@
+import 'dart:convert';
+
 import 'package:azure_cosmosdb/azure_cosmosdb.dart';
 import 'package:test/test.dart';
+
+import '../classes/spatial_data_sets.dart';
 
 void main() async {
   run();
 }
 
-const _cities = {
-  'Berlin': Point.geography(52.520007, 13.404954),
-  'Canberra': Point.geography(-35.28467, 149.13522),
-  'London': Point.geography(51.5073509, -0.1277583),
-  'New-York': Point.geography(40.712784, -74.005941),
-  'Paris': Point.geography(48.856613, 2.342889),
-  'Ushuaia': Point.geography(-54.8019121, -68.3029511),
-};
-
-const _distances = <String, double>{
-  // Berlin
-  'Berlin->Berlin': 0,
-  'Berlin->Canberra': 16056,
-  'Berlin->London': 932,
-  'Berlin->New-York': 6385,
-  'Berlin->Paris': 878,
-  'Berlin->Ushuaia': 14092,
-  // Canberra
-  'Canberra->Canberra': 0,
-  'Canberra->London': 16971,
-  'Canberra->New-York': 16215,
-  'Canberra->Paris': 16909,
-  'Canberra->Ushuaia': 9379,
-  // London
-  'London->London': 0,
-  'London->New-York': 5571,
-  'London->Paris': 343,
-  'London->Ushuaia': 13381,
-  // New-York
-  'New-York->New-York': 0,
-  'New-York->Paris': 5836,
-  'New-York->Ushuaia': 10631,
-  // Paris
-  'Paris->Paris': 0,
-  'Paris->Ushuaia': 13260,
-  // Ushuaia
-  'Ushuaia->Ushuaia': 0,
-};
-
 void run() {
-  test('Create a simple line', () async {
-    final line = Line();
+  test('Create a line', () async {
+    final line = LineString();
     expect(line.isEmpty, isTrue);
     expect(line.isNotEmpty, isFalse);
-    line.add(_cities['Paris']!); // Paris
+    line.add(cities['Paris']!); // Paris
     expect(line.isEmpty, isFalse);
     expect(line.isNotEmpty, isTrue);
-    line.add(_cities['New-York']!); // New York
+    line.add(cities['New-York']!); // New York
     expect(line.isEmpty, isFalse);
     expect(line.isNotEmpty, isTrue);
   });
 
+  test('Serialize a line', () async {
+    final line = LineString();
+    line.addAll([
+      cities['Paris']!,
+      cities['New-York']!,
+    ]);
+
+    final json = jsonDecode(jsonEncode(line));
+    expect(json, isA<Map>());
+    expect(json['type'], equals(DataType.lineString.name));
+
+    final coords = json['coordinates'];
+    expect(coords, isA<List>());
+    expect(coords.length, equals(2));
+
+    for (var i = 0; i < coords.length; i++) {
+      var p = line.points.elementAt(i);
+      expect(coords[i][0], equals(p.longitude));
+      expect(coords[i][1], equals(p.latitude));
+    }
+  });
+
+  test('Deserialize a line', () async {
+    final line = LineString();
+    line.addAll([
+      cities['Paris']!,
+      cities['New-York']!,
+    ]);
+
+    final json = jsonDecode(jsonEncode(line));
+
+    final dline = LineString.fromGeoJson(json, GeospatialConfig.geography);
+    expect(dline.points.length, equals(line.points.length));
+    for (var i = 0; i < line.points.length; i++) {
+      var p = line.points.elementAt(i);
+      var dp = dline.points.elementAt(i);
+      expect(dp.latitude, equals(p.latitude));
+      expect(dp.longitude, equals(p.longitude));
+    }
+  });
+
+  test('Serialize a polygon', () async {
+    final poly = parisArea;
+
+    final json = jsonDecode(jsonEncode(poly));
+    expect(json, isA<Map>());
+    expect(json['type'], equals(DataType.polygon.name));
+
+    final coords = json['coordinates'];
+    expect(coords, isA<List>());
+    expect(coords.length, equals(poly.rings.length));
+
+    var r = coords[0];
+    expect(r, isA<List>());
+    expect(r.length, equals(poly.rings.first.points.length + 1));
+    for (var i = 0; i < poly.rings.first.points.length; i++) {
+      var p = poly.rings.first.points.elementAt(i);
+      expect(r[i][0], equals(p.longitude));
+      expect(r[i][1], equals(p.latitude));
+    }
+  });
+
+  test('Deserialize a polygon', () async {
+    final poly = parisArea;
+
+    final json = jsonDecode(jsonEncode(poly));
+
+    final dpoly = Polygon.fromGeoJson(json, GeospatialConfig.geography);
+    expect(dpoly.rings.length, equals(poly.rings.length));
+    for (var i = 0; i < poly.rings.length; i++) {
+      var r = poly.rings.elementAt(i);
+      var dr = dpoly.rings.elementAt(i);
+      expect(dr.points.length, equals(r.points.length));
+      for (var j = 0; j < r.points.length; j++) {
+        var p = r.points.elementAt(j);
+        var dp = dr.points.elementAt(j);
+        expect(dp.latitude, p.latitude);
+        expect(dp.longitude, p.longitude);
+      }
+    }
+  });
+
   test('Long distances (cities)', () async {
-    final cities = _cities.entries;
-    for (final from in cities) {
-      for (final to in cities.where((t) => t.key.compareTo(from.key) >= 0)) {
-        final expected = _distances['${from.key}->${to.key}']!;
+    for (final from in cities.entries) {
+      for (final to
+          in cities.entries.where((t) => t.key.compareTo(from.key) >= 0)) {
+        final expected = cityDistances['${from.key}->${to.key}']!;
         _checkDistance(from.value, to.value, expected);
       }
     }
@@ -70,29 +117,29 @@ void run() {
   test('Short distances (monuments)', () async {
     // Paris
     _checkDistance(
-      Point.geography(48.858370, 2.294481), // Eiffel Tower
-      Point.geography(48.852968, 2.349902), // Notre Dame de Paris
+      monuments['Eiffel Tower']!,
+      monuments['Notre Dame de Paris']!,
       4.1,
     );
 
     // London
     _checkDistance(
-      Point.geography(51.50562, -0.07537), // Tower Bridge
-      Point.geography(51.50108, -0.12462), // Big Ben
+      monuments['London Tower Bridge']!,
+      monuments['Big Ben']!,
       3.5,
     );
 
     // New-York
     _checkDistance(
-      Point.geography(40.689247, -74.044502), // Statue of Liberty
-      Point.geography(40.748817, -73.985428), // Empire State Building
+      monuments['Statue of Liberty']!,
+      monuments['Empire State Building']!,
       8.3,
     );
   });
 }
 
 void _checkDistance(Point from, Point to, double expected) {
-  final line = Line();
+  final line = LineString();
   line.addAll([from, to]);
   final distance = earthDistanceCalculator.measure(line)!;
   final diff = (expected - distance).abs();

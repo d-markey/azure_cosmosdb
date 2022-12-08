@@ -17,7 +17,7 @@ class SpatialIndexPath {
 
   Map<String, dynamic> toJson() => {
         'path': path,
-        'types': (types ?? DataType.spatialTypes).map((t) => t.name).toList(),
+        'types': (types ?? DataType.spatial).map((t) => t.name).toList(),
         if (boundingBox != null) 'boundingBox': boundingBox!.toJson(),
       };
 }

@@ -1,7 +1,12 @@
 import '../indexing/data_type.dart';
+import '../indexing/geospatial_config.dart';
+import 'shape.dart';
 
 /// Class represengin a position
-class Point {
+class Point extends Shape {
+  @override
+  final type = DataType.point;
+
   /// The position's X coordinate.
   final double? x;
 
@@ -17,13 +22,6 @@ class Point {
   /// The position's altitude.
   final double? altitude;
 
-  /// `(x, y)` position.
-  const Point.geometry(this.x, this.y, [this.altitude])
-      : assert(x != null),
-        assert(y != null),
-        latitude = null,
-        longitude = null;
-
   /// `(lat, long)` position.
   const Point.geography(this.latitude, this.longitude, [this.altitude])
       : assert(latitude != null),
@@ -31,22 +29,50 @@ class Point {
         x = null,
         y = null;
 
-  /// Coordinates pair, either `(x, y)` or `(lat, long)`.
-  List<double> get coordinates =>
-      isGeometry ? [x!, y!] : [latitude!, longitude!];
+  /// `(x, y)` position.
+  const Point.geometry(this.x, this.y, [this.altitude])
+      : assert(x != null),
+        assert(y != null),
+        latitude = null,
+        longitude = null;
+
+  /// Coordinates pair, either `(x, y)` or `(long, lat)`.
+  @override
+  List<double> get coordinates => isGeometry
+      ? [x!, y!, if (altitude != null) altitude!]
+      : [longitude!, latitude!, if (altitude != null) altitude!];
+
+  /// `true` iif [latitude] and [longitude] are non-null.
+  bool get isGeographic => (latitude != null && longitude != null);
 
   /// `true` iif [x] and [y] are non-null.
   bool get isGeometry => (x != null && y != null);
 
-  /// `true` iif [latitude] and [longitude] are non-null.
-  bool get isGeographic => (latitude != null && longitude != null);
+  @override
+  Iterable<Iterable<Point>> get paths => [
+        [this]
+      ];
 
   /// The position's Z coordinate. Returns the [altitude] (which may be `null`)
   /// if the position is geometrical, `null` otherwise.
   double? get z => isGeometry ? altitude : null;
 
-  Map<String, dynamic> toJson() => {
-        'type': DataType.point.name,
-        'coordinates': coordinates,
-      };
+  static Point fromGeoJson(Map geoJson, GeospatialConfig config) =>
+      Shape.fromGeoJson<Point>(geoJson, config);
+
+  static Point loadGeographyCoords(Iterable coords) {
+    final c = (coords is List) ? coords : coords.toList();
+    final lat = c[1];
+    final long = c[0];
+    final alt = (c.length >= 3) ? c[2] : null;
+    return Point.geography(lat, long, alt);
+  }
+
+  static Point loadGeometryCoords(Iterable coords) {
+    final c = (coords is List) ? coords : coords.toList();
+    final x = c[0];
+    final y = c[1];
+    final alt = (c.length >= 3) ? c[2] : null;
+    return Point.geometry(x, y, alt);
+  }
 }

@@ -23,5 +23,5 @@ class DataType {
   static const lineString = DataType._('LineString');
 
   /// List of spatial data types.
-  static const spatialTypes = [point, polygon, multiPolygon, lineString];
+  static const spatial = [point, polygon, multiPolygon, lineString];
 }

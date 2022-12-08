@@ -190,6 +190,20 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
+  /// Loads documents from this collection matching the provided [query].
+  Future<dynamic> rawQuery(Query query, {CosmosDbPermission? permission}) =>
+      client.rawQuery(
+        '$url/docs',
+        query,
+        'Documents',
+        Context(
+          type: 'docs',
+          resId: url,
+          token: permission?.token ?? _token,
+          onForbidden: _refreshPermission,
+        ),
+      );
+
   /// Adds a new [document] to this collection.
   Future<T> add<T extends BaseDocument>(T document,
           {CosmosDbPartition? partition, CosmosDbPermission? permission}) =>

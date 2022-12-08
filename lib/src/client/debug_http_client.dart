@@ -85,7 +85,7 @@ class DebugHttpClient extends http.BaseClient {
         log('[$ts] <-- ${h.key} = ${h.value}');
       }
     }
-    if (traceBody && response.statusCode >= 400 && response.statusCode != 404) {
+    if (traceBody) {
       // get the response bytes for logging
       final resp = await http.Response.fromStream(response);
       log('[$ts] <-- COSMOSDB ERROR ${resp.statusCode}: ${resp.body}');

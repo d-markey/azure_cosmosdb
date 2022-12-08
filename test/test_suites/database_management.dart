@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
-import 'package:azure_cosmosdb/src/_internal/_extensions.dart';
+import 'package:azure_cosmosdb/src/_internal/_linq_extensions.dart';
 import 'package:http/http.dart';
 import 'package:test/test.dart';
 

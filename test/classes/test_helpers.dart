@@ -33,15 +33,4 @@ String getTempDbName() => 'test_$millisecondsSinceEpoch';
 
 extension LogExt on CosmosDbServer {
   void useSilentLogger() => useLogger((_) {}, withBody: true, withHeader: true);
-
-  void useLogger(void Function(Object?) logger,
-      {bool withBody = true, bool withHeader = false}) {
-    final httpClient = dbgHttpClient;
-    if (httpClient != null) {
-      httpClient.log = logger;
-      httpClient.trace = true;
-      httpClient.traceBody = withBody;
-      httpClient.traceHeaders = withHeader;
-    }
-  }
 }
