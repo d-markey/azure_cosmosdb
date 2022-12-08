@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-12-05</dd>
+<dd>2022-12-08</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -66,7 +66,7 @@
 <td>2</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 3" id="line3">
-<td>3</td><td></td><td></td><td><code>import 'package:crypto/crypto.dart';</code></td>
+<td>3</td><td></td><td></td><td><code>import 'package:crypto/crypto.dart' as crypto;</code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
 <td>4</td><td></td><td></td><td><code></code></td>
@@ -87,67 +87,70 @@
 <td>9</td><td></td><td></td><td><code>class Authorization {</code></td>
 </tr>
 <tr class="lineCov" title="Line 10" id="line10">
-<td>10</td><td></td><td>1</td><td><code>  Authorization.fromKey(Hmac? key, String method, String type, String resId) {</code></td>
+<td>10</td><td></td><td>1</td><td><code>  Authorization.fromKey(</code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>    if (key == null) {</code></td>
+<td>11</td><td></td><td></td><td><code>      crypto.Hmac? key, String method, String type, String resId) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 12" id="line12">
-<td>12</td><td></td><td>2</td><td><code>      throw CosmosDbException(</code></td>
+<tr class="noop" title="Line 12" id="line12">
+<td>12</td><td></td><td></td><td><code>    if (key == null) {</code></td>
 </tr>
-<tr class="noop" title="Line 13" id="line13">
-<td>13</td><td></td><td></td><td><code>        HttpStatusCode.unauthorized,</code></td>
+<tr class="lineCov" title="Line 13" id="line13">
+<td>13</td><td></td><td>2</td><td><code>      throw CosmosDbException(</code></td>
 </tr>
 <tr class="noop" title="Line 14" id="line14">
-<td>14</td><td></td><td></td><td><code>        'Missing master key',</code></td>
+<td>14</td><td></td><td></td><td><code>        HttpStatusCode.unauthorized,</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
-<td>15</td><td></td><td></td><td><code>      );</code></td>
+<td>15</td><td></td><td></td><td><code>        'Missing master key',</code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
-<td>16</td><td></td><td></td><td><code>    }</code></td>
+<td>16</td><td></td><td></td><td><code>      );</code></td>
 </tr>
-<tr class="lineCov" title="Line 17" id="line17">
-<td>17</td><td></td><td>4</td><td><code>    date = DateTime.now().toImfFixedString();</code></td>
+<tr class="noop" title="Line 17" id="line17">
+<td>17</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 18" id="line18">
-<td>18</td><td></td><td>4</td><td><code>    final payload = '$method\n$type\n$resId\n${date.toLowerCase()}\n\n';</code></td>
+<td>18</td><td></td><td>4</td><td><code>    date = DateTime.now().toImfFixedString();</code></td>
 </tr>
 <tr class="lineCov" title="Line 19" id="line19">
-<td>19</td><td></td><td>5</td><td><code>    final signature = base64Encode(key.convert(utf8.encode(payload)).bytes);</code></td>
+<td>19</td><td></td><td>4</td><td><code>    final payload = '$method\n$type\n$resId\n${date.toLowerCase()}\n\n';</code></td>
 </tr>
 <tr class="lineCov" title="Line 20" id="line20">
-<td>20</td><td></td><td>3</td><td><code>    token = Uri.encodeComponent('type=master&amp;ver=1.0&amp;sig=$signature');</code></td>
+<td>20</td><td></td><td>5</td><td><code>    final signature = base64Encode(key.convert(utf8.encode(payload)).bytes);</code></td>
 </tr>
-<tr class="noop" title="Line 21" id="line21">
-<td>21</td><td></td><td></td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>3</td><td><code>    token = Uri.encodeComponent('type=master&amp;ver=1.0&amp;sig=$signature');</code></td>
 </tr>
 <tr class="noop" title="Line 22" id="line22">
-<td>22</td><td></td><td></td><td><code></code></td>
+<td>22</td><td></td><td></td><td><code>  }</code></td>
 </tr>
-<tr class="lineCov" title="Line 23" id="line23">
-<td>23</td><td></td><td>2</td><td><code>  Authorization.fromToken(String token) {</code></td>
+<tr class="noop" title="Line 23" id="line23">
+<td>23</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 24" id="line24">
-<td>24</td><td></td><td>4</td><td><code>    date = DateTime.now().toImfFixedString();</code></td>
+<td>24</td><td></td><td>2</td><td><code>  Authorization.fromToken(String token) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 25" id="line25">
-<td>25</td><td></td><td>2</td><td><code>    this.token = Uri.encodeComponent(token);</code></td>
+<td>25</td><td></td><td>4</td><td><code>    date = DateTime.now().toImfFixedString();</code></td>
 </tr>
 <tr class="lineCov" title="Line 26" id="line26">
-<td>26</td><td></td><td>1</td><td><code>  }</code></td>
+<td>26</td><td></td><td>2</td><td><code>    this.token = Uri.encodeComponent(token);</code></td>
 </tr>
-<tr class="noop" title="Line 27" id="line27">
-<td>27</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 27" id="line27">
+<td>27</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
-<tr class="lineCov" title="Line 28" id="line28">
-<td>28</td><td></td><td>1</td><td><code>  late final String date;</code></td>
+<tr class="noop" title="Line 28" id="line28">
+<td>28</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 29" id="line29">
-<td>29</td><td></td><td>1</td><td><code>  late final String token;</code></td>
+<td>29</td><td></td><td>1</td><td><code>  late final String date;</code></td>
 </tr>
-<tr class="noop" title="Line 30" id="line30">
-<td>30</td><td></td><td></td><td><code>}</code></td>
+<tr class="lineCov" title="Line 30" id="line30">
+<td>30</td><td></td><td>1</td><td><code>  late final String token;</code></td>
+</tr>
+<tr class="noop" title="Line 31" id="line31">
+<td>31</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

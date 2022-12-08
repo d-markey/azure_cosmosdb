@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-12-05</dd>
+<dd>2022-12-08</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>5</td><td>5</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>7</td><td>7</td><td class="high">100.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -72,7 +72,7 @@
 <td>4</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
-<td>5</td><td></td><td></td><td><code>import 'package:http/http.dart';</code></td>
+<td>5</td><td></td><td></td><td><code>import 'package:http/http.dart' as http;</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
 <td>6</td><td></td><td></td><td><code></code></td>
@@ -84,10 +84,10 @@
 <td>8</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 9" id="line9">
-<td>9</td><td></td><td>1</td><td><code>bool retryIf(Client http, Exception e) {</code></td>
+<td>9</td><td></td><td>1</td><td><code>bool retryIf(http.Client client, Exception e) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 10" id="line10">
-<td>10</td><td></td><td>1</td><td><code>  if (http is DebugHttpClient) {</code></td>
+<td>10</td><td></td><td>1</td><td><code>  if (client is DebugHttpClient) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 11" id="line11">
 <td>11</td><td></td><td>2</td><td><code>    log('!!! received exception $e');</code></td>
@@ -95,26 +95,29 @@
 <tr class="noop" title="Line 12" id="line12">
 <td>12</td><td></td><td></td><td><code>  }</code></td>
 </tr>
-<tr class="noop" title="Line 13" id="line13">
-<td>13</td><td></td><td></td><td><code>  final retry =</code></td>
+<tr class="lineCov" title="Line 13" id="line13">
+<td>13</td><td></td><td>1</td><td><code>  final retry = e is SocketException ||</code></td>
 </tr>
 <tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>3</td><td><code>      e is SocketException || e is TimeoutException || e is ClientException;</code></td>
+<td>14</td><td></td><td>1</td><td><code>      e is TimeoutException ||</code></td>
 </tr>
-<tr class="noop" title="Line 15" id="line15">
-<td>15</td><td></td><td></td><td><code>  if (retry) {</code></td>
+<tr class="lineCov" title="Line 15" id="line15">
+<td>15</td><td></td><td>1</td><td><code>      e is http.ClientException;</code></td>
 </tr>
-<tr class="lineCov" title="Line 16" id="line16">
-<td>16</td><td></td><td>3</td><td><code>    log('retrying on error ${e.runtimeType}...');</code></td>
+<tr class="noop" title="Line 16" id="line16">
+<td>16</td><td></td><td></td><td><code>  if (retry) {</code></td>
 </tr>
-<tr class="noop" title="Line 17" id="line17">
-<td>17</td><td></td><td></td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 17" id="line17">
+<td>17</td><td></td><td>3</td><td><code>    log('retrying on error ${e.runtimeType}...');</code></td>
 </tr>
 <tr class="noop" title="Line 18" id="line18">
-<td>18</td><td></td><td></td><td><code>  return retry;</code></td>
+<td>18</td><td></td><td></td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 19" id="line19">
-<td>19</td><td></td><td></td><td><code>}</code></td>
+<td>19</td><td></td><td></td><td><code>  return retry;</code></td>
+</tr>
+<tr class="noop" title="Line 20" id="line20">
+<td>20</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

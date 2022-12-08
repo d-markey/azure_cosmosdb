@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-05" filename="cosmos_db_collection.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.92561984" lines-covered="112" lines-valid="121" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-08" filename="cosmos_db_collection.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9302326" lines-covered="120" lines-valid="129" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'base_document.dart';</code>
@@ -608,6 +608,56 @@
 </line>
 <line hits="3">
 <code>      client.query&lt;T&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        '$url/docs',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        query,</code>
+</line>
+<line>
+<code>        'Documents',</code>
+</line>
+<line hits="2">
+<code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          type: 'docs',</code>
+</line>
+<line hits="1">
+<code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          token: permission?.token ?? _token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          onForbidden: _refreshPermission,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        ),</code>
+</line>
+<line hits="1">
+<code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Loads documents from this collection matching the provided [query].</code>
+</line>
+<line hits="2">
+<code>  Future&lt;dynamic&gt; rawQuery(Query query, {CosmosDbPermission? permission}) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      client.rawQuery(</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-05" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9807692" lines-covered="102" lines-valid="104" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-08" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9818182" lines-covered="108" lines-valid="110" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -11,7 +11,7 @@
 <code/>
 </line>
 <line>
-<code>import 'package:crypto/crypto.dart';</code>
+<code>import 'package:crypto/crypto.dart' as crypto;</code>
 </line>
 <line>
 <code>import 'package:http/http.dart' as http;</code>
@@ -75,7 +75,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
-<code>      _key = Hmac(sha256, base64Decode(masterKey));</code>
+<code>      _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -108,7 +108,7 @@
 <code/>
 </line>
 <line hits="1">
-<code>  late final Hmac? _key;</code>
+<code>  late final crypto.Hmac? _key;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -592,9 +592,9 @@
 <line>
 <code>        query,</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        context.copyWith(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          query: query,</code>
@@ -628,6 +628,60 @@
 </line>
 <line hits="1">
 <code>              (error, stackTrace) =&gt; throw error.withContext('POST', path));</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;dynamic&gt; rawQuery(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          String path, Query query, String resultSet, Context context) =&gt;</code>
+</line>
+<line hits="2">
+<code>      _send(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        'POST',</code>
+</line>
+<line>
+<code>        path,</code>
+</line>
+<line>
+<code>        query,</code>
+</line>
+<line hits="2">
+<code>        context.copyWith(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          query: query,</code>
+</line>
+<line hits="2">
+<code>          headers: {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>            'content-type': 'application/query+json',</code>
+</line>
+<line>
+<code>            'x-ms-documentdb-isquery': 'true',</code>
+</line>
+<line>
+<code>          },</code>
+</line>
+<line>
+<code>        ),</code>
+</line>
+<line hits="2">
+<code>      ).onError&lt;ContextualizedException&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          (error, stackTrace) =&gt; throw error.withContext('POST', path));</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>

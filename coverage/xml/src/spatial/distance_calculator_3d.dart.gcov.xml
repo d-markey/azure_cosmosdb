@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-05" filename="distance_calculator_3d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="12" lines-valid="12" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-08" filename="distance_calculator_3d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="12" lines-valid="12" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:math';</code>
@@ -14,10 +14,10 @@
 <code>import 'distance_calculator_2d.dart';</code>
 </line>
 <line>
-<code>import 'line.dart';</code>
+<code>import 'point.dart';</code>
 </line>
 <line>
-<code>import 'point.dart';</code>
+<code>import 'shape.dart';</code>
 </line>
 <line>
 <code/>
@@ -32,10 +32,10 @@
 <code>  /// distance when [Point.altitude] are set in both positions, otherwise</code>
 </line>
 <line>
-<code>  /// a 2D distance is returned. [from] and [to] must have coordinate-based</code>
+<code>  /// a 2D distance is returned. [from] and [to] must have geometry-based</code>
 </line>
 <line>
-<code>  /// positions; if this is not the case, the function returns `null`. See</code>
+<code>  /// coordinates; if this is not the case, the function returns `null`. See</code>
 </line>
 <line>
 <code>  /// also [DistanceCalculator2D].</code>
@@ -87,26 +87,23 @@
 <code>  /// Computes the 3D length of a line or polygon. `null` is returned iif any</code>
 </line>
 <line>
-<code>  /// [Point] in the line or polygon does not have a coordinate-based [Point].</code>
+<code>  /// [Point] in the line or polygon is not geometry-based. If all points have a</code>
 </line>
 <line>
-<code>  /// If all points have a `null` `altitude`, returns a 2D distance. If some</code>
+<code>  /// `null` `altitude`, returns a 2D distance. If some points have their altitude</code>
 </line>
 <line>
-<code>  /// points have their altitude set while some others do not, the resulting</code>
+<code>  /// set while some others do not, the resulting distance may be inconsistent as</code>
 </line>
 <line>
-<code>  /// distance may be inconsistent as some segments will be measured in 2D and</code>
-</line>
-<line>
-<code>  /// others in 3D.</code>
+<code>  /// some segments will be measured in 2D and others in 3D.</code>
 </line>
 <line hits="1">
 <code>  @override</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>  double? measure(Line lineOrPolygon) =&gt; super.measure(lineOrPolygon);</code>
+<code>  double? measure(Shape shape) =&gt; super.measure(shape);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>

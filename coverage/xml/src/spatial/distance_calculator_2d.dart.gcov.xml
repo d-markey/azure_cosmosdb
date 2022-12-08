@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-05" filename="distance_calculator_2d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="9" lines-valid="9" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-08" filename="distance_calculator_2d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="9" lines-valid="9" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:math';</code>
@@ -14,10 +14,10 @@
 <code>import 'distance_calculator_3d.dart';</code>
 </line>
 <line>
-<code>import 'line.dart';</code>
+<code>import 'point.dart';</code>
 </line>
 <line>
-<code>import 'point.dart';</code>
+<code>import 'shape.dart';</code>
 </line>
 <line>
 <code/>
@@ -32,7 +32,7 @@
 <code>  /// implementation ignores all [Point.altitude] values. [from] and [to]</code>
 </line>
 <line>
-<code>  /// must have coordinate-based positions; if this is not the case, the</code>
+<code>  /// must have geometry-based coordinates; if this is not the case, the</code>
 </line>
 <line>
 <code>  /// function returns `null`. See also [DistanceCalculator3D].</code>
@@ -69,17 +69,17 @@
 <code/>
 </line>
 <line>
-<code>  /// Computes the 2D length of a line or polygon. `null` is returned iif any</code>
+<code>  /// Computes the 2D length of a line string or polygon. `null` is returned iif</code>
 </line>
 <line>
-<code>  /// [Point] in the line or polygon does not have a coordinate-based [Point].</code>
+<code>  /// any [Point] in the lines or polygon is not geometry-based.</code>
 </line>
 <line hits="1">
 <code>  @override</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>  double? measure(Line lineOrPolygon) =&gt; super.measure(lineOrPolygon);</code>
+<code>  double? measure(Shape shape) =&gt; super.measure(shape);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>

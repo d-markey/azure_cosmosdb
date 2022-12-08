@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-12-05</dd>
+<dd>2022-12-08</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -69,7 +69,7 @@
 <td>3</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
-<td>4</td><td></td><td></td><td><code>import 'package:http/http.dart';</code></td>
+<td>4</td><td></td><td></td><td><code>import 'package:http/http.dart' as http;</code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
 <td>5</td><td></td><td></td><td><code></code></td>
@@ -81,10 +81,10 @@
 <td>7</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 8" id="line8">
-<td>8</td><td></td><td></td><td><code>bool retryIf(Client http, Exception e) {</code></td>
+<td>8</td><td></td><td></td><td><code>bool retryIf(http.Client client, Exception e) {</code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
-<td>9</td><td></td><td></td><td><code>  if (http is DebugHttpClient) {</code></td>
+<td>9</td><td></td><td></td><td><code>  if (client is DebugHttpClient) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 10" id="line10">
 <td>10</td><td></td><td>1</td><td><code>    log('!!! received exception $e');</code></td>
@@ -93,7 +93,7 @@
 <td>11</td><td></td><td></td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 12" id="line12">
-<td>12</td><td></td><td></td><td><code>  final retry = e is TimeoutException || e is ClientException;</code></td>
+<td>12</td><td></td><td></td><td><code>  final retry = e is TimeoutException || e is http.ClientException;</code></td>
 </tr>
 <tr class="lineCov" title="Line 13" id="line13">
 <td>13</td><td></td><td>1</td><td><code>  if (retry) {</code></td>

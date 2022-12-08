@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-12-05</dd>
+<dd>2022-12-08</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>102</td><td>104</td><td class="high">98.1%</td>
+<th scope="row">Lines</th><td>108</td><td>110</td><td class="high">98.2%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -69,7 +69,7 @@
 <td>3</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
-<td>4</td><td></td><td></td><td><code>import 'package:crypto/crypto.dart';</code></td>
+<td>4</td><td></td><td></td><td><code>import 'package:crypto/crypto.dart' as crypto;</code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
 <td>5</td><td></td><td></td><td><code>import 'package:http/http.dart' as http;</code></td>
@@ -129,7 +129,7 @@
 <td>23</td><td></td><td>1</td><td><code>    if (masterKey != null) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 24" id="line24">
-<td>24</td><td></td><td>4</td><td><code>      _key = Hmac(sha256, base64Decode(masterKey));</code></td>
+<td>24</td><td></td><td>4</td><td><code>      _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));</code></td>
 </tr>
 <tr class="noop" title="Line 25" id="line25">
 <td>25</td><td></td><td></td><td><code>    } else {</code></td>
@@ -159,7 +159,7 @@
 <td>33</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 34" id="line34">
-<td>34</td><td></td><td>1</td><td><code>  late final Hmac? _key;</code></td>
+<td>34</td><td></td><td>1</td><td><code>  late final crypto.Hmac? _key;</code></td>
 </tr>
 <tr class="lineCov" title="Line 35" id="line35">
 <td>35</td><td></td><td>1</td><td><code>  late final http.Client _http;</code></td>
@@ -564,7 +564,7 @@
 <td>168</td><td></td><td></td><td><code>        query,</code></td>
 </tr>
 <tr class="lineCov" title="Line 169" id="line169">
-<td>169</td><td></td><td>1</td><td><code>        context.copyWith(</code></td>
+<td>169</td><td></td><td>2</td><td><code>        context.copyWith(</code></td>
 </tr>
 <tr class="noop" title="Line 170" id="line170">
 <td>170</td><td></td><td></td><td><code>          query: query,</code></td>
@@ -600,43 +600,91 @@
 <td>180</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 181" id="line181">
-<td>181</td><td></td><td>2</td><td><code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code></td>
+<td>181</td><td></td><td>2</td><td><code>  Future&lt;dynamic&gt; rawQuery(</code></td>
 </tr>
 <tr class="noop" title="Line 182" id="line182">
-<td>182</td><td></td><td></td><td><code>          String path, BaseDocument doc, Context context) =&gt;</code></td>
+<td>182</td><td></td><td></td><td><code>          String path, Query query, String resultSet, Context context) =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 183" id="line183">
-<td>183</td><td></td><td>2</td><td><code>      _send('PUT', path, doc, context)</code></td>
+<td>183</td><td></td><td>2</td><td><code>      _send(</code></td>
 </tr>
-<tr class="lineCov" title="Line 184" id="line184">
-<td>184</td><td></td><td>4</td><td><code>          .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
+<tr class="noop" title="Line 184" id="line184">
+<td>184</td><td></td><td></td><td><code>        'POST',</code></td>
 </tr>
-<tr class="lineCov" title="Line 185" id="line185">
-<td>185</td><td></td><td>2</td><td><code>          .onError&lt;ContextualizedException&gt;(</code></td>
+<tr class="noop" title="Line 185" id="line185">
+<td>185</td><td></td><td></td><td><code>        path,</code></td>
 </tr>
-<tr class="lineCov" title="Line 186" id="line186">
-<td>186</td><td></td><td>1</td><td><code>              (error, stackTrace) =&gt; throw error.withContext('PUT', path));</code></td>
+<tr class="noop" title="Line 186" id="line186">
+<td>186</td><td></td><td></td><td><code>        query,</code></td>
 </tr>
-<tr class="noop" title="Line 187" id="line187">
-<td>187</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 187" id="line187">
+<td>187</td><td></td><td>2</td><td><code>        context.copyWith(</code></td>
 </tr>
-<tr class="lineCov" title="Line 188" id="line188">
-<td>188</td><td></td><td>2</td><td><code>  Future&lt;bool&gt; delete(String path, Context context) =&gt;</code></td>
+<tr class="noop" title="Line 188" id="line188">
+<td>188</td><td></td><td></td><td><code>          query: query,</code></td>
 </tr>
 <tr class="lineCov" title="Line 189" id="line189">
-<td>189</td><td></td><td>2</td><td><code>      _send('DELETE', path, null, context)</code></td>
+<td>189</td><td></td><td>2</td><td><code>          headers: {</code></td>
 </tr>
-<tr class="lineCov" title="Line 190" id="line190">
-<td>190</td><td></td><td>3</td><td><code>          .then((result) =&gt; true)</code></td>
+<tr class="noop" title="Line 190" id="line190">
+<td>190</td><td></td><td></td><td><code>            'content-type': 'application/query+json',</code></td>
 </tr>
-<tr class="lineCov" title="Line 191" id="line191">
-<td>191</td><td></td><td>2</td><td><code>          .onError&lt;ContextualizedException&gt;(</code></td>
+<tr class="noop" title="Line 191" id="line191">
+<td>191</td><td></td><td></td><td><code>            'x-ms-documentdb-isquery': 'true',</code></td>
 </tr>
-<tr class="lineCov" title="Line 192" id="line192">
-<td>192</td><td></td><td>3</td><td><code>              (error, stackTrace) =&gt; throw error.withContext('DELETE', path));</code></td>
+<tr class="noop" title="Line 192" id="line192">
+<td>192</td><td></td><td></td><td><code>          },</code></td>
 </tr>
 <tr class="noop" title="Line 193" id="line193">
-<td>193</td><td></td><td></td><td><code>}</code></td>
+<td>193</td><td></td><td></td><td><code>        ),</code></td>
+</tr>
+<tr class="lineCov" title="Line 194" id="line194">
+<td>194</td><td></td><td>2</td><td><code>      ).onError&lt;ContextualizedException&gt;(</code></td>
+</tr>
+<tr class="lineCov" title="Line 195" id="line195">
+<td>195</td><td></td><td>1</td><td><code>          (error, stackTrace) =&gt; throw error.withContext('POST', path));</code></td>
+</tr>
+<tr class="noop" title="Line 196" id="line196">
+<td>196</td><td></td><td></td><td><code></code></td>
+</tr>
+<tr class="lineCov" title="Line 197" id="line197">
+<td>197</td><td></td><td>2</td><td><code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code></td>
+</tr>
+<tr class="noop" title="Line 198" id="line198">
+<td>198</td><td></td><td></td><td><code>          String path, BaseDocument doc, Context context) =&gt;</code></td>
+</tr>
+<tr class="lineCov" title="Line 199" id="line199">
+<td>199</td><td></td><td>2</td><td><code>      _send('PUT', path, doc, context)</code></td>
+</tr>
+<tr class="lineCov" title="Line 200" id="line200">
+<td>200</td><td></td><td>4</td><td><code>          .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
+</tr>
+<tr class="lineCov" title="Line 201" id="line201">
+<td>201</td><td></td><td>2</td><td><code>          .onError&lt;ContextualizedException&gt;(</code></td>
+</tr>
+<tr class="lineCov" title="Line 202" id="line202">
+<td>202</td><td></td><td>1</td><td><code>              (error, stackTrace) =&gt; throw error.withContext('PUT', path));</code></td>
+</tr>
+<tr class="noop" title="Line 203" id="line203">
+<td>203</td><td></td><td></td><td><code></code></td>
+</tr>
+<tr class="lineCov" title="Line 204" id="line204">
+<td>204</td><td></td><td>2</td><td><code>  Future&lt;bool&gt; delete(String path, Context context) =&gt;</code></td>
+</tr>
+<tr class="lineCov" title="Line 205" id="line205">
+<td>205</td><td></td><td>2</td><td><code>      _send('DELETE', path, null, context)</code></td>
+</tr>
+<tr class="lineCov" title="Line 206" id="line206">
+<td>206</td><td></td><td>3</td><td><code>          .then((result) =&gt; true)</code></td>
+</tr>
+<tr class="lineCov" title="Line 207" id="line207">
+<td>207</td><td></td><td>2</td><td><code>          .onError&lt;ContextualizedException&gt;(</code></td>
+</tr>
+<tr class="lineCov" title="Line 208" id="line208">
+<td>208</td><td></td><td>3</td><td><code>              (error, stackTrace) =&gt; throw error.withContext('DELETE', path));</code></td>
+</tr>
+<tr class="noop" title="Line 209" id="line209">
+<td>209</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

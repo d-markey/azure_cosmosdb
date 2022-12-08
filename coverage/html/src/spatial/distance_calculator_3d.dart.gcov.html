@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-12-05</dd>
+<dd>2022-12-08</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -72,10 +72,10 @@
 <td>4</td><td></td><td></td><td><code>import 'distance_calculator_2d.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
-<td>5</td><td></td><td></td><td><code>import 'line.dart';</code></td>
+<td>5</td><td></td><td></td><td><code>import 'point.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
-<td>6</td><td></td><td></td><td><code>import 'point.dart';</code></td>
+<td>6</td><td></td><td></td><td><code>import 'shape.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 7" id="line7">
 <td>7</td><td></td><td></td><td><code></code></td>
@@ -90,10 +90,10 @@
 <td>10</td><td></td><td></td><td><code>  /// distance when [Point.altitude] are set in both positions, otherwise</code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>  /// a 2D distance is returned. [from] and [to] must have coordinate-based</code></td>
+<td>11</td><td></td><td></td><td><code>  /// a 2D distance is returned. [from] and [to] must have geometry-based</code></td>
 </tr>
 <tr class="noop" title="Line 12" id="line12">
-<td>12</td><td></td><td></td><td><code>  /// positions; if this is not the case, the function returns `null`. See</code></td>
+<td>12</td><td></td><td></td><td><code>  /// coordinates; if this is not the case, the function returns `null`. See</code></td>
 </tr>
 <tr class="noop" title="Line 13" id="line13">
 <td>13</td><td></td><td></td><td><code>  /// also [DistanceCalculator2D].</code></td>
@@ -135,28 +135,25 @@
 <td>25</td><td></td><td></td><td><code>  /// Computes the 3D length of a line or polygon. `null` is returned iif any</code></td>
 </tr>
 <tr class="noop" title="Line 26" id="line26">
-<td>26</td><td></td><td></td><td><code>  /// [Point] in the line or polygon does not have a coordinate-based [Point].</code></td>
+<td>26</td><td></td><td></td><td><code>  /// [Point] in the line or polygon is not geometry-based. If all points have a</code></td>
 </tr>
 <tr class="noop" title="Line 27" id="line27">
-<td>27</td><td></td><td></td><td><code>  /// If all points have a `null` `altitude`, returns a 2D distance. If some</code></td>
+<td>27</td><td></td><td></td><td><code>  /// `null` `altitude`, returns a 2D distance. If some points have their altitude</code></td>
 </tr>
 <tr class="noop" title="Line 28" id="line28">
-<td>28</td><td></td><td></td><td><code>  /// points have their altitude set while some others do not, the resulting</code></td>
+<td>28</td><td></td><td></td><td><code>  /// set while some others do not, the resulting distance may be inconsistent as</code></td>
 </tr>
 <tr class="noop" title="Line 29" id="line29">
-<td>29</td><td></td><td></td><td><code>  /// distance may be inconsistent as some segments will be measured in 2D and</code></td>
+<td>29</td><td></td><td></td><td><code>  /// some segments will be measured in 2D and others in 3D.</code></td>
 </tr>
-<tr class="noop" title="Line 30" id="line30">
-<td>30</td><td></td><td></td><td><code>  /// others in 3D.</code></td>
+<tr class="lineCov" title="Line 30" id="line30">
+<td>30</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
 <tr class="lineCov" title="Line 31" id="line31">
-<td>31</td><td></td><td>1</td><td><code>  @override</code></td>
+<td>31</td><td></td><td>2</td><td><code>  double? measure(Shape shape) =&gt; super.measure(shape);</code></td>
 </tr>
-<tr class="lineCov" title="Line 32" id="line32">
-<td>32</td><td></td><td>2</td><td><code>  double? measure(Line lineOrPolygon) =&gt; super.measure(lineOrPolygon);</code></td>
-</tr>
-<tr class="noop" title="Line 33" id="line33">
-<td>33</td><td></td><td></td><td><code>}</code></td>
+<tr class="noop" title="Line 32" id="line32">
+<td>32</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>
