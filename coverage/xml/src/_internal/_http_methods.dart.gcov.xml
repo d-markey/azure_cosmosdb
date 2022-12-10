@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="_http_methods.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/_internal" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>class HttpMethod {</code>
+</line>
+<line hits="1">
+<code>  const HttpMethod._(this.name, this.isReadOnly);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String name;</code>
+</line>
+<line>
+<code>  final bool isReadOnly;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  static const get = HttpMethod._('GET', true);</code>
+</line>
+<line>
+<code>  static const post = HttpMethod._('POST', false);</code>
+</line>
+<line>
+<code>  static const put = HttpMethod._('PUT', false);</code>
+</line>
+<line>
+<code>  static const patch = HttpMethod._('PATCH', false);</code>
+</line>
+<line>
+<code>  static const delete = HttpMethod._('DELETE', false);</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

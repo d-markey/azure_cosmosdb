@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.68421054" lines-covered="13" lines-valid="19" package="/src" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:convert';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'cosmos_db_exceptions.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class representing a CosmosDB throughput</code>
+</line>
+<line>
+<code>class CosmosDbThroughput {</code>
+</line>
+<line hits="2">
+<code>  CosmosDbThroughput(int throughput)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : header = {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          'x-ms-offer-throughput': throughput.toString(),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        } {</code>
+</line>
+<line hits="2">
+<code>    if (throughput &lt; _min) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      throw ApplicationException(</code>
+</line>
+<line hits="0">
+<code>          'Invalid throughput: minimum value is $_min RUs');</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="3">
+<code>    if (throughput % 100 != 0) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      throw ApplicationException(</code>
+</line>
+<line>
+<code>          'Invalid throughput: value must be a multiple of 100 RUs');</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  CosmosDbThroughput.autoScale(int maxThroughput)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : header = {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          'x-ms-cosmos-offer-autopilot-settings':</code>
+</line>
+<line hits="3">
+<code>              jsonEncode({'maxThroughput': maxThroughput}),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        } {</code>
+</line>
+<line hits="2">
+<code>    if (maxThroughput &lt; _minAutoScale) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      throw ApplicationException(</code>
+</line>
+<line hits="0">
+<code>          'Invalid max throughput: minimum value is $_minAutoScale RUs');</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="3">
+<code>    if (maxThroughput % 1000 != 0) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      throw ApplicationException(</code>
+</line>
+<line>
+<code>          'Invalid max throughput: value must be a multiple of 1000 RUs');</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>  static final minimum = CosmosDbThroughput(400);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final Map&lt;String, String&gt; header;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  static final _min = 400;</code>
+</line>
+<line>
+<code>  static final _minAutoScale = 1000;</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

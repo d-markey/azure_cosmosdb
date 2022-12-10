@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="../../jgenhtml.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../../jgenhtml.js"></script>
-<title>LCOV - lcov.info data_type.dart</title>
+<title>LCOV - lcov.info _http_call.dart</title>
 </head>
 <body class="noscript nolegend">
 <h1>LCOV - code coverage report</h1>
@@ -13,7 +13,7 @@
 <dl class="pageView">
 <dt>Current view</dt>
 <dd>
-<a href="../../index.html">top level</a> - <a href="index.html">/src/indexing</a> - data_type.dart</dd>
+<a href="../../index.html">top level</a> - <a href="index.html">/src/_internal</a> - _http_call.dart</dd>
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>1</td><td>1</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>9</td><td>11</td><td class="med">81.8%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -60,85 +60,82 @@
 </thead>
 <tbody>
 <tr class="noop" title="Line 1" id="line1">
-<td>1</td><td></td><td></td><td><code>/// Constants for data types.</code></td>
+<td>1</td><td></td><td></td><td><code>import 'package:http/http.dart' as http;</code></td>
 </tr>
 <tr class="noop" title="Line 2" id="line2">
-<td>2</td><td></td><td></td><td><code>class DataType {</code></td>
+<td>2</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 3" id="line3">
-<td>3</td><td></td><td>1</td><td><code>  const DataType._(this.name);</code></td>
+<tr class="noop" title="Line 3" id="line3">
+<td>3</td><td></td><td></td><td><code>import '_authorization.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
-<td>4</td><td></td><td></td><td><code></code></td>
+<td>4</td><td></td><td></td><td><code>import '_http_header.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
-<td>5</td><td></td><td></td><td><code>  final String name;</code></td>
+<td>5</td><td></td><td></td><td><code>import '_http_methods.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
 <td>6</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 7" id="line7">
-<td>7</td><td></td><td></td><td><code>  /// String type.</code></td>
+<td>7</td><td></td><td></td><td><code>class HttpCall {</code></td>
 </tr>
-<tr class="noop" title="Line 8" id="line8">
-<td>8</td><td></td><td></td><td><code>  static const string = DataType._('String');</code></td>
+<tr class="lineNoCov" title="Line 8" id="line8">
+<td>8</td><td></td><td>0</td><td><code>  const HttpCall(this.method, this.uri);</code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
 <td>9</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="noop" title="Line 10" id="line10">
-<td>10</td><td></td><td></td><td><code>  /// Numeric type.</code></td>
+<tr class="lineCov" title="Line 10" id="line10">
+<td>10</td><td></td><td>2</td><td><code>  const HttpCall.get(this.uri) : method = HttpMethod.get;</code></td>
 </tr>
-<tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>  static const number = DataType._('Number');</code></td>
+<tr class="lineCov" title="Line 11" id="line11">
+<td>11</td><td></td><td>2</td><td><code>  const HttpCall.post(this.uri) : method = HttpMethod.post;</code></td>
 </tr>
-<tr class="noop" title="Line 12" id="line12">
-<td>12</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 12" id="line12">
+<td>12</td><td></td><td>2</td><td><code>  const HttpCall.put(this.uri) : method = HttpMethod.put;</code></td>
 </tr>
-<tr class="noop" title="Line 13" id="line13">
-<td>13</td><td></td><td></td><td><code>  /// Point type.</code></td>
+<tr class="lineNoCov" title="Line 13" id="line13">
+<td>13</td><td></td><td>0</td><td><code>  const HttpCall.patch(this.uri) : method = HttpMethod.patch;</code></td>
 </tr>
-<tr class="noop" title="Line 14" id="line14">
-<td>14</td><td></td><td></td><td><code>  static const point = DataType._('Point');</code></td>
+<tr class="lineCov" title="Line 14" id="line14">
+<td>14</td><td></td><td>2</td><td><code>  const HttpCall.delete(this.uri) : method = HttpMethod.delete;</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
 <td>15</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
-<td>16</td><td></td><td></td><td><code>  /// Polygon type.</code></td>
+<td>16</td><td></td><td></td><td><code>  final HttpMethod method;</code></td>
 </tr>
 <tr class="noop" title="Line 17" id="line17">
-<td>17</td><td></td><td></td><td><code>  static const polygon = DataType._('Polygon');</code></td>
+<td>17</td><td></td><td></td><td><code>  final String uri;</code></td>
 </tr>
 <tr class="noop" title="Line 18" id="line18">
 <td>18</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="noop" title="Line 19" id="line19">
-<td>19</td><td></td><td></td><td><code>  /// Multi-polygon type.</code></td>
+<tr class="lineCov" title="Line 19" id="line19">
+<td>19</td><td></td><td>1</td><td><code>  http.Request getRequest(String root, Authorization authorization) {</code></td>
 </tr>
-<tr class="noop" title="Line 20" id="line20">
-<td>20</td><td></td><td></td><td><code>  static const multiPolygon = DataType._('MultiPolygon');</code></td>
+<tr class="lineCov" title="Line 20" id="line20">
+<td>20</td><td></td><td>7</td><td><code>    final request = http.Request(method.name, Uri.parse(root + uri));</code></td>
 </tr>
-<tr class="noop" title="Line 21" id="line21">
-<td>21</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>4</td><td><code>    request.headers[HttpHeader.authorization] = authorization.token;</code></td>
 </tr>
-<tr class="noop" title="Line 22" id="line22">
-<td>22</td><td></td><td></td><td><code>  /// Line-string type.</code></td>
+<tr class="lineCov" title="Line 22" id="line22">
+<td>22</td><td></td><td>4</td><td><code>    request.headers[HttpHeader.msDate] = authorization.date;</code></td>
 </tr>
-<tr class="noop" title="Line 23" id="line23">
-<td>23</td><td></td><td></td><td><code>  static const lineString = DataType._('LineString');</code></td>
+<tr class="lineCov" title="Line 23" id="line23">
+<td>23</td><td></td><td>3</td><td><code>    request.headers.addAll(HttpHeader.apiVersion);</code></td>
 </tr>
 <tr class="noop" title="Line 24" id="line24">
-<td>24</td><td></td><td></td><td><code></code></td>
+<td>24</td><td></td><td></td><td><code>    return request;</code></td>
 </tr>
 <tr class="noop" title="Line 25" id="line25">
-<td>25</td><td></td><td></td><td><code>  /// List of spatial data types.</code></td>
+<td>25</td><td></td><td></td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 26" id="line26">
-<td>26</td><td></td><td></td><td><code>  static const spatial = [point, polygon, multiPolygon, lineString];</code></td>
-</tr>
-<tr class="noop" title="Line 27" id="line27">
-<td>27</td><td></td><td></td><td><code>}</code></td>
+<td>26</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

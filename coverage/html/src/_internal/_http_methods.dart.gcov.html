@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="../../jgenhtml.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../../jgenhtml.js"></script>
-<title>LCOV - lcov.info index_path.dart</title>
+<title>LCOV - lcov.info _http_methods.dart</title>
 </head>
 <body class="noscript nolegend">
 <h1>LCOV - code coverage report</h1>
@@ -13,7 +13,7 @@
 <dl class="pageView">
 <dt>Current view</dt>
 <dd>
-<a href="../../index.html">top level</a> - <a href="index.html">/src/indexing</a> - index_path.dart</dd>
+<a href="../../index.html">top level</a> - <a href="index.html">/src/_internal</a> - _http_methods.dart</dd>
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>5</td><td>5</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>1</td><td>1</td><td class="high">100.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -60,55 +60,40 @@
 </thead>
 <tbody>
 <tr class="noop" title="Line 1" id="line1">
-<td>1</td><td></td><td></td><td><code>import 'index_order.dart';</code></td>
+<td>1</td><td></td><td></td><td><code>class HttpMethod {</code></td>
 </tr>
-<tr class="noop" title="Line 2" id="line2">
-<td>2</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 2" id="line2">
+<td>2</td><td></td><td>1</td><td><code>  const HttpMethod._(this.name, this.isReadOnly);</code></td>
 </tr>
 <tr class="noop" title="Line 3" id="line3">
-<td>3</td><td></td><td></td><td><code>/// Class representing an index.</code></td>
+<td>3</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
-<td>4</td><td></td><td></td><td><code>class IndexPath {</code></td>
+<td>4</td><td></td><td></td><td><code>  final String name;</code></td>
 </tr>
-<tr class="lineCov" title="Line 5" id="line5">
-<td>5</td><td></td><td>1</td><td><code>  IndexPath(this.path, {this.order});</code></td>
+<tr class="noop" title="Line 5" id="line5">
+<td>5</td><td></td><td></td><td><code>  final bool isReadOnly;</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
 <td>6</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 7" id="line7">
-<td>7</td><td></td><td></td><td><code>  /// JSON path to the field/nodes.</code></td>
+<td>7</td><td></td><td></td><td><code>  static const get = HttpMethod._('GET', true);</code></td>
 </tr>
 <tr class="noop" title="Line 8" id="line8">
-<td>8</td><td></td><td></td><td><code>  final String path;</code></td>
+<td>8</td><td></td><td></td><td><code>  static const post = HttpMethod._('POST', false);</code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
-<td>9</td><td></td><td></td><td><code></code></td>
+<td>9</td><td></td><td></td><td><code>  static const put = HttpMethod._('PUT', false);</code></td>
 </tr>
 <tr class="noop" title="Line 10" id="line10">
-<td>10</td><td></td><td></td><td><code>  /// Index order, see constants from [IndexOrder].</code></td>
+<td>10</td><td></td><td></td><td><code>  static const patch = HttpMethod._('PATCH', false);</code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>  final IndexOrder? order;</code></td>
+<td>11</td><td></td><td></td><td><code>  static const delete = HttpMethod._('DELETE', false);</code></td>
 </tr>
 <tr class="noop" title="Line 12" id="line12">
-<td>12</td><td></td><td></td><td><code></code></td>
-</tr>
-<tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>3</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code></td>
-</tr>
-<tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>3</td><td><code>        'path': path,</code></td>
-</tr>
-<tr class="lineCov" title="Line 15" id="line15">
-<td>15</td><td></td><td>5</td><td><code>        if (order != null) 'order': order!.name,</code></td>
-</tr>
-<tr class="lineCov" title="Line 16" id="line16">
-<td>16</td><td></td><td>1</td><td><code>      };</code></td>
-</tr>
-<tr class="noop" title="Line 17" id="line17">
-<td>17</td><td></td><td></td><td><code>}</code></td>
+<td>12</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>
