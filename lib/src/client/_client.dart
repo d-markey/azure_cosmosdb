@@ -6,7 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:retry/retry.dart';
 
 import '../_internal/_authorization.dart';
+import '../_internal/_http_call.dart';
+import '../_internal/_http_header.dart';
 import '../_internal/_http_status_codes.dart';
+import '../_internal/_mime_type.dart';
 import '../base_document.dart';
 import '../cosmos_db_exceptions.dart';
 import '../queries/paging.dart';
@@ -17,8 +20,12 @@ import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';
 typedef _DocumentBuilder = DocumentBuilder<BaseDocument>;
 
 class Client {
-  Client(this._url, {String? masterKey, http.Client? httpClient})
-      : _baseHttpClient = httpClient ?? http.Client() {
+  Client(
+    this._url, {
+    String? masterKey,
+    this.multipleWriteLocations = false,
+    http.Client? httpClient,
+  }) : _baseHttpClient = httpClient ?? http.Client() {
     _http = _baseHttpClient;
     if (masterKey != null) {
       _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));
@@ -28,6 +35,7 @@ class Client {
   }
 
   final String _url;
+  final bool multipleWriteLocations;
   final http.Client _baseHttpClient;
   final RetryOptions _retry = RetryOptions();
 
@@ -65,24 +73,22 @@ class Client {
   }
 
   Future<http.StreamedResponse> _sendWithAuth(
-    String method,
-    String path,
+    HttpCall call,
     BaseDocument? body,
     Context context,
     Authorization authorization,
   ) {
-    final request = http.Request(method, Uri.parse(_url + path));
+    final request = call.getRequest(_url, authorization);
 
     if (body != null) {
+      request.headers.addAll(HttpHeader.jsonPayload);
       request.body = jsonEncode(body);
-      request.headers['content-type'] = 'application/json';
+    }
+    if (multipleWriteLocations && !call.method.isReadOnly) {
+      request.headers.addAll(HttpHeader.allowTentativeWrites);
     }
 
     request.headers.addAll(context.getHeaders());
-
-    request.headers['authorization'] = authorization.token;
-    request.headers['x-ms-date'] = authorization.date;
-    request.headers['x-ms-version'] = '2018-12-31';
 
     return _retry.retry(
       () => _http.send(request).timeout(Duration(seconds: 5)),
@@ -91,19 +97,18 @@ class Client {
   }
 
   Future<dynamic> _send(
-    String method,
-    String path,
+    HttpCall call,
     BaseDocument? body,
     Context context,
   ) async {
-    String resId = context.resId ?? path;
+    String resId = context.resId ?? call.uri;
 
     var auth = (context.token != null)
         ? Authorization.fromToken(context.token!)
         : Authorization.fromKey(
-            _key, method.toLowerCase(), context.type, resId);
+            _key, call.method.name.toLowerCase(), context.type, resId);
 
-    var result = await _sendWithAuth(method, path, body, context, auth);
+    var result = await _sendWithAuth(call, body, context, auth);
 
     if (result.statusCode == HttpStatusCode.forbidden) {
       // try to get a new permission from the onForbidden callback
@@ -112,19 +117,22 @@ class Client {
       if (token != null) {
         // try again with this permission
         auth = Authorization.fromToken(token);
-        result = await _sendWithAuth(method, path, body, context, auth);
+        result = await _sendWithAuth(call, body, context, auth);
       }
     }
 
-    final contentType = result.headers['content-type'];
-    if (contentType != 'application/json') {
+    final contentType = result.headers[HttpHeader.contentType];
+    if (contentType != MimeType.json) {
       throw BadResponseException('Unsupported content-type: $contentType');
     }
     final response = await result.stream.bytesToString();
     dynamic data = response.isEmpty ? {} : jsonDecode(response);
 
     if (!HttpStatusCode.success(result.statusCode)) {
-      final ex = CosmosDbException(result.statusCode, data['message']);
+      final message = (data is Map && data.containsKey('message'))
+          ? '${result.reasonPhrase}: ${data['message']}'
+          : result.reasonPhrase;
+      final ex = CosmosDbException(result.statusCode, message);
       if (ex is! NotFoundException || context.throwOnNotFound) {
         throw ex;
       }
@@ -132,78 +140,88 @@ class Client {
       data = null;
     }
 
-    context.paging?.setContinuation(result.headers['x-ms-continuation'] ?? '');
+    context.paging?.setContinuation(
+      result.headers[HttpHeader.msContinuation] ?? '',
+    );
     return data;
   }
 
-  Future<dynamic> getJson(String path, Context context) =>
-      _send('GET', path, null, context).onError<ContextualizedException>(
-          (error, stackTrace) => throw error.withContext('GET', path));
+  Future<dynamic> getJson(String path, Context context) {
+    final call = HttpCall.get(path);
+    return _send(call, null, context).rethrowContextualizedException(call);
+  }
 
-  Future<T?> get<T extends BaseDocument>(String path, Context context) =>
-      _send('GET', path, null, context)
-          .then((data) => _build<T>(context, data))
-          .onError<ContextualizedException>(
-              (error, stackTrace) => throw error.withContext('GET', path));
+  Future<T?> get<T extends BaseDocument>(String path, Context context) {
+    final call = HttpCall.get(path);
+    return _send(call, null, context)
+        .then((data) => _build<T>(context, data))
+        .rethrowContextualizedException(call);
+  }
 
   Future<Iterable<T>> getMany<T extends BaseDocument>(
-          String path, String resultSet, Context context) =>
-      _send('GET', path, null, context)
-          .then((result) => _buildMany<T>(context, result![resultSet]))
-          .onError<ContextualizedException>(
-              (error, stackTrace) => throw error.withContext('GET', path));
+      String path, String resultSet, Context context) {
+    final call = HttpCall.get(path);
+    return _send(call, null, context)
+        .then((result) => _buildMany<T>(context, result![resultSet]))
+        .rethrowContextualizedException(call);
+  }
 
   Future<T> post<T extends BaseDocument>(
-          String path, BaseDocument doc, Context context) =>
-      _send('POST', path, doc, context)
-          .then((data) => _build<T>(context, data)!)
-          .onError<ContextualizedException>(
-              (error, stackTrace) => throw error.withContext('POST', path));
+      String path, BaseDocument doc, Context context) {
+    final call = HttpCall.post(path);
+    return _send(call, doc, context)
+        .then((data) => _build<T>(context, data)!)
+        .rethrowContextualizedException(call);
+  }
+
+  Future<T> patch<T extends BaseDocument>(
+      String path, BaseDocument doc, Context context) {
+    final call = HttpCall.patch(path);
+    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))
+        .then((data) => _build<T>(context, data)!)
+        .rethrowContextualizedException(call);
+  }
 
   Future<Iterable<T>> query<T extends BaseDocument>(
-          String path, Query query, String resultSet, Context context) =>
-      _send(
-        'POST',
-        path,
-        query,
-        context.copyWith(
-          query: query,
-          headers: {
-            'content-type': 'application/query+json',
-            'x-ms-documentdb-isquery': 'true',
-          },
-        ),
-      )
-          .then((result) => _buildMany<T>(context, result![resultSet]))
-          .onError<ContextualizedException>(
-              (error, stackTrace) => throw error.withContext('POST', path));
+      String path, Query query, String resultSet, Context context) {
+    final call = HttpCall.post(path);
+    return _send(
+            call,
+            query,
+            context.copyWith(
+              paging: query,
+              partition: query.partition,
+              headers: HttpHeader.queryPayload,
+            ))
+        .then((result) => _buildMany<T>(context, result![resultSet]))
+        .rethrowContextualizedException(call);
+  }
 
   Future<dynamic> rawQuery(
-          String path, Query query, String resultSet, Context context) =>
-      _send(
-        'POST',
-        path,
+      String path, Query query, String resultSet, Context context) {
+    final call = HttpCall.post(path);
+    return _send(
+        call,
         query,
         context.copyWith(
-          query: query,
-          headers: {
-            'content-type': 'application/query+json',
-            'x-ms-documentdb-isquery': 'true',
-          },
-        ),
-      ).onError<ContextualizedException>(
-          (error, stackTrace) => throw error.withContext('POST', path));
+          paging: query,
+          partition: query.partition,
+          headers: HttpHeader.queryPayload,
+        )).rethrowContextualizedException(call);
+  }
 
   Future<T> put<T extends BaseDocument>(
-          String path, BaseDocument doc, Context context) =>
-      _send('PUT', path, doc, context)
-          .then((data) => _build<T>(context, data)!)
-          .onError<ContextualizedException>(
-              (error, stackTrace) => throw error.withContext('PUT', path));
+      String path, BaseDocument doc, Context context) {
+    final call = HttpCall.put(path);
+    return _send(call, doc, context)
+        .then((data) => _build<T>(context, data)!)
+        .rethrowContextualizedException(call);
+  }
 
-  Future<bool> delete(String path, Context context) =>
-      _send('DELETE', path, null, context)
-          .then((result) => true)
-          .onError<ContextualizedException>(
-              (error, stackTrace) => throw error.withContext('DELETE', path));
+  Future<bool> delete(String path, Context context) {
+    final call = HttpCall.delete(path);
+    return _send(call, null, context)
+        .then((result) => true)
+        .rethrowContextualizedException(call);
+  }
 }

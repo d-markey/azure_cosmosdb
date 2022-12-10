@@ -18,7 +18,7 @@ void run(CosmosDbServer cosmosDB) {
   late CosmosDbDatabase database;
 
   setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempDbName());
+    database = await cosmosDB.databases.create(getTempName());
   });
 
   tearDownAll(() async {

@@ -20,7 +20,7 @@ void run(CosmosDbServer cosmosDB) {
   late final CosmosDbCollection collection;
 
   setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempDbName());
+    database = await cosmosDB.databases.create(getTempName());
     final indexingPolicy = IndexingPolicy();
     indexingPolicy.spatialIndexes
         .add(SpatialIndexPath('/p/?', types: [DataType.point]));

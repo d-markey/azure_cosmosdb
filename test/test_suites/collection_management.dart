@@ -31,13 +31,18 @@ void run(CosmosDbServer cosmosDB) {
   };
 
   late CosmosDbDatabase database;
+  late CosmosDbDatabase database_4000RU;
 
   setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempDbName());
+    database = await cosmosDB.databases.create(getTempName('test'));
+    database_4000RU = await cosmosDB.databases.create(
+        getTempName('test_manual'),
+        throughput: CosmosDbThroughput(4000));
   });
 
   tearDownAll(() async {
     await cosmosDB.databases.delete(database);
+    await cosmosDB.databases.delete(database_4000RU);
   });
 
   test('List collections before creation', () async {
@@ -80,6 +85,26 @@ void run(CosmosDbServer cosmosDB) {
         .openOrCreate(collName1, partitionKeys: ['/id']);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
+  });
+
+  test('Create collection with openOrCreate() - fixed throughput', () async {
+    final collection = await database_4000RU.collections.openOrCreate(
+        getTempName('coll'),
+        partitionKeys: ['/id'],
+        throughput: CosmosDbThroughput.minimum);
+    expect(collection, isNotNull);
+    expect(collection.exists, isTrue);
+    await database.collections.delete(collection);
+  });
+
+  test('Create collection with openOrCreate() - auto-scale', () async {
+    final collection = await database_4000RU.collections.openOrCreate(
+        getTempName('coll3'),
+        partitionKeys: ['/id'],
+        throughput: CosmosDbThroughput.autoScale(2000));
+    expect(collection, isNotNull);
+    expect(collection.exists, isTrue);
+    await database.collections.delete(collection);
   });
 
   test('Create collection with openOrCreate() and simple indexing policy',

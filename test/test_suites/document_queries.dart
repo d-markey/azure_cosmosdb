@@ -19,7 +19,7 @@ void run(CosmosDbServer cosmosDB) {
   late final CosmosDbCollection spatialCollection;
 
   setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempDbName());
+    database = await cosmosDB.databases.create(getTempName());
     collection = await database.collections.create(
       'items',
       partitionKeys: ['/id'],

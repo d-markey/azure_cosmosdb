@@ -10,12 +10,10 @@ Future<CosmosDbServer?> getTestInstance() async {
     'https://localhost:8081',
     masterKey: masterKey,
     httpClient: DebugHttpClient(),
-  );
-
-  // enable logging to cover the logging code, but with a silent logger :)
-  server.useSilentLogger();
+  )..disableLog();
 
   try {
+    // make sure a CosmosDB instance is available for tests
     await server.databases.list();
     return server;
   } catch (ex) {
@@ -29,8 +27,17 @@ Future<CosmosDbServer?> getTestInstance() async {
 int get millisecondsSinceEpoch => DateTime.now().millisecondsSinceEpoch;
 int get secondsSinceEpoch => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-String getTempDbName() => 'test_$millisecondsSinceEpoch';
+String getTempName([String? prefix]) =>
+    '${prefix ?? 'temp'}_$millisecondsSinceEpoch';
 
 extension LogExt on CosmosDbServer {
-  void useSilentLogger() => useLogger((_) {}, withBody: true, withHeader: true);
+  // enabling logging is based on the `print`method
+  void enableLog({bool withBody = true, bool withHeader = false}) =>
+      useLogger(print, withBody: withBody, withHeader: withHeader);
+
+  // disabling logging is actually done by using a silent logger and enabling
+  // full tracing. This is done to cover the logging code during tests :)
+  void disableLog() => useLogger(_noop, withBody: true, withHeader: true);
+
+  static void _noop(dynamic print) {}
 }

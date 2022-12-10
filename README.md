@@ -14,7 +14,7 @@
 [![Code Lines](https://img.shields.io/badge/dynamic/json?color=blue&label=code%20lines&query=%24.linesValid&url=https%3A%2F%2Fraw.githubusercontent.com%2Fd-markey%2Fazure_cosmosdb%2Fmain%2Fcoverage.json)](https://github.com/d-markey/azure_cosmosdb/tree/main/coverage/html)
 [![Code Coverage](https://img.shields.io/badge/dynamic/json?color=blue&label=code%20coverage&query=%24.lineRate&suffix=%25&url=https%3A%2F%2Fraw.githubusercontent.com%2Fd-markey%2Fazure_cosmosdb%2Fmain%2Fcoverage.json)](https://github.com/d-markey/azure_cosmosdb/tree/main/coverage/html)
 
-Azure Cosmos DB SQL API for Dart & Flutter
+Connector for Azure Cosmos DB on Dart and Flutter platforms. Supports Cosmos DB SQL API, indexing policies, users, permissions, and spatial types.
 
 ## Summary
 
@@ -25,17 +25,17 @@ Azure Cosmos DB SQL API for Dart & Flutter
 
 ## <a name="features"></a>Features
 
-`Server`: the main class used to communicate with your Azure Cosmos DB instance.
+`CosmosDbServer`: the main class used to communicate with your Azure Cosmos DB instance.
 
-`Database`: class representing a Azure Cosmos DB database hosted in `Server`.
+`CosmosDbDatabase`: class representing a Azure Cosmos DB database hosted in `CosmosDbServer`.
 
-`Collection`: class representing a Azure Cosmos DB collection from a `Database`.
+`CosmosDbCollection`: class representing a Azure Cosmos DB collection from a `CosmosDbDatabase`.
 
-`BaseDocument`: class representing a Azure Cosmos DB document stored in a `Collection`.
+`BaseDocument`: class representing a Azure Cosmos DB document stored in a `CosmosDbCollection`.
 
-`Query`: class representing a Azure Cosmos DB SQL query to search documents in a `Collection`.
+`Query`: class representing a Azure Cosmos DB SQL query to search documents in a `CosmosDbCollection`.
 
-`Users` and `Permissions`: to manage users and rights in the Azure Cosmos DB database.
+`CosmosDbUsers` and `CosmosDbPermissions`: to manage users and rights in the Azure Cosmos DB database.
 
 ## <a name="started"></a>Getting Started
 
@@ -43,7 +43,7 @@ Import `azure_cosmosdb` from your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-   azure_cosmosdb: ^0.9.0
+   azure_cosmosdb: ^1.6.0
 ```
 
 ## <a name="usage"></a>Usage
@@ -60,9 +60,9 @@ It should also implement a static `fromJson(Map json)` method to build instances
 For instance:
 
 ```dart
-import 'package:azure_cosmosdb/azure_cosmosdb.dart' as cosmosdb;
+import 'package:azure_cosmosdb/azure_cosmosdb.dart';
 
-class ToDo extends cosmosdb.BaseDocumentWithEtag {
+class ToDo extends BaseDocumentWithEtag {
   ToDo(
     this.id,
     this.label, {
@@ -117,9 +117,24 @@ For instance:
 ```dart
 void main() async {
   // connect to the collection
-  final cosmosDB = cosmosdb.Server('https://localhost:8081/', masterKey: '/* your master key*/');
-  final database = await cosmosDB.databases.openOrCreate('sample');
-  final todoCollection = await database.collections.openOrCreate('todo', partitionKeys: ['/id']);
+  final cosmosDB = CosmosDbServer('https://localhost:8081/', masterKey: '/* your master key*/');
+
+  final database = await cosmosDB.databases.openOrCreate(
+    'sample',
+    throughput: CosmosDbThroughput.minimum,
+  );
+
+  final indexingPolicy =
+      IndexingPolicy(indexingMode: IndexingMode.consistent, automatic: false);
+  indexingPolicy.excludedPaths.add(IndexPath('/*'));
+  indexingPolicy.includedPaths.add(IndexPath('/"due-date"/?'));
+  indexingPolicy.compositeIndexes.add([
+    IndexPath('/label', order: IndexOrder.ascending),
+    IndexPath('/"due-date"', order: IndexOrder.descending)
+  ]);
+
+  final todoCollection = await database.collections.openOrCreate('todo',
+      partitionKeys: ['/id'], indexingPolicy: indexingPolicy);
 
   // register the builder for ToDo items
   todoCollection.registerBuilder<ToDo>(ToDo.fromJson);
@@ -161,8 +176,8 @@ void main() async {
 
 ## <a name="permissions"></a>Users and Permissions
 
-Most APIs implemented in `azure_cosmosdb` support an optional `Permission` parameter when
-calling Azure Cosmos DB.
+Most APIs implemented in `azure_cosmosdb` support an optional `CosmosDbPermission` parameter
+when calling Azure Cosmos DB.
 
 This makes it possible open a connection to Azure Cosmos DB without providing the master
 key. The master key should be kept secret and should not be provided in Web apps or even

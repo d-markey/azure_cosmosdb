@@ -20,7 +20,10 @@ void main() async {
     return;
   }
 
-  final database = await cosmosDB.databases.openOrCreate('sample');
+  final database = await cosmosDB.databases.openOrCreate(
+    'sample',
+    throughput: CosmosDbThroughput.minimum,
+  );
 
   final indexingPolicy =
       IndexingPolicy(indexingMode: IndexingMode.consistent, automatic: false);

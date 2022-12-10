@@ -22,7 +22,7 @@ void run(CosmosDbServer cosmosDB) {
   late String collectionUrl;
 
   setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempDbName());
+    database = await cosmosDB.databases.create(getTempName());
     await database.users.add(user);
     database.registerBuilder<TestDocument>(TestDocument.fromJson);
     final collection =
@@ -92,11 +92,11 @@ void run(CosmosDbServer cosmosDB) {
     expect(readOnly, isNotNull);
     expect(readOnly!.token, isNotNull);
 
-    final roCOll = await database.collections.open(collName)
+    final roColl = await database.collections.open(collName)
       ..usePermission(readOnly);
 
     await expectLater(
-      roCOll.add(TestDocument('4', 'TEST #3', [11, 13, 17])),
+      roColl.add(TestDocument('4', 'TEST #3', [11, 13, 17])),
       throwsA(isA<ForbiddenException>()),
     );
   });

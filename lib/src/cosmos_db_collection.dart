@@ -228,27 +228,25 @@ class CosmosDbCollection extends BaseDocument {
         Context(
           type: 'docs',
           resId: url,
-          headers: {
-            'x-ms-documentdb-is-upsert': 'true',
-          },
+          headers: {'x-ms-documentdb-is-upsert': 'true'},
           partition: partition ?? CosmosDbPartition(document.id),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
       );
 
-  /// Updates (replaces) a [document] in this collection. The [document] must be a
-  /// [BaseDocumentWithEtag] and its [BaseDocumentWithEtag.etag] must be known.
-  Future<T> replace<T extends BaseDocumentWithEtag>(T document,
+  /// Updates (replaces) a [document] in this collection. If the [document] is a
+  /// [BaseDocumentWithEtag], its [BaseDocumentWithEtag.etag] must be known.
+  Future<T> replace<T extends BaseDocument>(T document,
           {CosmosDbPartition? partition, CosmosDbPermission? permission}) =>
       client.put(
         '$url/docs/${document.id}',
         document,
         Context(
           type: 'docs',
-          headers: {
-            'if-match': document.etag,
-          },
+          headers: (document is BaseDocumentWithEtag)
+              ? {'if-match': document.etag}
+              : null,
           partition: partition ?? CosmosDbPartition(document.id),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,

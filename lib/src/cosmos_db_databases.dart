@@ -2,6 +2,7 @@ import 'client/_client.dart';
 import 'client/_context.dart';
 import 'cosmos_db_database.dart';
 import 'cosmos_db_exceptions.dart';
+import 'cosmos_db_throughput.dart';
 import 'permissions/cosmos_db_permission.dart';
 import 'cosmos_db_server.dart';
 
@@ -45,28 +46,30 @@ class CosmosDbDatabases {
           {bool throwOnNotFound = false, CosmosDbPermission? permission}) =>
       client
           .delete(
-        '$_url/${database.id}',
-        Context(
-          type: 'dbs',
-          throwOnNotFound: throwOnNotFound,
-          token: permission?.token,
-        ),
-      )
+              '$_url/${database.id}',
+              Context(
+                type: 'dbs',
+                throwOnNotFound: throwOnNotFound,
+                token: permission?.token,
+              ))
           .then((value) {
         database.setExists(false);
         return true;
       });
 
   /// Creates a new [CosmosDbDatabase] with the specified `name`.
-  Future<CosmosDbDatabase> create(String name,
-          {CosmosDbPermission? permission}) =>
+  Future<CosmosDbDatabase> create(
+    String name, {
+    CosmosDbPermission? permission,
+    CosmosDbThroughput? throughput,
+  }) =>
       client.post<CosmosDbDatabase>(
         _url,
         CosmosDbDatabase(server, name),
         Context(
           type: 'dbs',
           resId: '',
-          headers: {'x-ms-offer-throughput': '400'},
+          headers: throughput?.header,
           builder: _build,
           token: permission?.token,
         ),
@@ -82,12 +85,15 @@ class CosmosDbDatabases {
   }
 
   /// Opens or creates a [CosmosDbDatabase] with the specified `name`.
-  Future<CosmosDbDatabase> openOrCreate(String name,
-      {CosmosDbPermission? permission}) async {
+  Future<CosmosDbDatabase> openOrCreate(
+    String name, {
+    CosmosDbPermission? permission,
+    CosmosDbThroughput? throughput,
+  }) async {
     try {
       return await open(name, permission: permission);
     } on NotFoundException {
-      return await create(name, permission: permission);
+      return await create(name, permission: permission, throughput: throughput);
     }
   }
 }

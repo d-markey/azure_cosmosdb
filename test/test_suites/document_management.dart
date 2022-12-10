@@ -20,7 +20,7 @@ void run(CosmosDbServer cosmosDB) {
   late final CosmosDbCollection collection;
 
   setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempDbName());
+    database = await cosmosDB.databases.create(getTempName());
     collection = await database.collections.create(
       'items',
       partitionKeys: ['/id'],
@@ -30,21 +30,6 @@ void run(CosmosDbServer cosmosDB) {
 
   tearDownAll(() async {
     await cosmosDB.databases.delete(database);
-  });
-
-  test('List documents before creation', () async {
-    expect(await collection.list<TestDocument>(), isEmpty);
-
-    final query = Query(
-      'SELECT * FROM docs WHERE docs.id=@id',
-      params: {'@id': '1'},
-    );
-    query.onPartition('1');
-    expect(await collection.query<TestDocument>(query), isEmpty);
-
-    query.withParam('@id', '2');
-    query.crossPartition();
-    expect(await collection.query<TestDocument>(query), isEmpty);
   });
 
   test('List documents before creation', () async {

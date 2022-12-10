@@ -2,6 +2,7 @@ import 'client/_context.dart';
 import 'cosmos_db_collection.dart';
 import 'cosmos_db_database.dart';
 import 'cosmos_db_exceptions.dart';
+import 'cosmos_db_throughput.dart';
 import 'indexing/geospatial_config.dart';
 import 'indexing/indexing_policy.dart';
 import 'permissions/cosmos_db_permission.dart';
@@ -66,6 +67,7 @@ class CosmosDbCollections {
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
     CosmosDbPermission? permission,
+    CosmosDbThroughput? throughput,
   }) =>
       database.client.post<CosmosDbCollection>(
         url,
@@ -79,9 +81,7 @@ class CosmosDbCollections {
         Context(
           type: 'colls',
           resId: database.url,
-          headers: {
-            'x-ms-offer-throughput': '400',
-          },
+          headers: (throughput ?? CosmosDbThroughput.minimum).header,
           builder: fromJson,
         ),
       );
@@ -96,6 +96,7 @@ class CosmosDbCollections {
     List<String>? partitionKeys,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
+    CosmosDbThroughput? throughput,
   }) async {
     try {
       return await open(name);
@@ -105,6 +106,7 @@ class CosmosDbCollections {
         partitionKeys: partitionKeys,
         indexingPolicy: indexingPolicy,
         geospatialConfig: geospatialConfig,
+        throughput: throughput,
       );
     }
   }

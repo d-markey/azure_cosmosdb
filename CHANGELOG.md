@@ -1,3 +1,8 @@
+## 1.6.1
+
+- Update README.md
+- Added support for throughput when creating a database or a collection.
+
 ## 1.6.0
 
 - Renamed `Line` class to `LineString`.

@@ -1,8 +1,8 @@
+import '../_internal/_http_header.dart';
 import '../base_document.dart';
 import '../indexing/partition.dart';
 import '../permissions/cosmos_db_permission.dart';
 import '../queries/paging.dart';
-import '../queries/query.dart';
 import '../cosmos_db_server.dart';
 
 class Context {
@@ -39,21 +39,27 @@ class Context {
     _headers![name] = value;
   }
 
-  Context copyWith({Query? query, Map<String, String>? headers}) {
+  Context copyWith(
+      {Paging? paging,
+      CosmosDbPartition? partition,
+      Map<String, String>? headers,
+      List<String>? removeHeaders}) {
     final copy = Context(
-        type: type,
-        resId: resId,
-        paging: paging ?? query,
-        partition: partition ?? query?.partition,
-        token: token,
-        onForbidden: onForbidden);
+      type: type,
+      resId: resId,
+      paging: paging ?? this.paging,
+      partition: partition ?? this.partition,
+      token: token,
+      onForbidden: onForbidden,
+    );
     if (_headers != null) {
-      copy._headers ??= {};
-      copy._headers!.addAll(_headers!);
+      (copy._headers ??= {}).addAll(_headers!);
     }
     if (headers != null) {
-      copy._headers ??= {};
-      copy._headers!.addAll(headers);
+      (copy._headers ??= {}).addAll(headers);
+    }
+    if (removeHeaders != null) {
+      copy._headers?.removeWhere((key, value) => removeHeaders.contains(key));
     }
     return copy;
   }
@@ -69,11 +75,11 @@ class Context {
     }
     final maxCount = (paging?.maxCount ?? -1);
     if (maxCount > 0) {
-      headers['x-ms-max-item-count'] = maxCount.toString();
+      headers[HttpHeader.msMaxItemCount] = maxCount.toString();
     }
     final continuation = paging?.continuation ?? '';
     if (continuation.isNotEmpty) {
-      headers['x-ms-continuation'] = continuation;
+      headers[HttpHeader.msContinuation] = continuation;
     }
     return headers;
   }

@@ -18,15 +18,13 @@ void main() async {
 }
 
 void run(CosmosDbServer cosmosDB) {
-  final dbName = getTempDbName();
+  final dbName = getTempName();
 
   test('Requests fail when master key and permission are missing', () async {
     final server = CosmosDbServer('https://localhost:8081');
     try {
-      await server.databases.list();
-      throw Exception('The request did not fail');
-    } on UnauthorizedException catch (ex) {
-      expect(ex.toString(), contains(ex.runtimeType.toString()));
+      await expectLater(
+          server.databases.list(), throwsA(isA<UnauthorizedException>()));
     } finally {
       server.dbgHttpClient?.close();
     }
@@ -111,6 +109,24 @@ void run(CosmosDbServer cosmosDB) {
     final database = await cosmosDB.databases.openOrCreate(dbName);
     expect(database, isNotNull);
     expect(database.exists, isTrue);
+  });
+
+  test('Create database with openOrCreate() - fixed throuput', () async {
+    final database = await cosmosDB.databases.openOrCreate(
+        getTempName('test_manual'),
+        throughput: CosmosDbThroughput(5000));
+    expect(database, isNotNull);
+    expect(database.exists, isTrue);
+    await cosmosDB.databases.delete(database);
+  });
+
+  test('Create database with openOrCreate() - auto-scale', () async {
+    final database = await cosmosDB.databases.openOrCreate(
+        getTempName('test_autoscale'),
+        throughput: CosmosDbThroughput.autoScale(50000));
+    expect(database, isNotNull);
+    expect(database.exists, isTrue);
+    await cosmosDB.databases.delete(database);
   });
 
   test('Open database with openOrCreate()', () async {

@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import '_internal/_http_call.dart';
 import '_internal/_http_status_codes.dart';
 
 abstract class InternalException implements Exception {
@@ -10,12 +13,16 @@ abstract class InternalException implements Exception {
       message.isNotEmpty ? '$runtimeType: $message' : runtimeType.toString();
 }
 
+class ApplicationException extends InternalException {
+  ApplicationException(String message) : super._(message);
+}
+
 abstract class ContextualizedException extends InternalException {
   ContextualizedException._(String method, this.url, String? message)
       : method = method.toUpperCase(),
         super._(message);
 
-  ContextualizedException withContext(String method, String url);
+  ContextualizedException _withContext(String method, String url);
 
   final String method;
   final String url;
@@ -54,7 +61,7 @@ class CosmosDbException extends ContextualizedException {
       CosmosDbException._internal('', '', statusCode, message);
 
   @override
-  CosmosDbException withContext(String method, String url) =>
+  CosmosDbException _withContext(String method, String url) =>
       CosmosDbException._internal(method, url, statusCode, message);
 
   final int statusCode;
@@ -87,7 +94,7 @@ class UnknownDocumentTypeException extends ContextualizedException {
   UnknownDocumentTypeException(Type docType) : this._('', '', docType);
 
   @override
-  UnknownDocumentTypeException withContext(String method, String url) =>
+  UnknownDocumentTypeException _withContext(String method, String url) =>
       UnknownDocumentTypeException._(method, url, docType);
 
   final Type docType;
@@ -100,6 +107,13 @@ class BadResponseException extends ContextualizedException {
   BadResponseException(String message) : this._('', '', message);
 
   @override
-  BadResponseException withContext(String method, String url) =>
+  BadResponseException _withContext(String method, String url) =>
       BadResponseException._(method, url, message);
+}
+
+// internal use
+extension ContextualizedExceptionExt<T> on Future<T> {
+  Future<T> rethrowContextualizedException(HttpCall call) =>
+      onError<ContextualizedException>((error, stackTrace) =>
+          throw error._withContext(call.method.name, call.uri));
 }

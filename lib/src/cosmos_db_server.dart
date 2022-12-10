@@ -18,11 +18,14 @@ class CosmosDbServer {
   /// Passing the [masterKey] is discouraged in client apps to prevent from theft;
   /// instead, a proxy should be implemented in order to protect the master key.
   CosmosDbServer(String urlOrAccount,
-      {String? masterKey, http.Client? httpClient})
+      {String? masterKey,
+      http.Client? httpClient,
+      bool multipleWriteLocations = false})
       : _client = Client(
           _buildUrl(urlOrAccount),
           masterKey: masterKey,
           httpClient: httpClient,
+          multipleWriteLocations: multipleWriteLocations,
         );
 
   final Client _client;
