@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="_http_status_codes.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/_internal" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="_http_status_codes.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/_internal" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>abstract class HttpStatusCode {</code>
 </line>
 <line>
 <code>  static const ok = 200;</code>
+</line>
+<line>
+<code>  static const notModified = 304;</code>
 </line>
 <line>
 <code>  static const notFound = 404;</code>
@@ -18,6 +21,12 @@
 </line>
 <line>
 <code>  static const conflict = 409;</code>
+</line>
+<line>
+<code>  static const preconditionFailure = 412;</code>
+</line>
+<line>
+<code>  static const tooManyRequests = 429;</code>
 </line>
 <line>
 <code>  static const serverError = 500;</code>

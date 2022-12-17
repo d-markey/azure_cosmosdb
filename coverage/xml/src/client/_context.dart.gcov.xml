@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8947368" lines-covered="34" lines-valid="38" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9705882" lines-covered="33" lines-valid="34" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../_internal/_http_header.dart';</code>
@@ -18,6 +18,12 @@
 </line>
 <line>
 <code>import '../cosmos_db_server.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>const version = '1.8.0';</code>
 </line>
 <line>
 <code/>
@@ -64,11 +70,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>      _headers ??= {};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>      _headers!.addAll(headers);</code>
+<code>      _headers = {...headers};</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -115,21 +117,9 @@
 <line>
 <code/>
 </line>
-<line hits="2">
-<code>  void addHeader(String name, String value) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    _headers ??= {};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    _headers![name] = value;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="5">
+<code>  void addHeader(String name, String value) =&gt; (_headers ??= {})[name] = value;</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -162,11 +152,13 @@
 <code>      resId: resId,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      paging: paging ?? this.paging,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      partition: partition ?? this.partition,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>      token: token,</code>
@@ -183,8 +175,9 @@
 <code>    if (_headers != null) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="5">
 <code>      (copy._headers ??= {}).addAll(_headers!);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -224,9 +217,9 @@
 <code>  Map&lt;String, String&gt; getHeaders() {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
-<code>    final headers = &lt;String, String&gt;{};</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="3">
+<code>    final headers = {HttpHeader.userAgent: 'AzureCosmosDb.Dart/$version'};</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>    if (_headers != null) {</code>
@@ -247,9 +240,9 @@
 <code>    if (partitionHeader != null) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
-<code>      headers[partitionHeader.key] = partitionHeader.value;</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>      headers.addAll(partitionHeader);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>

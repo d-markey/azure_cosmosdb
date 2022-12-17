@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.93650794" lines-covered="118" lines-valid="126" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9777778" lines-covered="132" lines-valid="135" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -83,13 +83,16 @@
 <line>
 <code>    http.Client? httpClient,</code>
 </line>
+<line>
+<code>    RetryOptions? retryOptions,</code>
+</line>
 <line hits="1">
-<code>  }) : _baseHttpClient = httpClient ?? http.Client() {</code>
+<code>  })  : _http = httpClient ?? http.Client(),</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>    _http = _baseHttpClient;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="1">
+<code>        _retry = retryOptions ?? RetryOptions() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    if (masterKey != null) {</code>
@@ -123,10 +126,7 @@
 <code>  final bool multipleWriteLocations;</code>
 </line>
 <line>
-<code>  final http.Client _baseHttpClient;</code>
-</line>
-<line>
-<code>  final RetryOptions _retry = RetryOptions();</code>
+<code>  final RetryOptions _retry;</code>
 </line>
 <line>
 <code/>
@@ -149,9 +149,9 @@
 <line>
 <code/>
 </line>
-<line hits="3">
-<code>  http.Client get httpClient =&gt; _baseHttpClient;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>  http.Client get httpClient =&gt; _http;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -385,38 +385,79 @@
 <line>
 <code/>
 </line>
-<line hits="3">
-<code>    if (result.statusCode == HttpStatusCode.forbidden) {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>      // try to get a new permission from the onForbidden callback</code>
-</line>
-<line hits="3">
-<code>      final permission = await context.onForbidden?.call();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>    switch (result.statusCode) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>      final token = permission?.token;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>      if (token != null) {</code>
+<code>      case HttpStatusCode.forbidden:</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>        // try again with this permission</code>
+<code>        // try to get a new permission from the onForbidden callback</code>
+</line>
+<line hits="3">
+<code>        final permission = await context.onForbidden?.call();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        final token = permission?.token;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        if (token != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          // try again with this permission</code>
 </line>
 <line hits="2">
-<code>        auth = Authorization.fromToken(token);</code>
+<code>          auth = Authorization.fromToken(token);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        result = await _sendWithAuth(call, body, context, auth);</code>
+<code>          result = await _sendWithAuth(call, body, context, auth);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>      }</code>
+<code>        }</code>
+</line>
+<line hits="1">
+<code>        break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      case HttpStatusCode.tooManyRequests:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        // throttling, retry after the specified delay</code>
+</line>
+<line>
+<code>        final delay =</code>
+</line>
+<line hits="4">
+<code>            int.tryParse(result.headers[HttpHeader.msRetryAfterMs] ?? '');</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        if (delay != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>          await Future.delayed(Duration(milliseconds: delay));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          result = await _sendWithAuth(call, body, context, auth);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line hits="1">
+<code>        break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -461,9 +502,9 @@
 <code>          ? '${result.reasonPhrase}: ${data['message']}'</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>          : result.reasonPhrase;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>      final ex = CosmosDbException(result.statusCode, message);</code>
@@ -619,26 +660,32 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String path, BaseDocument doc, Context context) {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    final call = HttpCall.patch(path);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>

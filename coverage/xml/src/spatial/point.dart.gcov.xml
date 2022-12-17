@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="point.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.88235295" lines-covered="30" lines-valid="34" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="point.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.88235295" lines-covered="30" lines-valid="34" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../indexing/data_type.dart';</code>

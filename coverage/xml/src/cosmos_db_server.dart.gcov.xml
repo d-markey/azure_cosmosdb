@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="cosmos_db_server.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="24" lines-valid="24" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="cosmos_db_server.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="27" lines-valid="27" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'package:http/http.dart' as http;</code>
+</line>
+<line>
+<code>import 'package:retry/retry.dart';</code>
 </line>
 <line>
 <code/>
@@ -69,6 +72,9 @@
 <code>      http.Client? httpClient,</code>
 </line>
 <line>
+<code>      RetryOptions? retryOptions,</code>
+</line>
+<line>
 <code>      bool multipleWriteLocations = false})</code>
 </line>
 <line hits="2">
@@ -79,11 +85,15 @@
 <code>          _buildUrl(urlOrAccount),</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>          masterKey: masterKey,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          httpClient: httpClient,</code>
+</line>
+<line>
+<code>          retryOptions: retryOptions,</code>
 </line>
 <line>
 <code>          multipleWriteLocations: multipleWriteLocations,</code>
@@ -191,41 +201,43 @@
 <line>
 <code>  /// ```</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>  void useLogger(void Function(Object?) logger,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      {bool withBody = true, bool withHeader = false}) {</code>
 </line>
 <line hits="1">
-<code>    final httpClient = dbgHttpClient;</code>
+<code>    final dbgClient = dbgHttpClient;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
-<code>    if (httpClient != null) {</code>
+<line hits="1">
+<code>    if (dbgClient != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      httpClient.log = logger;</code>
+<code>      dbgClient.log = logger;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
-<code>      httpClient.trace = true;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>      dbgClient.trace = true;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
-<code>      httpClient.traceBody = withBody;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>      dbgClient.traceBody = withBody;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
-<code>      httpClient.traceHeaders = withHeader;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>      dbgClient.traceHeaders = withHeader;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line>
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -238,27 +250,27 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>    final httpClient = dbgHttpClient;</code>
+<code>    final dbgClient = dbgHttpClient;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>    if (httpClient != null) {</code>
+<code>    if (dbgClient != null) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      httpClient.log = DebugHttpClient.defaultLog;</code>
+<code>      dbgClient.log = DebugHttpClient.defaultLog;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      httpClient.trace = false;</code>
+<code>      dbgClient.trace = false;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      httpClient.traceBody = false;</code>
+<code>      dbgClient.traceBody = false;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      httpClient.traceHeaders = false;</code>
+<code>      dbgClient.traceHeaders = false;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>

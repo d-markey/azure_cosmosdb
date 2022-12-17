@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="patch_operation.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="13" lines-valid="13" package="/src/patch" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>class PatchOperation {</code>
+</line>
+<line hits="1">
+<code>  PatchOperation._(this.op, this.path, this.value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String op;</code>
+</line>
+<line>
+<code>  final String path;</code>
+</line>
+<line>
+<code>  final dynamic value;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  PatchOperation.add(String path, dynamic value) : this._('add', path, value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  PatchOperation.set(String path, dynamic value) : this._('set', path, value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  PatchOperation.replace(String path, dynamic value)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      : this._('replace', path, value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  PatchOperation.incr(String path, num value) : this._('incr', path, value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>  PatchOperation.decr(String path, num value) : this._('incr', path, -value);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  PatchOperation.remove(String path) : this._('remove', path, null);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        'op': op,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        'path': path,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>        if (op != 'remove') 'value': value,</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2022-12-10</dd>
+<dd>2022-12-17</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -75,7 +75,7 @@
 <td>5</td><td></td><td></td><td><code>/// Class representing CosmosDB SQL query.</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
-<td>6</td><td></td><td></td><td><code>class Query extends Paging implements BaseDocument {</code></td>
+<td>6</td><td></td><td></td><td><code>class Query extends Paging implements SpecialDocument {</code></td>
 </tr>
 <tr class="noop" title="Line 7" id="line7">
 <td>7</td><td></td><td></td><td><code>  /// Builds a new CosmosDB SQL query with [command] and [params].</code></td>
@@ -96,7 +96,7 @@
 <td>12</td><td></td><td></td><td><code>      : _partition = partition,</code></td>
 </tr>
 <tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>2</td><td><code>        _params = (params == null) ? null : Map&lt;String, dynamic&gt;.from(params),</code></td>
+<td>13</td><td></td><td>2</td><td><code>        _params = (params == null) ? null : {...params},</code></td>
 </tr>
 <tr class="lineCov" title="Line 14" id="line14">
 <td>14</td><td></td><td>2</td><td><code>        super(maxCount);</code></td>

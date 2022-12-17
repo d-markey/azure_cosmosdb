@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="cosmos_db_permissions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.84090906" lines-covered="37" lines-valid="44" package="/src/permissions" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="cosmos_db_permissions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.89361703" lines-covered="42" lines-valid="47" package="/src/permissions" testname="lcov.info" version="1.5">
 <lines>
+<line>
+<code>import 'package:azure_cosmosdb/src/_internal/_http_header.dart';</code>
+</line>
+<line>
+<code/>
+</line>
 <line>
 <code>import '../client/_context.dart';</code>
 </line>
@@ -134,15 +140,21 @@
 <line>
 <code>    );</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    final seconds = expiry?.inSeconds ?? 0;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    if (seconds &gt; 0) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
-<code>      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());</code>
+<line hits="2">
+<code>      context.addHeader(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -219,9 +231,13 @@
 <code>    if (seconds &gt; 0) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>      context.addHeader(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -297,9 +313,13 @@
 <code>    if (seconds &gt; 0) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>      context.addHeader(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>

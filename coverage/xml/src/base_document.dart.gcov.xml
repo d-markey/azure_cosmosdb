@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-10" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="2" lines-valid="2" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2022-12-17" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.75" lines-covered="6" lines-valid="8" package="/src" testname="lcov.info" version="1.5">
 <lines>
+<line>
+<code>import 'indexing/partition.dart';</code>
+</line>
+<line>
+<code/>
+</line>
 <line>
 <code>/// Function definition to hydrate (deserialize) CosmosDB documents.</code>
 </line>
@@ -38,10 +44,37 @@
 <code/>
 </line>
 <line>
+<code>/// Base class for query/patch documents.</code>
+</line>
+<line>
+<code>abstract class SpecialDocument implements BaseDocument {</code>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line>
+<code>  String get id =&gt; '';</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
 <code>/// Base class for CosmosDB documents including the `etag` property.</code>
 </line>
 <line>
-<code>abstract class BaseDocumentWithEtag extends BaseDocument {</code>
+<code>abstract class BaseDocumentWithEtag extends BaseDocument with EtagMixin {}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Base class for CosmosDB documents including the `etag` property.</code>
+</line>
+<line>
+<code>mixin EtagMixin on BaseDocument {</code>
 </line>
 <line>
 <code>  /// The document's `etag` property.</code>
@@ -59,9 +92,64 @@
 <line>
 <code>  /// Set `etag` from a JSON map; to be called by [DocumentBuilder] methods.</code>
 </line>
-<line hits="4">
+<line hits="10">
 <code>  void setEtag(Map body) =&gt; _etag = body['_etag'];</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="10" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Mixin to add custom partition key on [BaseDocument].</code>
+</line>
+<line>
+<code>mixin PartitionKeyMixin on BaseDocument {</code>
+</line>
+<line>
+<code>  /// The document's partition key. Override this to provide a custom partition</code>
+</line>
+<line>
+<code>  /// key. By default, [id] is used as the partition key. When overriding,</code>
+</line>
+<line>
+<code>  /// make sure this value is serialized in accordance with the collection's</code>
+</line>
+<line>
+<code>  /// partition key definition.</code>
+</line>
+<line hits="0">
+<code>  String get partitionKey =&gt; id;</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>// For internal use</code>
+</line>
+<line>
+<code>extension PartitionKeyExt on BaseDocument {</code>
+</line>
+<line hits="1">
+<code>  CosmosDbPartition getPartitionKey() =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      CosmosDbPartition((this is PartitionKeyMixin)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          ? (this as PartitionKeyMixin).partitionKey</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          : id);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
