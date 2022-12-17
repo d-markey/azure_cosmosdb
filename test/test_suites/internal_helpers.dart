@@ -39,7 +39,7 @@ void run() {
     expect(notFound, isNull);
   });
 
-  test('firstOrDefault - empty set', () async {
+  test('firstOrDefault() - empty set', () async {
     final notFound = emptyList.firstOrDefault((item) => item['id'] == 2);
     expect(notFound, isNull);
   });
@@ -64,7 +64,7 @@ void run() {
     expect(notFound, isNull);
   });
 
-  test('firstOrDefault - empty set', () async {
+  test('singleOrDefault() - empty set', () async {
     final notFound = emptyList.singleOrDefault((item) => item['id'] == 2);
     expect(notFound, isNull);
   });

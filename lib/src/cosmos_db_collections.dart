@@ -21,7 +21,7 @@ class CosmosDbCollections {
 
   CosmosDbCollection fromJson(Map json) {
     final coll = CosmosDbCollection(database, json['id'],
-        partitionKeys: json['partitionKey']['paths']?.cast<String>());
+        partitionKey: json['partitionKey']['paths']?.cast<String>().first);
     coll.setExists(true);
     return coll;
   }
@@ -63,7 +63,8 @@ class CosmosDbCollections {
   /// Creates a new [CosmosDbCollection] with the specified `name` and `partitionKeys`.
   Future<CosmosDbCollection> create(
     String name, {
-    List<String>? partitionKeys,
+    @Deprecated('Use partitionKey instead.') List<String>? partitionKeys,
+    String? partitionKey,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
     CosmosDbPermission? permission,
@@ -75,6 +76,7 @@ class CosmosDbCollections {
           database,
           name,
           partitionKeys: partitionKeys,
+          partitionKey: partitionKey,
           indexingPolicy: indexingPolicy,
           geospatialConfig: geospatialConfig,
         ),
@@ -93,7 +95,8 @@ class CosmosDbCollections {
   /// Opens or creates a [CosmosDbCollection] with id [name].
   Future<CosmosDbCollection> openOrCreate(
     String name, {
-    List<String>? partitionKeys,
+    @Deprecated('Use partitionKey instead.') List<String>? partitionKeys,
+    String? partitionKey,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
     CosmosDbThroughput? throughput,
@@ -104,6 +107,7 @@ class CosmosDbCollections {
       return await create(
         name,
         partitionKeys: partitionKeys,
+        partitionKey: partitionKey,
         indexingPolicy: indexingPolicy,
         geospatialConfig: geospatialConfig,
         throughput: throughput,

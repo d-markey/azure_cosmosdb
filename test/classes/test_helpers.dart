@@ -1,5 +1,3 @@
-import 'package:test/test.dart';
-
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 
 const masterKey =
@@ -17,9 +15,6 @@ Future<CosmosDbServer?> getTestInstance() async {
     await server.databases.list();
     return server;
   } catch (ex) {
-    test(
-        '! COSMOS DB IS OFFLINE - TESTS HAVE BEEN DISABLED - Exception ${ex.runtimeType}',
-        () {});
     return null;
   }
 }

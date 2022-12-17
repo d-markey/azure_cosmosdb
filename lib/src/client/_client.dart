@@ -25,8 +25,9 @@ class Client {
     String? masterKey,
     this.multipleWriteLocations = false,
     http.Client? httpClient,
-  }) : _baseHttpClient = httpClient ?? http.Client() {
-    _http = _baseHttpClient;
+    RetryOptions? retryOptions,
+  })  : _http = httpClient ?? http.Client(),
+        _retry = retryOptions ?? RetryOptions() {
     if (masterKey != null) {
       _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));
     } else {
@@ -36,15 +37,14 @@ class Client {
 
   final String _url;
   final bool multipleWriteLocations;
-  final http.Client _baseHttpClient;
-  final RetryOptions _retry = RetryOptions();
+  final RetryOptions _retry;
 
   late final crypto.Hmac? _key;
   late final http.Client _http;
 
   final _builders = <Type, _DocumentBuilder>{};
 
-  http.Client get httpClient => _baseHttpClient;
+  http.Client get httpClient => _http;
 
   void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) {
     _builders[T] = builder;
@@ -110,15 +110,26 @@ class Client {
 
     var result = await _sendWithAuth(call, body, context, auth);
 
-    if (result.statusCode == HttpStatusCode.forbidden) {
-      // try to get a new permission from the onForbidden callback
-      final permission = await context.onForbidden?.call();
-      final token = permission?.token;
-      if (token != null) {
-        // try again with this permission
-        auth = Authorization.fromToken(token);
-        result = await _sendWithAuth(call, body, context, auth);
-      }
+    switch (result.statusCode) {
+      case HttpStatusCode.forbidden:
+        // try to get a new permission from the onForbidden callback
+        final permission = await context.onForbidden?.call();
+        final token = permission?.token;
+        if (token != null) {
+          // try again with this permission
+          auth = Authorization.fromToken(token);
+          result = await _sendWithAuth(call, body, context, auth);
+        }
+        break;
+      case HttpStatusCode.tooManyRequests:
+        // throttling, retry after the specified delay
+        final delay =
+            int.tryParse(result.headers[HttpHeader.msRetryAfterMs] ?? '');
+        if (delay != null) {
+          await Future.delayed(Duration(milliseconds: delay));
+          result = await _sendWithAuth(call, body, context, auth);
+        }
+        break;
     }
 
     final contentType = result.headers[HttpHeader.contentType];

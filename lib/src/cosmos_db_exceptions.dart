@@ -17,6 +17,10 @@ class ApplicationException extends InternalException {
   ApplicationException(String message) : super._(message);
 }
 
+class InvalidTokenException extends ApplicationException {
+  InvalidTokenException(String message) : super(message);
+}
+
 abstract class ContextualizedException extends InternalException {
   ContextualizedException._(String method, this.url, String? message)
       : method = method.toUpperCase(),
@@ -44,6 +48,8 @@ class CosmosDbException extends ContextualizedException {
       [String? message]) {
     message ??= 'Error $statusCode';
     switch (statusCode) {
+      case HttpStatusCode.notModified:
+        return NotModifiedException._('', '', message);
       case HttpStatusCode.unauthorized:
         return UnauthorizedException._('', '', message);
       case HttpStatusCode.forbidden:
@@ -52,6 +58,8 @@ class CosmosDbException extends ContextualizedException {
         return NotFoundException._('', '', message);
       case HttpStatusCode.conflict:
         return ConflictException._('', '', message);
+      case HttpStatusCode.preconditionFailure:
+        return PreconditionFailureException._('', '', message);
       default:
         return CosmosDbException._('', '', statusCode, message);
     }
@@ -65,6 +73,11 @@ class CosmosDbException extends ContextualizedException {
       CosmosDbException._internal(method, url, statusCode, message);
 
   final int statusCode;
+}
+
+class NotModifiedException extends CosmosDbException {
+  NotModifiedException._(String method, String url, [String? message])
+      : super._(method, url, HttpStatusCode.notModified, message);
 }
 
 class UnauthorizedException extends CosmosDbException {
@@ -85,6 +98,11 @@ class ConflictException extends CosmosDbException {
 class NotFoundException extends CosmosDbException {
   NotFoundException._(String method, String url, [String? message])
       : super._(method, url, HttpStatusCode.notFound, message);
+}
+
+class PreconditionFailureException extends CosmosDbException {
+  PreconditionFailureException._(String method, String url, [String? message])
+      : super._(method, url, HttpStatusCode.preconditionFailure, message);
 }
 
 class UnknownDocumentTypeException extends ContextualizedException {

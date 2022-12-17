@@ -1,3 +1,4 @@
+import '_internal/_http_header.dart';
 import 'base_document.dart';
 import 'client/_client.dart';
 import 'client/_context.dart';
@@ -6,6 +7,7 @@ import 'cosmos_db_exceptions.dart';
 import 'indexing/geospatial_config.dart';
 import 'indexing/indexing_policy.dart';
 import 'indexing/partition.dart';
+import 'patch/patch.dart';
 import 'permissions/cosmos_db_permission.dart';
 import 'queries/query.dart';
 import 'cosmos_db_server.dart';
@@ -16,7 +18,8 @@ typedef Collection = CosmosDbCollection;
 /// Class representing a CosmosDB collection.
 class CosmosDbCollection extends BaseDocument {
   CosmosDbCollection(this.database, this.id,
-      {this.partitionKeys,
+      {@Deprecated('Use partitionKey instead.') this.partitionKeys,
+      this.partitionKey,
       IndexingPolicy? indexingPolicy,
       GeospatialConfig? geospatialConfig})
       : url = '${database.url}/colls/$id',
@@ -38,7 +41,11 @@ class CosmosDbCollection extends BaseDocument {
   final String id;
 
   /// The collection's list of partition keys; mandatory when creating a new [CosmosDbCollection].
+  @Deprecated('Use partitionKey instead.')
   final List<String>? partitionKeys;
+
+  /// The collection's partition key; mandatory when creating a new [CosmosDbCollection].
+  final String? partitionKey;
 
   /// The collection's indexing policy.
   IndexingPolicy? _indexingPolicy;
@@ -54,7 +61,7 @@ class CosmosDbCollection extends BaseDocument {
   Map<String, dynamic> toJson() => {
         'id': id,
         'partitionKey': {
-          "paths": partitionKeys,
+          "paths": (partitionKey != null) ? [partitionKey!] : partitionKeys
         },
         if (_indexingPolicy != null)
           'indexingPolicy': _indexingPolicy!.toJson(),
@@ -143,7 +150,7 @@ class CosmosDbCollection extends BaseDocument {
   }
 
   /// Finds the document with [id] in this collection. If the document does not exist,
-  /// this method returns `null` by default. If `throwOnNotFound` is set to `true`, it
+  /// this method returns `null` by default. If [throwOnNotFound] is set to `true`, it
   /// will instead throw a [NotFoundException].
   Future<T?> find<T extends BaseDocument>(String id,
           {bool throwOnNotFound = false,
@@ -159,6 +166,27 @@ class CosmosDbCollection extends BaseDocument {
           onForbidden: _refreshPermission,
         ),
       );
+
+  /// Returns the latest version of the document.
+  Future<T?> get<T extends BaseDocument>(T document,
+          {bool throwOnNotFound = false,
+          CosmosDbPartition? partition,
+          CosmosDbPermission? permission}) =>
+      client
+          .get<T>(
+            '$url/docs/${document.id}',
+            Context(
+              type: 'docs',
+              throwOnNotFound: throwOnNotFound,
+              headers: (document is EtagMixin)
+                  ? {HttpHeader.ifNoneMatch: document.etag}
+                  : null,
+              partition: partition ?? document.getPartitionKey(),
+              token: permission?.token ?? _token,
+              onForbidden: _refreshPermission,
+            ),
+          )
+          .onError<NotModifiedException>((error, stackTrace) => document);
 
   /// Lists all documents from this collection.
   Future<Iterable<T>> list<T extends BaseDocument>(
@@ -213,7 +241,7 @@ class CosmosDbCollection extends BaseDocument {
         Context(
           type: 'docs',
           resId: url,
-          partition: partition ?? CosmosDbPartition(document.id),
+          partition: partition ?? document.getPartitionKey(),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
@@ -228,48 +256,78 @@ class CosmosDbCollection extends BaseDocument {
         Context(
           type: 'docs',
           resId: url,
-          headers: {'x-ms-documentdb-is-upsert': 'true'},
-          partition: partition ?? CosmosDbPartition(document.id),
+          headers: HttpHeader.isUpsert,
+          partition: partition ?? document.getPartitionKey(),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
       );
 
-  /// Updates (replaces) a [document] in this collection. If the [document] is a
-  /// [BaseDocumentWithEtag], its [BaseDocumentWithEtag.etag] must be known.
+  /// Updates (replaces) a [document] in this collection. If the [document] has
+  /// [EtagMixin], its [EtagMixin.etag] must be known.
   Future<T> replace<T extends BaseDocument>(T document,
-          {CosmosDbPartition? partition, CosmosDbPermission? permission}) =>
+          {bool checkEtag = true,
+          CosmosDbPartition? partition,
+          CosmosDbPermission? permission}) =>
       client.put(
         '$url/docs/${document.id}',
         document,
         Context(
           type: 'docs',
-          headers: (document is BaseDocumentWithEtag)
-              ? {'if-match': document.etag}
+          headers: (document is EtagMixin && checkEtag)
+              ? {HttpHeader.ifMatch: document.etag}
               : null,
-          partition: partition ?? CosmosDbPartition(document.id),
+          partition: partition ?? document.getPartitionKey(),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
       );
 
-  /// Deletes the document with [id] from this collection. If the document does not
-  /// exist, this method returns `true` by default. If [throwOnNotFound] is set to
-  /// `true`, it will instead throw a [NotFoundException].
-  Future<bool> delete(String id,
-          {bool throwOnNotFound = false,
-          CosmosDbPartition? partition,
-          CosmosDbPermission? permission}) =>
-      client.delete(
-        '$url/docs/$id',
+  /// Updates (patches) a [document] in this collection by applying the [patch]
+  /// operations.
+  Future<T> patch<T extends BaseDocument>(T document, Patch patch,
+          {CosmosDbPartition? partition, CosmosDbPermission? permission}) =>
+      client.patch(
+        '$url/docs/${document.id}',
+        patch,
         Context(
           type: 'docs',
-          throwOnNotFound: throwOnNotFound,
-          partition: partition ?? CosmosDbPartition(id),
+          headers: HttpHeader.patchPayload,
+          partition: partition ?? document.getPartitionKey(),
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
       );
+
+  /// Deletes the document from this collection. If the document does not exist,
+  /// this method returns `true` by default. If [throwOnNotFound] is set to
+  /// `true`, it will instead throw a [NotFoundException]. If the [document] is
+  /// provided, its attributes take over the [id] value. If it has [EtagMixin],
+  /// its [EtagMixin.etag] must be known.
+  Future<bool> delete(@Deprecated('Provide a document instead.') String id,
+      {dynamic document,
+      bool throwOnNotFound = false,
+      bool checkEtag = true,
+      CosmosDbPartition? partition,
+      CosmosDbPermission? permission}) {
+    final docId = (document is BaseDocument) ? document.id : id;
+    final docPart = (document is BaseDocument)
+        ? document.getPartitionKey()
+        : CosmosDbPartition(docId);
+    return client.delete(
+      '$url/docs/$docId',
+      Context(
+        type: 'docs',
+        throwOnNotFound: throwOnNotFound,
+        headers: (document is EtagMixin && checkEtag)
+            ? {HttpHeader.ifMatch: document.etag}
+            : null,
+        partition: partition ?? docPart,
+        token: permission?.token ?? _token,
+        onForbidden: _refreshPermission,
+      ),
+    );
+  }
 }
 
 // internal use

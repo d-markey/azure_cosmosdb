@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 import 'classes/test_helpers.dart';
 
 import 'test_suites/internal_helpers.dart' as internal_tests;
+import 'test_suites/expression_tokenizer.dart' as tokenizer_tests;
 import 'test_suites/geometry_shapes.dart' as geometry_tests;
 import 'test_suites/geography_shapes.dart' as geography_tests;
 import 'test_suites/database_management.dart' as db_tests;
@@ -19,11 +20,17 @@ void main() async {
 
   group('INTERNAL HELPERS -', () => internal_tests.run());
 
+  group('EXPRESSION TOKENIZER -', () => tokenizer_tests.run());
+
   group('GEOMETRY SHAPES -', () => geometry_tests.run());
 
   group('GEOGRAPHY SHAPES -', () => geography_tests.run());
 
-  if (cosmosDB != null) {
+  if (cosmosDB == null) {
+    test('! COSMOS DB TESTS', () {
+      expect(cosmosDB, isNotNull);
+    });
+  } else {
     group('DATABASE MANAGEMENT -', () => db_tests.run(cosmosDB));
 
     group('USER MANAGEMENT -', () => user_tests.run(cosmosDB));
@@ -39,8 +46,15 @@ void main() async {
     group('DOCUMENT QUERIES -', () => query_tests.run(cosmosDB));
 
     test('Reset logger', () {
-      cosmosDB.resetLogger();
       expect(cosmosDB.dbgHttpClient, isNotNull);
+
+      cosmosDB.enableLog(withBody: false, withHeader: true);
+      expect(cosmosDB.dbgHttpClient!.log, equals(print));
+      expect(cosmosDB.dbgHttpClient!.trace, isTrue);
+      expect(cosmosDB.dbgHttpClient!.traceHeaders, isTrue);
+      expect(cosmosDB.dbgHttpClient!.traceBody, isFalse);
+
+      cosmosDB.resetLogger();
       expect(cosmosDB.dbgHttpClient!.log, equals(DebugHttpClient.defaultLog));
       expect(cosmosDB.dbgHttpClient!.trace, isFalse);
       expect(cosmosDB.dbgHttpClient!.traceHeaders, isFalse);

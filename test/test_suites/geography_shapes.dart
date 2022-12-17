@@ -5,12 +5,12 @@ import 'package:test/test.dart';
 
 import '../classes/spatial_data_sets.dart';
 
-void main() async {
+void main() {
   run();
 }
 
 void run() {
-  test('Create a line', () async {
+  test('Create a line', () {
     final line = LineString();
     expect(line.isEmpty, isTrue);
     expect(line.isNotEmpty, isFalse);
@@ -22,7 +22,7 @@ void run() {
     expect(line.isNotEmpty, isTrue);
   });
 
-  test('Serialize a line', () async {
+  test('Serialize a line', () {
     final line = LineString();
     line.addAll([
       cities['Paris']!,
@@ -44,7 +44,7 @@ void run() {
     }
   });
 
-  test('Deserialize a line', () async {
+  test('Deserialize a line', () {
     final line = LineString();
     line.addAll([
       cities['Paris']!,
@@ -63,7 +63,7 @@ void run() {
     }
   });
 
-  test('Serialize a polygon', () async {
+  test('Serialize a polygon', () {
     final poly = parisArea;
 
     final json = jsonDecode(jsonEncode(poly));
@@ -84,7 +84,7 @@ void run() {
     }
   });
 
-  test('Deserialize a polygon', () async {
+  test('Deserialize a polygon', () {
     final poly = parisArea;
 
     final json = jsonDecode(jsonEncode(poly));
@@ -104,7 +104,7 @@ void run() {
     }
   });
 
-  test('Long distances (cities)', () async {
+  test('Long distances (cities)', () {
     for (final from in cities.entries) {
       for (final to
           in cities.entries.where((t) => t.key.compareTo(from.key) >= 0)) {
@@ -114,7 +114,7 @@ void run() {
     }
   });
 
-  test('Short distances (monuments)', () async {
+  test('Short distances (monuments)', () {
     // Paris
     _checkDistance(
       monuments['Eiffel Tower']!,

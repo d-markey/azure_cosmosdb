@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 
+import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
 import 'package:http/http.dart' as http;
 
 import '../_internal/_http_status_codes.dart';
@@ -27,6 +28,9 @@ class DebugHttpClient extends http.BaseClient {
 
   /// Enable/disable forced forbidden (status code 403) response.
   bool forceForbidden = false;
+
+  /// Enable/disable forced throttled delay.
+  Duration? forceThrottleDelay;
 
   /// Enable/disable forced timeout response. When set, the next request will
   /// throw the exception and reset [forceException].
@@ -79,7 +83,7 @@ class DebugHttpClient extends http.BaseClient {
 
   Future<http.StreamedResponse> _logResponse(
       String ts, http.StreamedResponse response) async {
-    log('[$ts] <-- status ${response.statusCode} ${response.reasonPhrase}');
+    log('[$ts] <-- COSMOS DB Status = ${response.statusCode} ${response.reasonPhrase}');
     if (traceHeaders) {
       for (var h in response.headers.entries) {
         log('[$ts] <-- ${h.key} = ${h.value}');
@@ -88,7 +92,7 @@ class DebugHttpClient extends http.BaseClient {
     if (traceBody) {
       // get the response bytes for logging
       final resp = await http.Response.fromStream(response);
-      log('[$ts] <-- COSMOSDB ERROR ${resp.statusCode}: ${resp.body}');
+      log('[$ts] <-- COSMOS DB ${resp.statusCode} Payload = ${resp.body}');
       // rebuild the response
       response = http.StreamedResponse(
         Stream.fromIterable([resp.bodyBytes]),
@@ -123,11 +127,20 @@ class DebugHttpClient extends http.BaseClient {
         forceException = null;
         throw ex;
       }
-      if (forceForbidden) {
+      if (forceThrottleDelay != null) {
+        final delay = forceThrottleDelay!.inMilliseconds;
+        forceThrottleDelay = null;
+        response = http.StreamedResponse(
+          Stream<List<int>>.fromIterable([]),
+          HttpStatusCode.tooManyRequests,
+          reasonPhrase: 'Forced Throttle',
+          headers: {HttpHeader.msRetryAfterMs: delay.toString()},
+        );
+      } else if (forceForbidden) {
         response = http.StreamedResponse(
           Stream<List<int>>.fromIterable([]),
           HttpStatusCode.forbidden,
-          reasonPhrase: 'Forced',
+          reasonPhrase: 'Forced Forbidden',
         );
       } else {
         response = await _http.send(request);

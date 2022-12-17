@@ -24,8 +24,8 @@ void run(CosmosDbServer cosmosDB) {
     final indexingPolicy = IndexingPolicy();
     indexingPolicy.spatialIndexes
         .add(SpatialIndexPath('/p/?', types: [DataType.point]));
-    collection = await database.collections.create('items',
-        partitionKeys: ['/id'], indexingPolicy: indexingPolicy);
+    collection = await database.collections
+        .create('items', partitionKey: '/id', indexingPolicy: indexingPolicy);
     collection.registerBuilder<TestSpatialDocumentPoint>(
         TestSpatialDocumentPoint.fromJson);
     collection.registerBuilder<TestSpatialDocumentLineString>(

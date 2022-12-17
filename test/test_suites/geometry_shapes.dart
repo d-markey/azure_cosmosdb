@@ -4,12 +4,12 @@ import 'dart:math';
 import 'package:azure_cosmosdb/azure_cosmosdb.dart';
 import 'package:test/test.dart';
 
-void main() async {
+void main() {
   run();
 }
 
 void run() {
-  test('Serialize a point', () async {
+  test('Serialize a point', () {
     final p = Point.geometry(2, 3);
     final json = jsonDecode(jsonEncode(p));
     expect(json, isA<Map>());
@@ -22,7 +22,7 @@ void run() {
     expect(coordinates[1], equals(p.y));
   });
 
-  test('Deserialize a point', () async {
+  test('Deserialize a point', () {
     final p = Point.geometry(2, 3);
 
     final json = jsonDecode(jsonEncode(p));
@@ -32,7 +32,7 @@ void run() {
     expect(dp.y, equals(p.y));
   });
 
-  test('Create a 2D line', () async {
+  test('Create a 2D line', () {
     final line = LineString();
     expect(line.isEmpty, isTrue);
     expect(line.isNotEmpty, isFalse);
@@ -44,7 +44,7 @@ void run() {
     expect(line.isNotEmpty, isTrue);
   });
 
-  test('Serialize a 2D line', () async {
+  test('Serialize a 2D line', () {
     final line = LineString();
     line.add(Point.geometry(0, 1));
     line.add(Point.geometry(2, 3));
@@ -63,7 +63,7 @@ void run() {
     expect(coordinates[1][1], equals(pos[1].y));
   });
 
-  test('Deserialize a 2D line', () async {
+  test('Deserialize a 2D line', () {
     final line = LineString();
     line.add(Point.geometry(0, 1));
     line.add(Point.geometry(2, 3));
@@ -80,7 +80,7 @@ void run() {
     }
   });
 
-  test('Measure a 2D line', () async {
+  test('Measure a 2D line', () {
     final line = LineString();
     line.add(Point.geometry(0, 0));
     line.add(Point.geometry(2, 2));
@@ -92,7 +92,7 @@ void run() {
     expect(d3D, equals(sqrt(8)));
   });
 
-  test('Create a 3D line', () async {
+  test('Create a 3D line', () {
     final line = LineString();
     expect(line.isEmpty, isTrue);
     expect(line.isNotEmpty, isFalse);
@@ -102,7 +102,7 @@ void run() {
     line.add(Point.geometry(2, 2, 2));
   });
 
-  test('Measure a 3D line', () async {
+  test('Measure a 3D line', () {
     final line = LineString();
     line.add(Point.geometry(0, 0, 0));
     line.add(Point.geometry(2, 2, 2));
@@ -114,7 +114,7 @@ void run() {
     expect(d3D, equals(sqrt(12)));
   });
 
-  test('Create a 2D triangle', () async {
+  test('Create a 2D triangle', () {
     final triangle = Polygon();
     expect(triangle.isEmpty, isTrue);
     expect(triangle.isNotEmpty, isFalse);
@@ -128,7 +128,7 @@ void run() {
     expect(triangle.isNotEmpty, isTrue);
   });
 
-  test('Serialize a 2D triangle', () async {
+  test('Serialize a 2D triangle', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([
@@ -157,7 +157,7 @@ void run() {
     expect(coordinates[3][1], equals(pos[0].y));
   });
 
-  test('Deserialize a 2D triangle', () async {
+  test('Deserialize a 2D triangle', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([
@@ -184,7 +184,7 @@ void run() {
     }
   });
 
-  test('Measure a 2D triangle', () async {
+  test('Measure a 2D triangle', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([
@@ -200,7 +200,7 @@ void run() {
     expect(d3D, equals(2 + 2 * sqrt(2)));
   });
 
-  test('Create a 3D triangle', () async {
+  test('Create a 3D triangle', () {
     final triangle = Polygon();
     expect(triangle.isEmpty, isTrue);
     expect(triangle.isNotEmpty, isFalse);
@@ -214,7 +214,7 @@ void run() {
     expect(triangle.isNotEmpty, isTrue);
   });
 
-  test('Measure a 3D triangle', () async {
+  test('Measure a 3D triangle', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([
@@ -230,7 +230,7 @@ void run() {
     expect(d3D, equals(sqrt(8) + 2 * sqrt(3)));
   });
 
-  test('Create a mixed 2D/3D triangle', () async {
+  test('Create a mixed 2D/3D triangle', () {
     final triangle = Polygon();
     expect(triangle.isEmpty, isTrue);
     expect(triangle.isNotEmpty, isFalse);
@@ -244,7 +244,7 @@ void run() {
     expect(triangle.isNotEmpty, isTrue);
   });
 
-  test('Measure a mixed 2D/3D triangle', () async {
+  test('Measure a mixed 2D/3D triangle', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([
@@ -260,7 +260,7 @@ void run() {
     expect(d3D, equals(2 + sqrt(3) + sqrt(2)));
   });
 
-  test('Create a multi-polygon', () async {
+  test('Create a multi-polygon', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([
@@ -284,7 +284,7 @@ void run() {
     expect(multi.isNotEmpty, isTrue);
   });
 
-  test('Serialize a multi-polygon', () async {
+  test('Serialize a multi-polygon', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([
@@ -336,7 +336,7 @@ void run() {
     expect(jsonSquare[4][1], equals(squarePos[0].y));
   });
 
-  test('Deserialize a multi-polygon', () async {
+  test('Deserialize a multi-polygon', () {
     final triangle = Polygon();
     triangle.add(LineString()
       ..addAll([

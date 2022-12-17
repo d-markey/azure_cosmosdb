@@ -3,14 +3,14 @@ import '../indexing/partition.dart';
 import 'paging.dart';
 
 /// Class representing CosmosDB SQL query.
-class Query extends Paging implements BaseDocument {
+class Query extends Paging implements SpecialDocument {
   /// Builds a new CosmosDB SQL query with [command] and [params].
   Query(this.command,
       {int? maxCount,
       CosmosDbPartition? partition,
       Map<String, dynamic>? params})
       : _partition = partition,
-        _params = (params == null) ? null : Map<String, dynamic>.from(params),
+        _params = (params == null) ? null : {...params},
         super(maxCount);
 
   @override

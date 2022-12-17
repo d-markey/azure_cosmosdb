@@ -26,7 +26,7 @@ void run(CosmosDbServer cosmosDB) {
     await database.users.add(user);
     database.registerBuilder<TestDocument>(TestDocument.fromJson);
     final collection =
-        await database.collections.create(collName, partitionKeys: ['/id']);
+        await database.collections.create(collName, partitionKey: '/id');
     collectionUrl = collection.url;
     await collection.add(TestDocument('1', 'TEST #1', [1, 2, 3]));
     await collection.add(TestDocument('2', 'TEST #2', [2, 3, 5]));
@@ -143,7 +143,8 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Expired permission', () async {
-    final permission = await database.users.permissions.get(user, permName);
+    final permission = await database.users.permissions
+        .get(user, permName, expiry: Duration(seconds: 600));
     expect(permission, isNotNull);
     expect(permission!.token, isNotNull);
 

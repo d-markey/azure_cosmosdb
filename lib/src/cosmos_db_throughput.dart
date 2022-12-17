@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
+
 import 'cosmos_db_exceptions.dart';
 
 /// Class representing a CosmosDB throughput
 class CosmosDbThroughput {
   CosmosDbThroughput(int throughput)
       : header = {
-          'x-ms-offer-throughput': throughput.toString(),
+          HttpHeader.msOfferThroughput: throughput.toString(),
         } {
     if (throughput < _min) {
       throw ApplicationException(
@@ -20,7 +22,7 @@ class CosmosDbThroughput {
 
   CosmosDbThroughput.autoScale(int maxThroughput)
       : header = {
-          'x-ms-cosmos-offer-autopilot-settings':
+          HttpHeader.msCosmosOfferAutopilotSettings:
               jsonEncode({'maxThroughput': maxThroughput}),
         } {
     if (maxThroughput < _minAutoScale) {

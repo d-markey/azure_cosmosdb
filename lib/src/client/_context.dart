@@ -5,6 +5,8 @@ import '../permissions/cosmos_db_permission.dart';
 import '../queries/paging.dart';
 import '../cosmos_db_server.dart';
 
+const version = '1.8.0';
+
 class Context {
   Context({
     required this.type,
@@ -18,8 +20,7 @@ class Context {
     this.builder,
   }) {
     if (headers != null) {
-      _headers ??= {};
-      _headers!.addAll(headers);
+      _headers = {...headers};
     }
   }
 
@@ -34,10 +35,7 @@ class Context {
 
   Map<String, String>? _headers;
 
-  void addHeader(String name, String value) {
-    _headers ??= {};
-    _headers![name] = value;
-  }
+  void addHeader(String name, String value) => (_headers ??= {})[name] = value;
 
   Context copyWith(
       {Paging? paging,
@@ -65,13 +63,13 @@ class Context {
   }
 
   Map<String, String> getHeaders() {
-    final headers = <String, String>{};
+    final headers = {HttpHeader.userAgent: 'AzureCosmosDb.Dart/$version'};
     if (_headers != null) {
       headers.addAll(_headers!);
     }
     final partitionHeader = partition?.header;
     if (partitionHeader != null) {
-      headers[partitionHeader.key] = partitionHeader.value;
+      headers.addAll(partitionHeader);
     }
     final maxCount = (paging?.maxCount ?? -1);
     if (maxCount > 0) {

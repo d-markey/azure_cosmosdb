@@ -22,7 +22,7 @@ void run(CosmosDbServer cosmosDB) {
     database = await cosmosDB.databases.create(getTempName());
     collection = await database.collections.create(
       'items',
-      partitionKeys: ['/id'],
+      partitionKey: '/id',
     );
     collection.registerBuilder<TestDocument>(TestDocument.fromJson);
     await collection.add(TestDocument('1', 'PRIME #1', [2, 3, 5]));
@@ -33,7 +33,7 @@ void run(CosmosDbServer cosmosDB) {
     indexingPolicy.spatialIndexes.add(SpatialIndexPath('/p/?'));
     spatialCollection = await database.collections.create(
       'areas',
-      partitionKeys: ['/id'],
+      partitionKey: '/id',
       indexingPolicy: indexingPolicy,
     );
     spatialCollection.registerBuilder<TestSpatialDocumentPoint>(

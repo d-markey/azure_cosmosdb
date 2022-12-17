@@ -21,7 +21,7 @@ class PermissionMode {
 }
 
 /// Class representing a CosmosDB permission.
-class CosmosDbPermission extends BaseDocumentWithEtag {
+class CosmosDbPermission extends BaseDocument with EtagMixin {
   CosmosDbPermission(this.id, this.mode, this.resource, [this.token]);
 
   @override

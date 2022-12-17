@@ -4,7 +4,7 @@ import '../base_document.dart';
 typedef User = CosmosDbUser;
 
 /// Class representing a CosmosDB user.
-class CosmosDbUser extends BaseDocumentWithEtag {
+class CosmosDbUser extends BaseDocument with EtagMixin {
   CosmosDbUser(this.id);
 
   @override

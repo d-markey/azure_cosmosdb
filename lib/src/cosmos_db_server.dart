@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:retry/retry.dart';
 
 import 'client/_client.dart';
 import 'client/debug_http_client.dart';
@@ -20,11 +21,13 @@ class CosmosDbServer {
   CosmosDbServer(String urlOrAccount,
       {String? masterKey,
       http.Client? httpClient,
+      RetryOptions? retryOptions,
       bool multipleWriteLocations = false})
       : _client = Client(
           _buildUrl(urlOrAccount),
           masterKey: masterKey,
           httpClient: httpClient,
+          retryOptions: retryOptions,
           multipleWriteLocations: multipleWriteLocations,
         );
 
@@ -60,23 +63,23 @@ extension CosmosDbServerDbgExt on CosmosDbServer {
   /// ```
   void useLogger(void Function(Object?) logger,
       {bool withBody = true, bool withHeader = false}) {
-    final httpClient = dbgHttpClient;
-    if (httpClient != null) {
-      httpClient.log = logger;
-      httpClient.trace = true;
-      httpClient.traceBody = withBody;
-      httpClient.traceHeaders = withHeader;
+    final dbgClient = dbgHttpClient;
+    if (dbgClient != null) {
+      dbgClient.log = logger;
+      dbgClient.trace = true;
+      dbgClient.traceBody = withBody;
+      dbgClient.traceHeaders = withHeader;
     }
   }
 
   /// Reset the logger.
   void resetLogger() {
-    final httpClient = dbgHttpClient;
-    if (httpClient != null) {
-      httpClient.log = DebugHttpClient.defaultLog;
-      httpClient.trace = false;
-      httpClient.traceBody = false;
-      httpClient.traceHeaders = false;
+    final dbgClient = dbgHttpClient;
+    if (dbgClient != null) {
+      dbgClient.log = DebugHttpClient.defaultLog;
+      dbgClient.trace = false;
+      dbgClient.traceBody = false;
+      dbgClient.traceHeaders = false;
     }
   }
 }

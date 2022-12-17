@@ -1,3 +1,5 @@
+import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
+
 import '../client/_context.dart';
 import 'cosmos_db_permission.dart';
 import 'cosmos_db_user.dart';
@@ -41,7 +43,8 @@ class CosmosDbPermissions {
     );
     final seconds = expiry?.inSeconds ?? 0;
     if (seconds > 0) {
-      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());
+      context.addHeader(
+          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());
     }
     return _users.client.get<CosmosDbPermission>(
       '${_users.url}/${user.id}/permissions/$name',
@@ -64,7 +67,8 @@ class CosmosDbPermissions {
     );
     final seconds = expiry?.inSeconds ?? 0;
     if (seconds > 0) {
-      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());
+      context.addHeader(
+          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());
     }
     return _users.client.post<CosmosDbPermission>(
       '${_users.url}/${user.id}/permissions',
@@ -87,7 +91,8 @@ class CosmosDbPermissions {
     );
     final seconds = expiry?.inSeconds ?? 0;
     if (seconds > 0) {
-      context.addHeader('x-ms-documentdb-expiry-seconds', seconds.toString());
+      context.addHeader(
+          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());
     }
     return _users.client.put<CosmosDbPermission>(
       '${_users.url}/${user.id}/permissions/${userPermission.id}',

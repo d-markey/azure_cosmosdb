@@ -1,7 +1,9 @@
 /// Azure CosmosDB SQL Rest API for Dart/Flutter.
 library azure_cosmosdb;
 
-export 'src/base_document.dart';
+export 'package:retry/retry.dart' show RetryOptions;
+
+export 'src/base_document.dart' hide SpecialDocument;
 export 'src/cosmos_db_collection.dart' show CosmosDbCollection;
 export 'src/cosmos_db_collections.dart';
 export 'src/cosmos_db_database.dart' show CosmosDbDatabase;
@@ -17,6 +19,7 @@ export 'src/indexing/indexing_mode.dart';
 export 'src/indexing/indexing_policy.dart';
 export 'src/indexing/partition.dart';
 export 'src/indexing/spatial_index_path.dart';
+export 'src/patch/patch.dart';
 export 'src/permissions/cosmos_db_permission.dart';
 export 'src/permissions/cosmos_db_permissions.dart' show CosmosDbPermissions;
 export 'src/permissions/cosmos_db_user.dart';

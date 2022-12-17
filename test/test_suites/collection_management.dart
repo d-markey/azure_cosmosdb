@@ -81,8 +81,8 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Create collection with openOrCreate()', () async {
-    final collection = await database.collections
-        .openOrCreate(collName1, partitionKeys: ['/id']);
+    final collection =
+        await database.collections.openOrCreate(collName1, partitionKey: '/id');
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
@@ -90,7 +90,7 @@ void run(CosmosDbServer cosmosDB) {
   test('Create collection with openOrCreate() - fixed throughput', () async {
     final collection = await database_4000RU.collections.openOrCreate(
         getTempName('coll'),
-        partitionKeys: ['/id'],
+        partitionKey: '/id',
         throughput: CosmosDbThroughput.minimum);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
@@ -100,7 +100,7 @@ void run(CosmosDbServer cosmosDB) {
   test('Create collection with openOrCreate() - auto-scale', () async {
     final collection = await database_4000RU.collections.openOrCreate(
         getTempName('coll3'),
-        partitionKeys: ['/id'],
+        partitionKey: '/id',
         throughput: CosmosDbThroughput.autoScale(2000));
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
@@ -113,7 +113,7 @@ void run(CosmosDbServer cosmosDB) {
     indexingPolicy.excludedPaths.add(IndexPath('/*'));
     indexingPolicy.includedPaths.add(IndexPath('/gid/?'));
     final collection = await database.collections.openOrCreate(collName3,
-        partitionKeys: ['/gid'], indexingPolicy: indexingPolicy);
+        partitionKey: '/gid', indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
@@ -129,7 +129,7 @@ void run(CosmosDbServer cosmosDB) {
       IndexPath('/"due-date"', order: IndexOrder.descending),
     ]);
     final collection = await database.collections.openOrCreate(collName4,
-        partitionKeys: ['/gid'], indexingPolicy: indexingPolicy);
+        partitionKey: '/gid', indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
@@ -146,7 +146,7 @@ void run(CosmosDbServer cosmosDB) {
       ),
     );
     final collection = await database.collections.openOrCreate(collName5,
-        partitionKeys: ['/id'], indexingPolicy: indexingPolicy);
+        partitionKey: '/id', indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
@@ -162,15 +162,15 @@ void run(CosmosDbServer cosmosDB) {
       ),
     );
     final collection = await database.collections.openOrCreate(collName6,
-        partitionKeys: ['/id'], indexingPolicy: indexingPolicy);
+        partitionKey: '/id', indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
 
   test('Create collection with openOrCreate(), then update indexing policy',
       () async {
-    final collection = await database.collections
-        .openOrCreate(collName7, partitionKeys: ['/id']);
+    final collection =
+        await database.collections.openOrCreate(collName7, partitionKey: '/id');
 
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
@@ -189,7 +189,7 @@ void run(CosmosDbServer cosmosDB) {
 
   test('Create collection with create() fails', () async {
     await expectLater(
-      database.collections.create(collName1, partitionKeys: ['/id']),
+      database.collections.create(collName1, partitionKey: '/id'),
       throwsA(isA<ConflictException>()),
     );
   });

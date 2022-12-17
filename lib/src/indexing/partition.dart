@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
+
 @Deprecated('Use CosmosDbPartition instead.')
 typedef Partition = CosmosDbPartition;
 
@@ -7,22 +9,15 @@ typedef Partition = CosmosDbPartition;
 class CosmosDbPartition {
   const CosmosDbPartition._(this.header);
 
-  /// Creates a partition for a composite key.
-  CosmosDbPartition.multi(Iterable<String> keys)
-      : this._(MapEntry(
-          'x-ms-documentdb-partitionkey',
-          jsonEncode(keys),
-        ));
-
   /// Creates a partition for a single key.
-  CosmosDbPartition(String key) : this.multi([key]);
+  CosmosDbPartition(String key)
+      : this._({
+          HttpHeader.msDocumentDbPartitionKey: jsonEncode([key])
+        });
 
   /// Used for cross-partition queries.
-  static const all = CosmosDbPartition._(MapEntry(
-    'x-ms-documentdb-query-enablecrosspartition',
-    'true',
-  ));
+  static const all = CosmosDbPartition._(HttpHeader.enableCrossPartition);
 
   /// The HTTP header representing the target partition.
-  final MapEntry<String, String> header;
+  final Map<String, String> header;
 }
