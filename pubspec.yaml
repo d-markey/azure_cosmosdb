@@ -5,13 +5,14 @@ homepage: https://pub.dev/packages/azure_cosmosdb
 repository: https://www.github.com/d-markey/azure_cosmosdb
 
 environment:
-  sdk: '>=2.13.0 <3.0.0'
+  sdk: '>=2.15.0 <3.0.0'
 
 dependencies:
   crypto: ^3.0.2
   retry: ^3.1.0
   http: ^0.13.5
+  murmur3: ^1.0.0
 
 dev_dependencies:
   lints: ^2.0.1
-  test: ^1.22.0
+  test: ^1.22.1
