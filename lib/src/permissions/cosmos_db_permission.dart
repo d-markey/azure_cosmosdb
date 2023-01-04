@@ -1,9 +1,6 @@
 import '../base_document.dart';
 import '../cosmos_db_exceptions.dart';
 
-@Deprecated('Use CosmosDbPermission instead.')
-typedef Permission = CosmosDbPermission;
-
 /// Permission modes
 class PermissionMode {
   const PermissionMode._(this.name);

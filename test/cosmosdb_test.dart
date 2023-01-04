@@ -7,6 +7,7 @@ import 'test_suites/internal_helpers.dart' as internal_tests;
 import 'test_suites/expression_tokenizer.dart' as tokenizer_tests;
 import 'test_suites/geometry_shapes.dart' as geometry_tests;
 import 'test_suites/geography_shapes.dart' as geography_tests;
+import 'test_suites/path_parser.dart' as path_parser_tests;
 import 'test_suites/database_management.dart' as db_tests;
 import 'test_suites/user_management.dart' as user_tests;
 import 'test_suites/permission_management.dart' as permission_tests;
@@ -14,6 +15,7 @@ import 'test_suites/collection_management.dart' as coll_tests;
 import 'test_suites/document_management.dart' as doc_tests;
 import 'test_suites/document_queries.dart' as query_tests;
 import 'test_suites/document_spatial.dart' as spatial_tests;
+import 'test_suites/document_batch.dart' as batch_tests;
 
 void main() async {
   final cosmosDB = await getTestInstance();
@@ -26,11 +28,13 @@ void main() async {
 
   group('GEOGRAPHY SHAPES -', () => geography_tests.run());
 
-  if (cosmosDB == null) {
-    test('! COSMOS DB TESTS', () {
-      expect(cosmosDB, isNotNull);
-    });
-  } else {
+  group('PATH PARSER -', () => path_parser_tests.run());
+
+  test('COSMOS DB CONNECTION', () {
+    expect(cosmosDB, isNotNull);
+  });
+
+  if (cosmosDB != null) {
     group('DATABASE MANAGEMENT -', () => db_tests.run(cosmosDB));
 
     group('USER MANAGEMENT -', () => user_tests.run(cosmosDB));
@@ -44,6 +48,8 @@ void main() async {
     group('SPATIAL DOCUMENT -', () => spatial_tests.run(cosmosDB));
 
     group('DOCUMENT QUERIES -', () => query_tests.run(cosmosDB));
+
+    group('DOCUMENT BATCHES -', () => batch_tests.run(cosmosDB));
 
     test('Reset logger', () {
       expect(cosmosDB.dbgHttpClient, isNotNull);

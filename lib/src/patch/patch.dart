@@ -37,6 +37,9 @@ class Patch extends SpecialDocument {
             needSpace = true;
             break;
           case Token.separator:
+            if (token.text == ':') {
+              parts.add(' ');
+            }
             parts.add(token.text);
             needSpace = (token.text == ',' || token.text == ':');
             break;
@@ -48,9 +51,6 @@ class Patch extends SpecialDocument {
             parts.add(token.text);
             break;
         }
-      }
-      if (parts.isNotEmpty && parts.last == ' ') {
-        parts.removeLast();
       }
       cond = parts.join();
     }

@@ -1,15 +1,13 @@
 import '../base_document.dart';
-import '../indexing/partition.dart';
+import '../partition/partition_key.dart';
 import 'paging.dart';
 
 /// Class representing CosmosDB SQL query.
 class Query extends Paging implements SpecialDocument {
   /// Builds a new CosmosDB SQL query with [command] and [params].
   Query(this.command,
-      {int? maxCount,
-      CosmosDbPartition? partition,
-      Map<String, dynamic>? params})
-      : _partition = partition,
+      {int? maxCount, PartitionKey? partitionKey, Map<String, dynamic>? params})
+      : _partitionKey = partitionKey,
         _params = (params == null) ? null : {...params},
         super(maxCount);
 
@@ -23,14 +21,14 @@ class Query extends Paging implements SpecialDocument {
 
   /// The partition where the query should be executed; by default, the query
   /// will be executed against all partitions.
-  CosmosDbPartition get partition => _partition ?? CosmosDbPartition.all;
-  CosmosDbPartition? _partition;
+  PartitionKey get partitionKey => _partitionKey ?? PartitionKey.all;
+  PartitionKey? _partitionKey;
 
   /// Force the query to execute in all partitions.
-  void crossPartition() => _partition = CosmosDbPartition.all;
+  void crossPartition() => _partitionKey = null;
 
   /// Restrict the query to the partition identified by [key].
-  void onPartition(String key) => _partition = CosmosDbPartition(key);
+  void onPartition(PartitionKey partitionKey) => _partitionKey = partitionKey;
 
   /// Registers a paramater/value to the query.
   void withParam(String name, dynamic value) =>

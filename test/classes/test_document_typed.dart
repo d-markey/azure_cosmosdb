@@ -2,18 +2,17 @@ import 'package:azure_cosmosdb/azure_cosmosdb.dart';
 
 import 'test_document.dart';
 
-class TestDocumentWithPK extends TestDocument with PartitionKeyMixin {
-  TestDocumentWithPK(String id, this.type, String label, List<int> data)
+class TestTypedDocument extends TestDocument with PartitionKeyMixin {
+  TestTypedDocument(String id, this.type, String label, List<int> data)
       : super(id, label, data);
 
   final String type;
 
   @override
-  Map<String, dynamic> toJson() =>
-      super.toJson()..addAll({'t': type, 'pk': keys.first});
+  Map<String, dynamic> toJson() => super.toJson()..addAll({'t': type});
 
-  static TestDocumentWithPK fromJson(Map json) {
-    final doc = TestDocumentWithPK(
+  static TestTypedDocument fromJson(Map json) {
+    final doc = TestTypedDocument(
       json['id'],
       json['t'],
       json['l'],
@@ -27,5 +26,5 @@ class TestDocumentWithPK extends TestDocument with PartitionKeyMixin {
   }
 
   @override
-  List<String> get keys => ['$id:$type'];
+  List<String> get keys => [type];
 }

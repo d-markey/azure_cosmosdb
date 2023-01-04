@@ -12,22 +12,24 @@ void main() async {
 }
 
 void run(CosmosDbServer cosmosDB) {
-  final collName1 = 'test_1';
-  final collName2 = 'not_found_2';
-  final collName3 = 'idx_test_3';
-  final collName4 = 'idx_test_4';
-  final collName5 = 'geom_test_5';
-  final collName6 = 'geos_test_6';
-  final collName7 = 'test_7';
+  final collTest1 = 'test_1';
+  final collTest2 = 'test_2';
+  final collNotFoundTest = 'not_found';
+  final collIndexTest1 = 'idx_test_1';
+  final collIndexTest2 = 'idx_test_2';
+  final collGeometryTest = 'geom_test';
+  final collGeography = 'geos_test';
+  final collMultiTest = 'multi_test';
 
   final collNames = {
-    collName1,
-    collName2,
-    collName3,
-    collName4,
-    collName5,
-    collName6,
-    collName7,
+    collTest1,
+    collTest2,
+    collNotFoundTest,
+    collIndexTest1,
+    collIndexTest2,
+    collGeometryTest,
+    collGeography,
+    collMultiTest,
   };
 
   late CosmosDbDatabase database;
@@ -52,18 +54,18 @@ void run(CosmosDbServer cosmosDB) {
 
   test('Open a non-existing collection fails', () async {
     await expectLater(
-      database.collections.open(collName1),
+      database.collections.open(collTest1),
       throwsA(isA<NotFoundException>()),
     );
     await expectLater(
-      database.collections.open(collName2),
+      database.collections.open(collNotFoundTest),
       throwsA(isA<NotFoundException>()),
     );
   });
 
   test('Delete a non-existing collection fails when throwOnNotFound is true',
       () async {
-    final collection = CosmosDbCollection(database, collName1);
+    final collection = CosmosDbCollection(database, collTest1);
     expect(collection.exists, isNull);
     await expectLater(
       database.collections.delete(collection, throwOnNotFound: true),
@@ -74,23 +76,31 @@ void run(CosmosDbServer cosmosDB) {
   test(
       'Delete a non-existing collection succeeds when throwOnNotFound is false',
       () async {
-    final collection = CosmosDbCollection(database, collName1);
+    final collection = CosmosDbCollection(database, collTest1);
     expect(collection.exists, isNull);
     await database.collections.delete(collection, throwOnNotFound: false);
     expect(collection.exists, isFalse);
   });
 
   test('Create collection with openOrCreate()', () async {
-    final collection =
-        await database.collections.openOrCreate(collName1, partitionKey: '/id');
+    final collection = await database.collections
+        .openOrCreate(collTest1, partitionKey: PartitionKeySpec.id);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
 
+  test('Create collection with openOrCreate() - multi-hash partition key',
+      () async {
+    final collection = await database.collections.openOrCreate(collMultiTest,
+        partitionKey: PartitionKeySpec.multi(['/id', '/type']));
+    expect(collection, isNotNull);
+    expect(collection.exists, isTrue);
+  }, skip: true);
+
   test('Create collection with openOrCreate() - fixed throughput', () async {
     final collection = await database_4000RU.collections.openOrCreate(
         getTempName('coll'),
-        partitionKey: '/id',
+        partitionKey: PartitionKeySpec.id,
         throughput: CosmosDbThroughput.minimum);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
@@ -100,7 +110,7 @@ void run(CosmosDbServer cosmosDB) {
   test('Create collection with openOrCreate() - auto-scale', () async {
     final collection = await database_4000RU.collections.openOrCreate(
         getTempName('coll3'),
-        partitionKey: '/id',
+        partitionKey: PartitionKeySpec.id,
         throughput: CosmosDbThroughput.autoScale(2000));
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
@@ -112,8 +122,8 @@ void run(CosmosDbServer cosmosDB) {
     final indexingPolicy = IndexingPolicy();
     indexingPolicy.excludedPaths.add(IndexPath('/*'));
     indexingPolicy.includedPaths.add(IndexPath('/gid/?'));
-    final collection = await database.collections.openOrCreate(collName3,
-        partitionKey: '/gid', indexingPolicy: indexingPolicy);
+    final collection = await database.collections.openOrCreate(collIndexTest1,
+        partitionKey: PartitionKeySpec('/gid'), indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
@@ -128,10 +138,17 @@ void run(CosmosDbServer cosmosDB) {
       IndexPath('/label', order: IndexOrder.ascending),
       IndexPath('/"due-date"', order: IndexOrder.descending),
     ]);
-    final collection = await database.collections.openOrCreate(collName4,
-        partitionKey: '/gid', indexingPolicy: indexingPolicy);
+    final collection = await database.collections.openOrCreate(collIndexTest2,
+        partitionKey: PartitionKeySpec('/gid'), indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
+  });
+
+  test('Open collection and check partition key spec', () async {
+    final collection = await database.collections.openOrCreate(collIndexTest2);
+    expect(collection, isNotNull);
+    expect(collection.exists, isTrue);
+    expect(collection.partitionKeySpec, equals(PartitionKeySpec('/gid')));
   });
 
   test(
@@ -145,8 +162,8 @@ void run(CosmosDbServer cosmosDB) {
         boundingBox: BoundingBox(-1, -1, 1, 1),
       ),
     );
-    final collection = await database.collections.openOrCreate(collName5,
-        partitionKey: '/id', indexingPolicy: indexingPolicy);
+    final collection = await database.collections.openOrCreate(collGeometryTest,
+        partitionKey: PartitionKeySpec.id, indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
@@ -161,16 +178,16 @@ void run(CosmosDbServer cosmosDB) {
         types: [DataType.point],
       ),
     );
-    final collection = await database.collections.openOrCreate(collName6,
-        partitionKey: '/id', indexingPolicy: indexingPolicy);
+    final collection = await database.collections.openOrCreate(collGeography,
+        partitionKey: PartitionKeySpec.id, indexingPolicy: indexingPolicy);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
   });
 
   test('Create collection with openOrCreate(), then update indexing policy',
       () async {
-    final collection =
-        await database.collections.openOrCreate(collName7, partitionKey: '/id');
+    final collection = await database.collections
+        .openOrCreate(collTest2, partitionKey: PartitionKeySpec.id);
 
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
@@ -182,27 +199,35 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Open collection with openOrCreate()', () async {
-    final collection = await database.collections.openOrCreate(collName1);
+    final collection = await database.collections.openOrCreate(collTest1);
     expect(collection, isNotNull);
     expect(collection.exists, isTrue);
+    expect(collection.partitionKeySpec, equals(PartitionKeySpec.id));
   });
 
-  test('Create collection with create() fails', () async {
+  test('Create existing collection with create() fails', () async {
     await expectLater(
-      database.collections.create(collName1, partitionKey: '/id'),
+      database.collections.create(collTest1, partitionKey: PartitionKeySpec.id),
       throwsA(isA<ConflictException>()),
     );
   });
 
   test('List collections after creation', () async {
     final list = await database.collections.list();
-    final collection = list.singleOrDefault((coll) => coll.id == collName1);
+    final collection = list.singleOrDefault((coll) => coll.id == collTest1);
     expect(collection, isNotNull);
     expect(collection?.exists, isTrue);
+    expect(collection?.partitionKeySpec, equals(PartitionKeySpec.id));
+  });
+
+  test('Get collections partition key ranges', () async {
+    final coll = await database.collections.openOrCreate(collTest1);
+    final pkranges = await coll.getPkRanges();
+    expect(pkranges, isNotEmpty);
   });
 
   test('Delete collection', () async {
-    final collection = await database.collections.openOrCreate(collName1);
+    final collection = await database.collections.openOrCreate(collTest1);
     expect(collection.exists, isTrue);
     await database.collections.delete(collection);
     expect(collection.exists, isFalse);
@@ -210,7 +235,7 @@ void run(CosmosDbServer cosmosDB) {
 
   test('List collections after deletion', () async {
     final list = await database.collections.list();
-    final collection = list.singleOrDefault((coll) => coll.id == collName1);
+    final collection = list.singleOrDefault((coll) => coll.id == collTest1);
     expect(collection, isNull);
   });
 }

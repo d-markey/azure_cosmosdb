@@ -7,9 +7,6 @@ import 'cosmos_db_databases.dart';
 
 typedef FutureCallback<T> = Future<T> Function();
 
-@Deprecated('Use CosmosDbServer instead.')
-typedef Instance = CosmosDbServer;
-
 /// Class representing a CosmosDB instance
 class CosmosDbServer {
   /// Builds a new Cosmos DB [CosmosDbServer] with the provided [urlOrAccount],

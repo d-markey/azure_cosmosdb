@@ -23,13 +23,14 @@ void run(CosmosDbServer cosmosDB) {
 
   setUpAll(() async {
     database = await cosmosDB.databases.create(getTempName());
-    await database.users.add(user);
     database.registerBuilder<TestDocument>(TestDocument.fromJson);
-    final collection =
-        await database.collections.create(collName, partitionKey: '/id');
+    final collection = await database.collections
+        .create(collName, partitionKey: PartitionKeySpec.id);
     collectionUrl = collection.url;
     await collection.add(TestDocument('1', 'TEST #1', [1, 2, 3]));
     await collection.add(TestDocument('2', 'TEST #2', [2, 3, 5]));
+
+    await database.users.add(user);
   });
 
   tearDownAll(() async {

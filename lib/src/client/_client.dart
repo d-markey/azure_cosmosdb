@@ -11,6 +11,7 @@ import '../_internal/_http_header.dart';
 import '../_internal/_http_status_codes.dart';
 import '../_internal/_mime_type.dart';
 import '../base_document.dart';
+import '../batch/transactional_batch.dart';
 import '../cosmos_db_exceptions.dart';
 import '../queries/paging.dart';
 import '../queries/query.dart';
@@ -157,7 +158,7 @@ class Client {
     return data;
   }
 
-  Future<dynamic> getJson(String path, Context context) {
+  Future<dynamic> rawGet(String path, Context context) {
     final call = HttpCall.get(path);
     return _send(call, null, context).rethrowContextualizedException(call);
   }
@@ -177,22 +178,6 @@ class Client {
         .rethrowContextualizedException(call);
   }
 
-  Future<T> post<T extends BaseDocument>(
-      String path, BaseDocument doc, Context context) {
-    final call = HttpCall.post(path);
-    return _send(call, doc, context)
-        .then((data) => _build<T>(context, data)!)
-        .rethrowContextualizedException(call);
-  }
-
-  Future<T> patch<T extends BaseDocument>(
-      String path, BaseDocument doc, Context context) {
-    final call = HttpCall.patch(path);
-    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))
-        .then((data) => _build<T>(context, data)!)
-        .rethrowContextualizedException(call);
-  }
-
   Future<Iterable<T>> query<T extends BaseDocument>(
       String path, Query query, String resultSet, Context context) {
     final call = HttpCall.post(path);
@@ -201,7 +186,7 @@ class Client {
             query,
             context.copyWith(
               paging: query,
-              partition: query.partition,
+              partitionKey: query.partitionKey,
               headers: HttpHeader.queryPayload,
             ))
         .then((result) => _buildMany<T>(context, result![resultSet]))
@@ -216,9 +201,43 @@ class Client {
         query,
         context.copyWith(
           paging: query,
-          partition: query.partition,
+          partitionKey: query.partitionKey,
           headers: HttpHeader.queryPayload,
         )).rethrowContextualizedException(call);
+  }
+
+  Future<dynamic> batch(
+      String path, TransactionalBatch batch, Context context) {
+    final call = HttpCall.post(path);
+    return _send(
+        call,
+        batch,
+        context.copyWith(
+          headers: Map.from(batch.isAtomic
+              ? HttpHeader.atomicBatchRequest
+              : HttpHeader.nonAtomicBatchRequest)
+            ..addAll({
+              'x-ms-documentdb-partitionkeyrangeid': '0',
+              'x-ms-cosmos-batch-continue-on-error':
+                  batch.isAtomic ? 'false' : 'true'
+            }),
+        )).rethrowContextualizedException(call);
+  }
+
+  Future<T> post<T extends BaseDocument>(
+      String path, BaseDocument doc, Context context) {
+    final call = HttpCall.post(path);
+    return _send(call, doc, context)
+        .then((data) => _build<T>(context, data)!)
+        .rethrowContextualizedException(call);
+  }
+
+  Future<T> patch<T extends BaseDocument>(
+      String path, BaseDocument doc, Context context) {
+    final call = HttpCall.patch(path);
+    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))
+        .then((data) => _build<T>(context, data)!)
+        .rethrowContextualizedException(call);
   }
 
   Future<T> put<T extends BaseDocument>(

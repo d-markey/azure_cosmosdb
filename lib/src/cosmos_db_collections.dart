@@ -5,10 +5,8 @@ import 'cosmos_db_exceptions.dart';
 import 'cosmos_db_throughput.dart';
 import 'indexing/geospatial_config.dart';
 import 'indexing/indexing_policy.dart';
+import 'partition/partition_key_spec.dart';
 import 'permissions/cosmos_db_permission.dart';
-
-@Deprecated('Use CosmosDbCollections instead.')
-typedef Collections = CosmosDbCollections;
 
 /// Class used to manage [CosmosDbCollection]s in a [CosmosDbDatabase].
 class CosmosDbCollections {
@@ -21,7 +19,7 @@ class CosmosDbCollections {
 
   CosmosDbCollection fromJson(Map json) {
     final coll = CosmosDbCollection(database, json['id'],
-        partitionKey: json['partitionKey']['paths']?.cast<String>().first);
+        partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']));
     coll.setExists(true);
     return coll;
   }
@@ -63,8 +61,7 @@ class CosmosDbCollections {
   /// Creates a new [CosmosDbCollection] with the specified `name` and `partitionKeys`.
   Future<CosmosDbCollection> create(
     String name, {
-    @Deprecated('Use partitionKey instead.') List<String>? partitionKeys,
-    String? partitionKey,
+    required PartitionKeySpec partitionKey,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
     CosmosDbPermission? permission,
@@ -75,8 +72,7 @@ class CosmosDbCollections {
         CosmosDbCollection(
           database,
           name,
-          partitionKeys: partitionKeys,
-          partitionKey: partitionKey,
+          partitionKeySpec: partitionKey,
           indexingPolicy: indexingPolicy,
           geospatialConfig: geospatialConfig,
         ),
@@ -95,8 +91,7 @@ class CosmosDbCollections {
   /// Opens or creates a [CosmosDbCollection] with id [name].
   Future<CosmosDbCollection> openOrCreate(
     String name, {
-    @Deprecated('Use partitionKey instead.') List<String>? partitionKeys,
-    String? partitionKey,
+    PartitionKeySpec? partitionKey,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
     CosmosDbThroughput? throughput,
@@ -106,8 +101,7 @@ class CosmosDbCollections {
     } on NotFoundException {
       return await create(
         name,
-        partitionKeys: partitionKeys,
-        partitionKey: partitionKey,
+        partitionKey: partitionKey!,
         indexingPolicy: indexingPolicy,
         geospatialConfig: geospatialConfig,
         throughput: throughput,

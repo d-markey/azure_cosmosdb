@@ -6,9 +6,6 @@ import 'permissions/cosmos_db_permission.dart';
 import 'permissions/cosmos_db_users.dart';
 import 'cosmos_db_server.dart';
 
-@Deprecated('Use CosmosDbDatabase instead.')
-typedef Database = CosmosDbDatabase;
-
 /// Class representing a CosmosDB database.
 class CosmosDbDatabase extends BaseDocument {
   CosmosDbDatabase(this.server, this.id) : url = 'dbs/$id';
@@ -34,7 +31,7 @@ class CosmosDbDatabase extends BaseDocument {
       client.registerBuilder<T>(builder);
 
   /// Gets information for this [CosmosDbDatabase].
-  Future<dynamic> getInfo({CosmosDbPermission? permission}) => client.getJson(
+  Future<dynamic> getInfo({CosmosDbPermission? permission}) => client.rawGet(
       url,
       Context(
         type: 'dbs',

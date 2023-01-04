@@ -25,12 +25,12 @@ void run(CosmosDbServer cosmosDB) {
     database = await cosmosDB.databases.create(getTempName());
     collection = await database.collections.create(
       'items',
-      partitionKey: '/id',
+      partitionKey: PartitionKeySpec.id,
     );
     collection.registerBuilder<TestDocument>(TestDocument.fromJson);
     collectionWithPK = await database.collections.create(
       'items_custom_pk',
-      partitionKey: '/pk',
+      partitionKey: PartitionKeySpec('/pk'),
     );
     collectionWithPK
         .registerBuilder<TestDocumentWithPK>(TestDocumentWithPK.fromJson);
@@ -47,7 +47,7 @@ void run(CosmosDbServer cosmosDB) {
       'SELECT * FROM docs WHERE docs.id=@id',
       params: {'@id': '1'},
     );
-    query.onPartition('1');
+    query.onPartition(PartitionKey('1'));
     expect(await collection.query<TestDocument>(query), isEmpty);
 
     query.withParam('@id', '2');
@@ -182,13 +182,13 @@ void run(CosmosDbServer cosmosDB) {
       ..add('/counter', 3)
       ..increment('/counter', 7);
     var patched = await collectionWithPK.patch(doc, patch);
-    expect(patched.partitionKey, equals(doc.partitionKey));
+    expect(patched.keys, equals(doc.keys));
     expect(patched.label, endsWith('(PATCHED)'));
     expect(patched.props['counter'], equals(3 + 7));
 
     patch = Patch()..decrement('/counter', 5);
     patched = await collectionWithPK.patch(doc, patch);
-    expect(patched.partitionKey, equals(doc.partitionKey));
+    expect(patched.keys, equals(doc.keys));
     expect(patched.label, endsWith('(PATCHED)'));
     expect(patched.props['counter'], equals(3 + 7 - 5));
 
@@ -196,7 +196,7 @@ void run(CosmosDbServer cosmosDB) {
       ..replace('/counter', -1)
       ..replace('/l', 'OVERWRITTEN');
     patched = await collectionWithPK.patch(doc, patch);
-    expect(patched.partitionKey, equals(doc.partitionKey));
+    expect(patched.keys, equals(doc.keys));
     expect(patched.label, equals('OVERWRITTEN'));
     expect(patched.props['counter'], equals(-1));
 
@@ -214,13 +214,13 @@ void run(CosmosDbServer cosmosDB) {
           'from c where c.counter = @neg and CONTAINS(c.l, \'OVER\')')
       ..withParam('@neg', -1);
     patched = await collectionWithPK.patch(doc, patch);
-    expect(patched.partitionKey, equals(doc.partitionKey));
+    expect(patched.keys, equals(doc.keys));
     expect(patched.label, equals('OVERWRITTEN'));
     expect(patched.props['counter'], isNull);
 
     final after = await collectionWithPK.list<TestDocumentWithPK>();
     expect(after.length, equals(before.length));
-    expect(after.where((d) => d.partitionKey == doc.partitionKey), isNotEmpty);
+    expect(after.where((d) => d.keys.first == doc.keys.first), isNotEmpty);
   });
 
   test('Replace a document - etag mismatch', () async {
@@ -252,7 +252,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(after.where((d) => d.id == doc.id), isNotEmpty);
     expect(after.where((d) => d.label.endsWith('(MUST NOT BE REPLACED)')),
         isEmpty);
-    expect(after.where((d) => d.partitionKey == doc.partitionKey).first.label,
+    expect(after.where((d) => d.keys.first == doc.keys.first).first.label,
         equals(label));
   });
 
@@ -266,16 +266,16 @@ void run(CosmosDbServer cosmosDB) {
     final before = await collection.list<TestDocument>();
 
     var doc = before.firstWhere((d) => d.id == '1');
-    expect(await collection.delete('', document: doc), isTrue);
+    expect(await collection.delete(document: doc), isTrue);
 
     final after = await collection.list<TestDocument>();
     expect(after.length, equals(before.length - 1));
     expect(after.every((d) => d.etag.isNotEmpty), isTrue);
 
-    expect(await collection.delete(doc.id), isTrue);
+    expect(await collection.delete(id: doc.id), isTrue);
 
     await expectLater(
-      collection.delete(doc.id, throwOnNotFound: true),
+      collection.delete(id: doc.id, throwOnNotFound: true),
       throwsA(isA<NotFoundException>()),
     );
   });
@@ -284,16 +284,16 @@ void run(CosmosDbServer cosmosDB) {
     final before = await collectionWithPK.list<TestDocumentWithPK>();
 
     var doc = before.firstWhere((d) => d.id == '1');
-    expect(await collectionWithPK.delete('', document: doc), isTrue);
+    expect(await collectionWithPK.delete(document: doc), isTrue);
 
     final after = await collectionWithPK.list<TestDocumentWithPK>();
     expect(after.length, equals(before.length - 1));
     expect(after.every((d) => d.etag.isNotEmpty), isTrue);
 
-    expect(await collectionWithPK.delete('', document: doc), isTrue);
+    expect(await collectionWithPK.delete(document: doc), isTrue);
 
     await expectLater(
-      collectionWithPK.delete('', document: doc, throwOnNotFound: true),
+      collectionWithPK.delete(document: doc, throwOnNotFound: true),
       throwsA(isA<NotFoundException>()),
     );
   });
@@ -303,7 +303,7 @@ void run(CosmosDbServer cosmosDB) {
 
     var doc = before.first;
     doc.setEtag({'_etag': 'dummy'});
-    await expectLater(collection.delete('', document: doc),
+    await expectLater(collection.delete(document: doc),
         throwsA(isA<PreconditionFailureException>()));
 
     final after = await collection.list<TestDocument>();
@@ -315,7 +315,7 @@ void run(CosmosDbServer cosmosDB) {
 
     var doc = before.first;
     doc.setEtag({'_etag': 'dummy'});
-    await expectLater(collectionWithPK.delete('', document: doc),
+    await expectLater(collectionWithPK.delete(document: doc),
         throwsA(isA<PreconditionFailureException>()));
 
     final after = await collectionWithPK.list<TestDocumentWithPK>();

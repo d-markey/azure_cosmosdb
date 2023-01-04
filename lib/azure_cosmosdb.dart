@@ -4,6 +4,7 @@ library azure_cosmosdb;
 export 'package:retry/retry.dart' show RetryOptions;
 
 export 'src/base_document.dart' hide SpecialDocument;
+export 'src/batch/transactional_batch.dart';
 export 'src/cosmos_db_collection.dart' show CosmosDbCollection;
 export 'src/cosmos_db_collections.dart';
 export 'src/cosmos_db_database.dart' show CosmosDbDatabase;
@@ -17,7 +18,8 @@ export 'src/indexing/index_order.dart';
 export 'src/indexing/index_path.dart';
 export 'src/indexing/indexing_mode.dart';
 export 'src/indexing/indexing_policy.dart';
-export 'src/indexing/partition.dart';
+export 'src/partition/partition_key_spec.dart';
+export 'src/partition/partition_key.dart';
 export 'src/indexing/spatial_index_path.dart';
 export 'src/patch/patch.dart';
 export 'src/permissions/cosmos_db_permission.dart';

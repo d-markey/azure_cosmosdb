@@ -1,8 +1,5 @@
 import '../base_document.dart';
 
-@Deprecated('Use CosmosDbUser instead.')
-typedef User = CosmosDbUser;
-
 /// Class representing a CosmosDB user.
 class CosmosDbUser extends BaseDocument with EtagMixin {
   CosmosDbUser(this.id);

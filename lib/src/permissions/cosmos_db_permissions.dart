@@ -5,9 +5,6 @@ import 'cosmos_db_permission.dart';
 import 'cosmos_db_user.dart';
 import 'cosmos_db_users.dart';
 
-@Deprecated('Use CosmosDbPermissions instead.')
-typedef Permissions = CosmosDbPermissions;
-
 /// Class used to manage [CosmosDbPermission]s for CosmosDB [CosmosDbUsers].
 class CosmosDbPermissions {
   CosmosDbPermissions(this._users);

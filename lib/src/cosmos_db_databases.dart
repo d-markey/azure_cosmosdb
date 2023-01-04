@@ -6,9 +6,6 @@ import 'cosmos_db_throughput.dart';
 import 'permissions/cosmos_db_permission.dart';
 import 'cosmos_db_server.dart';
 
-@Deprecated('Use CosmosDbDatabases instead.')
-typedef Databases = CosmosDbDatabases;
-
 /// Class used to manage [CosmosDbDatabase]s in a [CosmosDbServer].
 class CosmosDbDatabases {
   CosmosDbDatabases(this.server) : _url = 'dbs';

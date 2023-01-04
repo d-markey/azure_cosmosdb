@@ -1,3 +1,8 @@
+## 2.0.0
+
+- Added [PartitionKeySpec] for partition key definition. A [PartitionKeySpec] must be provided when creating a [CosmosDbCollection]. The static final instance [PartitionKeySpec.id] can be used as the default partition key `['/id']`. When opening an existing collection, the [PartitionKeySpec] is loaded from the Cosmos DB response. [PartitionKeySpec.from] rebuilds a [BaseDocument]'s partition key. 
+- Added [PartitionKey] for providing a partition key when operating on documents/queries. The special value [PartitionKey.all] enables cross-partition queries.
+
 ## 1.8.0
 
 - Added support for patching documents. A document may be patched conditionally and the condition can be parameterized (parameter values are integrated into the condition client-side, as Cosmos DB does not accept parameterized conditions out-of-the-box). Variable names MUST start with `@`.

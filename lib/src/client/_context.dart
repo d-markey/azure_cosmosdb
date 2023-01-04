@@ -1,11 +1,11 @@
 import '../_internal/_http_header.dart';
 import '../base_document.dart';
-import '../indexing/partition.dart';
+import '../partition/partition_key.dart';
 import '../permissions/cosmos_db_permission.dart';
 import '../queries/paging.dart';
 import '../cosmos_db_server.dart';
 
-const version = '1.8.0';
+const version = '2.0.0';
 
 class Context {
   Context({
@@ -14,7 +14,7 @@ class Context {
     Map<String, String>? headers,
     this.throwOnNotFound = true,
     this.paging,
-    this.partition,
+    this.partitionKey,
     this.token,
     this.onForbidden,
     this.builder,
@@ -28,7 +28,7 @@ class Context {
   final String? resId;
   final bool throwOnNotFound;
   final Paging? paging;
-  final CosmosDbPartition? partition;
+  final PartitionKey? partitionKey;
   final String? token;
   final FutureCallback<CosmosDbPermission?>? onForbidden;
   final DocumentBuilder? builder;
@@ -39,14 +39,14 @@ class Context {
 
   Context copyWith(
       {Paging? paging,
-      CosmosDbPartition? partition,
+      PartitionKey? partitionKey,
       Map<String, String>? headers,
       List<String>? removeHeaders}) {
     final copy = Context(
       type: type,
       resId: resId,
       paging: paging ?? this.paging,
-      partition: partition ?? this.partition,
+      partitionKey: partitionKey ?? this.partitionKey,
       token: token,
       onForbidden: onForbidden,
     );
@@ -67,9 +67,8 @@ class Context {
     if (_headers != null) {
       headers.addAll(_headers!);
     }
-    final partitionHeader = partition?.header;
-    if (partitionHeader != null) {
-      headers.addAll(partitionHeader);
+    if (partitionKey != null) {
+      headers.addAll(partitionKey!.header);
     }
     final maxCount = (paging?.maxCount ?? -1);
     if (maxCount > 0) {

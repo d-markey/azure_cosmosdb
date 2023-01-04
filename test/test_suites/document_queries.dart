@@ -22,7 +22,7 @@ void run(CosmosDbServer cosmosDB) {
     database = await cosmosDB.databases.create(getTempName());
     collection = await database.collections.create(
       'items',
-      partitionKey: '/id',
+      partitionKey: PartitionKeySpec.id,
     );
     collection.registerBuilder<TestDocument>(TestDocument.fromJson);
     await collection.add(TestDocument('1', 'PRIME #1', [2, 3, 5]));
@@ -33,7 +33,7 @@ void run(CosmosDbServer cosmosDB) {
     indexingPolicy.spatialIndexes.add(SpatialIndexPath('/p/?'));
     spatialCollection = await database.collections.create(
       'areas',
-      partitionKey: '/id',
+      partitionKey: PartitionKeySpec.id,
       indexingPolicy: indexingPolicy,
     );
     spatialCollection.registerBuilder<TestSpatialDocumentPoint>(
@@ -62,7 +62,7 @@ void run(CosmosDbServer cosmosDB) {
   test('Query single documents', () async {
     final query = Query(
       'SELECT * FROM doc WHERE doc.id=@id',
-      partition: CosmosDbPartition('1'),
+      partitionKey: PartitionKey('1'),
       params: {'@id': '1'},
     );
 
@@ -74,7 +74,7 @@ void run(CosmosDbServer cosmosDB) {
   test('Query on wrong partition yields no documents', () async {
     final query = Query(
       'SELECT * FROM doc WHERE doc.id=@id',
-      partition: CosmosDbPartition('2'),
+      partitionKey: PartitionKey('2'),
       params: {'@id': '1'},
     );
 
@@ -85,7 +85,7 @@ void run(CosmosDbServer cosmosDB) {
   test('Cross-partition query', () async {
     final query = Query(
       'SELECT * FROM doc WHERE doc.id=@id1 OR doc.id=@id2',
-      partition: CosmosDbPartition('1'),
+      partitionKey: PartitionKey('1'),
       params: {'@id1': '1', '@id2': '3'},
     );
 
@@ -93,11 +93,11 @@ void run(CosmosDbServer cosmosDB) {
     expect(res.length, equals(1));
     expect(res.first.id, equals('1'));
 
-    query.onPartition('2');
+    query.onPartition(PartitionKey('2'));
     res = await collection.query<TestDocument>(query);
     expect(res, isEmpty);
 
-    query.onPartition('3');
+    query.onPartition(PartitionKey('3'));
     res = await collection.query<TestDocument>(query);
     expect(res.length, equals(1));
     expect(res.first.id, equals('3'));
@@ -111,7 +111,7 @@ void run(CosmosDbServer cosmosDB) {
     // /!\ NOTE: TestDocuments serialize as { 'id': id , 'l': label, 'd': data}
     // /!\ NOTE: to match the label, the query must use 'doc.l'
     final query = Query('SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
-        params: {'@text': 'PRIME'}, partition: CosmosDbPartition.all);
+        params: {'@text': 'PRIME'});
     final res = await collection.query<TestDocument>(query);
     expect(res.length, equals(2));
     expect(query.continuation, isEmpty);
@@ -119,9 +119,7 @@ void run(CosmosDbServer cosmosDB) {
 
   test('Query multiple documents with paging', () async {
     final query = Query('SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
-        params: {'@text': 'PRIME'},
-        partition: CosmosDbPartition.all,
-        maxCount: 1);
+        params: {'@text': 'PRIME'}, maxCount: 1);
 
     final res1 = await collection.query<TestDocument>(query);
     expect(query.continuation, isNotEmpty);
@@ -141,7 +139,6 @@ void run(CosmosDbServer cosmosDB) {
     for (var entry in cities.entries) {
       q = Query(
         'SELECT ST_ISVALIDDETAILED(@${entry.key.replaceAll('-', '')})',
-        partition: CosmosDbPartition.all,
         params: {'@${entry.key.replaceAll('-', '')}': entry.value},
       );
       r = await spatialCollection.rawQuery(q);
@@ -151,7 +148,6 @@ void run(CosmosDbServer cosmosDB) {
     for (var entry in monuments.entries) {
       q = Query(
         'SELECT ST_ISVALIDDETAILED(@${entry.key.replaceAll(' ', '')})',
-        partition: CosmosDbPartition.all,
         params: {'@${entry.key.replaceAll(' ', '')}': entry.value},
       );
       r = await spatialCollection.rawQuery(q);
@@ -165,7 +161,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_ISVALIDDETAILED(@flight)',
-      partition: CosmosDbPartition.all,
       params: {
         '@flight': LineString()
           ..addAll([
@@ -189,7 +184,6 @@ void run(CosmosDbServer cosmosDB) {
     }.entries) {
       q = Query(
         'SELECT ST_ISVALIDDETAILED(@${entry.key})',
-        partition: CosmosDbPartition.all,
         params: {'@${entry.key}': entry.value},
       );
       r = await spatialCollection.rawQuery(q);
@@ -203,7 +197,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_ISVALIDDETAILED(@multi)',
-      partition: CosmosDbPartition.all,
       params: {
         '@multi': MultiPolygon()
           ..addAll([
@@ -223,7 +216,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_ISVALIDDETAILED(@multi)',
-      partition: CosmosDbPartition.all,
       params: {
         '@multi': MultiPolygon()
           ..addAll([
@@ -238,13 +230,13 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Query spatial document', () async {
-    var query = Query('SELECT * FROM doc', partition: CosmosDbPartition.all);
+    var query = Query('SELECT * FROM doc');
     final res0 = await spatialCollection.query<TestSpatialDocumentPoint>(query);
     expect(query.continuation, isEmpty);
     expect(res0.length, equals(2));
 
     query = Query('SELECT * FROM doc WHERE ST_WITHIN(doc.p, @area)',
-        params: {'@area': parisArea}, partition: CosmosDbPartition.all);
+        params: {'@area': parisArea});
 
     final res1 = await spatialCollection.query<TestSpatialDocumentPoint>(query);
     expect(query.continuation, isEmpty);
@@ -252,8 +244,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(res1.first.id, equals('flt'));
 
     query = Query('SELECT * FROM doc WHERE ST_WITHIN(doc.p, @area)',
-        params: {'@area': parisArea.invert()},
-        partition: CosmosDbPartition.all);
+        params: {'@area': parisArea.invert()});
 
     final res2 = await spatialCollection.query<TestSpatialDocumentPoint>(query);
     expect(query.continuation, isEmpty);
@@ -285,7 +276,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_ISVALIDDETAILED(@punched)',
-      partition: CosmosDbPartition.all,
       params: {
         '@punched': punched,
       },
@@ -295,7 +285,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_WITHIN(@point, @punched)',
-      partition: CosmosDbPartition.all,
       params: {
         '@point': Point.geometry(0, 0),
         '@punched': punched,
@@ -306,7 +295,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_WITHIN(@point, @punched)',
-      partition: CosmosDbPartition.all,
       params: {
         '@point': Point.geometry(0.5, 0.5),
         '@punched': punched,
@@ -317,7 +305,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_WITHIN(@point, @punched)',
-      partition: CosmosDbPartition.all,
       params: {
         '@point': Point.geometry(1.5, 1.5),
         '@punched': punched,
@@ -328,7 +315,6 @@ void run(CosmosDbServer cosmosDB) {
 
     q = Query(
       'SELECT ST_WITHIN(@point, @punched)',
-      partition: CosmosDbPartition.all,
       params: {
         '@point': Point.geometry(2.5, 2.5),
         '@punched': punched,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 
 const masterKey =
@@ -8,7 +10,8 @@ Future<CosmosDbServer?> getTestInstance() async {
     'https://localhost:8081',
     masterKey: masterKey,
     httpClient: DebugHttpClient(),
-  )..disableLog();
+  );
+  server.disableLog();
 
   try {
     // make sure a CosmosDB instance is available for tests

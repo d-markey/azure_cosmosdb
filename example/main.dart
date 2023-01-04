@@ -35,7 +35,7 @@ void main() async {
   ]);
 
   final todoCollection = await database.collections.openOrCreate('todo',
-      partitionKey: '/id', indexingPolicy: indexingPolicy);
+      partitionKey: PartitionKeySpec.id, indexingPolicy: indexingPolicy);
 
   todoCollection.registerBuilder<ToDo>(ToDo.build);
 

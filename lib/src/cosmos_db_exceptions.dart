@@ -21,6 +21,10 @@ class InvalidTokenException extends ApplicationException {
   InvalidTokenException(String message) : super(message);
 }
 
+class PartitionKeyException extends ApplicationException {
+  PartitionKeyException(String message) : super(message);
+}
+
 abstract class ContextualizedException extends InternalException {
   ContextualizedException._(String method, this.url, String? message)
       : method = method.toUpperCase(),
