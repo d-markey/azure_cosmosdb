@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-01</dd>
+<dd>2023-01-04</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>10</td><td>11</td><td class="high">90.9%</td>
+<th scope="row">Lines</th><td>9</td><td>11</td><td class="med">81.8%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -87,19 +87,19 @@
 <td>9</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 10" id="line10">
-<td>10</td><td></td><td>2</td><td><code>  const HttpCall.get(this.uri) : method = HttpMethod.get;</code></td>
+<td>10</td><td></td><td>1</td><td><code>  const HttpCall.get(this.uri) : method = HttpMethod.get;</code></td>
 </tr>
 <tr class="lineCov" title="Line 11" id="line11">
-<td>11</td><td></td><td>2</td><td><code>  const HttpCall.post(this.uri) : method = HttpMethod.post;</code></td>
+<td>11</td><td></td><td>1</td><td><code>  const HttpCall.post(this.uri) : method = HttpMethod.post;</code></td>
 </tr>
 <tr class="lineCov" title="Line 12" id="line12">
-<td>12</td><td></td><td>2</td><td><code>  const HttpCall.put(this.uri) : method = HttpMethod.put;</code></td>
+<td>12</td><td></td><td>1</td><td><code>  const HttpCall.put(this.uri) : method = HttpMethod.put;</code></td>
 </tr>
-<tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>2</td><td><code>  const HttpCall.patch(this.uri) : method = HttpMethod.patch;</code></td>
+<tr class="lineNoCov" title="Line 13" id="line13">
+<td>13</td><td></td><td>0</td><td><code>  const HttpCall.patch(this.uri) : method = HttpMethod.patch;</code></td>
 </tr>
 <tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>2</td><td><code>  const HttpCall.delete(this.uri) : method = HttpMethod.delete;</code></td>
+<td>14</td><td></td><td>1</td><td><code>  const HttpCall.delete(this.uri) : method = HttpMethod.delete;</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
 <td>15</td><td></td><td></td><td><code></code></td>
@@ -117,16 +117,16 @@
 <td>19</td><td></td><td>1</td><td><code>  http.Request getRequest(String root, Authorization authorization) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 20" id="line20">
-<td>20</td><td></td><td>7</td><td><code>    final request = http.Request(method.name, Uri.parse(root + uri));</code></td>
+<td>20</td><td></td><td>6</td><td><code>    final request = http.Request(method.name, Uri.parse(root + uri));</code></td>
 </tr>
 <tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>4</td><td><code>    request.headers[HttpHeader.authorization] = authorization.token;</code></td>
+<td>21</td><td></td><td>3</td><td><code>    request.headers[HttpHeader.authorization] = authorization.token;</code></td>
 </tr>
 <tr class="lineCov" title="Line 22" id="line22">
-<td>22</td><td></td><td>4</td><td><code>    request.headers[HttpHeader.msDate] = authorization.date;</code></td>
+<td>22</td><td></td><td>3</td><td><code>    request.headers[HttpHeader.msDate] = authorization.date;</code></td>
 </tr>
 <tr class="lineCov" title="Line 23" id="line23">
-<td>23</td><td></td><td>3</td><td><code>    request.headers.addAll(HttpHeader.apiVersion);</code></td>
+<td>23</td><td></td><td>2</td><td><code>    request.headers.addAll(HttpHeader.apiVersion);</code></td>
 </tr>
 <tr class="noop" title="Line 24" id="line24">
 <td>24</td><td></td><td></td><td><code>    return request;</code></td>

@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-01</dd>
+<dd>2023-01-04</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>35</td><td>35</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>25</td><td>29</td><td class="med">86.2%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -92,14 +92,14 @@
 <tr class="noop" title="Line 11" id="line11">
 <td>11</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 12" id="line12">
-<td>12</td><td></td><td>1</td><td><code>  final _rings = &lt;LineString&gt;[];</code></td>
+<tr class="noop" title="Line 12" id="line12">
+<td>12</td><td></td><td></td><td><code>  final _rings = &lt;LineString&gt;[];</code></td>
 </tr>
 <tr class="noop" title="Line 13" id="line13">
 <td>13</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>2</td><td><code>  Polygon();</code></td>
+<td>14</td><td></td><td>1</td><td><code>  Polygon();</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
 <td>15</td><td></td><td></td><td><code></code></td>
@@ -108,19 +108,19 @@
 <td>16</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
 <tr class="lineCov" title="Line 17" id="line17">
-<td>17</td><td></td><td>4</td><td><code>  List get coordinates =&gt; rings.map((r) {</code></td>
+<td>17</td><td></td><td>3</td><td><code>  List get coordinates =&gt; rings.map((r) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 18" id="line18">
-<td>18</td><td></td><td>2</td><td><code>        final coords = r.coordinates;</code></td>
+<td>18</td><td></td><td>1</td><td><code>        final coords = r.coordinates;</code></td>
 </tr>
 <tr class="lineCov" title="Line 19" id="line19">
-<td>19</td><td></td><td>3</td><td><code>        coords.add(coords[0]);</code></td>
+<td>19</td><td></td><td>2</td><td><code>        coords.add(coords[0]);</code></td>
 </tr>
-<tr class="lineCov" title="Line 20" id="line20">
-<td>20</td><td></td><td>1</td><td><code>        return coords;</code></td>
+<tr class="noop" title="Line 20" id="line20">
+<td>20</td><td></td><td></td><td><code>        return coords;</code></td>
 </tr>
 <tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>2</td><td><code>      }).toList();</code></td>
+<td>21</td><td></td><td>1</td><td><code>      }).toList();</code></td>
 </tr>
 <tr class="noop" title="Line 22" id="line22">
 <td>22</td><td></td><td></td><td><code></code></td>
@@ -146,11 +146,11 @@
 <tr class="lineCov" title="Line 29" id="line29">
 <td>29</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
-<tr class="lineCov" title="Line 30" id="line30">
-<td>30</td><td></td><td>1</td><td><code>  Iterable&lt;Iterable&lt;Point&gt;&gt; get paths =&gt;</code></td>
+<tr class="noop" title="Line 30" id="line30">
+<td>30</td><td></td><td></td><td><code>  Iterable&lt;Iterable&lt;Point&gt;&gt; get paths =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 31" id="line31">
-<td>31</td><td></td><td>8</td><td><code>      rings.map((r) =&gt; r.points.followedBy(r.points.take(1)));</code></td>
+<td>31</td><td></td><td>7</td><td><code>      rings.map((r) =&gt; r.points.followedBy(r.points.take(1)));</code></td>
 </tr>
 <tr class="noop" title="Line 32" id="line32">
 <td>32</td><td></td><td></td><td><code></code></td>
@@ -165,7 +165,7 @@
 <td>35</td><td></td><td></td><td><code>  /// repeated automatically to meet GeoJSON requirements.</code></td>
 </tr>
 <tr class="lineCov" title="Line 36" id="line36">
-<td>36</td><td></td><td>4</td><td><code>  Iterable&lt;LineString&gt; get rings =&gt; _rings.asIterable();</code></td>
+<td>36</td><td></td><td>3</td><td><code>  Iterable&lt;LineString&gt; get rings =&gt; _rings.asIterable();</code></td>
 </tr>
 <tr class="noop" title="Line 37" id="line37">
 <td>37</td><td></td><td></td><td><code></code></td>
@@ -174,7 +174,7 @@
 <td>38</td><td></td><td></td><td><code>  /// Adds a ring to the polygon.</code></td>
 </tr>
 <tr class="lineCov" title="Line 39" id="line39">
-<td>39</td><td></td><td>4</td><td><code>  void add(LineString ring) =&gt; _rings.add(ring);</code></td>
+<td>39</td><td></td><td>3</td><td><code>  void add(LineString ring) =&gt; _rings.add(ring);</code></td>
 </tr>
 <tr class="noop" title="Line 40" id="line40">
 <td>40</td><td></td><td></td><td><code></code></td>
@@ -183,7 +183,7 @@
 <td>41</td><td></td><td></td><td><code>  /// Adds a set of rings to the polygon.</code></td>
 </tr>
 <tr class="lineCov" title="Line 42" id="line42">
-<td>42</td><td></td><td>4</td><td><code>  void addAll(Iterable&lt;LineString&gt; rings) =&gt; _rings.addAll(rings);</code></td>
+<td>42</td><td></td><td>3</td><td><code>  void addAll(Iterable&lt;LineString&gt; rings) =&gt; _rings.addAll(rings);</code></td>
 </tr>
 <tr class="noop" title="Line 43" id="line43">
 <td>43</td><td></td><td></td><td><code></code></td>
@@ -194,23 +194,23 @@
 <tr class="noop" title="Line 45" id="line45">
 <td>45</td><td></td><td></td><td><code>  /// walking the ring points in reversed order.</code></td>
 </tr>
-<tr class="lineCov" title="Line 46" id="line46">
-<td>46</td><td></td><td>3</td><td><code>  Polygon invert() =&gt; Polygon()</code></td>
+<tr class="lineNoCov" title="Line 46" id="line46">
+<td>46</td><td></td><td>0</td><td><code>  Polygon invert() =&gt; Polygon()</code></td>
 </tr>
-<tr class="lineCov" title="Line 47" id="line47">
-<td>47</td><td></td><td>1</td><td><code>    ..addAll(</code></td>
+<tr class="lineNoCov" title="Line 47" id="line47">
+<td>47</td><td></td><td>0</td><td><code>    ..addAll(</code></td>
 </tr>
-<tr class="lineCov" title="Line 48" id="line48">
-<td>48</td><td></td><td>2</td><td><code>      rings.map(</code></td>
+<tr class="lineNoCov" title="Line 48" id="line48">
+<td>48</td><td></td><td>0</td><td><code>      rings.map(</code></td>
 </tr>
-<tr class="lineCov" title="Line 49" id="line49">
-<td>49</td><td></td><td>5</td><td><code>        (r) =&gt; LineString()..addAll(r.reversed),</code></td>
+<tr class="lineNoCov" title="Line 49" id="line49">
+<td>49</td><td></td><td>0</td><td><code>        (r) =&gt; LineString()..addAll(r.reversed),</code></td>
 </tr>
 <tr class="noop" title="Line 50" id="line50">
 <td>50</td><td></td><td></td><td><code>      ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 51" id="line51">
-<td>51</td><td></td><td>1</td><td><code>    );</code></td>
+<tr class="noop" title="Line 51" id="line51">
+<td>51</td><td></td><td></td><td><code>    );</code></td>
 </tr>
 <tr class="noop" title="Line 52" id="line52">
 <td>52</td><td></td><td></td><td><code></code></td>
@@ -219,37 +219,37 @@
 <td>53</td><td></td><td>1</td><td><code>  static Polygon fromGeoJson(Map geoJson, GeospatialConfig config) =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 54" id="line54">
-<td>54</td><td></td><td>2</td><td><code>      Shape.fromGeoJson&lt;Polygon&gt;(geoJson, config);</code></td>
+<td>54</td><td></td><td>1</td><td><code>      Shape.fromGeoJson&lt;Polygon&gt;(geoJson, config);</code></td>
 </tr>
 <tr class="noop" title="Line 55" id="line55">
 <td>55</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 56" id="line56">
-<td>56</td><td></td><td>3</td><td><code>  static Polygon loadGeographyCoords(Iterable coords) =&gt; Polygon()</code></td>
+<td>56</td><td></td><td>2</td><td><code>  static Polygon loadGeographyCoords(Iterable coords) =&gt; Polygon()</code></td>
 </tr>
 <tr class="lineCov" title="Line 57" id="line57">
 <td>57</td><td></td><td>1</td><td><code>    ..addAll(</code></td>
 </tr>
 <tr class="lineCov" title="Line 58" id="line58">
-<td>58</td><td></td><td>3</td><td><code>      coords.cast&lt;Iterable&gt;().map(_Ring.loadGeographyCoords),</code></td>
+<td>58</td><td></td><td>2</td><td><code>      coords.cast&lt;Iterable&gt;().map(_Ring.loadGeographyCoords),</code></td>
 </tr>
-<tr class="lineCov" title="Line 59" id="line59">
-<td>59</td><td></td><td>1</td><td><code>    );</code></td>
+<tr class="noop" title="Line 59" id="line59">
+<td>59</td><td></td><td></td><td><code>    );</code></td>
 </tr>
 <tr class="noop" title="Line 60" id="line60">
 <td>60</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 61" id="line61">
-<td>61</td><td></td><td>3</td><td><code>  static Polygon loadGeometryCoords(Iterable coords) =&gt; Polygon()</code></td>
+<td>61</td><td></td><td>2</td><td><code>  static Polygon loadGeometryCoords(Iterable coords) =&gt; Polygon()</code></td>
 </tr>
 <tr class="lineCov" title="Line 62" id="line62">
 <td>62</td><td></td><td>1</td><td><code>    ..addAll(</code></td>
 </tr>
 <tr class="lineCov" title="Line 63" id="line63">
-<td>63</td><td></td><td>3</td><td><code>      coords.cast&lt;Iterable&gt;().map(_Ring.loadGeometryCoords),</code></td>
+<td>63</td><td></td><td>2</td><td><code>      coords.cast&lt;Iterable&gt;().map(_Ring.loadGeometryCoords),</code></td>
 </tr>
-<tr class="lineCov" title="Line 64" id="line64">
-<td>64</td><td></td><td>1</td><td><code>    );</code></td>
+<tr class="noop" title="Line 64" id="line64">
+<td>64</td><td></td><td></td><td><code>    );</code></td>
 </tr>
 <tr class="noop" title="Line 65" id="line65">
 <td>65</td><td></td><td></td><td><code>}</code></td>
@@ -261,19 +261,19 @@
 <td>67</td><td></td><td></td><td><code>class _Ring {</code></td>
 </tr>
 <tr class="lineCov" title="Line 68" id="line68">
-<td>68</td><td></td><td>2</td><td><code>  static LineString loadGeographyCoords(Iterable coords) =&gt;</code></td>
+<td>68</td><td></td><td>1</td><td><code>  static LineString loadGeographyCoords(Iterable coords) =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 69" id="line69">
-<td>69</td><td></td><td>3</td><td><code>      LineString.loadGeographyCoords(coords.skipLast());</code></td>
+<td>69</td><td></td><td>2</td><td><code>      LineString.loadGeographyCoords(coords.skipLast());</code></td>
 </tr>
 <tr class="noop" title="Line 70" id="line70">
 <td>70</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 71" id="line71">
-<td>71</td><td></td><td>2</td><td><code>  static LineString loadGeometryCoords(Iterable coords) =&gt;</code></td>
+<td>71</td><td></td><td>1</td><td><code>  static LineString loadGeometryCoords(Iterable coords) =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 72" id="line72">
-<td>72</td><td></td><td>3</td><td><code>      LineString.loadGeometryCoords(coords.skipLast());</code></td>
+<td>72</td><td></td><td>2</td><td><code>      LineString.loadGeometryCoords(coords.skipLast());</code></td>
 </tr>
 <tr class="noop" title="Line 73" id="line73">
 <td>73</td><td></td><td></td><td><code>}</code></td>

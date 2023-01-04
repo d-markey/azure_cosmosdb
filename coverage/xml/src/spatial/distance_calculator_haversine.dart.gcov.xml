@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="distance_calculator_haversine.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="14" lines-valid="14" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="distance_calculator_haversine.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="12" lines-valid="12" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:math' as math;</code>
@@ -72,24 +72,23 @@
 <code>  @override</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  double? distance(Point from, Point to) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    if (!from.isGeographic || !to.isGeographic) return null;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="6">
+<line hits="5">
 <code>    final dLatSin = _sin((to.latitude! - from.latitude!) / 2);</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="5">
 <code>    final dLongSin = _sin((to.longitude! - from.longitude!) / 2);</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="5">
 <code>    final cosSq = _cos(from.latitude!) * _cos(to.latitude!);</code>
@@ -98,21 +97,20 @@
 <line>
 <code/>
 </line>
-<line hits="5">
+<line hits="4">
 <code>    final a = dLatSin * dLatSin + cosSq * dLongSin * dLongSin;</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="5">
 <code>    final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));</code>
 <hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    return c * radius;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="transactional_batch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="13" package="/src/batch" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'package:azure_cosmosdb/azure_cosmosdb.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import '../base_document.dart';</code>
+</line>
+<line>
+<code>import 'batch_operation.dart';</code>
+</line>
+<line>
+<code>import 'batch_operation_create.dart';</code>
+</line>
+<line>
+<code>import 'batch_operation_read.dart';</code>
+</line>
+<line>
+<code>import 'batch_operation_upsert.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class TransactionalBatch extends SpecialDocument {</code>
+</line>
+<line hits="0">
+<code>  TransactionalBatch({this.isAtomic = true});</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final bool isAtomic;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final _ops = &lt;BatchOperation&gt;[];</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  void _add(BatchOperation op) {</code>
+</line>
+<line hits="0">
+<code>    if (_ops.length &gt;= 100) {</code>
+</line>
+<line hits="0">
+<code>      throw Exception('Transactional batch is limited to 100 operations.');</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="0">
+<code>    _ops.add(op);</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  void create&lt;T extends BaseDocument&gt;(T item, {PartitionKeySpec? pk}) =&gt;</code>
+</line>
+<line hits="0">
+<code>      _add(BatchOperationCreate(item, pk: pk));</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  void upsert&lt;T extends BaseDocument&gt;(T item, {PartitionKeySpec? pk}) =&gt;</code>
+</line>
+<line hits="0">
+<code>      _add(BatchOperationUpsert(item, pk: pk));</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  void read(String id, {PartitionKey? partitionKey}) =&gt;</code>
+</line>
+<line hits="0">
+<code>      _add(BatchOperationRead(id, partitionKey: partitionKey));</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  List&lt;dynamic&gt; toJson() =&gt; _ops.map((o) =&gt; o.toJson()).toList();</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

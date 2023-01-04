@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.83116883" lines-covered="64" lines-valid="77" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.703125" lines-covered="45" lines-valid="64" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -118,9 +118,8 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>  late final http.Client _http;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -128,9 +127,8 @@
 <line>
 <code>  /// Default log function.</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  static void defaultLog(Object? object) =&gt; dev.log(object.toString());</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -138,9 +136,8 @@
 <line>
 <code>  /// Log function (based on dart:developer's `log` function by default).</code>
 </line>
-<line hits="1">
+<line>
 <code>  void Function(Object? object) log = defaultLog;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -154,20 +151,20 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;http.BaseRequest&gt; _logRequest(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String ts, http.BaseRequest request) async {</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    log('&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;');</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="5">
 <code>    log('[$ts] --&gt; ${request.method} ${request.url}');</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -176,13 +173,13 @@
 <code>    if (traceHeaders) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      for (var h in request.headers.entries) {</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="5">
 <code>        log('[$ts] --&gt; ${h.key} = ${h.value}');</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
@@ -201,9 +198,9 @@
 <code>      if (request is http.Request) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="4">
 <code>        log('[$ts] --&gt; body = ${request.body}');</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      } else if (request is http.StreamedRequest) {</code>
@@ -256,39 +253,37 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>    return request;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;http.StreamedResponse&gt; _logResponse(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String ts, http.StreamedResponse response) async {</code>
 </line>
-<line hits="6">
+<line hits="5">
 <code>    log('[$ts] &lt;-- COSMOS DB Status = ${response.statusCode} ${response.reasonPhrase}');</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    if (traceHeaders) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      for (var h in response.headers.entries) {</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="5">
 <code>        log('[$ts] &lt;-- ${h.key} = ${h.value}');</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
@@ -296,31 +291,31 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    if (traceBody) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      // get the response bytes for logging</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      final resp = await http.Response.fromStream(response);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="5">
 <code>      log('[$ts] &lt;-- COSMOS DB ${resp.statusCode} Payload = ${resp.body}');</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      // rebuild the response</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      response = http.StreamedResponse(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>        Stream.fromIterable([resp.bodyBytes]),</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        resp.statusCode,</code>
@@ -352,36 +347,33 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>    return response;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;void&gt; _logException(String ts, dynamic exception) async {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>    log('[$ts] &lt;-- EXCEPTION CAUGHT: $exception');</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code>
+<code>    log('[$ts] &lt;-- EXCEPTION CAUGHT: $exception');</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
+<code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -390,20 +382,19 @@
 <code>  @override</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  Future&lt;http.StreamedResponse&gt; send(http.BaseRequest request) async {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>    String ts = DateTime.now().toUtc().toIso8601String();</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    request = trace ? await _logRequest(ts, request) : request;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -414,9 +405,8 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>    try {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>      final ex = forceException;</code>
@@ -429,32 +419,27 @@
 <code>        forceException = null;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>        throw ex;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
 </line>
-<line hits="2">
-<code>      if (forceThrottleDelay != null) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>        final delay = forceThrottleDelay!.inMilliseconds;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>        forceThrottleDelay = null;</code>
+<code>      if (forceThrottleDelay != null) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
-<code>        response = http.StreamedResponse(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>        final delay = forceThrottleDelay!.inMilliseconds;</code>
 </line>
-<line hits="3">
+<line hits="0">
+<code>        forceThrottleDelay = null;</code>
+</line>
+<line hits="0">
+<code>        response = http.StreamedResponse(</code>
+</line>
+<line hits="0">
 <code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          HttpStatusCode.tooManyRequests,</code>
@@ -462,24 +447,23 @@
 <line>
 <code>          reasonPhrase: 'Forced Throttle',</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>          headers: {HttpHeader.msRetryAfterMs: delay.toString()},</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        );</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      } else if (forceForbidden) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        response = http.StreamedResponse(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        response = http.StreamedResponse(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
 <code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          HttpStatusCode.forbidden,</code>
@@ -493,16 +477,16 @@
 <line>
 <code>      } else {</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>        response = await _http.send(request);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>      response = trace ? await _logResponse(ts, response) : response;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    } catch (ex) {</code>
@@ -511,16 +495,15 @@
 <code>      if (trace) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        _logException(ts, ex);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
 </line>
-<line hits="1">
+<line>
 <code>      rethrow;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -528,13 +511,11 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>    return response;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

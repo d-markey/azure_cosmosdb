@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="_path_parser.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.88709676" lines-covered="55" lines-valid="62" package="/src/partition" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>class PathParser {</code>
+</line>
+<line hits="1">
+<code>  List&lt;PathComponent&gt; parse(String path) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    final state = ParserState(path);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    final components = &lt;PathComponent&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    while (state.current.isNotEmpty) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      switch (state.current) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        case '/':</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          components.add(state.getPathSegment());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          break;</code>
+</line>
+<line hits="1">
+<code>        case '[':</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          components.add(state.getArrayIndex());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          break;</code>
+</line>
+<line>
+<code>        default:</code>
+</line>
+<line hits="0">
+<code>          throw Exception();</code>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code>    return components;</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class ParserState {</code>
+</line>
+<line hits="1">
+<code>  ParserState(String path)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>      : _chars = path.runes.map((r) =&gt; String.fromCharCode(r)).toList();</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final List&lt;String&gt; _chars;</code>
+</line>
+<line>
+<code>  int _pos = 0;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="8">
+<code>  String get current =&gt; (_pos &lt; _chars.length) ? _chars[_pos] : '';</code>
+<hit count="8" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  PathSegment getPathSegment() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    if (current == '/') {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="2">
+<code>    var start = _pos, end = -1;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    if (current == '"') {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      start++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      while (_pos &lt; _chars.length) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        if (current == '"') {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          end = _pos;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          break;</code>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line hits="2">
+<code>        _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line>
+<code>    } else {</code>
+</line>
+<line hits="4">
+<code>      while (_pos &lt; _chars.length) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        if (const {'/', '['}.contains(current)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          end = _pos;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          break;</code>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line hits="2">
+<code>        _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>    if (end &lt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      end = _pos;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="5">
+<code>    return PathSegment(_chars.sublist(start, end).join().trim());</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  ArrayIndex getArrayIndex() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    var start = _pos, end = -1;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    while (_pos &lt; _chars.length) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      if (current == ']') {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        end = _pos;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        break;</code>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line hits="2">
+<code>      _pos++;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>    if (end &lt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      throw Exception();</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="4">
+<code>    final idx = int.tryParse(_chars.sublist(start, end).join());</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    if (idx == null) {</code>
+</line>
+<line hits="0">
+<code>      throw Exception();</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>    return ArrayIndex(idx);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>abstract class PathComponent {</code>
+</line>
+<line>
+<code>  dynamic extract(dynamic json);</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class PathSegment extends PathComponent {</code>
+</line>
+<line hits="1">
+<code>  PathSegment(this.segment);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String segment;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  dynamic extract(dynamic json) =&gt; (json as Map)[segment];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  int get hashCode =&gt; segment.hashCode;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  bool operator ==(dynamic other) =&gt;</code>
+</line>
+<line hits="4">
+<code>      (other is PathSegment) &amp;&amp; segment == other.segment;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class ArrayIndex extends PathComponent {</code>
+</line>
+<line hits="1">
+<code>  ArrayIndex(this.index);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final int index;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  dynamic extract(dynamic json) =&gt; (json as List)[index];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  int get hashCode =&gt; index;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  bool operator ==(dynamic other) =&gt;</code>
+</line>
+<line hits="4">
+<code>      (other is ArrayIndex) &amp;&amp; index == other.index;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>extension JsonExtractExt on List&lt;PathComponent&gt; {</code>
+</line>
+<line hits="1">
+<code>  dynamic extract(dynamic json) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    var cur = json;</code>
+</line>
+<line hits="3">
+<code>    for (var i = 0; i &lt; length; i++) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      cur = this[i].extract(cur);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code>    return cur;</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

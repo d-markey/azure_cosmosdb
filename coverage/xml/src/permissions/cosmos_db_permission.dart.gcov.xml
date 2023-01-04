@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="cosmos_db_permission.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95454544" lines-covered="21" lines-valid="22" package="/src/permissions" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="cosmos_db_permission.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9444444" lines-covered="17" lines-valid="18" package="/src/permissions" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
 </line>
 <line>
 <code>import '../cosmos_db_exceptions.dart';</code>
-</line>
-<line>
-<code/>
-</line>
-<line>
-<code>@Deprecated('Use CosmosDbPermission instead.')</code>
-</line>
-<line>
-<code>typedef Permission = CosmosDbPermission;</code>
 </line>
 <line>
 <code/>
@@ -47,24 +38,23 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  static PermissionMode parse(String name) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    if (name == read.name) return read;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>    if (name == read.name) return read;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
+<line hits="2">
 <code>    if (name == all.name) return all;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>    throw BadResponseException('Unsupported permission mode');</code>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -78,9 +68,9 @@
 <line>
 <code>class CosmosDbPermission extends BaseDocument with EtagMixin {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  CosmosDbPermission(this.id, this.mode, this.resource, [this.token]);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -125,25 +115,24 @@
 <code>  @override</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        'id': id,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>        'permissionMode': mode.name,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        'resource': resource,</code>
+<code>        'permissionMode': mode.name,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>      };</code>
+<code>        'resource': resource,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      };</code>
 </line>
 <line>
 <code/>
@@ -151,41 +140,39 @@
 <line>
 <code>  /// Builds a [CosmosDbPermission] from a CosmosDB JSON object.</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  static CosmosDbPermission build(Map json) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    final permission = CosmosDbPermission(</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        json['id'],</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>        PermissionMode.parse(json['permissionMode']),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        json['resource'],</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        json['_token']);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    permission.setEtag(json);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>    return permission;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

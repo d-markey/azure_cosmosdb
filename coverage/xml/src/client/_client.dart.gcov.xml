@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9777778" lines-covered="132" lines-valid="135" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.7017544" lines-covered="80" lines-valid="114" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -41,6 +41,9 @@
 <code>import '../base_document.dart';</code>
 </line>
 <line>
+<code>import '../batch/transactional_batch.dart';</code>
+</line>
+<line>
 <code>import '../cosmos_db_exceptions.dart';</code>
 </line>
 <line>
@@ -67,9 +70,9 @@
 <line>
 <code>class Client {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Client(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    this._url, {</code>
@@ -94,13 +97,12 @@
 <code>        _retry = retryOptions ?? RetryOptions() {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>    if (masterKey != null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    } else {</code>
@@ -112,9 +114,8 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -131,20 +132,17 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>  late final crypto.Hmac? _key;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  late final http.Client _http;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>  final _builders = &lt;Type, _DocumentBuilder&gt;{};</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -156,44 +154,41 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    _builders[T] = builder;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>    _builders[T] = builder;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
-<code>  DocumentBuilder&lt;T&gt; _getBuilder&lt;T extends BaseDocument&gt;(Context context) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>    final builder = context.builder ?? _builders[T];</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    if (builder == null) throw UnknownDocumentTypeException(T);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    return (data) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>      try {</code>
+<code>  DocumentBuilder&lt;T&gt; _getBuilder&lt;T extends BaseDocument&gt;(Context context) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
+<code>    final builder = context.builder ?? _builders[T];</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>    if (builder == null) throw UnknownDocumentTypeException(T);</code>
+</line>
+<line hits="1">
+<code>    return (data) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      try {</code>
+</line>
+<line hits="1">
 <code>        return builder(data) as T;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      } catch (ex) {</code>
@@ -204,58 +199,54 @@
 <line>
 <code>      }</code>
 </line>
-<line hits="1">
+<line>
 <code>    };</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  T? _build&lt;T extends BaseDocument&gt;(Context context, Map? item) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    final builder = _getBuilder&lt;T&gt;(context);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>    final builder = _getBuilder&lt;T&gt;(context);</code>
+<code>    return (item == null || item.isEmpty) ? null : builder(item);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  Iterable&lt;T&gt; _buildMany&lt;T extends BaseDocument&gt;(Context context, List? items) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    final builder = _getBuilder&lt;T&gt;(context);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>    return (item == null || item.isEmpty) ? null : builder(item);</code>
+<code>    return (items ?? []).map((item) =&gt; builder(item));</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
-<code>  Iterable&lt;T&gt; _buildMany&lt;T extends BaseDocument&gt;(Context context, List? items) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    final builder = _getBuilder&lt;T&gt;(context);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>    return (items ?? []).map((item) =&gt; builder(item));</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
-<line hits="2">
 <code>  Future&lt;http.StreamedResponse&gt; _sendWithAuth(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    HttpCall call,</code>
@@ -272,20 +263,19 @@
 <line>
 <code>  ) {</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    final request = call.getRequest(_url, authorization);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>    if (body != null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>      request.headers.addAll(HttpHeader.jsonPayload);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>      request.body = jsonEncode(body);</code>
@@ -307,38 +297,37 @@
 <line>
 <code/>
 </line>
-<line hits="4">
-<code>    request.headers.addAll(context.getHeaders());</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
 <line hits="3">
-<code>    return _retry.retry(</code>
+<code>    request.headers.addAll(context.getHeaders());</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="6">
-<code>      () =&gt; _http.send(request).timeout(Duration(seconds: 5)),</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>      retryIf: (e) =&gt; retryIf(_http, e),</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>    );</code>
-</line>
-<line hits="1">
-<code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
 <line hits="2">
-<code>  Future&lt;dynamic&gt; _send(</code>
+<code>    return _retry.retry(</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>      () =&gt; _http.send(request).timeout(Duration(seconds: 5)),</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      retryIf: (e) =&gt; retryIf(_http, e),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    );</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  Future&lt;dynamic&gt; _send(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    HttpCall call,</code>
@@ -352,9 +341,9 @@
 <line>
 <code>  ) async {</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    String resId = context.resId ?? call.uri;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -363,9 +352,9 @@
 <code>    var auth = (context.token != null)</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>        ? Authorization.fromToken(context.token!)</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        : Authorization.fromKey(</code>
@@ -378,16 +367,16 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    var result = await _sendWithAuth(call, body, context, auth);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    switch (result.statusCode) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>      case HttpStatusCode.forbidden:</code>
@@ -396,35 +385,33 @@
 <line>
 <code>        // try to get a new permission from the onForbidden callback</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>        final permission = await context.onForbidden?.call();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        final token = permission?.token;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>        if (token != null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          // try again with this permission</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>          auth = Authorization.fromToken(token);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>          result = await _sendWithAuth(call, body, context, auth);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        }</code>
 </line>
-<line hits="1">
+<line>
 <code>        break;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>      case HttpStatusCode.tooManyRequests:</code>
@@ -436,28 +423,23 @@
 <line>
 <code>        final delay =</code>
 </line>
-<line hits="4">
+<line hits="0">
 <code>            int.tryParse(result.headers[HttpHeader.msRetryAfterMs] ?? '');</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>        if (delay != null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>          await Future.delayed(Duration(milliseconds: delay));</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          result = await _sendWithAuth(call, body, context, auth);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        }</code>
 </line>
-<line hits="1">
+<line>
 <code>        break;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -465,9 +447,9 @@
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    final contentType = result.headers[HttpHeader.contentType];</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    if (contentType != MimeType.json) {</code>
@@ -479,13 +461,13 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    final response = await result.stream.bytesToString();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>    dynamic data = response.isEmpty ? {} : jsonDecode(response);</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -494,17 +476,17 @@
 <code>    if (!HttpStatusCode.success(result.statusCode)) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>      final message = (data is Map &amp;&amp; data.containsKey('message'))</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>          ? '${result.reasonPhrase}: ${data['message']}'</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>          : result.reasonPhrase;</code>
+<code>          ? '${result.reasonPhrase}: ${data['message']}'</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          : result.reasonPhrase;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>      final ex = CosmosDbException(result.statusCode, message);</code>
@@ -514,9 +496,8 @@
 <code>      if (ex is! NotFoundException || context.throwOnNotFound) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>        throw ex;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
@@ -533,177 +514,109 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    context.paging?.setContinuation(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      result.headers[HttpHeader.msContinuation] ?? '',</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    );</code>
 </line>
-<line hits="1">
+<line>
 <code>    return data;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
 <line hits="1">
-<code>  Future&lt;dynamic&gt; getJson(String path, Context context) {</code>
+<code>  Future&lt;dynamic&gt; rawGet(String path, Context context) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    final call = HttpCall.get(path);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(call, null, context).rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(String path, Context context) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    final call = HttpCall.get(path);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    return _send(call, null, context)</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>    return _send(call, null, context).rethrowContextualizedException(call);</code>
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data))</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line>
-<code>  }</code>
-</line>
-<line>
-<code/>
-</line>
-<line hits="2">
-<code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(String path, Context context) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    final call = HttpCall.get(path);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    return _send(call, null, context)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>        .then((data) =&gt; _build&lt;T&gt;(context, data))</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>        .rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>  }</code>
+<code>        .rethrowContextualizedException(call);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
+<code>  }</code>
+</line>
+<line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;Iterable&lt;T&gt;&gt; getMany&lt;T extends BaseDocument&gt;(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String path, String resultSet, Context context) {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    final call = HttpCall.get(path);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    return _send(call, null, context)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="4">
 <code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>        .rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
-<line hits="2">
-<code>  Future&lt;T&gt; post&lt;T extends BaseDocument&gt;(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>      String path, BaseDocument doc, Context context) {</code>
-</line>
-<line hits="2">
-<code>    final call = HttpCall.post(path);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    return _send(call, doc, context)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
-<code>        .rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>  }</code>
+<code>        .rethrowContextualizedException(call);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
-<code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>      String path, BaseDocument doc, Context context) {</code>
-</line>
-<line hits="2">
-<code>    final call = HttpCall.patch(path);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>        .rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
-<line hits="2">
+<line hits="0">
 <code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String path, Query query, String resultSet, Context context) {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    final call = HttpCall.post(path);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    return _send(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            call,</code>
@@ -711,53 +624,44 @@
 <line>
 <code>            query,</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>            context.copyWith(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>              paging: query,</code>
 </line>
-<line hits="1">
-<code>              partition: query.partition,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>              partitionKey: query.partitionKey,</code>
 </line>
-<line hits="1">
+<line>
 <code>              headers: HttpHeader.queryPayload,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            ))</code>
 </line>
-<line hits="5">
+<line hits="0">
 <code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        .rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  Future&lt;dynamic&gt; rawQuery(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String path, Query query, String resultSet, Context context) {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    final call = HttpCall.post(path);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    return _send(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        call,</code>
@@ -765,24 +669,20 @@
 <line>
 <code>        query,</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        context.copyWith(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          paging: query,</code>
 </line>
-<line hits="1">
-<code>          partition: query.partition,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>          partitionKey: query.partitionKey,</code>
 </line>
-<line hits="1">
+<line>
 <code>          headers: HttpHeader.queryPayload,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        )).rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  }</code>
@@ -790,59 +690,164 @@
 <line>
 <code/>
 </line>
-<line hits="2">
-<code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>  Future&lt;dynamic&gt; batch(</code>
+</line>
+<line>
+<code>      String path, TransactionalBatch batch, Context context) {</code>
+</line>
+<line hits="0">
+<code>    final call = HttpCall.post(path);</code>
+</line>
+<line hits="0">
+<code>    return _send(</code>
+</line>
+<line>
+<code>        call,</code>
+</line>
+<line>
+<code>        batch,</code>
+</line>
+<line hits="0">
+<code>        context.copyWith(</code>
+</line>
+<line hits="0">
+<code>          headers: Map.from(batch.isAtomic</code>
+</line>
+<line>
+<code>              ? HttpHeader.atomicBatchRequest</code>
+</line>
+<line>
+<code>              : HttpHeader.nonAtomicBatchRequest)</code>
+</line>
+<line hits="0">
+<code>            ..addAll({</code>
+</line>
+<line>
+<code>              'x-ms-documentdb-partitionkeyrangeid': '0',</code>
+</line>
+<line>
+<code>              'x-ms-cosmos-batch-continue-on-error':</code>
+</line>
+<line hits="0">
+<code>                  batch.isAtomic ? 'false' : 'true'</code>
+</line>
+<line>
+<code>            }),</code>
+</line>
+<line hits="0">
+<code>        )).rethrowContextualizedException(call);</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  Future&lt;T&gt; post&lt;T extends BaseDocument&gt;(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String path, BaseDocument doc, Context context) {</code>
 </line>
-<line hits="2">
-<code>    final call = HttpCall.put(path);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    return _send(call, doc, context)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>        .rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="1">
+<code>    final call = HttpCall.post(path);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>  }</code>
+<code>    return _send(call, doc, context)</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
+<code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(</code>
+</line>
+<line>
+<code>      String path, BaseDocument doc, Context context) {</code>
+</line>
+<line hits="0">
+<code>    final call = HttpCall.patch(path);</code>
+</line>
+<line hits="0">
+<code>    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))</code>
+</line>
+<line hits="0">
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
+</line>
+<line hits="0">
+<code>        .rethrowContextualizedException(call);</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String path, BaseDocument doc, Context context) {</code>
+</line>
+<line hits="1">
+<code>    final call = HttpCall.put(path);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    return _send(call, doc, context)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
 <code>  Future&lt;bool&gt; delete(String path, Context context) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    final call = HttpCall.delete(path);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    return _send(call, null, context)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>        .then((result) =&gt; true)</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        .rethrowContextualizedException(call);</code>
+<code>        .then((result) =&gt; true)</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>  }</code>
+<code>        .rethrowContextualizedException(call);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
 </line>
 <line>
 <code>}</code>

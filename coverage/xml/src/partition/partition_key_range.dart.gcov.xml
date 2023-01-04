@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="partition_key_range.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="9" package="/src/partition" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:convert';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'package:azure_cosmosdb/azure_cosmosdb.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Class representing a partition key range.</code>
+</line>
+<line>
+<code>class PartitionKeyRange extends BaseDocumentWithEtag {</code>
+</line>
+<line hits="0">
+<code>  PartitionKeyRange(this.id, this.minInclusive, this.maxExclusive);</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  @override</code>
+</line>
+<line>
+<code>  final String id;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String minInclusive;</code>
+</line>
+<line>
+<code>  final String maxExclusive;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line>
+<code>  dynamic toJson() =&gt;</code>
+</line>
+<line hits="0">
+<code>      {'id': id, 'minInclusive': minInclusive, 'maxExclusive': maxExclusive};</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  String toString() =&gt; jsonEncode(toJson());</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  static PartitionKeyRange fromJson(dynamic body) {</code>
+</line>
+<line hits="0">
+<code>    final pkRange = PartitionKeyRange(</code>
+</line>
+<line hits="0">
+<code>        body['id'], body['minInclusive'], body['maxExclusive']);</code>
+</line>
+<line hits="0">
+<code>    pkRange.setEtag(body);</code>
+</line>
+<line>
+<code>    return pkRange;</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

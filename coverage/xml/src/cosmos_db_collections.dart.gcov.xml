@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="cosmos_db_collections.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95454544" lines-covered="42" lines-valid="44" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="cosmos_db_collections.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.94285715" lines-covered="33" lines-valid="35" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'client/_context.dart';</code>
@@ -23,16 +23,10 @@
 <code>import 'indexing/indexing_policy.dart';</code>
 </line>
 <line>
+<code>import 'partition/partition_key_spec.dart';</code>
+</line>
+<line>
 <code>import 'permissions/cosmos_db_permission.dart';</code>
-</line>
-<line>
-<code/>
-</line>
-<line>
-<code>@Deprecated('Use CosmosDbCollections instead.')</code>
-</line>
-<line>
-<code>typedef Collections = CosmosDbCollections;</code>
 </line>
 <line>
 <code/>
@@ -43,9 +37,9 @@
 <line>
 <code>class CosmosDbCollections {</code>
 </line>
-<line hits="4">
+<line hits="3">
 <code>  CosmosDbCollections(this.database) : url = '${database.url}/colls';</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -65,29 +59,27 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  CosmosDbCollection fromJson(Map json) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>    final coll = CosmosDbCollection(database, json['id'],</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
-<code>        partitionKey: json['partitionKey']['paths']?.cast&lt;String&gt;().first);</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>        partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']));</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    coll.setExists(true);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>    return coll;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -95,35 +87,35 @@
 <line>
 <code>  /// Lists all collections from this [database].</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;Iterable&lt;CosmosDbCollection&gt;&gt; list({CosmosDbPermission? permission}) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      database.client.getMany&lt;CosmosDbCollection&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        url,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        'DocumentCollections',</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
 </line>
-<line hits="3">
-<code>          resId: database.url,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="2">
-<code>          builder: fromJson,</code>
+<code>          resId: database.url,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          builder: fromJson,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          token: permission?.token,</code>
@@ -131,9 +123,8 @@
 <line>
 <code>        ),</code>
 </line>
-<line hits="1">
+<line>
 <code>      );</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -153,28 +144,28 @@
 <line>
 <code>  /// be set to `false`.</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;bool&gt; delete(CosmosDbCollection collection,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, CosmosDbPermission? permission}) =&gt;</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>      database.client</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>          .delete(</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>        '$url/${collection.id}',</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
@@ -191,21 +182,19 @@
 <line>
 <code>      )</code>
 </line>
-<line hits="3">
-<code>          .then((value) {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="2">
-<code>        collection.setExists(false);</code>
+<code>          .then((value) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>        return true;</code>
+<code>        collection.setExists(false);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
+<code>        return true;</code>
+</line>
+<line>
 <code>      });</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -213,18 +202,15 @@
 <line>
 <code>  /// Creates a new [CosmosDbCollection] with the specified `name` and `partitionKeys`.</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;CosmosDbCollection&gt; create(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    String name, {</code>
 </line>
 <line>
-<code>    @Deprecated('Use partitionKey instead.') List&lt;String&gt;? partitionKeys,</code>
-</line>
-<line>
-<code>    String? partitionKey,</code>
+<code>    required PartitionKeySpec partitionKey,</code>
 </line>
 <line>
 <code>    IndexingPolicy? indexingPolicy,</code>
@@ -241,17 +227,17 @@
 <line>
 <code>  }) =&gt;</code>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      database.client.post&lt;CosmosDbCollection&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        url,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        CosmosDbCollection(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>          database,</code>
@@ -260,12 +246,8 @@
 <line>
 <code>          name,</code>
 </line>
-<line hits="1">
-<code>          partitionKeys: partitionKeys,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
 <line>
-<code>          partitionKey: partitionKey,</code>
+<code>          partitionKeySpec: partitionKey,</code>
 </line>
 <line>
 <code>          indexingPolicy: indexingPolicy,</code>
@@ -276,31 +258,30 @@
 <line>
 <code>        ),</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>          resId: database.url,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>          headers: (throughput ?? CosmosDbThroughput.minimum).header,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>          builder: fromJson,</code>
+<code>          headers: (throughput ?? CosmosDbThroughput.minimum).header,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          builder: fromJson,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="1">
+<line>
 <code>      );</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -312,9 +293,9 @@
 <code>  Future&lt;CosmosDbCollection&gt; open(String name) =&gt;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      CosmosDbCollection(database, name).getInfo();</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -322,18 +303,15 @@
 <line>
 <code>  /// Opens or creates a [CosmosDbCollection] with id [name].</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;CosmosDbCollection&gt; openOrCreate(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    String name, {</code>
 </line>
 <line>
-<code>    @Deprecated('Use partitionKey instead.') List&lt;String&gt;? partitionKeys,</code>
-</line>
-<line>
-<code>    String? partitionKey,</code>
+<code>    PartitionKeySpec? partitionKey,</code>
 </line>
 <line>
 <code>    IndexingPolicy? indexingPolicy,</code>
@@ -347,30 +325,26 @@
 <line>
 <code>  }) async {</code>
 </line>
-<line hits="1">
+<line>
 <code>    try {</code>
+</line>
+<line hits="1">
+<code>      return await open(name);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
-<code>      return await open(name);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
+<line hits="1">
 <code>    } on NotFoundException {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      return await create(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        name,</code>
 </line>
 <line>
-<code>        partitionKeys: partitionKeys,</code>
-</line>
-<line>
-<code>        partitionKey: partitionKey,</code>
+<code>        partitionKey: partitionKey!,</code>
 </line>
 <line>
 <code>        indexingPolicy: indexingPolicy,</code>
@@ -387,9 +361,8 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

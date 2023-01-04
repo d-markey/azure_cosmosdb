@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="cosmos_db_permissions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.89361703" lines-covered="42" lines-valid="47" package="/src/permissions" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="cosmos_db_permissions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.875" lines-covered="35" lines-valid="40" package="/src/permissions" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'package:azure_cosmosdb/src/_internal/_http_header.dart';</code>
@@ -23,23 +23,14 @@
 <code/>
 </line>
 <line>
-<code>@Deprecated('Use CosmosDbPermissions instead.')</code>
-</line>
-<line>
-<code>typedef Permissions = CosmosDbPermissions;</code>
-</line>
-<line>
-<code/>
-</line>
-<line>
 <code>/// Class used to manage [CosmosDbPermission]s for CosmosDB [CosmosDbUsers].</code>
 </line>
 <line>
 <code>class CosmosDbPermissions {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  CosmosDbPermissions(this._users);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -60,9 +51,9 @@
 <line>
 <code>          {CosmosDbPermission? permission}) =&gt;</code>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      _users.client.getMany&lt;CosmosDbPermission&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>        '${_users.url}/${user.id}/permissions',</code>
@@ -71,9 +62,9 @@
 <line>
 <code>        'Permissions',</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'permissions',</code>
@@ -82,9 +73,8 @@
 <code>          resId: '${_users.url}/${user.id}',</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>          builder: CosmosDbPermission.build,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          token: permission?.token,</code>
@@ -101,9 +91,9 @@
 <line>
 <code>  /// Retrieves permission with id [name] for the specified [user].</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;CosmosDbPermission?&gt; get(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    CosmosDbUser user,</code>
@@ -120,9 +110,9 @@
 <line>
 <code>  }) {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    final context = Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      type: 'permissions',</code>
@@ -130,9 +120,8 @@
 <line>
 <code>      throwOnNotFound: true,</code>
 </line>
-<line hits="1">
+<line>
 <code>      builder: CosmosDbPermission.build,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      token: permission?.token,</code>
@@ -140,32 +129,32 @@
 <line>
 <code>    );</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    final seconds = expiry?.inSeconds ?? 0;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    if (seconds &gt; 0) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      context.addHeader(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="4">
+<line hits="3">
 <code>    return _users.client.get&lt;CosmosDbPermission&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="4">
 <code>      '${_users.url}/${user.id}/permissions/$name',</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      context,</code>
@@ -173,9 +162,8 @@
 <line>
 <code>    );</code>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -183,9 +171,9 @@
 <line>
 <code>  /// Grants the [user] the specified [userPermission].</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Future&lt;CosmosDbPermission&gt; grant(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    CosmosDbUser user,</code>
@@ -202,20 +190,19 @@
 <line>
 <code>  }) {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    final context = Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      type: 'permissions',</code>
 </line>
-<line hits="5">
+<line hits="4">
 <code>      resId: '${_users.url}/${user.id}',</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>      builder: CosmosDbPermission.build,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      token: permission?.token,</code>
@@ -227,24 +214,24 @@
 <code>    final seconds = expiry?.inSeconds ?? 0;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    if (seconds &gt; 0) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      context.addHeader(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="4">
+<line hits="3">
 <code>    return _users.client.post&lt;CosmosDbPermission&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>      '${_users.url}/${user.id}/permissions',</code>
@@ -259,9 +246,8 @@
 <line>
 <code>    );</code>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -288,16 +274,15 @@
 <line>
 <code>  }) {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    final context = Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      type: 'permissions',</code>
 </line>
-<line hits="1">
+<line>
 <code>      builder: CosmosDbPermission.build,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      token: permission?.token,</code>
@@ -313,20 +298,20 @@
 <code>    if (seconds &gt; 0) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      context.addHeader(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>          HttpHeader.msDocumentDbExpirySeconds, seconds.toString());</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="4">
+<line hits="3">
 <code>    return _users.client.put&lt;CosmosDbPermission&gt;(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="5">
 <code>      '${_users.url}/${user.id}/permissions/${userPermission.id}',</code>
@@ -357,17 +342,17 @@
 <line>
 <code>          {bool throwOnNotFound = false, CosmosDbPermission? permission}) =&gt;</code>
 </line>
-<line hits="4">
+<line hits="3">
 <code>      _users.client.delete(</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>        '${_users.url}/${user.id}/permissions/$name',</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>        Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'permissions',</code>
@@ -375,9 +360,8 @@
 <line>
 <code>          throwOnNotFound: throwOnNotFound,</code>
 </line>
-<line hits="1">
+<line>
 <code>          builder: CosmosDbPermission.build,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          token: permission?.token,</code>

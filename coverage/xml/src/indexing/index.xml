@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="57" lines-valid="57" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.875" lines-covered="35" lines-valid="40" package="/src/indexing" testname="lcov.info" version="1.5">
 <sources>
-<source branches-hit="0" branches-valid="0" filename="indexing_policy.dart" functions-hit="0" functions-valid="0" lines-hit="22" lines-valid="22" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="22" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="indexing_policy.dart" functions-hit="0" functions-valid="0" lines-hit="16" lines-valid="16" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="16" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="spatial_index_path.dart" functions-hit="0" functions-valid="0" lines-hit="7" lines-valid="7" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="7" name="&lt;unnamed&gt;"/>
-</source>
-<source branches-hit="0" branches-valid="0" filename="index_path.dart" functions-hit="0" functions-valid="0" lines-hit="5" lines-valid="5" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="5" name="&lt;unnamed&gt;"/>
-</source>
-<source branches-hit="0" branches-valid="0" filename="partition.dart" functions-hit="0" functions-valid="0" lines-hit="4" lines-valid="4" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<source branches-hit="0" branches-valid="0" filename="index_path.dart" functions-hit="0" functions-valid="0" lines-hit="4" lines-valid="4" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="4" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="geospatial_config.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="9" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
-</source>
-<source branches-hit="0" branches-valid="0" filename="bounding_box.dart" functions-hit="0" functions-valid="0" lines-hit="7" lines-valid="7" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="7" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="geospatial_config.dart" functions-hit="0" functions-valid="0" lines-hit="5" lines-valid="5" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="5" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="indexing_mode.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="1" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="spatial_index_path.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="6" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="6" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="bounding_box.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="6" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="data_type.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="1" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="query.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9444444" lines-covered="17" lines-valid="18" package="/src/queries" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="query.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="16" package="/src/queries" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
 </line>
 <line>
-<code>import '../indexing/partition.dart';</code>
+<code>import '../partition/partition_key.dart';</code>
 </line>
 <line>
 <code>import 'paging.dart';</code>
@@ -22,29 +22,20 @@
 <line>
 <code>  /// Builds a new CosmosDB SQL query with [command] and [params].</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Query(this.command,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>      {int? maxCount,</code>
+<code>      {int? maxCount, PartitionKey? partitionKey, Map&lt;String, dynamic&gt;? params})</code>
 </line>
 <line>
-<code>      CosmosDbPartition? partition,</code>
+<code>      : _partitionKey = partitionKey,</code>
 </line>
-<line>
-<code>      Map&lt;String, dynamic&gt;? params})</code>
-</line>
-<line>
-<code>      : _partition = partition,</code>
-</line>
-<line hits="2">
+<line hits="0">
 <code>        _params = (params == null) ? null : {...params},</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        super(maxCount);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -67,9 +58,8 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>  late final Map&lt;String, dynamic&gt;? _params;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -80,12 +70,11 @@
 <line>
 <code>  /// will be executed against all partitions.</code>
 </line>
-<line hits="3">
-<code>  CosmosDbPartition get partition =&gt; _partition ?? CosmosDbPartition.all;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>  PartitionKey get partitionKey =&gt; _partitionKey ?? PartitionKey.all;</code>
 </line>
 <line>
-<code>  CosmosDbPartition? _partition;</code>
+<code>  PartitionKey? _partitionKey;</code>
 </line>
 <line>
 <code/>
@@ -93,9 +82,8 @@
 <line>
 <code>  /// Force the query to execute in all partitions.</code>
 </line>
-<line hits="3">
-<code>  void crossPartition() =&gt; _partition = CosmosDbPartition.all;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>  void crossPartition() =&gt; _partitionKey = null;</code>
 </line>
 <line>
 <code/>
@@ -103,9 +91,8 @@
 <line>
 <code>  /// Restrict the query to the partition identified by [key].</code>
 </line>
-<line hits="3">
-<code>  void onPartition(String key) =&gt; _partition = CosmosDbPartition(key);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>  void onPartition(PartitionKey partitionKey) =&gt; _partitionKey = partitionKey;</code>
 </line>
 <line>
 <code/>
@@ -113,48 +100,38 @@
 <line>
 <code>  /// Registers a paramater/value to the query.</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  void withParam(String name, dynamic value) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      (_params ??= &lt;String, dynamic&gt;{})[name] = value;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>        'query': command,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        if (_params != null)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>          'parameters': _params!.entries</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="0">
 <code>              .map((e) =&gt; {'name': e.key, 'value': e.value})</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>              .toList()</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>      };</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

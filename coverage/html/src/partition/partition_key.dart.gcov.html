@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="../../jgenhtml.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../../jgenhtml.js"></script>
-<title>LCOV - lcov.info partition.dart</title>
+<title>LCOV - lcov.info partition_key.dart</title>
 </head>
 <body class="noscript nolegend">
 <h1>LCOV - code coverage report</h1>
@@ -13,11 +13,11 @@
 <dl class="pageView">
 <dt>Current view</dt>
 <dd>
-<a href="../../index.html">top level</a> - <a href="index.html">/src/indexing</a> - partition.dart</dd>
+<a href="../../index.html">top level</a> - <a href="index.html">/src/partition</a> - partition_key.dart</dd>
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-01</dd>
+<dd>2023-01-04</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>4</td><td>4</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>4</td><td>5</td><td class="med">80.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -66,67 +66,70 @@
 <td>2</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 3" id="line3">
-<td>3</td><td></td><td></td><td><code>import 'package:azure_cosmosdb/src/_internal/_http_header.dart';</code></td>
+<td>3</td><td></td><td></td><td><code>import '../_internal/_http_header.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
 <td>4</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
-<td>5</td><td></td><td></td><td><code>@Deprecated('Use CosmosDbPartition instead.')</code></td>
+<td>5</td><td></td><td></td><td><code>/// Class representing a partition key.</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
-<td>6</td><td></td><td></td><td><code>typedef Partition = CosmosDbPartition;</code></td>
+<td>6</td><td></td><td></td><td><code>class PartitionKey {</code></td>
 </tr>
-<tr class="noop" title="Line 7" id="line7">
-<td>7</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 7" id="line7">
+<td>7</td><td></td><td>2</td><td><code>  const PartitionKey._(this.values);</code></td>
 </tr>
 <tr class="noop" title="Line 8" id="line8">
-<td>8</td><td></td><td></td><td><code>/// Class representing a partition in a Cosmos DB collection.</code></td>
+<td>8</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
-<td>9</td><td></td><td></td><td><code>class CosmosDbPartition {</code></td>
+<td>9</td><td></td><td></td><td><code>  final List&lt;dynamic&gt; values;</code></td>
 </tr>
-<tr class="lineCov" title="Line 10" id="line10">
-<td>10</td><td></td><td>2</td><td><code>  const CosmosDbPartition._(this.header);</code></td>
+<tr class="noop" title="Line 10" id="line10">
+<td>10</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code></code></td>
+<td>11</td><td></td><td></td><td><code>  /// Partition key with a single property.</code></td>
 </tr>
-<tr class="noop" title="Line 12" id="line12">
-<td>12</td><td></td><td></td><td><code>  /// Creates a partition for a single key.</code></td>
+<tr class="lineNoCov" title="Line 12" id="line12">
+<td>12</td><td></td><td>0</td><td><code>  PartitionKey(String value) : this._(List.unmodifiable([value]));</code></td>
 </tr>
-<tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>2</td><td><code>  CosmosDbPartition(String key)</code></td>
+<tr class="noop" title="Line 13" id="line13">
+<td>13</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>3</td><td><code>      : this._({</code></td>
+<tr class="noop" title="Line 14" id="line14">
+<td>14</td><td></td><td></td><td><code>  /// Creates a partition key for multiple keys.</code></td>
 </tr>
 <tr class="lineCov" title="Line 15" id="line15">
-<td>15</td><td></td><td>3</td><td><code>          HttpHeader.msDocumentDbPartitionKey: jsonEncode([key])</code></td>
+<td>15</td><td></td><td>3</td><td><code>  PartitionKey.multi(List&lt;dynamic&gt; values) : this._(List.unmodifiable(values));</code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
-<td>16</td><td></td><td></td><td><code>        });</code></td>
+<td>16</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 17" id="line17">
-<td>17</td><td></td><td></td><td><code></code></td>
+<td>17</td><td></td><td></td><td><code>  /// Used for cross-partition queries.</code></td>
 </tr>
 <tr class="noop" title="Line 18" id="line18">
-<td>18</td><td></td><td></td><td><code>  /// Used for cross-partition queries.</code></td>
+<td>18</td><td></td><td></td><td><code>  static const all = PartitionKey._([]);</code></td>
 </tr>
 <tr class="noop" title="Line 19" id="line19">
-<td>19</td><td></td><td></td><td><code>  static const all = CosmosDbPartition._(HttpHeader.enableCrossPartition);</code></td>
+<td>19</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 20" id="line20">
-<td>20</td><td></td><td></td><td><code></code></td>
+<td>20</td><td></td><td></td><td><code>  /// The HTTP header representing the target partition.</code></td>
 </tr>
-<tr class="noop" title="Line 21" id="line21">
-<td>21</td><td></td><td></td><td><code>  /// The HTTP header representing the target partition.</code></td>
+<tr class="lineCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>2</td><td><code>  Map&lt;String, String&gt; get header =&gt; (this == all)</code></td>
 </tr>
 <tr class="noop" title="Line 22" id="line22">
-<td>22</td><td></td><td></td><td><code>  final Map&lt;String, String&gt; header;</code></td>
+<td>22</td><td></td><td></td><td><code>      ? HttpHeader.enableCrossPartition</code></td>
 </tr>
-<tr class="noop" title="Line 23" id="line23">
-<td>23</td><td></td><td></td><td><code>}</code></td>
+<tr class="lineCov" title="Line 23" id="line23">
+<td>23</td><td></td><td>3</td><td><code>      : {HttpHeader.msDocumentDbPartitionKey: jsonEncode(values)};</code></td>
+</tr>
+<tr class="noop" title="Line 24" id="line24">
+<td>24</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

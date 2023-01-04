@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9705882" lines-covered="33" lines-valid="34" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.4814815" lines-covered="13" lines-valid="27" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../_internal/_http_header.dart';</code>
@@ -8,7 +8,7 @@
 <code>import '../base_document.dart';</code>
 </line>
 <line>
-<code>import '../indexing/partition.dart';</code>
+<code>import '../partition/partition_key.dart';</code>
 </line>
 <line>
 <code>import '../permissions/cosmos_db_permission.dart';</code>
@@ -23,7 +23,7 @@
 <code/>
 </line>
 <line>
-<code>const version = '1.8.0';</code>
+<code>const version = '2.0.0';</code>
 </line>
 <line>
 <code/>
@@ -31,9 +31,9 @@
 <line>
 <code>class Context {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  Context({</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    required this.type,</code>
@@ -51,7 +51,7 @@
 <code>    this.paging,</code>
 </line>
 <line>
-<code>    this.partition,</code>
+<code>    this.partitionKey,</code>
 </line>
 <line>
 <code>    this.token,</code>
@@ -65,20 +65,18 @@
 <line>
 <code>  }) {</code>
 </line>
-<line hits="1">
+<line>
 <code>    if (headers != null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>      _headers = {...headers};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -96,7 +94,7 @@
 <code>  final Paging? paging;</code>
 </line>
 <line>
-<code>  final CosmosDbPartition? partition;</code>
+<code>  final PartitionKey? partitionKey;</code>
 </line>
 <line>
 <code>  final String? token;</code>
@@ -110,29 +108,27 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line>
 <code>  Map&lt;String, String&gt;? _headers;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="5">
+<line hits="4">
 <code>  void addHeader(String name, String value) =&gt; (_headers ??= {})[name] = value;</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Context copyWith(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      {Paging? paging,</code>
 </line>
 <line>
-<code>      CosmosDbPartition? partition,</code>
+<code>      PartitionKey? partitionKey,</code>
 </line>
 <line>
 <code>      Map&lt;String, String&gt;? headers,</code>
@@ -140,55 +136,44 @@
 <line>
 <code>      List&lt;String&gt;? removeHeaders}) {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    final copy = Context(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      type: type,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      resId: resId,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      paging: paging ?? this.paging,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
-<code>      partition: partition ?? this.partition,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>      partitionKey: partitionKey ?? this.partitionKey,</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      token: token,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      onForbidden: onForbidden,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    );</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    if (_headers != null) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="0">
 <code>      (copy._headers ??= {}).addAll(_headers!);</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>    if (headers != null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>      (copy._headers ??= {}).addAll(headers);</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -202,13 +187,11 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>    return copy;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -217,62 +200,56 @@
 <code>  Map&lt;String, String&gt; getHeaders() {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>    final headers = {HttpHeader.userAgent: 'AzureCosmosDb.Dart/$version'};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="2">
-<code>    if (_headers != null) {</code>
+<code>    final headers = {HttpHeader.userAgent: 'AzureCosmosDb.Dart/$version'};</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>      headers.addAll(_headers!);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>    }</code>
-</line>
-<line hits="3">
-<code>    final partitionHeader = partition?.header;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>    if (partitionHeader != null) {</code>
+<code>    if (_headers != null) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      headers.addAll(partitionHeader);</code>
+<code>      headers.addAll(_headers!);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="4">
-<code>    final maxCount = (paging?.maxCount ?? -1);</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<line hits="1">
+<code>    if (partitionKey != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      headers.addAll(partitionKey!.header);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
 </line>
 <line hits="2">
-<code>    if (maxCount &gt; 0) {</code>
+<code>    final maxCount = (paging?.maxCount ?? -1);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="1">
+<code>    if (maxCount &gt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
 <code>      headers[HttpHeader.msMaxItemCount] = maxCount.toString();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="3">
+<line hits="1">
 <code>    final continuation = paging?.continuation ?? '';</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    if (continuation.isNotEmpty) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      headers[HttpHeader.msContinuation] = continuation;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="_linq_extensions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="21" lines-valid="21" package="/src/_internal" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="_linq_extensions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="15" lines-valid="15" package="/src/_internal" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>class LinqException implements Exception {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  LinqException(this.message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -20,9 +20,9 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>T _identity&lt;T&gt;(T item) =&gt; item;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -30,88 +30,84 @@
 <line>
 <code>extension Linq&lt;T&gt; on Iterable&lt;T&gt; {</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>  Iterable&lt;T&gt; asIterable() =&gt; map(_identity);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
-</line>
-<line hits="2">
-<code>  Iterable&lt;T&gt; skipLast() {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    final keep = length - 1;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    return (keep &gt; 0) ? take(keep) : const [];</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>  }</code>
+<code>  Iterable&lt;T&gt; skipLast() {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    final keep = length - 1;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return (keep &gt; 0) ? take(keep) : const [];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  T? firstOrDefault(bool Function(T) predicate) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    if (isEmpty) return null;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    for (var item in this) {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      if (predicate(item)) return item;</code>
+<code>    for (var item in this) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      if (predicate(item)) return item;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>    return null;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  T? singleOrDefault(bool Function(T) predicate) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="1">
 <code>    if (isEmpty) return null;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    T? found;</code>
 </line>
-<line hits="3">
-<code>    for (var item in this) {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="2">
-<code>      if (predicate(item)) {</code>
+<code>    for (var item in this) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>        if (found != null) {</code>
+<code>      if (predicate(item)) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line>
+<code>        if (found != null) {</code>
+</line>
+<line hits="1">
 <code>          throw LinqException(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>              'Collection contains several items matching the predicate');</code>
@@ -128,13 +124,11 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line>
 <code>    return found;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

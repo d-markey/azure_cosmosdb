@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-01</dd>
+<dd>2023-01-04</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>23</td><td>23</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>18</td><td>19</td><td class="high">94.7%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -80,8 +80,8 @@
 <tr class="noop" title="Line 7" id="line7">
 <td>7</td><td></td><td></td><td><code>class LineString extends Shape {</code></td>
 </tr>
-<tr class="lineCov" title="Line 8" id="line8">
-<td>8</td><td></td><td>1</td><td><code>  final _points = &lt;Point&gt;[];</code></td>
+<tr class="noop" title="Line 8" id="line8">
+<td>8</td><td></td><td></td><td><code>  final _points = &lt;Point&gt;[];</code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
 <td>9</td><td></td><td></td><td><code></code></td>
@@ -96,7 +96,7 @@
 <td>12</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>2</td><td><code>  LineString();</code></td>
+<td>13</td><td></td><td>1</td><td><code>  LineString();</code></td>
 </tr>
 <tr class="noop" title="Line 14" id="line14">
 <td>14</td><td></td><td></td><td><code></code></td>
@@ -107,11 +107,11 @@
 <tr class="lineCov" title="Line 16" id="line16">
 <td>16</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
-<tr class="lineCov" title="Line 17" id="line17">
-<td>17</td><td></td><td>1</td><td><code>  List&lt;List&lt;double&gt;&gt; get coordinates =&gt;</code></td>
+<tr class="noop" title="Line 17" id="line17">
+<td>17</td><td></td><td></td><td><code>  List&lt;List&lt;double&gt;&gt; get coordinates =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 18" id="line18">
-<td>18</td><td></td><td>6</td><td><code>      points.map((p) =&gt; p.coordinates).toList();</code></td>
+<td>18</td><td></td><td>5</td><td><code>      points.map((p) =&gt; p.coordinates).toList();</code></td>
 </tr>
 <tr class="noop" title="Line 19" id="line19">
 <td>19</td><td></td><td></td><td><code></code></td>
@@ -120,7 +120,7 @@
 <td>20</td><td></td><td></td><td><code>  /// `true` iif the line string contains no points.</code></td>
 </tr>
 <tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>4</td><td><code>  bool get isEmpty =&gt; points.isEmpty;</code></td>
+<td>21</td><td></td><td>3</td><td><code>  bool get isEmpty =&gt; points.isEmpty;</code></td>
 </tr>
 <tr class="noop" title="Line 22" id="line22">
 <td>22</td><td></td><td></td><td><code></code></td>
@@ -129,7 +129,7 @@
 <td>23</td><td></td><td></td><td><code>  /// `true` iif the line string contains one or more points.</code></td>
 </tr>
 <tr class="lineCov" title="Line 24" id="line24">
-<td>24</td><td></td><td>4</td><td><code>  bool get isNotEmpty =&gt; points.isNotEmpty;</code></td>
+<td>24</td><td></td><td>3</td><td><code>  bool get isNotEmpty =&gt; points.isNotEmpty;</code></td>
 </tr>
 <tr class="noop" title="Line 25" id="line25">
 <td>25</td><td></td><td></td><td><code></code></td>
@@ -144,7 +144,7 @@
 <td>28</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
 <tr class="lineCov" title="Line 29" id="line29">
-<td>29</td><td></td><td>3</td><td><code>  Iterable&lt;Iterable&lt;Point&gt;&gt; get paths =&gt; [points];</code></td>
+<td>29</td><td></td><td>2</td><td><code>  Iterable&lt;Iterable&lt;Point&gt;&gt; get paths =&gt; [points];</code></td>
 </tr>
 <tr class="noop" title="Line 30" id="line30">
 <td>30</td><td></td><td></td><td><code></code></td>
@@ -153,7 +153,7 @@
 <td>31</td><td></td><td></td><td><code>  /// Collection of points making up the line string.</code></td>
 </tr>
 <tr class="lineCov" title="Line 32" id="line32">
-<td>32</td><td></td><td>5</td><td><code>  Iterable&lt;Point&gt; get points =&gt; _points.map((p) =&gt; p);</code></td>
+<td>32</td><td></td><td>4</td><td><code>  Iterable&lt;Point&gt; get points =&gt; _points.map((p) =&gt; p);</code></td>
 </tr>
 <tr class="noop" title="Line 33" id="line33">
 <td>33</td><td></td><td></td><td><code></code></td>
@@ -161,8 +161,8 @@
 <tr class="noop" title="Line 34" id="line34">
 <td>34</td><td></td><td></td><td><code>  /// Collection of points making up the line string, in reverse order.</code></td>
 </tr>
-<tr class="lineCov" title="Line 35" id="line35">
-<td>35</td><td></td><td>4</td><td><code>  Iterable&lt;Point&gt; get reversed =&gt; _points.reversed;</code></td>
+<tr class="lineNoCov" title="Line 35" id="line35">
+<td>35</td><td></td><td>0</td><td><code>  Iterable&lt;Point&gt; get reversed =&gt; _points.reversed;</code></td>
 </tr>
 <tr class="noop" title="Line 36" id="line36">
 <td>36</td><td></td><td></td><td><code></code></td>
@@ -171,7 +171,7 @@
 <td>37</td><td></td><td></td><td><code>  /// Adds a point to the line string.</code></td>
 </tr>
 <tr class="lineCov" title="Line 38" id="line38">
-<td>38</td><td></td><td>4</td><td><code>  void add(Point point) =&gt; _points.add(point);</code></td>
+<td>38</td><td></td><td>3</td><td><code>  void add(Point point) =&gt; _points.add(point);</code></td>
 </tr>
 <tr class="noop" title="Line 39" id="line39">
 <td>39</td><td></td><td></td><td><code></code></td>
@@ -180,7 +180,7 @@
 <td>40</td><td></td><td></td><td><code>  /// Adds a set of points to the line string.</code></td>
 </tr>
 <tr class="lineCov" title="Line 41" id="line41">
-<td>41</td><td></td><td>4</td><td><code>  void addAll(Iterable&lt;Point&gt; points) =&gt; _points.addAll(points);</code></td>
+<td>41</td><td></td><td>3</td><td><code>  void addAll(Iterable&lt;Point&gt; points) =&gt; _points.addAll(points);</code></td>
 </tr>
 <tr class="noop" title="Line 42" id="line42">
 <td>42</td><td></td><td></td><td><code></code></td>
@@ -189,37 +189,37 @@
 <td>43</td><td></td><td>1</td><td><code>  static LineString fromGeoJson(Map geoJson, GeospatialConfig config) =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 44" id="line44">
-<td>44</td><td></td><td>2</td><td><code>      Shape.fromGeoJson&lt;LineString&gt;(geoJson, config);</code></td>
+<td>44</td><td></td><td>1</td><td><code>      Shape.fromGeoJson&lt;LineString&gt;(geoJson, config);</code></td>
 </tr>
 <tr class="noop" title="Line 45" id="line45">
 <td>45</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 46" id="line46">
-<td>46</td><td></td><td>3</td><td><code>  static LineString loadGeographyCoords(Iterable coords) =&gt; LineString()</code></td>
+<td>46</td><td></td><td>2</td><td><code>  static LineString loadGeographyCoords(Iterable coords) =&gt; LineString()</code></td>
 </tr>
 <tr class="lineCov" title="Line 47" id="line47">
 <td>47</td><td></td><td>1</td><td><code>    ..addAll(</code></td>
 </tr>
 <tr class="lineCov" title="Line 48" id="line48">
-<td>48</td><td></td><td>3</td><td><code>      coords.cast&lt;List&gt;().map(Point.loadGeographyCoords),</code></td>
+<td>48</td><td></td><td>2</td><td><code>      coords.cast&lt;List&gt;().map(Point.loadGeographyCoords),</code></td>
 </tr>
-<tr class="lineCov" title="Line 49" id="line49">
-<td>49</td><td></td><td>1</td><td><code>    );</code></td>
+<tr class="noop" title="Line 49" id="line49">
+<td>49</td><td></td><td></td><td><code>    );</code></td>
 </tr>
 <tr class="noop" title="Line 50" id="line50">
 <td>50</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 51" id="line51">
-<td>51</td><td></td><td>3</td><td><code>  static LineString loadGeometryCoords(Iterable coords) =&gt; LineString()</code></td>
+<td>51</td><td></td><td>2</td><td><code>  static LineString loadGeometryCoords(Iterable coords) =&gt; LineString()</code></td>
 </tr>
 <tr class="lineCov" title="Line 52" id="line52">
 <td>52</td><td></td><td>1</td><td><code>    ..addAll(</code></td>
 </tr>
 <tr class="lineCov" title="Line 53" id="line53">
-<td>53</td><td></td><td>3</td><td><code>      coords.cast&lt;List&gt;().map(Point.loadGeometryCoords),</code></td>
+<td>53</td><td></td><td>2</td><td><code>      coords.cast&lt;List&gt;().map(Point.loadGeometryCoords),</code></td>
 </tr>
-<tr class="lineCov" title="Line 54" id="line54">
-<td>54</td><td></td><td>1</td><td><code>    );</code></td>
+<tr class="noop" title="Line 54" id="line54">
+<td>54</td><td></td><td></td><td><code>    );</code></td>
 </tr>
 <tr class="noop" title="Line 55" id="line55">
 <td>55</td><td></td><td></td><td><code>}</code></td>

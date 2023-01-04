@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.75" lines-covered="6" lines-valid="8" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.44444445" lines-covered="4" lines-valid="9" package="/src" testname="lcov.info" version="1.5">
 <lines>
-<line>
-<code>import 'indexing/partition.dart';</code>
-</line>
-<line>
-<code/>
-</line>
 <line>
 <code>/// Function definition to hydrate (deserialize) CosmosDB documents.</code>
 </line>
@@ -26,7 +20,7 @@
 <code>  /// The document's [id].</code>
 </line>
 <line>
-<code>  String get id;</code>
+<code>  dynamic get id;</code>
 </line>
 <line>
 <code/>
@@ -35,7 +29,7 @@
 <code>  /// Serialization to a JSON map.</code>
 </line>
 <line>
-<code>  Map&lt;String, dynamic&gt; toJson();</code>
+<code>  dynamic toJson();</code>
 </line>
 <line>
 <code>}</code>
@@ -62,6 +56,42 @@
 <code/>
 </line>
 <line>
+<code>/// Base class for a document with an id.</code>
+</line>
+<line>
+<code>class DocumentWithId implements BaseDocument {</code>
+</line>
+<line hits="1">
+<code>  DocumentWithId(this.id);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  @override</code>
+</line>
+<line>
+<code>  final dynamic id;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  dynamic toJson() =&gt; {'id': id};</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
 <code>/// Base class for CosmosDB documents including the `etag` property.</code>
 </line>
 <line>
@@ -79,9 +109,8 @@
 <line>
 <code>  /// The document's `etag` property.</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  String get etag =&gt; _etag ?? '';</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  String? _etag;</code>
@@ -92,9 +121,9 @@
 <line>
 <code>  /// Set `etag` from a JSON map; to be called by [DocumentBuilder] methods.</code>
 </line>
-<line hits="10">
+<line hits="9">
 <code>  void setEtag(Map body) =&gt; _etag = body['_etag'];</code>
-<hit count="10" name="&lt;unnamed&gt;"/>
+<hit count="9" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -121,7 +150,7 @@
 <code>  /// partition key definition.</code>
 </line>
 <line hits="0">
-<code>  String get partitionKey =&gt; id;</code>
+<code>  List&lt;dynamic&gt; get keys =&gt; [id];</code>
 </line>
 <line>
 <code>}</code>
@@ -135,21 +164,11 @@
 <line>
 <code>extension PartitionKeyExt on BaseDocument {</code>
 </line>
-<line hits="1">
-<code>  CosmosDbPartition getPartitionKey() =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>  List&lt;dynamic&gt; getKeys() =&gt;</code>
 </line>
-<line hits="3">
-<code>      CosmosDbPartition((this is PartitionKeyMixin)</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>          ? (this as PartitionKeyMixin).partitionKey</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>          : id);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>      (this is PartitionKeyMixin) ? (this as PartitionKeyMixin).keys : [id];</code>
 </line>
 <line>
 <code>}</code>

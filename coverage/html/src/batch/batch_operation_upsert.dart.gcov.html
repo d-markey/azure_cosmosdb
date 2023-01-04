@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="../../jgenhtml.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../../jgenhtml.js"></script>
-<title>LCOV - lcov.info _retry_if_web.dart</title>
+<title>LCOV - lcov.info batch_operation_upsert.dart</title>
 </head>
 <body class="noscript nolegend">
 <h1>LCOV - code coverage report</h1>
@@ -13,11 +13,11 @@
 <dl class="pageView">
 <dt>Current view</dt>
 <dd>
-<a href="../../index.html">top level</a> - <a href="index.html">/src/client</a> - _retry_if_web.dart</dd>
+<a href="../../index.html">top level</a> - <a href="index.html">/src/batch</a> - batch_operation_upsert.dart</dd>
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-01</dd>
+<dd>2023-01-04</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>3</td><td>3</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>0</td><td>1</td><td class="low">0.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -60,55 +60,37 @@
 </thead>
 <tbody>
 <tr class="noop" title="Line 1" id="line1">
-<td>1</td><td></td><td></td><td><code>import 'dart:async';</code></td>
+<td>1</td><td></td><td></td><td><code>import '../base_document.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 2" id="line2">
-<td>2</td><td></td><td></td><td><code>import 'dart:developer';</code></td>
+<td>2</td><td></td><td></td><td><code>import '../partition/partition_key_spec.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 3" id="line3">
-<td>3</td><td></td><td></td><td><code></code></td>
+<td>3</td><td></td><td></td><td><code>import 'batch_operation.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
-<td>4</td><td></td><td></td><td><code>import 'package:http/http.dart' as http;</code></td>
+<td>4</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
-<td>5</td><td></td><td></td><td><code></code></td>
+<td>5</td><td></td><td></td><td><code>class BatchOperationUpsert&lt;T extends BaseDocument&gt;</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
-<td>6</td><td></td><td></td><td><code>import 'debug_http_client.dart';</code></td>
+<td>6</td><td></td><td></td><td><code>    extends BatchOperationOnItem&lt;T&gt; {</code></td>
 </tr>
-<tr class="noop" title="Line 7" id="line7">
-<td>7</td><td></td><td></td><td><code></code></td>
+<tr class="lineNoCov" title="Line 7" id="line7">
+<td>7</td><td></td><td>0</td><td><code>  BatchOperationUpsert(T item, {PartitionKeySpec? pk}) : super(item, pk: pk);</code></td>
 </tr>
 <tr class="noop" title="Line 8" id="line8">
-<td>8</td><td></td><td></td><td><code>bool retryIf(http.Client client, Exception e) {</code></td>
+<td>8</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
-<td>9</td><td></td><td></td><td><code>  if (client is DebugHttpClient) {</code></td>
+<td>9</td><td></td><td></td><td><code>  @override</code></td>
 </tr>
-<tr class="lineCov" title="Line 10" id="line10">
-<td>10</td><td></td><td>1</td><td><code>    log('!!! received exception $e');</code></td>
+<tr class="noop" title="Line 10" id="line10">
+<td>10</td><td></td><td></td><td><code>  final BatchOperationType op = BatchOperationType.upsert;</code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>  }</code></td>
-</tr>
-<tr class="noop" title="Line 12" id="line12">
-<td>12</td><td></td><td></td><td><code>  final retry = e is TimeoutException || e is http.ClientException;</code></td>
-</tr>
-<tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>1</td><td><code>  if (retry) {</code></td>
-</tr>
-<tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>1</td><td><code>    log('retrying on error ${e.runtimeType}...');</code></td>
-</tr>
-<tr class="noop" title="Line 15" id="line15">
-<td>15</td><td></td><td></td><td><code>  }</code></td>
-</tr>
-<tr class="noop" title="Line 16" id="line16">
-<td>16</td><td></td><td></td><td><code>  return retry;</code></td>
-</tr>
-<tr class="noop" title="Line 17" id="line17">
-<td>17</td><td></td><td></td><td><code>}</code></td>
+<td>11</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

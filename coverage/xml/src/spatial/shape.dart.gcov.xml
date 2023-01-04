@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-01" filename="shape.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8" lines-covered="16" lines-valid="20" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="shape.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.75" lines-covered="12" lines-valid="16" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../cosmos_db_exceptions.dart';</code>
@@ -161,9 +161,9 @@
 <line>
 <code>  /// Serialize to GeoJSON.</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; toGeoJson();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -171,21 +171,20 @@
 <line>
 <code>  /// Serialize to GeoJSON.</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>  Map&lt;String, dynamic&gt; toGeoJson() =&gt; {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>        'type': type.name,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        'coordinates': coordinates,</code>
+<code>        'type': type.name,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>      };</code>
+<code>        'coordinates': coordinates,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      };</code>
 </line>
 <line>
 <code/>
@@ -193,21 +192,21 @@
 <line>
 <code>  /// Deserialize from GeoJSON.</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  static T fromGeoJson&lt;T&gt;(Map json, GeospatialConfig config) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    final spatialType = _map[T]!;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>    final spatialType = _map[T]!;</code>
+<code>    final type = json['type']?.toString() ?? '';</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>    final type = json['type']?.toString() ?? '';</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="5">
+<line hits="4">
 <code>    if (type.toLowerCase() != spatialType.name.toLowerCase()) {</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      throw BadResponseException(</code>
@@ -218,13 +217,12 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="2">
-<code>    final coords = json['coordinates'] as List?;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>    if (coords == null) {</code>
+<code>    final coords = json['coordinates'] as List?;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    if (coords == null) {</code>
 </line>
 <line hits="0">
 <code>      throw BadResponseException(</code>
@@ -235,13 +233,12 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    final loader = _loaders[spatialType]?[config];</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line>
 <code>    if (loader == null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      throw BadResponseException('No loader for type \'${spatialType.name}\'');</code>
@@ -249,13 +246,12 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="2">
-<code>    return loader(coords) as T;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
 <line hits="1">
-<code>  }</code>
+<code>    return loader(coords) as T;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
 </line>
 <line>
 <code>}</code>

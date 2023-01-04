@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-01</dd>
+<dd>2023-01-04</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>16</td><td>20</td><td class="med">80.0%</td>
+<th scope="row">Lines</th><td>12</td><td>16</td><td class="med">75.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -219,7 +219,7 @@
 <td>53</td><td></td><td></td><td><code>  /// Serialize to GeoJSON.</code></td>
 </tr>
 <tr class="lineCov" title="Line 54" id="line54">
-<td>54</td><td></td><td>3</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; toGeoJson();</code></td>
+<td>54</td><td></td><td>2</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; toGeoJson();</code></td>
 </tr>
 <tr class="noop" title="Line 55" id="line55">
 <td>55</td><td></td><td></td><td><code></code></td>
@@ -228,16 +228,16 @@
 <td>56</td><td></td><td></td><td><code>  /// Serialize to GeoJSON.</code></td>
 </tr>
 <tr class="lineCov" title="Line 57" id="line57">
-<td>57</td><td></td><td>3</td><td><code>  Map&lt;String, dynamic&gt; toGeoJson() =&gt; {</code></td>
+<td>57</td><td></td><td>2</td><td><code>  Map&lt;String, dynamic&gt; toGeoJson() =&gt; {</code></td>
 </tr>
 <tr class="lineCov" title="Line 58" id="line58">
-<td>58</td><td></td><td>3</td><td><code>        'type': type.name,</code></td>
+<td>58</td><td></td><td>2</td><td><code>        'type': type.name,</code></td>
 </tr>
 <tr class="lineCov" title="Line 59" id="line59">
-<td>59</td><td></td><td>2</td><td><code>        'coordinates': coordinates,</code></td>
+<td>59</td><td></td><td>1</td><td><code>        'coordinates': coordinates,</code></td>
 </tr>
-<tr class="lineCov" title="Line 60" id="line60">
-<td>60</td><td></td><td>1</td><td><code>      };</code></td>
+<tr class="noop" title="Line 60" id="line60">
+<td>60</td><td></td><td></td><td><code>      };</code></td>
 </tr>
 <tr class="noop" title="Line 61" id="line61">
 <td>61</td><td></td><td></td><td><code></code></td>
@@ -246,16 +246,16 @@
 <td>62</td><td></td><td></td><td><code>  /// Deserialize from GeoJSON.</code></td>
 </tr>
 <tr class="lineCov" title="Line 63" id="line63">
-<td>63</td><td></td><td>2</td><td><code>  static T fromGeoJson&lt;T&gt;(Map json, GeospatialConfig config) {</code></td>
+<td>63</td><td></td><td>1</td><td><code>  static T fromGeoJson&lt;T&gt;(Map json, GeospatialConfig config) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 64" id="line64">
-<td>64</td><td></td><td>2</td><td><code>    final spatialType = _map[T]!;</code></td>
+<td>64</td><td></td><td>1</td><td><code>    final spatialType = _map[T]!;</code></td>
 </tr>
 <tr class="lineCov" title="Line 65" id="line65">
-<td>65</td><td></td><td>3</td><td><code>    final type = json['type']?.toString() ?? '';</code></td>
+<td>65</td><td></td><td>2</td><td><code>    final type = json['type']?.toString() ?? '';</code></td>
 </tr>
 <tr class="lineCov" title="Line 66" id="line66">
-<td>66</td><td></td><td>5</td><td><code>    if (type.toLowerCase() != spatialType.name.toLowerCase()) {</code></td>
+<td>66</td><td></td><td>4</td><td><code>    if (type.toLowerCase() != spatialType.name.toLowerCase()) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 67" id="line67">
 <td>67</td><td></td><td>0</td><td><code>      throw BadResponseException(</code></td>
@@ -267,10 +267,10 @@
 <td>69</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 70" id="line70">
-<td>70</td><td></td><td>2</td><td><code>    final coords = json['coordinates'] as List?;</code></td>
+<td>70</td><td></td><td>1</td><td><code>    final coords = json['coordinates'] as List?;</code></td>
 </tr>
-<tr class="lineCov" title="Line 71" id="line71">
-<td>71</td><td></td><td>1</td><td><code>    if (coords == null) {</code></td>
+<tr class="noop" title="Line 71" id="line71">
+<td>71</td><td></td><td></td><td><code>    if (coords == null) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 72" id="line72">
 <td>72</td><td></td><td>0</td><td><code>      throw BadResponseException(</code></td>
@@ -282,10 +282,10 @@
 <td>74</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 75" id="line75">
-<td>75</td><td></td><td>3</td><td><code>    final loader = _loaders[spatialType]?[config];</code></td>
+<td>75</td><td></td><td>2</td><td><code>    final loader = _loaders[spatialType]?[config];</code></td>
 </tr>
-<tr class="lineCov" title="Line 76" id="line76">
-<td>76</td><td></td><td>1</td><td><code>    if (loader == null) {</code></td>
+<tr class="noop" title="Line 76" id="line76">
+<td>76</td><td></td><td></td><td><code>    if (loader == null) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 77" id="line77">
 <td>77</td><td></td><td>0</td><td><code>      throw BadResponseException('No loader for type \'${spatialType.name}\'');</code></td>
@@ -294,10 +294,10 @@
 <td>78</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 79" id="line79">
-<td>79</td><td></td><td>2</td><td><code>    return loader(coords) as T;</code></td>
+<td>79</td><td></td><td>1</td><td><code>    return loader(coords) as T;</code></td>
 </tr>
-<tr class="lineCov" title="Line 80" id="line80">
-<td>80</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="noop" title="Line 80" id="line80">
+<td>80</td><td></td><td></td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 81" id="line81">
 <td>81</td><td></td><td></td><td><code>}</code></td>
