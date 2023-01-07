@@ -1,5 +1,6 @@
 import '_internal/_http_header.dart';
 import 'base_document.dart';
+import 'batch/batch_response.dart';
 import 'batch/transactional_batch.dart';
 import 'client/_client.dart';
 import 'client/_context.dart';
@@ -15,9 +16,9 @@ import 'permissions/cosmos_db_permission.dart';
 import 'queries/query.dart';
 import 'cosmos_db_server.dart';
 
-/// Class representing a CosmosDB collection.
-class CosmosDbCollection extends BaseDocument {
-  CosmosDbCollection(this.database, this.id,
+/// Class representing a CosmosDB container.
+class CosmosDbContainer extends BaseDocument {
+  CosmosDbContainer(this.database, this.id,
       {PartitionKeySpec? partitionKeySpec,
       IndexingPolicy? indexingPolicy,
       GeospatialConfig? geospatialConfig})
@@ -26,13 +27,13 @@ class CosmosDbCollection extends BaseDocument {
         _indexingPolicy = indexingPolicy,
         _geospatialConfig = geospatialConfig;
 
-  /// The collection's parent [CosmosDbDatabase].
+  /// The container's parent [CosmosDbDatabase].
   final CosmosDbDatabase database;
 
-  /// The collection's base [url].
+  /// The container's base [url].
   final String url;
 
-  /// Flag indicating whether the collection exists in CosmosDB.
+  /// Flag indicating whether the container exists in CosmosDB.
   /// `null` if no check has been made yet.
   bool? get exists => _exists;
   bool? _exists;
@@ -40,14 +41,14 @@ class CosmosDbCollection extends BaseDocument {
   @override
   final String id;
 
-  /// The collection's partition key specification.
+  /// The container's partition key specification.
   final PartitionKeySpec partitionKeySpec;
 
-  /// The collection's indexing policy.
+  /// The container's indexing policy.
   IndexingPolicy? get indexingPolicy => _indexingPolicy;
   IndexingPolicy? _indexingPolicy;
 
-  /// The collection's indexing policy.
+  /// The container's geospatial configuration.
   GeospatialConfig? get geospatialConfig =>
       _geospatialConfig ?? GeospatialConfig.forPolicy(_indexingPolicy);
   GeospatialConfig? _geospatialConfig;
@@ -66,19 +67,19 @@ class CosmosDbCollection extends BaseDocument {
   /// [CosmosDbPermission] is a way to avoid disclosing the master key in
   /// client applications; to retrieve or create a permission, you should
   /// implement some additional API to be used by your client app. This API
-  /// will protect your master keys. Most methods from [CosmosDbCollection]
+  /// will protect your master keys. Most methods from [CosmosDbContainer]
   /// support an optional [permission] argument, to allow for overriding
-  /// this collection-wide [permission].
+  /// this container-wide [permission].
   void usePermission(CosmosDbPermission permission) {
     _token = permission.token;
   }
 
-  /// Clear the collection-wide permission.
+  /// Clear the container-wide permission.
   void clearPermission() {
     _token = null;
   }
 
-  /// Callback to refresh a permission. When the collection-wide
+  /// Callback to refresh a permission. When the container-wide
   /// [CosmosDbPermission] expires and a CosmosDB API replies with
   /// a [ForbiddenException] (HTTP error 403), this callback will
   /// be invoked to obtain a new, valid [CosmosDbPermission] that
@@ -103,15 +104,15 @@ class CosmosDbCollection extends BaseDocument {
   void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) =>
       database.registerBuilder<T>(builder);
 
-  /// Gets information for this [CosmosDbCollection].
-  Future<CosmosDbCollection> getInfo({CosmosDbPermission? permission}) async {
-    final coll = await client.get<CosmosDbCollection>(
+  /// Gets information for this [CosmosDbContainer].
+  Future<CosmosDbContainer> getInfo({CosmosDbPermission? permission}) async {
+    final coll = await client.get<CosmosDbContainer>(
         url,
         Context(
           type: 'colls',
           token: permission?.token ?? _token,
           throwOnNotFound: true,
-          builder: database.collections.fromJson,
+          builder: database.containers.fromJson,
         ));
     return coll!;
   }
@@ -128,7 +129,7 @@ class CosmosDbCollection extends BaseDocument {
               throwOnNotFound: true,
               builder: PartitionKeyRange.fromJson));
 
-  /// Gets information for this [CosmosDbCollection].
+  /// Gets information for this [CosmosDbContainer].
   Future<void> setIndexingPolicy(IndexingPolicy indexingPolicy,
       {GeospatialConfig? geospatialConfig,
       CosmosDbPermission? permission}) async {
@@ -139,13 +140,13 @@ class CosmosDbCollection extends BaseDocument {
       _geospatialConfig = geospatialConfig;
     }
     try {
-      await client.put<CosmosDbCollection>(
+      await client.put<CosmosDbContainer>(
           url,
           this,
           Context(
             type: 'colls',
             token: permission?.token ?? _token,
-            builder: database.collections.fromJson,
+            builder: database.containers.fromJson,
           ));
     } catch (ex) {
       _indexingPolicy = prevIndexingPolicy;
@@ -154,9 +155,9 @@ class CosmosDbCollection extends BaseDocument {
     }
   }
 
-  /// Finds the document with [id] in this collection. If the document does not exist,
+  /// Finds the document with [id] in this container. If the document does not exist,
   /// this method returns `null` by default. If [throwOnNotFound] is set to `true`, it
-  /// will instead throw a [NotFoundException].
+  /// will throw a [NotFoundException] instead.
   Future<T?> find<T extends BaseDocument>(dynamic id,
       {bool throwOnNotFound = false,
       PartitionKey? partitionKey,
@@ -198,7 +199,7 @@ class CosmosDbCollection extends BaseDocument {
           )
           .onError<NotModifiedException>((error, stackTrace) => document);
 
-  /// Lists all documents from this collection.
+  /// Lists all documents from this container.
   Future<Iterable<T>> list<T extends BaseDocument>(
           {PartitionKey? partitionKey, CosmosDbPermission? permission}) =>
       client.getMany<T>(
@@ -213,7 +214,7 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
-  /// Loads documents from this collection matching the provided [query].
+  /// Loads documents from this container matching the provided [query].
   Future<Iterable<T>> query<T extends BaseDocument>(Query query,
           {CosmosDbPermission? permission}) =>
       client.query<T>(
@@ -228,7 +229,7 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
-  /// Loads documents from this collection matching the provided [query].
+  /// Loads documents from this container matching the provided [query].
   Future<dynamic> rawQuery(Query query, {CosmosDbPermission? permission}) =>
       client.rawQuery(
         '$url/docs',
@@ -242,21 +243,7 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
-  /// Adds a new [batch] to this collection.
-  Future<dynamic> execute(TransactionalBatch batch,
-          {CosmosDbPermission? permission}) =>
-      client.batch(
-        '$url/docs',
-        batch,
-        Context(
-          type: 'docs',
-          resId: url,
-          token: permission?.token ?? _token,
-          onForbidden: _refreshPermission,
-        ),
-      );
-
-  /// Adds a new [document] to this collection.
+  /// Adds a new [document] to this container.
   Future<T> add<T extends BaseDocument>(T document,
           {PartitionKey? partitionKey, CosmosDbPermission? permission}) =>
       client.post(
@@ -271,7 +258,7 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
-  /// Adds or updates (replaces) a [document] in this collection.
+  /// Adds or updates (replaces) a [document] in this container.
   Future<T> upsert<T extends BaseDocument>(T document,
           {PartitionKey? partitionKey, CosmosDbPermission? permission}) =>
       client.post(
@@ -287,7 +274,7 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
-  /// Updates (replaces) a [document] in this collection. If the [document] has
+  /// Updates (replaces) a [document] in this container. If the [document] has
   /// [EtagMixin], its [EtagMixin.etag] must be known.
   Future<T> replace<T extends BaseDocument>(T document,
           {bool checkEtag = true,
@@ -307,7 +294,7 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
-  /// Updates (patches) a [document] in this collection by applying the [patch]
+  /// Updates (patches) a [document] in this container by applying the [patch]
   /// operations.
   Future<T> patch<T extends BaseDocument>(T document, Patch patch,
           {PartitionKey? partitionKey, CosmosDbPermission? permission}) =>
@@ -325,7 +312,7 @@ class CosmosDbCollection extends BaseDocument {
         ),
       );
 
-  /// Deletes the document from this collection. If the document does not exist,
+  /// Deletes the document from this container. If the document does not exist,
   /// this method returns `true` by default. If [throwOnNotFound] is set to
   /// `true`, it will instead throw a [NotFoundException]. If the [document] is
   /// provided, its attributes take over the [id] value. If it has [EtagMixin],
@@ -355,10 +342,32 @@ class CosmosDbCollection extends BaseDocument {
       ),
     );
   }
+
+  /// Prepare a batch for this container.
+  TransactionalBatch<T> prepareBatch<T extends BaseDocument>(
+          {bool isAtomic = false, bool continueOnError = true}) =>
+      isAtomic
+          ? TransactionalBatch<T>.atomic(this)
+          : TransactionalBatch<T>(this, continueOnError: continueOnError);
+
+  /// Executes the batch in this container.
+  Future<BatchResponse<T>> execute<T extends BaseDocument>(
+          TransactionalBatch<T> batch,
+          {CosmosDbPermission? permission}) =>
+      client.batch<T>(
+        '$url/docs',
+        batch,
+        Context(
+          type: 'docs',
+          resId: url,
+          token: permission?.token ?? _token,
+          onForbidden: _refreshPermission,
+        ),
+      );
 }
 
 // internal use
-extension CollectionExt on CosmosDbCollection {
+extension ContainerExt on CosmosDbContainer {
   void setExists(bool exists) => _exists = exists;
 
   Client get client => database.client;

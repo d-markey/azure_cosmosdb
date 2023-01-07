@@ -1,3 +1,4 @@
+import '../_internal/_linq_extensions.dart';
 import '../indexing/data_type.dart';
 import '../indexing/geospatial_config.dart';
 import 'point.dart';
@@ -29,7 +30,7 @@ class LineString extends Shape {
   Iterable<Iterable<Point>> get paths => [points];
 
   /// Collection of points making up the line string.
-  Iterable<Point> get points => _points.map((p) => p);
+  Iterable<Point> get points => _points.asIterable();
 
   /// Collection of points making up the line string, in reverse order.
   Iterable<Point> get reversed => _points.reversed;

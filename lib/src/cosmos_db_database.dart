@@ -1,7 +1,7 @@
 import 'base_document.dart';
 import 'client/_client.dart';
 import 'client/_context.dart';
-import 'cosmos_db_collections.dart';
+import 'cosmos_db_containers.dart';
 import 'permissions/cosmos_db_permission.dart';
 import 'permissions/cosmos_db_users.dart';
 import 'cosmos_db_server.dart';
@@ -38,8 +38,8 @@ class CosmosDbDatabase extends BaseDocument {
         token: permission?.token,
       ));
 
-  /// Provides access to collections in this [CosmosDbDatabase].
-  late final CosmosDbCollections collections = CosmosDbCollections(this);
+  /// Provides access to containers in this [CosmosDbDatabase].
+  late final CosmosDbContainers containers = CosmosDbContainers(this);
 
   /// Provides access to users in this [CosmosDbDatabase].
   late final CosmosDbUsers users = CosmosDbUsers(this);

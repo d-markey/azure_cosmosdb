@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
+import '_internal/_http_header.dart';
 
 import 'cosmos_db_exceptions.dart';
 

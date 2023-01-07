@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 
-import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
 import 'package:http/http.dart' as http;
 
-import '../_internal/_http_status_codes.dart';
+import '../_internal/_http_header.dart';
+import 'http_status_codes.dart';
 import '_debug_http_overrides_web.dart'
     if (dart.library.io) '_debug_http_overrides_vm.dart';
 

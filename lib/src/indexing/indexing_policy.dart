@@ -2,7 +2,7 @@ import 'index_path.dart';
 import 'indexing_mode.dart';
 import 'spatial_index_path.dart';
 
-/// Class representing a collections's indexing policy.
+/// Class representing a container's indexing policy.
 class IndexingPolicy {
   IndexingPolicy(
       {this.indexingMode = IndexingMode.consistent, this.automatic = true});

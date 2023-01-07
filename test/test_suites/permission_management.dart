@@ -6,7 +6,7 @@ import '../classes/test_document.dart';
 import '../classes/test_helpers.dart';
 
 void main() async {
-  final cosmosDB = await getTestInstance();
+  final cosmosDB = await getTestInstance(preview: true);
   if (cosmosDB != null) {
     run(cosmosDB);
   }
@@ -19,16 +19,16 @@ void run(CosmosDbServer cosmosDB) {
   final collName = 'items';
 
   late CosmosDbDatabase database;
-  late String collectionUrl;
+  late String containerUrl;
 
   setUpAll(() async {
     database = await cosmosDB.databases.create(getTempName());
     database.registerBuilder<TestDocument>(TestDocument.fromJson);
-    final collection = await database.collections
+    final container = await database.containers
         .create(collName, partitionKey: PartitionKeySpec.id);
-    collectionUrl = collection.url;
-    await collection.add(TestDocument('1', 'TEST #1', [1, 2, 3]));
-    await collection.add(TestDocument('2', 'TEST #2', [2, 3, 5]));
+    containerUrl = container.url;
+    await container.add(TestDocument('1', 'TEST #1', [1, 2, 3]));
+    await container.add(TestDocument('2', 'TEST #2', [2, 3, 5]));
 
     await database.users.add(user);
   });
@@ -54,20 +54,20 @@ void run(CosmosDbServer cosmosDB) {
           CosmosDbPermission(
             permName,
             PermissionMode.read,
-            collectionUrl,
+            containerUrl,
           ),
           expiry: Duration(days: 366),
         ),
         throwsA(isA<CosmosDbException>()));
   });
 
-  test('Grant READ permission on collection', () async {
+  test('Grant READ permission on container', () async {
     final granted = await database.users.permissions.grant(
       user,
       CosmosDbPermission(
         permName,
         PermissionMode.read,
-        collectionUrl,
+        containerUrl,
       ),
       expiry: Duration(minutes: 30),
     );
@@ -80,7 +80,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readOnly, isNotNull);
     expect(readOnly!.token, isNotNull);
 
-    final roColl = await database.collections.open(collName)
+    final roColl = await database.containers.open(collName)
       ..usePermission(readOnly);
 
     final doc = await roColl.find<TestDocument>('1');
@@ -93,7 +93,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readOnly, isNotNull);
     expect(readOnly!.token, isNotNull);
 
-    final roColl = await database.collections.open(collName)
+    final roColl = await database.containers.open(collName)
       ..usePermission(readOnly);
 
     await expectLater(
@@ -108,7 +108,7 @@ void run(CosmosDbServer cosmosDB) {
       CosmosDbPermission(
         permName,
         PermissionMode.all,
-        collectionUrl,
+        containerUrl,
       ),
       expiry: Duration(minutes: 15),
     );
@@ -121,7 +121,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readWrite, isNotNull);
     expect(readWrite!.token, isNotNull);
 
-    final rwColl = await database.collections.open(collName)
+    final rwColl = await database.containers.open(collName)
       ..usePermission(readWrite);
 
     final doc = await rwColl.find<TestDocument>('1');
@@ -134,7 +134,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readWrite, isNotNull);
     expect(readWrite!.token, isNotNull);
 
-    final rwColl = await database.collections.open(collName)
+    final rwColl = await database.containers.open(collName)
       ..usePermission(readWrite);
 
     final doc = await rwColl.add(TestDocument('4', 'TEST #4', [11, 13, 17]));
@@ -149,7 +149,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(permission, isNotNull);
     expect(permission!.token, isNotNull);
 
-    final coll = await database.collections.open(collName)
+    final coll = await database.containers.open(collName)
       ..usePermission(permission);
 
     // permissions have a resolution of 1 second with undocumented minimal

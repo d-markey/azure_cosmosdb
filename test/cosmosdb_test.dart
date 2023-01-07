@@ -11,15 +11,13 @@ import 'test_suites/path_parser.dart' as path_parser_tests;
 import 'test_suites/database_management.dart' as db_tests;
 import 'test_suites/user_management.dart' as user_tests;
 import 'test_suites/permission_management.dart' as permission_tests;
-import 'test_suites/collection_management.dart' as coll_tests;
+import 'test_suites/container_management.dart' as container_tests;
 import 'test_suites/document_management.dart' as doc_tests;
 import 'test_suites/document_queries.dart' as query_tests;
 import 'test_suites/document_spatial.dart' as spatial_tests;
 import 'test_suites/document_batch.dart' as batch_tests;
 
 void main() async {
-  final cosmosDB = await getTestInstance();
-
   group('INTERNAL HELPERS -', () => internal_tests.run());
 
   group('EXPRESSION TOKENIZER -', () => tokenizer_tests.run());
@@ -30,41 +28,52 @@ void main() async {
 
   group('PATH PARSER -', () => path_parser_tests.run());
 
+  final currentCosmosDb = await getTestInstance(preview: false);
+  final previewCosmosDb = await getTestInstance(preview: true);
+
+  group('CURRENT ($currentApiVersion) -',
+      () => runCosmosDbTests(currentCosmosDb));
+
+  group('PREVIEW ($previewApiVersion) -',
+      () => runCosmosDbTests(previewCosmosDb));
+}
+
+void runCosmosDbTests(CosmosDbServer? cosmosDb) {
   test('COSMOS DB CONNECTION', () {
-    expect(cosmosDB, isNotNull);
+    expect(cosmosDb, isNotNull);
   });
 
-  if (cosmosDB != null) {
-    group('DATABASE MANAGEMENT -', () => db_tests.run(cosmosDB));
+  if (cosmosDb != null) {
+    group('DATABASE MANAGEMENT -', () => db_tests.run(cosmosDb));
 
-    group('USER MANAGEMENT -', () => user_tests.run(cosmosDB));
+    group('USER MANAGEMENT -', () => user_tests.run(cosmosDb));
 
-    group('PERMISSION MANAGEMENT -', () => permission_tests.run(cosmosDB));
+    group('PERMISSION MANAGEMENT -', () => permission_tests.run(cosmosDb));
 
-    group('COLLECTION MANAGEMENT -', () => coll_tests.run(cosmosDB));
+    group('CONTAINER MANAGEMENT -', () => container_tests.run(cosmosDb));
 
-    group('DOCUMENT MANAGEMENT -', () => doc_tests.run(cosmosDB));
+    group('DOCUMENT MANAGEMENT -', () => doc_tests.run(cosmosDb));
 
-    group('SPATIAL DOCUMENT -', () => spatial_tests.run(cosmosDB));
+    group('SPATIAL DOCUMENT -', () => spatial_tests.run(cosmosDb));
 
-    group('DOCUMENT QUERIES -', () => query_tests.run(cosmosDB));
+    group('DOCUMENT QUERIES -', () => query_tests.run(cosmosDb));
 
-    group('DOCUMENT BATCHES -', () => batch_tests.run(cosmosDB));
+    group('DOCUMENT BATCHES -', () => batch_tests.run(cosmosDb));
 
-    test('Reset logger', () {
-      expect(cosmosDB.dbgHttpClient, isNotNull);
+    test('LOGGER - Reset logger', () {
+      expect(cosmosDb.dbgHttpClient, isNotNull);
 
-      cosmosDB.enableLog(withBody: false, withHeader: true);
-      expect(cosmosDB.dbgHttpClient!.log, equals(print));
-      expect(cosmosDB.dbgHttpClient!.trace, isTrue);
-      expect(cosmosDB.dbgHttpClient!.traceHeaders, isTrue);
-      expect(cosmosDB.dbgHttpClient!.traceBody, isFalse);
+      cosmosDb.enableLog(withBody: false, withHeader: true);
+      expect(cosmosDb.dbgHttpClient!.log, equals(print));
+      expect(cosmosDb.dbgHttpClient!.trace, isTrue);
+      expect(cosmosDb.dbgHttpClient!.traceHeaders, isTrue);
+      expect(cosmosDb.dbgHttpClient!.traceBody, isFalse);
 
-      cosmosDB.resetLogger();
-      expect(cosmosDB.dbgHttpClient!.log, equals(DebugHttpClient.defaultLog));
-      expect(cosmosDB.dbgHttpClient!.trace, isFalse);
-      expect(cosmosDB.dbgHttpClient!.traceHeaders, isFalse);
-      expect(cosmosDB.dbgHttpClient!.traceBody, isFalse);
+      cosmosDb.resetLogger();
+      expect(cosmosDb.dbgHttpClient!.log, equals(DebugHttpClient.defaultLog));
+      expect(cosmosDb.dbgHttpClient!.trace, isFalse);
+      expect(cosmosDb.dbgHttpClient!.traceHeaders, isFalse);
+      expect(cosmosDb.dbgHttpClient!.traceBody, isFalse);
     });
   }
 }

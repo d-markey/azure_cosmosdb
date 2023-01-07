@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import '_internal/_http_call.dart';
-import '_internal/_http_status_codes.dart';
+import 'client/http_status_codes.dart';
 
 abstract class InternalException implements Exception {
   InternalException._(String? message) : message = message ?? '';

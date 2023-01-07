@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart' as crypto;
 
-import '../_internal/_http_status_codes.dart';
+import '../client/http_status_codes.dart';
 import '../cosmos_db_exceptions.dart';
 import '_imf_fixdate.dart';
 

@@ -34,10 +34,10 @@ void main() async {
     IndexPath('/"due-date"', order: IndexOrder.descending)
   ]);
 
-  final todoCollection = await database.collections.openOrCreate('todo',
+  final todoContainer = await database.containers.openOrCreate('todo',
       partitionKey: PartitionKeySpec.id, indexingPolicy: indexingPolicy);
 
-  todoCollection.registerBuilder<ToDo>(ToDo.build);
+  todoContainer.registerBuilder<ToDo>(ToDo.build);
 
   try {
     final task = ToDo(
@@ -45,12 +45,12 @@ void main() async {
       dueDate: DateTime.now().add(Duration(days: 3)),
     );
 
-    final created = await todoCollection.add<ToDo>(task);
+    final created = await todoContainer.add<ToDo>(task);
 
     print('Added new task ${task.id} - ${task.label}');
     print('Got task ${created.id} - ${created.label}');
 
-    final tasks = await todoCollection.query<ToDo>(Query(
+    final tasks = await todoContainer.query<ToDo>(Query(
         'SELECT * FROM c WHERE c.label = @improvetests',
         params: {'@improvetests': task.label}));
 

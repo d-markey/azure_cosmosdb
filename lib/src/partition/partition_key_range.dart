@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:azure_cosmosdb/azure_cosmosdb.dart';
+import '../base_document.dart';
 
 /// Class representing a partition key range.
 class PartitionKeyRange extends BaseDocumentWithEtag {
@@ -19,10 +19,10 @@ class PartitionKeyRange extends BaseDocumentWithEtag {
   @override
   String toString() => jsonEncode(toJson());
 
-  static PartitionKeyRange fromJson(dynamic body) {
+  static PartitionKeyRange fromJson(dynamic json) {
     final pkRange = PartitionKeyRange(
-        body['id'], body['minInclusive'], body['maxExclusive']);
-    pkRange.setEtag(body);
+        json['id'], json['minInclusive'], json['maxExclusive']);
+    pkRange.setEtag(json);
     return pkRange;
   }
 }

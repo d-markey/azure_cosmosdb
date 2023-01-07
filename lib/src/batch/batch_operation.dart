@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../base_document.dart';
+import '../partition/partition_key.dart';
 import '../partition/partition_key_spec.dart';
 
 class BatchOperationType {
@@ -17,6 +18,12 @@ class BatchOperationType {
 }
 
 abstract class BatchOperation {
+  BatchOperation({PartitionKeySpec? partitionKeySpec, this.partitionKey})
+      : partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id;
+
+  final PartitionKey? partitionKey;
+  final PartitionKeySpec? partitionKeySpec;
+
   BatchOperationType get op;
 
   Map<String, dynamic> toJson() => {'operationType': op.name};
@@ -24,18 +31,19 @@ abstract class BatchOperation {
 
 abstract class BatchOperationOnItem<T extends BaseDocument>
     extends BatchOperation {
-  BatchOperationOnItem(this.item, {this.pk});
+  BatchOperationOnItem(this.item,
+      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})
+      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);
 
   final T item;
-
-  final PartitionKeySpec? pk;
 
   @override
   Map<String, dynamic> toJson() => super.toJson()
     ..addAll({
       'id': item.id,
-      'partitionKey':
-          jsonEncode((pk ?? PartitionKeySpec.id).from(item)?.values),
+      'partitionKey': jsonEncode(
+          (partitionKey ?? (partitionKeySpec ?? PartitionKeySpec.id).from(item))
+              ?.values),
       'resourceBody': item.toJson(),
     });
 }

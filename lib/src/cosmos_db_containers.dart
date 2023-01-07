@@ -1,5 +1,5 @@
 import 'client/_context.dart';
-import 'cosmos_db_collection.dart';
+import 'cosmos_db_container.dart';
 import 'cosmos_db_database.dart';
 import 'cosmos_db_exceptions.dart';
 import 'cosmos_db_throughput.dart';
@@ -8,25 +8,25 @@ import 'indexing/indexing_policy.dart';
 import 'partition/partition_key_spec.dart';
 import 'permissions/cosmos_db_permission.dart';
 
-/// Class used to manage [CosmosDbCollection]s in a [CosmosDbDatabase].
-class CosmosDbCollections {
-  CosmosDbCollections(this.database) : url = '${database.url}/colls';
+/// Class used to manage [CosmosDbContainer]s in a [CosmosDbDatabase].
+class CosmosDbContainers {
+  CosmosDbContainers(this.database) : url = '${database.url}/colls';
 
   /// The owner [CosmosDbDatabase].
   final CosmosDbDatabase database;
 
   final String url;
 
-  CosmosDbCollection fromJson(Map json) {
-    final coll = CosmosDbCollection(database, json['id'],
+  CosmosDbContainer fromJson(Map json) {
+    final coll = CosmosDbContainer(database, json['id'],
         partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']));
     coll.setExists(true);
     return coll;
   }
 
-  /// Lists all collections from this [database].
-  Future<Iterable<CosmosDbCollection>> list({CosmosDbPermission? permission}) =>
-      database.client.getMany<CosmosDbCollection>(
+  /// Lists all containers from this [database].
+  Future<Iterable<CosmosDbContainer>> list({CosmosDbPermission? permission}) =>
+      database.client.getMany<CosmosDbContainer>(
         url,
         'DocumentCollections',
         Context(
@@ -37,16 +37,16 @@ class CosmosDbCollections {
         ),
       );
 
-  /// Deletes the specified [collection] from this [database]. All documents in this
-  /// [collection] will be lost. If the [collection] does not exists, this method
+  /// Deletes the specified [container] from this [database]. All documents in this
+  /// [container] will be lost. If the [container] does not exists, this method
   /// returns `true` by default. if [throwOnNotFound] is set to `true`, it will throw
-  /// a [NotFoundException] instead. Upon success, the [CosmosDbCollection.exists] flag will
+  /// a [NotFoundException] instead. Upon success, the [CosmosDbContainer.exists] flag will
   /// be set to `false`.
-  Future<bool> delete(CosmosDbCollection collection,
+  Future<bool> delete(CosmosDbContainer container,
           {bool throwOnNotFound = false, CosmosDbPermission? permission}) =>
       database.client
           .delete(
-        '$url/${collection.id}',
+        '$url/${container.id}',
         Context(
           type: 'colls',
           throwOnNotFound: throwOnNotFound,
@@ -54,12 +54,12 @@ class CosmosDbCollections {
         ),
       )
           .then((value) {
-        collection.setExists(false);
+        container.setExists(false);
         return true;
       });
 
-  /// Creates a new [CosmosDbCollection] with the specified `name` and `partitionKeys`.
-  Future<CosmosDbCollection> create(
+  /// Creates a new [CosmosDbContainer] with the specified `name` and `partitionKeys`.
+  Future<CosmosDbContainer> create(
     String name, {
     required PartitionKeySpec partitionKey,
     IndexingPolicy? indexingPolicy,
@@ -67,9 +67,9 @@ class CosmosDbCollections {
     CosmosDbPermission? permission,
     CosmosDbThroughput? throughput,
   }) =>
-      database.client.post<CosmosDbCollection>(
+      database.client.post<CosmosDbContainer>(
         url,
-        CosmosDbCollection(
+        CosmosDbContainer(
           database,
           name,
           partitionKeySpec: partitionKey,
@@ -84,12 +84,12 @@ class CosmosDbCollections {
         ),
       );
 
-  /// Opens an existing [CosmosDbCollection] with id [name].
-  Future<CosmosDbCollection> open(String name) =>
-      CosmosDbCollection(database, name).getInfo();
+  /// Opens an existing [CosmosDbContainer] with id [name].
+  Future<CosmosDbContainer> open(String name) =>
+      CosmosDbContainer(database, name).getInfo();
 
-  /// Opens or creates a [CosmosDbCollection] with id [name].
-  Future<CosmosDbCollection> openOrCreate(
+  /// Opens or creates a [CosmosDbContainer] with id [name].
+  Future<CosmosDbContainer> openOrCreate(
     String name, {
     PartitionKeySpec? partitionKey,
     IndexingPolicy? indexingPolicy,

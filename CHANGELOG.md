@@ -1,7 +1,14 @@
 ## 2.0.0
 
-- Added [PartitionKeySpec] for partition key definition. A [PartitionKeySpec] must be provided when creating a [CosmosDbCollection]. The static final instance [PartitionKeySpec.id] can be used as the default partition key `['/id']`. When opening an existing collection, the [PartitionKeySpec] is loaded from the Cosmos DB response. [PartitionKeySpec.from] rebuilds a [BaseDocument]'s partition key. 
+- Added [PartitionKeySpec] for partition key definition. A [PartitionKeySpec] must be provided when creating a [CosmosDbCollection]. The static final instance [PartitionKeySpec.id] can be used as the default partition key `['/id']`. When opening an existing collection, the [PartitionKeySpec] is loaded from the Cosmos DB response. [PartitionKeySpec.from] rebuilds a [BaseDocument]'s partition key.
+- Support for multiple paths in [PartitionKeySpec] is available, in which case the [CosmosDbServer] connection must be initialized with `preview: true`.
 - Added [PartitionKey] for providing a partition key when operating on documents/queries. The special value [PartitionKey.all] enables cross-partition queries.
+- Added [TransactionalBatch] for batch processing.
+- Please note that support for batch and multi-partition key are still **experimental**.
+
+## 1.8.1
+
+- `_client.dart`: return early with `null` upon a "204 - No Content" status code (fix for https://github.com/d-markey/azure_cosmosdb/issues/1). Also skip parsing the response body if `content-length` is zero.
 
 ## 1.8.0
 

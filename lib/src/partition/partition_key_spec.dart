@@ -2,7 +2,7 @@ import '../base_document.dart';
 import '_path_parser.dart';
 import 'partition_key.dart';
 
-/// Class representing a partition key definition in a Cosmos DB collection.
+/// Class representing a partition key definition in a Cosmos DB container.
 class PartitionKeySpec {
   PartitionKeySpec._(this.paths, this.kind, this.version)
       : _partitionKeyPaths = null;

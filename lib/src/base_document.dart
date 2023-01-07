@@ -37,14 +37,14 @@ mixin EtagMixin on BaseDocument {
   String? _etag;
 
   /// Set `etag` from a JSON map; to be called by [DocumentBuilder] methods.
-  void setEtag(Map body) => _etag = body['_etag'];
+  void setEtag(Map json) => _etag = json['_etag'];
 }
 
 /// Mixin to add custom partition key on [BaseDocument].
 mixin PartitionKeyMixin on BaseDocument {
   /// The document's partition key. Override this to provide a custom partition
   /// key. By default, [id] is used as the partition key. When overriding,
-  /// make sure this value is serialized in accordance with the collection's
+  /// make sure this value is serialized in accordance with the container's
   /// partition key definition.
   List<dynamic> get keys => [id];
 }

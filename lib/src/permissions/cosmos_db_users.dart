@@ -18,7 +18,7 @@ class CosmosDbUsers {
   /// Provides access to permissions associated with [CosmosDbUser]s.
   late final CosmosDbPermissions permissions = CosmosDbPermissions(this);
 
-  /// Lists all collections from this [database].
+  /// Lists all containers from this [database].
   Future<Iterable<CosmosDbUser>> list({CosmosDbPermission? permission}) =>
       database.client.getMany<CosmosDbUser>(
         url,

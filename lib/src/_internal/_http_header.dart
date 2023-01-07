@@ -2,6 +2,7 @@ import '_mime_type.dart';
 
 abstract class HttpHeader {
   static const contentType = 'content-type';
+  static const contentLength = 'content-length';
   static const authorization = 'authorization';
   static const ifMatch = 'if-match';
   static const ifNoneMatch = 'if-none-match';
@@ -20,10 +21,14 @@ abstract class HttpHeader {
   static const msDocumentDbIsUpsert = 'x-ms-documentdb-is-upsert';
   static const msDocumentDbIsQuery = 'x-ms-documentdb-isquery';
   static const msDocumentDbPartitionKey = 'x-ms-documentdb-partitionkey';
+  static const msDocumentDbPartitionKeyRangeId =
+      'x-ms-documentdb-partitionkeyrangeid';
   static const msDocumentDbQueryEnableCrossPartition =
       'x-ms-documentdb-query-enablecrosspartition';
   static const msCosmosIsBatchRequest = 'x-ms-cosmos-is-batch-request';
   static const msCosmosBatchAtomic = 'x-ms-cosmos-batch-atomic';
+  static const msCosmosBatchContinueOnError =
+      'x-ms-cosmos-batch-continue-on-error';
 
   static const allowTentativeWrites = {
     msAllowTentativeWrites: 'true',
@@ -34,9 +39,6 @@ abstract class HttpHeader {
   static const jsonPayload = {
     contentType: MimeType.json,
   };
-  static const apiVersion = {
-    msVersion: '2018-12-31',
-  };
   static const patchPayload = {
     contentType: MimeType.jsonPatch,
   };
@@ -45,14 +47,6 @@ abstract class HttpHeader {
     msDocumentDbIsQuery: 'true',
   };
   static const enableCrossPartition = {
-    msDocumentDbQueryEnableCrossPartition: 'true',
-  };
-  static const nonAtomicBatchRequest = {
-    msCosmosIsBatchRequest: 'true',
-    msCosmosBatchAtomic: 'false',
-  };
-  static const atomicBatchRequest = {
-    msCosmosIsBatchRequest: 'true',
-    msCosmosBatchAtomic: 'true',
+    msDocumentDbQueryEnableCrossPartition: 'true'
   };
 }

@@ -8,10 +8,10 @@ class IndexingMode {
   static const consistent = IndexingMode._('consistent');
 
   /// Lazy mode. Lazy indexing is not supported in serverless mode, and new
-  /// collections cannot select lazy indexing unless an exemption was granted
+  /// containers cannot select lazy indexing unless an exemption was granted
   /// by Microsoft.
   @Deprecated(
-      'Lazy indexing is not supported in serverless mode, and new collections cannot select lazy indexing unless an exemption was granted by Microsoft')
+      'Lazy indexing is not supported in serverless mode, and new containers cannot select lazy indexing unless an exemption was granted by Microsoft')
   static const lazy = IndexingMode._('lazy');
 
   /// No indexing.

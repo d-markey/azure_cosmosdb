@@ -7,7 +7,7 @@ import '../classes/test_helpers.dart';
 import '../classes/test_spatial_document_point.dart';
 
 void main() async {
-  final cosmosDB = await getTestInstance();
+  final cosmosDB = await getTestInstance(preview: true);
   if (cosmosDB != null) {
     run(cosmosDB);
   }
@@ -15,35 +15,35 @@ void main() async {
 
 void run(CosmosDbServer cosmosDB) {
   late final CosmosDbDatabase database;
-  late final CosmosDbCollection collection;
-  late final CosmosDbCollection spatialCollection;
+  late final CosmosDbContainer container;
+  late final CosmosDbContainer spatialContainer;
 
   setUpAll(() async {
     database = await cosmosDB.databases.create(getTempName());
-    collection = await database.collections.create(
+    container = await database.containers.create(
       'items',
       partitionKey: PartitionKeySpec.id,
     );
-    collection.registerBuilder<TestDocument>(TestDocument.fromJson);
-    await collection.add(TestDocument('1', 'PRIME #1', [2, 3, 5]));
-    await collection.add(TestDocument('2', 'PRIME #2', [7, 11, 13]));
-    await collection.add(TestDocument('3', 'EVEN', [2, 4, 6]));
+    container.registerBuilder<TestDocument>(TestDocument.fromJson);
+    await container.add(TestDocument('1', 'PRIME #1', [2, 3, 5]));
+    await container.add(TestDocument('2', 'PRIME #2', [7, 11, 13]));
+    await container.add(TestDocument('3', 'EVEN', [2, 4, 6]));
 
     final indexingPolicy = IndexingPolicy();
     indexingPolicy.spatialIndexes.add(SpatialIndexPath('/p/?'));
-    spatialCollection = await database.collections.create(
+    spatialContainer = await database.containers.create(
       'areas',
       partitionKey: PartitionKeySpec.id,
       indexingPolicy: indexingPolicy,
     );
-    spatialCollection.registerBuilder<TestSpatialDocumentPoint>(
+    spatialContainer.registerBuilder<TestSpatialDocumentPoint>(
         TestSpatialDocumentPoint.fromJson);
-    await spatialCollection.add(TestSpatialDocumentPoint(
+    await spatialContainer.add(TestSpatialDocumentPoint(
       'flt',
       'Eiffel Tower',
       monuments['Eiffel Tower']!,
     ));
-    await spatialCollection.add(TestSpatialDocumentPoint(
+    await spatialContainer.add(TestSpatialDocumentPoint(
       'bbn',
       'Big Ben',
       monuments['Big Ben']!,
@@ -55,7 +55,7 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('List documents', () async {
-    final list = await collection.list<TestDocument>();
+    final list = await container.list<TestDocument>();
     expect(list.length, equals(3));
   });
 
@@ -66,7 +66,7 @@ void run(CosmosDbServer cosmosDB) {
       params: {'@id': '1'},
     );
 
-    var res = await collection.query<TestDocument>(query);
+    var res = await container.query<TestDocument>(query);
     expect(res.length, equals(1));
     expect(res.first.id, equals('1'));
   });
@@ -78,7 +78,7 @@ void run(CosmosDbServer cosmosDB) {
       params: {'@id': '1'},
     );
 
-    var res = await collection.query<TestDocument>(query);
+    var res = await container.query<TestDocument>(query);
     expect(res, isEmpty);
   });
 
@@ -89,21 +89,21 @@ void run(CosmosDbServer cosmosDB) {
       params: {'@id1': '1', '@id2': '3'},
     );
 
-    var res = await collection.query<TestDocument>(query);
+    var res = await container.query<TestDocument>(query);
     expect(res.length, equals(1));
     expect(res.first.id, equals('1'));
 
     query.onPartition(PartitionKey('2'));
-    res = await collection.query<TestDocument>(query);
+    res = await container.query<TestDocument>(query);
     expect(res, isEmpty);
 
     query.onPartition(PartitionKey('3'));
-    res = await collection.query<TestDocument>(query);
+    res = await container.query<TestDocument>(query);
     expect(res.length, equals(1));
     expect(res.first.id, equals('3'));
 
     query.crossPartition();
-    res = await collection.query<TestDocument>(query);
+    res = await container.query<TestDocument>(query);
     expect(res.length, equals(2));
   });
 
@@ -112,7 +112,7 @@ void run(CosmosDbServer cosmosDB) {
     // /!\ NOTE: to match the label, the query must use 'doc.l'
     final query = Query('SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
         params: {'@text': 'PRIME'});
-    final res = await collection.query<TestDocument>(query);
+    final res = await container.query<TestDocument>(query);
     expect(res.length, equals(2));
     expect(query.continuation, isEmpty);
   });
@@ -121,11 +121,11 @@ void run(CosmosDbServer cosmosDB) {
     final query = Query('SELECT * FROM doc WHERE CONTAINS(doc.l, @text)',
         params: {'@text': 'PRIME'}, maxCount: 1);
 
-    final res1 = await collection.query<TestDocument>(query);
+    final res1 = await container.query<TestDocument>(query);
     expect(query.continuation, isNotEmpty);
     expect(res1.length, equals(1));
 
-    final res2 = await collection.query<TestDocument>(query);
+    final res2 = await container.query<TestDocument>(query);
     expect(query.continuation, isEmpty);
     expect(res2.length, equals(1));
 
@@ -141,7 +141,7 @@ void run(CosmosDbServer cosmosDB) {
         'SELECT ST_ISVALIDDETAILED(@${entry.key.replaceAll('-', '')})',
         params: {'@${entry.key.replaceAll('-', '')}': entry.value},
       );
-      r = await spatialCollection.rawQuery(q);
+      r = await spatialContainer.rawQuery(q);
       expect(r['Documents'][0]['\$1']['valid'], isTrue);
     }
 
@@ -150,7 +150,7 @@ void run(CosmosDbServer cosmosDB) {
         'SELECT ST_ISVALIDDETAILED(@${entry.key.replaceAll(' ', '')})',
         params: {'@${entry.key.replaceAll(' ', '')}': entry.value},
       );
-      r = await spatialCollection.rawQuery(q);
+      r = await spatialContainer.rawQuery(q);
       expect(r['Documents'][0]['\$1']['valid'], isTrue);
     }
   });
@@ -169,7 +169,7 @@ void run(CosmosDbServer cosmosDB) {
           ])
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     expect(r['Documents'][0]['\$1']['valid'], isTrue);
   });
 
@@ -186,7 +186,7 @@ void run(CosmosDbServer cosmosDB) {
         'SELECT ST_ISVALIDDETAILED(@${entry.key})',
         params: {'@${entry.key}': entry.value},
       );
-      r = await spatialCollection.rawQuery(q);
+      r = await spatialContainer.rawQuery(q);
       expect(r['Documents'][0]['\$1']['valid'], isTrue);
     }
   });
@@ -205,7 +205,7 @@ void run(CosmosDbServer cosmosDB) {
           ])
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     // the polygons dont overlap, expect true
     expect(r['Documents'][0]['\$1']['valid'], isTrue);
   });
@@ -224,21 +224,21 @@ void run(CosmosDbServer cosmosDB) {
           ])
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     // expect false because inversed polygons overlap
     expect(r['Documents'][0]['\$1']['valid'], isFalse);
   });
 
   test('Query spatial document', () async {
     var query = Query('SELECT * FROM doc');
-    final res0 = await spatialCollection.query<TestSpatialDocumentPoint>(query);
+    final res0 = await spatialContainer.query<TestSpatialDocumentPoint>(query);
     expect(query.continuation, isEmpty);
     expect(res0.length, equals(2));
 
     query = Query('SELECT * FROM doc WHERE ST_WITHIN(doc.p, @area)',
         params: {'@area': parisArea});
 
-    final res1 = await spatialCollection.query<TestSpatialDocumentPoint>(query);
+    final res1 = await spatialContainer.query<TestSpatialDocumentPoint>(query);
     expect(query.continuation, isEmpty);
     expect(res1.length, equals(1));
     expect(res1.first.id, equals('flt'));
@@ -246,7 +246,7 @@ void run(CosmosDbServer cosmosDB) {
     query = Query('SELECT * FROM doc WHERE ST_WITHIN(doc.p, @area)',
         params: {'@area': parisArea.invert()});
 
-    final res2 = await spatialCollection.query<TestSpatialDocumentPoint>(query);
+    final res2 = await spatialContainer.query<TestSpatialDocumentPoint>(query);
     expect(query.continuation, isEmpty);
     expect(res2.length, equals(1));
     expect(res2.first.id, equals('bbn'));
@@ -280,7 +280,7 @@ void run(CosmosDbServer cosmosDB) {
         '@punched': punched,
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     expect(r['Documents'][0]['\$1']['valid'], isTrue);
 
     q = Query(
@@ -290,7 +290,7 @@ void run(CosmosDbServer cosmosDB) {
         '@punched': punched,
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     expect(r['Documents'][0]['\$1'], isFalse);
 
     q = Query(
@@ -300,7 +300,7 @@ void run(CosmosDbServer cosmosDB) {
         '@punched': punched,
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     expect(r['Documents'][0]['\$1'], isFalse);
 
     q = Query(
@@ -310,7 +310,7 @@ void run(CosmosDbServer cosmosDB) {
         '@punched': punched,
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     expect(r['Documents'][0]['\$1'], isTrue);
 
     q = Query(
@@ -320,7 +320,7 @@ void run(CosmosDbServer cosmosDB) {
         '@punched': punched,
       },
     );
-    r = await spatialCollection.rawQuery(q);
+    r = await spatialContainer.rawQuery(q);
     expect(r['Documents'][0]['\$1'], isFalse);
   });
 }

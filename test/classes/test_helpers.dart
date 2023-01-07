@@ -5,11 +5,12 @@ import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 const masterKey =
     'C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==';
 
-Future<CosmosDbServer?> getTestInstance() async {
+Future<CosmosDbServer?> getTestInstance({required bool preview}) async {
   final server = CosmosDbServer(
     'https://localhost:8081',
     masterKey: masterKey,
     httpClient: DebugHttpClient(),
+    preview: preview,
   );
   server.disableLog();
 
@@ -22,15 +23,18 @@ Future<CosmosDbServer?> getTestInstance() async {
   }
 }
 
-int get millisecondsSinceEpoch => DateTime.now().millisecondsSinceEpoch;
 int get secondsSinceEpoch => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-String getTempName([String? prefix]) =>
-    '${prefix ?? 'temp'}_$millisecondsSinceEpoch';
+int _globalCounter = 0;
+
+String getTempName([String? prefix]) {
+  _globalCounter++;
+  return '${prefix ?? 'temp'}_${_globalCounter}_$secondsSinceEpoch';
+}
 
 extension LogExt on CosmosDbServer {
   // enabling logging is based on the `print`method
-  void enableLog({bool withBody = true, bool withHeader = false}) =>
+  void enableLog({bool withBody = true, bool withHeader = true}) =>
       useLogger(print, withBody: withBody, withHeader: withHeader);
 
   // disabling logging is actually done by using a silent logger and enabling

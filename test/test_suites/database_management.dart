@@ -11,7 +11,7 @@ import '../classes/socket_exception_mock.dart' if (dart.library.io) 'dart:io'
 import '../classes/test_helpers.dart';
 
 void main() async {
-  final cosmosDB = await getTestInstance();
+  final cosmosDB = await getTestInstance(preview: true);
   if (cosmosDB != null) {
     run(cosmosDB);
   }
@@ -112,17 +112,15 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Create database with openOrCreate() - fixed throuput', () async {
-    final database = await cosmosDB.databases.openOrCreate(
-        getTempName('test_manual'),
-        throughput: CosmosDbThroughput(5000));
+    final database = await cosmosDB.databases
+        .openOrCreate(getTempName(), throughput: CosmosDbThroughput(5000));
     expect(database, isNotNull);
     expect(database.exists, isTrue);
     await cosmosDB.databases.delete(database);
   });
 
   test('Create database with openOrCreate() - auto-scale', () async {
-    final database = await cosmosDB.databases.openOrCreate(
-        getTempName('test_autoscale'),
+    final database = await cosmosDB.databases.openOrCreate(getTempName(),
         throughput: CosmosDbThroughput.autoScale(50000));
     expect(database, isNotNull);
     expect(database.exists, isTrue);

@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:retry/retry.dart';
 
 import 'client/_client.dart';
+import 'client/features.dart';
 import 'client/debug_http_client.dart';
 import 'cosmos_db_databases.dart';
 
@@ -19,19 +20,25 @@ class CosmosDbServer {
       {String? masterKey,
       http.Client? httpClient,
       RetryOptions? retryOptions,
-      bool multipleWriteLocations = false})
+      bool multipleWriteLocations = false,
+      bool preview = false})
       : _client = Client(
           _buildUrl(urlOrAccount),
           masterKey: masterKey,
           httpClient: httpClient,
           retryOptions: retryOptions,
           multipleWriteLocations: multipleWriteLocations,
+          version: preview ? previewApiVersion : currentApiVersion,
         );
 
   final Client _client;
 
   /// Provides access to databases in this [CosmosDbServer].
   late final CosmosDbDatabases databases = CosmosDbDatabases(this);
+
+  String get version => _client.version;
+
+  Features get features => _client.features;
 
   static String _buildUrl(String urlOrAccount) => !urlOrAccount.contains('://')
       ? 'https://$urlOrAccount.documents.azure.com/'
@@ -52,7 +59,7 @@ extension CosmosDbServerDbgExt on CosmosDbServer {
   /// ```dart
   /// server.useLogger(print);
   /// try {
-  ///   // do something eg. create a collection, add a document, execute a query...
+  ///   // do something eg. create a container, add a document, execute a query...
   ///   // the request to CosmosDB will be logged
   /// } finally {
   ///   server.resetLogger();

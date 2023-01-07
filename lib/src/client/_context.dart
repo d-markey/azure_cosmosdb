@@ -41,10 +41,12 @@ class Context {
       {Paging? paging,
       PartitionKey? partitionKey,
       Map<String, String>? headers,
-      List<String>? removeHeaders}) {
+      List<String>? removeHeaders,
+      DocumentBuilder? builder}) {
     final copy = Context(
       type: type,
       resId: resId,
+      builder: builder ?? this.builder,
       paging: paging ?? this.paging,
       partitionKey: partitionKey ?? this.partitionKey,
       token: token,

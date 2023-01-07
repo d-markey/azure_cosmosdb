@@ -5,7 +5,7 @@ import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 import '../classes/test_helpers.dart';
 
 void main() async {
-  final cosmosDB = await getTestInstance();
+  final cosmosDB = await getTestInstance(preview: true);
   if (cosmosDB != null) {
     run(cosmosDB);
   }

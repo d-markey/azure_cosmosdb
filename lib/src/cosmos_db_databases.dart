@@ -34,7 +34,7 @@ class CosmosDbDatabases {
         ),
       );
 
-  /// Deletes the specified [database] from this [server]. All collections and associated
+  /// Deletes the specified [database] from this [server]. All containers and associated
   /// documents will be lost. If the [database] does not exists, this method returns
   /// `true` by default. if [throwOnNotFound] is set to `true`, it will throw a
   /// [NotFoundException] instead. Upon success, the [CosmosDbDatabase.exists] flag will

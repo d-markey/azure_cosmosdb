@@ -9,7 +9,7 @@ import '../classes/test_spatial_document_polygon.dart';
 import '../classes/test_spatial_document_point.dart';
 
 void main() async {
-  final cosmosDB = await getTestInstance();
+  final cosmosDB = await getTestInstance(preview: true);
   if (cosmosDB != null) {
     run(cosmosDB);
   }
@@ -17,22 +17,22 @@ void main() async {
 
 void run(CosmosDbServer cosmosDB) {
   late final CosmosDbDatabase database;
-  late final CosmosDbCollection collection;
+  late final CosmosDbContainer container;
 
   setUpAll(() async {
     database = await cosmosDB.databases.create(getTempName());
     final indexingPolicy = IndexingPolicy();
     indexingPolicy.spatialIndexes
         .add(SpatialIndexPath('/p/?', types: [DataType.point]));
-    collection = await database.collections.create('items',
+    container = await database.containers.create('items',
         partitionKey: PartitionKeySpec.id, indexingPolicy: indexingPolicy);
-    collection.registerBuilder<TestSpatialDocumentPoint>(
+    container.registerBuilder<TestSpatialDocumentPoint>(
         TestSpatialDocumentPoint.fromJson);
-    collection.registerBuilder<TestSpatialDocumentLineString>(
+    container.registerBuilder<TestSpatialDocumentLineString>(
         TestSpatialDocumentLineString.fromJson);
-    collection.registerBuilder<TestSpatialDocumentPolygon>(
+    container.registerBuilder<TestSpatialDocumentPolygon>(
         TestSpatialDocumentPolygon.fromJson);
-    collection.registerBuilder<TestSpatialDocumentMultiPolygon>(
+    container.registerBuilder<TestSpatialDocumentMultiPolygon>(
         TestSpatialDocumentMultiPolygon.fromJson);
   });
 
@@ -41,16 +41,16 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Add documents - Points', () async {
-    var doc = await collection.add(TestSpatialDocumentPoint(
+    var doc = await container.add(TestSpatialDocumentPoint(
         '1', 'Eiffel Tower (Paris)', monuments['Eiffel Tower']!));
     expect(doc.label, contains('Eiffel Tower'));
-    doc = await collection.add(TestSpatialDocumentPoint(
+    doc = await container.add(TestSpatialDocumentPoint(
         '2', 'Big Ben (London)', monuments['Big Ben']!));
     expect(doc.label, contains('Big Ben'));
   });
 
   test('Add documents - Lines', () async {
-    var doc = await collection.add(TestSpatialDocumentLineString(
+    var doc = await container.add(TestSpatialDocumentLineString(
         'Paris-London',
         'Paris',
         'London',
@@ -64,13 +64,13 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Add documents - Polygon', () async {
-    var doc = await collection
+    var doc = await container
         .add(TestSpatialDocumentPolygon('Paris', 'Paris Area', parisArea));
     expect(doc.label, equals('Paris Area'));
   });
 
   test('Add documents - MultiPolygon', () async {
-    var doc = await collection.add(TestSpatialDocumentMultiPolygon(
+    var doc = await container.add(TestSpatialDocumentMultiPolygon(
         'ParisBois',
         'Bois de Paris',
         MultiPolygon()

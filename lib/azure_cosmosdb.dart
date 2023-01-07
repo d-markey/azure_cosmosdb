@@ -5,8 +5,16 @@ export 'package:retry/retry.dart' show RetryOptions;
 
 export 'src/base_document.dart' hide SpecialDocument;
 export 'src/batch/transactional_batch.dart';
-export 'src/cosmos_db_collection.dart' show CosmosDbCollection;
-export 'src/cosmos_db_collections.dart';
+export 'src/batch/batch_response.dart';
+export 'src/batch/batch_operation.dart';
+export 'src/batch/batch_operation_create.dart';
+export 'src/batch/batch_operation_delete.dart';
+export 'src/batch/batch_operation_read.dart';
+export 'src/batch/batch_operation_upsert.dart';
+export 'src/client/features.dart';
+export 'src/client/http_status_codes.dart';
+export 'src/cosmos_db_container.dart' show CosmosDbContainer;
+export 'src/cosmos_db_containers.dart';
 export 'src/cosmos_db_database.dart' show CosmosDbDatabase;
 export 'src/cosmos_db_databases.dart';
 export 'src/cosmos_db_exceptions.dart' hide ContextualizedExceptionExt;

@@ -28,8 +28,7 @@ extension Linq<T> on Iterable<T> {
     for (var item in this) {
       if (predicate(item)) {
         if (found != null) {
-          throw LinqException(
-              'Collection contains several items matching the predicate');
+          throw LinqException('Several items match the predicate');
         }
         found = item;
       }
