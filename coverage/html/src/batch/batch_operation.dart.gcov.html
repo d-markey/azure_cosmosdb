@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>14</td><td>15</td><td class="high">93.3%</td>
+<th scope="row">Lines</th><td>2</td><td>15</td><td class="low">13.3%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -119,8 +119,8 @@
 <tr class="noop" title="Line 20" id="line20">
 <td>20</td><td></td><td></td><td><code>abstract class BatchOperation {</code></td>
 </tr>
-<tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>1</td><td><code>  BatchOperation({PartitionKeySpec? partitionKeySpec, this.partitionKey})</code></td>
+<tr class="lineNoCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>0</td><td><code>  BatchOperation({PartitionKeySpec? partitionKeySpec, this.partitionKey})</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 22" id="line22">
 <td>22</td><td></td><td>0</td><td><code>      : partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id;</code></td>
@@ -144,7 +144,7 @@
 <td>28</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 29" id="line29">
-<td>29</td><td></td><td>5</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'operationType': op.name};</code></td>
+<td>29</td><td></td><td>1</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'operationType': op.name};</code></td>
 </tr>
 <tr class="noop" title="Line 30" id="line30">
 <td>30</td><td></td><td></td><td><code>}</code></td>
@@ -158,14 +158,14 @@
 <tr class="noop" title="Line 33" id="line33">
 <td>33</td><td></td><td></td><td><code>    extends BatchOperation {</code></td>
 </tr>
-<tr class="lineCov" title="Line 34" id="line34">
-<td>34</td><td></td><td>1</td><td><code>  BatchOperationOnItem(this.item,</code></td>
+<tr class="lineNoCov" title="Line 34" id="line34">
+<td>34</td><td></td><td>0</td><td><code>  BatchOperationOnItem(this.item,</code></td>
 </tr>
 <tr class="noop" title="Line 35" id="line35">
 <td>35</td><td></td><td></td><td><code>      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})</code></td>
 </tr>
-<tr class="lineCov" title="Line 36" id="line36">
-<td>36</td><td></td><td>1</td><td><code>      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);</code></td>
+<tr class="lineNoCov" title="Line 36" id="line36">
+<td>36</td><td></td><td>0</td><td><code>      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);</code></td>
 </tr>
 <tr class="noop" title="Line 37" id="line37">
 <td>37</td><td></td><td></td><td><code></code></td>
@@ -176,32 +176,32 @@
 <tr class="noop" title="Line 39" id="line39">
 <td>39</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 40" id="line40">
-<td>40</td><td></td><td>1</td><td><code>  @override</code></td>
+<tr class="lineNoCov" title="Line 40" id="line40">
+<td>40</td><td></td><td>0</td><td><code>  @override</code></td>
 </tr>
-<tr class="lineCov" title="Line 41" id="line41">
-<td>41</td><td></td><td>2</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; super.toJson()</code></td>
+<tr class="lineNoCov" title="Line 41" id="line41">
+<td>41</td><td></td><td>0</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; super.toJson()</code></td>
 </tr>
-<tr class="lineCov" title="Line 42" id="line42">
-<td>42</td><td></td><td>3</td><td><code>    ..addAll({</code></td>
+<tr class="lineNoCov" title="Line 42" id="line42">
+<td>42</td><td></td><td>0</td><td><code>    ..addAll({</code></td>
 </tr>
-<tr class="lineCov" title="Line 43" id="line43">
-<td>43</td><td></td><td>3</td><td><code>      'id': item.id,</code></td>
+<tr class="lineNoCov" title="Line 43" id="line43">
+<td>43</td><td></td><td>0</td><td><code>      'id': item.id,</code></td>
 </tr>
-<tr class="lineCov" title="Line 44" id="line44">
-<td>44</td><td></td><td>1</td><td><code>      'partitionKey': jsonEncode(</code></td>
+<tr class="lineNoCov" title="Line 44" id="line44">
+<td>44</td><td></td><td>0</td><td><code>      'partitionKey': jsonEncode(</code></td>
 </tr>
-<tr class="lineCov" title="Line 45" id="line45">
-<td>45</td><td></td><td>5</td><td><code>          (partitionKey ?? (partitionKeySpec ?? PartitionKeySpec.id).from(item))</code></td>
+<tr class="lineNoCov" title="Line 45" id="line45">
+<td>45</td><td></td><td>0</td><td><code>          (partitionKey ?? (partitionKeySpec ?? PartitionKeySpec.id).from(item))</code></td>
 </tr>
-<tr class="lineCov" title="Line 46" id="line46">
-<td>46</td><td></td><td>2</td><td><code>              ?.values),</code></td>
+<tr class="lineNoCov" title="Line 46" id="line46">
+<td>46</td><td></td><td>0</td><td><code>              ?.values),</code></td>
 </tr>
-<tr class="lineCov" title="Line 47" id="line47">
-<td>47</td><td></td><td>3</td><td><code>      'resourceBody': item.toJson(),</code></td>
+<tr class="lineNoCov" title="Line 47" id="line47">
+<td>47</td><td></td><td>0</td><td><code>      'resourceBody': item.toJson(),</code></td>
 </tr>
-<tr class="lineCov" title="Line 48" id="line48">
-<td>48</td><td></td><td>1</td><td><code>    });</code></td>
+<tr class="lineNoCov" title="Line 48" id="line48">
+<td>48</td><td></td><td>0</td><td><code>    });</code></td>
 </tr>
 <tr class="noop" title="Line 49" id="line49">
 <td>49</td><td></td><td></td><td><code>}</code></td>

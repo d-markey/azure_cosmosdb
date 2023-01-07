@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="5" lines-valid="5" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="5" package="/src/indexing" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'index_order.dart';</code>
@@ -13,9 +13,8 @@
 <line>
 <code>class IndexPath {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  IndexPath(this.path, {this.order});</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -38,21 +37,17 @@
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>        'path': path,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="0">
 <code>        if (order != null) 'order': order!.name,</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      };</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

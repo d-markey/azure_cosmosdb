@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="partition_key_spec.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.94" lines-covered="47" lines-valid="50" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="partition_key_spec.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.1" lines-covered="5" lines-valid="50" package="/src/partition" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -19,39 +19,32 @@
 <line>
 <code>class PartitionKeySpec {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  PartitionKeySpec._(this.paths, this.kind, this.version)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : _partitionKeyPaths = null;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  factory PartitionKeySpec._cached(List&lt;String&gt; paths,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      {required String kind, required int version}) {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    final pk = PartitionKeySpec._(paths, kind, version);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>    var cached = _cache.lookup(pk);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    if (cached == null) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      _cache.add(pk);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      cached = pk;</code>
@@ -59,28 +52,23 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    return cached;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  factory PartitionKeySpec._v2(List&lt;String&gt; paths) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      PartitionKeySpec._cached(paths,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>          kind: (paths.length &gt; 1) ? 'MultiHash' : 'Hash', version: 2);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -88,13 +76,11 @@
 <line>
 <code>  /// Partition key with a single property.</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  factory PartitionKeySpec(String partitionKey) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>      PartitionKeySpec._v2(List.unmodifiable([partitionKey]));</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -102,13 +88,11 @@
 <line>
 <code>  /// Creates a partition for multiple keys.</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  factory PartitionKeySpec.multi(List&lt;String&gt; partitionKeys) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      PartitionKeySpec._v2(List.unmodifiable(partitionKeys));</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -116,9 +100,9 @@
 <line>
 <code>  /// Default partition key.</code>
 </line>
-<line hits="5">
+<line hits="1">
 <code>  static final id = PartitionKeySpec._(['/id'], 'Hash', 2);</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -153,9 +137,9 @@
 <line>
 <code>  /// Converts this instance to JSON.</code>
 </line>
-<line hits="6">
+<line hits="1">
 <code>  dynamic toJson() =&gt; {'paths': paths, 'kind': kind, 'version': version};</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -163,47 +147,38 @@
 <line>
 <code>  /// The partition key components</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  List&lt;List&lt;PathComponent&gt;&gt;? _partitionKeyPaths;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>  int get hashCode =&gt; paths.join('\u0000').hashCode;</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  bool operator ==(dynamic other) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    if (other is! PartitionKeySpec ||</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="0">
 <code>        other.paths.length != paths.length ||</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>        other.version != version ||</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="4">
+<line hits="0">
 <code>        other.kind != kind) {</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      return false;</code>
@@ -211,13 +186,11 @@
 <line>
 <code>    } else {</code>
 </line>
-<line hits="5">
+<line hits="0">
 <code>      for (var i = 0; i &lt; paths.length; i++) {</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="0">
 <code>        if (other.paths[i] != paths[i]) {</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          return false;</code>
@@ -228,35 +201,29 @@
 <line>
 <code>      }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      return true;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  static PartitionKeySpec fromJson(dynamic json) =&gt; PartitionKeySpec._cached(</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>        json['paths'].cast&lt;String&gt;(),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        kind: json['kind'],</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        version: json['version'],</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      );</code>
@@ -264,9 +231,9 @@
 <line>
 <code/>
 </line>
-<line hits="4">
+<line hits="1">
 <code>  static final _parser = PathParser();</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -274,21 +241,17 @@
 <line>
 <code>  /// Extracts the [document]'s partition key according to this specification.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  PartitionKey? from(BaseDocument document) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    try {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      final keys = _extractKeys(document);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      return keys.isEmpty ? null : PartitionKey.multi(keys);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    } catch (ex) {</code>
@@ -299,39 +262,34 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  List&lt;dynamic&gt; _extractKeys(BaseDocument doc) =&gt;</code>
+</line>
+<line hits="0">
+<code>      (_partitionKeyPaths ??= paths.map((pk) =&gt; _parser.parse(pk)).toList())</code>
+</line>
+<line hits="1">
+<code>          .map((p) =&gt; p.extract(doc.toJson()))</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
-<code/>
-</line>
-<line hits="2">
-<code>  List&lt;dynamic&gt; _extractKeys(BaseDocument doc) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="8">
-<code>      (_partitionKeyPaths ??= paths.map((pk) =&gt; _parser.parse(pk)).toList())</code>
-<hit count="8" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="5">
-<code>          .map((p) =&gt; p.extract(doc.toJson()))</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
+<line hits="0">
 <code>          .where((k) =&gt; k != null)</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>          .toList();</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="4">
+<line hits="1">
 <code>  static final _cache = &lt;PartitionKeySpec&gt;{id};</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

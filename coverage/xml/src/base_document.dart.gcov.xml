@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.5555556" lines-covered="5" lines-valid="9" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.11111111" lines-covered="1" lines-valid="9" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>/// Function definition to hydrate (deserialize) CosmosDB documents.</code>
@@ -61,9 +61,8 @@
 <line>
 <code>class DocumentWithId implements BaseDocument {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  DocumentWithId(this.id);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -77,13 +76,12 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="1">
 <code>  dynamic toJson() =&gt; {'id': id};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -109,9 +107,8 @@
 <line>
 <code>  /// The document's `etag` property.</code>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  String get etag =&gt; _etag ?? '';</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  String? _etag;</code>
@@ -122,9 +119,8 @@
 <line>
 <code>  /// Set `etag` from a JSON map; to be called by [DocumentBuilder] methods.</code>
 </line>
-<line hits="10">
+<line hits="0">
 <code>  void setEtag(Map json) =&gt; _etag = json['_etag'];</code>
-<hit count="10" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

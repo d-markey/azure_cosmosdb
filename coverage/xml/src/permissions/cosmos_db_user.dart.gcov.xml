@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_user.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="8" lines-valid="8" package="/src/permissions" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_user.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.125" lines-covered="1" lines-valid="8" package="/src/permissions" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -13,9 +13,8 @@
 <line>
 <code>class CosmosDbUser extends BaseDocument with EtagMixin {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  CosmosDbUser(this.id);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -29,13 +28,12 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="1">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'id': id};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -43,25 +41,20 @@
 <line>
 <code>  /// Builds a [CosmosDbUser] from a CosmosDB JSON object.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  static CosmosDbUser build(Map json) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>    final user = CosmosDbUser(json['id']);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    user.setEtag(json);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    return user;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

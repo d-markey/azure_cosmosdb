@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9099099" lines-covered="101" lines-valid="111" package="/src/permissions" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.027027028" lines-covered="3" lines-valid="111" package="/src/permissions" testname="lcov.info" version="1.5">
 <sources>
-<source branches-hit="0" branches-valid="0" filename="cosmos_db_users.dart" functions-hit="0" functions-valid="0" lines-hit="30" lines-valid="34" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="30" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_users.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="34" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib"/>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_permission.dart" functions-hit="0" functions-valid="0" lines-hit="2" lines-valid="22" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="2" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="cosmos_db_permission.dart" functions-hit="0" functions-valid="0" lines-hit="21" lines-valid="22" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="21" name="&lt;unnamed&gt;"/>
-</source>
-<source branches-hit="0" branches-valid="0" filename="cosmos_db_permissions.dart" functions-hit="0" functions-valid="0" lines-hit="42" lines-valid="47" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="42" name="&lt;unnamed&gt;"/>
-</source>
-<source branches-hit="0" branches-valid="0" filename="cosmos_db_user.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="8" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="8" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_permissions.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="47" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib"/>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_user.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="8" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
 </source>
 </sources>
 <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>

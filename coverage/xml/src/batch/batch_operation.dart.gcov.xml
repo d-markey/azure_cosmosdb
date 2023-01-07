@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="batch_operation.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.93333334" lines-covered="14" lines-valid="15" package="/src/batch" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="batch_operation.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.13333334" lines-covered="2" lines-valid="15" package="/src/batch" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -62,9 +62,8 @@
 <line>
 <code>abstract class BatchOperation {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  BatchOperation({PartitionKeySpec? partitionKeySpec, this.partitionKey})</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      : partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id;</code>
@@ -87,9 +86,9 @@
 <line>
 <code/>
 </line>
-<line hits="5">
+<line hits="1">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'operationType': op.name};</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -103,16 +102,14 @@
 <line>
 <code>    extends BatchOperation {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  BatchOperationOnItem(this.item,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -123,41 +120,32 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; super.toJson()</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>    ..addAll({</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      'id': item.id,</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      'partitionKey': jsonEncode(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="0">
 <code>          (partitionKey ?? (partitionKeySpec ?? PartitionKeySpec.id).from(item))</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>              ?.values),</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      'resourceBody': item.toJson(),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    });</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

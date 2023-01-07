@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>7</td><td>7</td><td class="high">100.0%</td>
+<th scope="row">Lines</th><td>1</td><td>7</td><td class="low">14.3%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -74,11 +74,11 @@
 <tr class="noop" title="Line 5" id="line5">
 <td>5</td><td></td><td></td><td><code>class SpatialIndexPath {</code></td>
 </tr>
-<tr class="lineCov" title="Line 6" id="line6">
-<td>6</td><td></td><td>1</td><td><code>  SpatialIndexPath(this.path, {Iterable&lt;DataType&gt;? types, this.boundingBox})</code></td>
+<tr class="lineNoCov" title="Line 6" id="line6">
+<td>6</td><td></td><td>0</td><td><code>  SpatialIndexPath(this.path, {Iterable&lt;DataType&gt;? types, this.boundingBox})</code></td>
 </tr>
-<tr class="lineCov" title="Line 7" id="line7">
-<td>7</td><td></td><td>2</td><td><code>      : types = (types == null) ? null : List&lt;DataType&gt;.unmodifiable(types);</code></td>
+<tr class="lineNoCov" title="Line 7" id="line7">
+<td>7</td><td></td><td>0</td><td><code>      : types = (types == null) ? null : List&lt;DataType&gt;.unmodifiable(types);</code></td>
 </tr>
 <tr class="noop" title="Line 8" id="line8">
 <td>8</td><td></td><td></td><td><code></code></td>
@@ -110,20 +110,20 @@
 <tr class="noop" title="Line 17" id="line17">
 <td>17</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 18" id="line18">
-<td>18</td><td></td><td>3</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code></td>
+<tr class="lineNoCov" title="Line 18" id="line18">
+<td>18</td><td></td><td>0</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code></td>
 </tr>
-<tr class="lineCov" title="Line 19" id="line19">
-<td>19</td><td></td><td>3</td><td><code>        'path': path,</code></td>
+<tr class="lineNoCov" title="Line 19" id="line19">
+<td>19</td><td></td><td>0</td><td><code>        'path': path,</code></td>
 </tr>
 <tr class="lineCov" title="Line 20" id="line20">
-<td>20</td><td></td><td>7</td><td><code>        'types': (types ?? DataType.spatial).map((t) =&gt; t.name).toList(),</code></td>
+<td>20</td><td></td><td>1</td><td><code>        'types': (types ?? DataType.spatial).map((t) =&gt; t.name).toList(),</code></td>
 </tr>
-<tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>5</td><td><code>        if (boundingBox != null) 'boundingBox': boundingBox!.toJson(),</code></td>
+<tr class="lineNoCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>0</td><td><code>        if (boundingBox != null) 'boundingBox': boundingBox!.toJson(),</code></td>
 </tr>
-<tr class="lineCov" title="Line 22" id="line22">
-<td>22</td><td></td><td>1</td><td><code>      };</code></td>
+<tr class="lineNoCov" title="Line 22" id="line22">
+<td>22</td><td></td><td>0</td><td><code>      };</code></td>
 </tr>
 <tr class="noop" title="Line 23" id="line23">
 <td>23</td><td></td><td></td><td><code>}</code></td>

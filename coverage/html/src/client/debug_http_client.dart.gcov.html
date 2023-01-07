@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>64</td><td>77</td><td class="med">83.1%</td>
+<th scope="row">Lines</th><td>51</td><td>77</td><td class="low">66.2%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -309,22 +309,22 @@
 <td>83</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 84" id="line84">
-<td>84</td><td></td><td>2</td><td><code>  Future&lt;http.StreamedResponse&gt; _logResponse(</code></td>
+<td>84</td><td></td><td>1</td><td><code>  Future&lt;http.StreamedResponse&gt; _logResponse(</code></td>
 </tr>
 <tr class="noop" title="Line 85" id="line85">
 <td>85</td><td></td><td></td><td><code>      String ts, http.StreamedResponse response) async {</code></td>
 </tr>
 <tr class="lineCov" title="Line 86" id="line86">
-<td>86</td><td></td><td>6</td><td><code>    log('[$ts] &lt;-- COSMOS DB Status = ${response.statusCode} ${response.reasonPhrase}');</code></td>
+<td>86</td><td></td><td>5</td><td><code>    log('[$ts] &lt;-- COSMOS DB Status = ${response.statusCode} ${response.reasonPhrase}');</code></td>
 </tr>
 <tr class="lineCov" title="Line 87" id="line87">
 <td>87</td><td></td><td>1</td><td><code>    if (traceHeaders) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 88" id="line88">
-<td>88</td><td></td><td>4</td><td><code>      for (var h in response.headers.entries) {</code></td>
+<td>88</td><td></td><td>3</td><td><code>      for (var h in response.headers.entries) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 89" id="line89">
-<td>89</td><td></td><td>6</td><td><code>        log('[$ts] &lt;-- ${h.key} = ${h.value}');</code></td>
+<td>89</td><td></td><td>5</td><td><code>        log('[$ts] &lt;-- ${h.key} = ${h.value}');</code></td>
 </tr>
 <tr class="noop" title="Line 90" id="line90">
 <td>90</td><td></td><td></td><td><code>      }</code></td>
@@ -333,25 +333,25 @@
 <td>91</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 92" id="line92">
-<td>92</td><td></td><td>2</td><td><code>    if (traceBody) {</code></td>
+<td>92</td><td></td><td>1</td><td><code>    if (traceBody) {</code></td>
 </tr>
 <tr class="noop" title="Line 93" id="line93">
 <td>93</td><td></td><td></td><td><code>      // get the response bytes for logging</code></td>
 </tr>
 <tr class="lineCov" title="Line 94" id="line94">
-<td>94</td><td></td><td>2</td><td><code>      final resp = await http.Response.fromStream(response);</code></td>
+<td>94</td><td></td><td>1</td><td><code>      final resp = await http.Response.fromStream(response);</code></td>
 </tr>
 <tr class="lineCov" title="Line 95" id="line95">
-<td>95</td><td></td><td>6</td><td><code>      log('[$ts] &lt;-- COSMOS DB ${resp.statusCode} Payload = ${resp.body}');</code></td>
+<td>95</td><td></td><td>5</td><td><code>      log('[$ts] &lt;-- COSMOS DB ${resp.statusCode} Payload = ${resp.body}');</code></td>
 </tr>
 <tr class="noop" title="Line 96" id="line96">
 <td>96</td><td></td><td></td><td><code>      // rebuild the response</code></td>
 </tr>
 <tr class="lineCov" title="Line 97" id="line97">
-<td>97</td><td></td><td>2</td><td><code>      response = http.StreamedResponse(</code></td>
+<td>97</td><td></td><td>1</td><td><code>      response = http.StreamedResponse(</code></td>
 </tr>
 <tr class="lineCov" title="Line 98" id="line98">
-<td>98</td><td></td><td>4</td><td><code>        Stream.fromIterable([resp.bodyBytes]),</code></td>
+<td>98</td><td></td><td>3</td><td><code>        Stream.fromIterable([resp.bodyBytes]),</code></td>
 </tr>
 <tr class="lineCov" title="Line 99" id="line99">
 <td>99</td><td></td><td>1</td><td><code>        resp.statusCode,</code></td>
@@ -378,25 +378,25 @@
 <td>106</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 107" id="line107">
-<td>107</td><td></td><td>3</td><td><code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code></td>
+<td>107</td><td></td><td>2</td><td><code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code></td>
 </tr>
-<tr class="lineCov" title="Line 108" id="line108">
-<td>108</td><td></td><td>1</td><td><code>    return response;</code></td>
+<tr class="lineNoCov" title="Line 108" id="line108">
+<td>108</td><td></td><td>0</td><td><code>    return response;</code></td>
 </tr>
-<tr class="lineCov" title="Line 109" id="line109">
-<td>109</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 109" id="line109">
+<td>109</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 110" id="line110">
 <td>110</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 111" id="line111">
-<td>111</td><td></td><td>2</td><td><code>  Future&lt;void&gt; _logException(String ts, dynamic exception) async {</code></td>
+<td>111</td><td></td><td>1</td><td><code>  Future&lt;void&gt; _logException(String ts, dynamic exception) async {</code></td>
 </tr>
 <tr class="lineCov" title="Line 112" id="line112">
-<td>112</td><td></td><td>4</td><td><code>    log('[$ts] &lt;-- EXCEPTION CAUGHT: $exception');</code></td>
+<td>112</td><td></td><td>1</td><td><code>    log('[$ts] &lt;-- EXCEPTION CAUGHT: $exception');</code></td>
 </tr>
 <tr class="lineCov" title="Line 113" id="line113">
-<td>113</td><td></td><td>3</td><td><code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code></td>
+<td>113</td><td></td><td>1</td><td><code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code></td>
 </tr>
 <tr class="lineCov" title="Line 114" id="line114">
 <td>114</td><td></td><td>1</td><td><code>  }</code></td>
@@ -437,11 +437,11 @@
 <tr class="noop" title="Line 126" id="line126">
 <td>126</td><td></td><td></td><td><code>      if (ex != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 127" id="line127">
-<td>127</td><td></td><td>1</td><td><code>        forceException = null;</code></td>
+<tr class="lineNoCov" title="Line 127" id="line127">
+<td>127</td><td></td><td>0</td><td><code>        forceException = null;</code></td>
 </tr>
-<tr class="lineCov" title="Line 128" id="line128">
-<td>128</td><td></td><td>1</td><td><code>        throw ex;</code></td>
+<tr class="lineNoCov" title="Line 128" id="line128">
+<td>128</td><td></td><td>0</td><td><code>        throw ex;</code></td>
 </tr>
 <tr class="noop" title="Line 129" id="line129">
 <td>129</td><td></td><td></td><td><code>      }</code></td>
@@ -449,17 +449,17 @@
 <tr class="lineCov" title="Line 130" id="line130">
 <td>130</td><td></td><td>2</td><td><code>      if (forceThrottleDelay != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 131" id="line131">
-<td>131</td><td></td><td>2</td><td><code>        final delay = forceThrottleDelay!.inMilliseconds;</code></td>
+<tr class="lineNoCov" title="Line 131" id="line131">
+<td>131</td><td></td><td>0</td><td><code>        final delay = forceThrottleDelay!.inMilliseconds;</code></td>
 </tr>
-<tr class="lineCov" title="Line 132" id="line132">
-<td>132</td><td></td><td>1</td><td><code>        forceThrottleDelay = null;</code></td>
+<tr class="lineNoCov" title="Line 132" id="line132">
+<td>132</td><td></td><td>0</td><td><code>        forceThrottleDelay = null;</code></td>
 </tr>
-<tr class="lineCov" title="Line 133" id="line133">
-<td>133</td><td></td><td>2</td><td><code>        response = http.StreamedResponse(</code></td>
+<tr class="lineNoCov" title="Line 133" id="line133">
+<td>133</td><td></td><td>0</td><td><code>        response = http.StreamedResponse(</code></td>
 </tr>
-<tr class="lineCov" title="Line 134" id="line134">
-<td>134</td><td></td><td>3</td><td><code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code></td>
+<tr class="lineNoCov" title="Line 134" id="line134">
+<td>134</td><td></td><td>0</td><td><code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code></td>
 </tr>
 <tr class="noop" title="Line 135" id="line135">
 <td>135</td><td></td><td></td><td><code>          HttpStatusCode.tooManyRequests,</code></td>
@@ -467,8 +467,8 @@
 <tr class="noop" title="Line 136" id="line136">
 <td>136</td><td></td><td></td><td><code>          reasonPhrase: 'Forced Throttle',</code></td>
 </tr>
-<tr class="lineCov" title="Line 137" id="line137">
-<td>137</td><td></td><td>3</td><td><code>          headers: {HttpHeader.msRetryAfterMs: delay.toString()},</code></td>
+<tr class="lineNoCov" title="Line 137" id="line137">
+<td>137</td><td></td><td>0</td><td><code>          headers: {HttpHeader.msRetryAfterMs: delay.toString()},</code></td>
 </tr>
 <tr class="noop" title="Line 138" id="line138">
 <td>138</td><td></td><td></td><td><code>        );</code></td>
@@ -476,11 +476,11 @@
 <tr class="lineCov" title="Line 139" id="line139">
 <td>139</td><td></td><td>2</td><td><code>      } else if (forceForbidden) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 140" id="line140">
-<td>140</td><td></td><td>2</td><td><code>        response = http.StreamedResponse(</code></td>
+<tr class="lineNoCov" title="Line 140" id="line140">
+<td>140</td><td></td><td>0</td><td><code>        response = http.StreamedResponse(</code></td>
 </tr>
-<tr class="lineCov" title="Line 141" id="line141">
-<td>141</td><td></td><td>3</td><td><code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code></td>
+<tr class="lineNoCov" title="Line 141" id="line141">
+<td>141</td><td></td><td>0</td><td><code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code></td>
 </tr>
 <tr class="noop" title="Line 142" id="line142">
 <td>142</td><td></td><td></td><td><code>          HttpStatusCode.forbidden,</code></td>
@@ -501,16 +501,16 @@
 <td>147</td><td></td><td></td><td><code>      }</code></td>
 </tr>
 <tr class="lineCov" title="Line 148" id="line148">
-<td>148</td><td></td><td>3</td><td><code>      response = trace ? await _logResponse(ts, response) : response;</code></td>
+<td>148</td><td></td><td>2</td><td><code>      response = trace ? await _logResponse(ts, response) : response;</code></td>
 </tr>
 <tr class="noop" title="Line 149" id="line149">
 <td>149</td><td></td><td></td><td><code>    } catch (ex) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 150" id="line150">
-<td>150</td><td></td><td>1</td><td><code>      if (trace) {</code></td>
+<tr class="lineNoCov" title="Line 150" id="line150">
+<td>150</td><td></td><td>0</td><td><code>      if (trace) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 151" id="line151">
-<td>151</td><td></td><td>2</td><td><code>        _logException(ts, ex);</code></td>
+<td>151</td><td></td><td>1</td><td><code>        _logException(ts, ex);</code></td>
 </tr>
 <tr class="noop" title="Line 152" id="line152">
 <td>152</td><td></td><td></td><td><code>      }</code></td>
@@ -524,8 +524,8 @@
 <tr class="noop" title="Line 155" id="line155">
 <td>155</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 156" id="line156">
-<td>156</td><td></td><td>1</td><td><code>    return response;</code></td>
+<tr class="lineNoCov" title="Line 156" id="line156">
+<td>156</td><td></td><td>0</td><td><code>    return response;</code></td>
 </tr>
 <tr class="lineCov" title="Line 157" id="line157">
 <td>157</td><td></td><td>1</td><td><code>  }</code></td>

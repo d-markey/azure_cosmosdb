@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>25</td><td>29</td><td class="med">86.2%</td>
+<th scope="row">Lines</th><td>1</td><td>29</td><td class="low">3.4%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -101,8 +101,8 @@
 <tr class="noop" title="Line 14" id="line14">
 <td>14</td><td></td><td></td><td><code>class TransactionalBatch&lt;T extends BaseDocument&gt; extends SpecialDocument {</code></td>
 </tr>
-<tr class="lineCov" title="Line 15" id="line15">
-<td>15</td><td></td><td>1</td><td><code>  TransactionalBatch.atomic(this.container)</code></td>
+<tr class="lineNoCov" title="Line 15" id="line15">
+<td>15</td><td></td><td>0</td><td><code>  TransactionalBatch.atomic(this.container)</code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
 <td>16</td><td></td><td></td><td><code>      : isAtomic = true,</code></td>
@@ -113,8 +113,8 @@
 <tr class="noop" title="Line 18" id="line18">
 <td>18</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 19" id="line19">
-<td>19</td><td></td><td>1</td><td><code>  TransactionalBatch(this.container, {this.continueOnError = true})</code></td>
+<tr class="lineNoCov" title="Line 19" id="line19">
+<td>19</td><td></td><td>0</td><td><code>  TransactionalBatch(this.container, {this.continueOnError = true})</code></td>
 </tr>
 <tr class="noop" title="Line 20" id="line20">
 <td>20</td><td></td><td></td><td><code>      : isAtomic = false;</code></td>
@@ -128,20 +128,20 @@
 <tr class="noop" title="Line 23" id="line23">
 <td>23</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 24" id="line24">
-<td>24</td><td></td><td>3</td><td><code>  Map&lt;String, String&gt; get headers =&gt; {</code></td>
+<tr class="lineNoCov" title="Line 24" id="line24">
+<td>24</td><td></td><td>0</td><td><code>  Map&lt;String, String&gt; get headers =&gt; {</code></td>
 </tr>
 <tr class="noop" title="Line 25" id="line25">
 <td>25</td><td></td><td></td><td><code>        HttpHeader.msCosmosIsBatchRequest: 'true',</code></td>
 </tr>
-<tr class="lineCov" title="Line 26" id="line26">
-<td>26</td><td></td><td>2</td><td><code>        HttpHeader.msCosmosBatchAtomic: isAtomic ? 'true' : 'false',</code></td>
+<tr class="lineNoCov" title="Line 26" id="line26">
+<td>26</td><td></td><td>0</td><td><code>        HttpHeader.msCosmosBatchAtomic: isAtomic ? 'true' : 'false',</code></td>
 </tr>
 <tr class="noop" title="Line 27" id="line27">
 <td>27</td><td></td><td></td><td><code>        HttpHeader.msCosmosBatchContinueOnError:</code></td>
 </tr>
-<tr class="lineCov" title="Line 28" id="line28">
-<td>28</td><td></td><td>2</td><td><code>            continueOnError ? 'true' : 'false',</code></td>
+<tr class="lineNoCov" title="Line 28" id="line28">
+<td>28</td><td></td><td>0</td><td><code>            continueOnError ? 'true' : 'false',</code></td>
 </tr>
 <tr class="noop" title="Line 29" id="line29">
 <td>29</td><td></td><td></td><td><code>        HttpHeader.msDocumentDbPartitionKeyRangeId: '0',</code></td>
@@ -161,23 +161,23 @@
 <tr class="noop" title="Line 34" id="line34">
 <td>34</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 35" id="line35">
-<td>35</td><td></td><td>1</td><td><code>  final _ops = &lt;BatchOperation&gt;[];</code></td>
+<tr class="lineNoCov" title="Line 35" id="line35">
+<td>35</td><td></td><td>0</td><td><code>  final _ops = &lt;BatchOperation&gt;[];</code></td>
 </tr>
 <tr class="noop" title="Line 36" id="line36">
 <td>36</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 37" id="line37">
-<td>37</td><td></td><td>3</td><td><code>  Iterable&lt;BatchOperation&gt; get operations =&gt; _ops.asIterable();</code></td>
+<tr class="lineNoCov" title="Line 37" id="line37">
+<td>37</td><td></td><td>0</td><td><code>  Iterable&lt;BatchOperation&gt; get operations =&gt; _ops.asIterable();</code></td>
 </tr>
 <tr class="noop" title="Line 38" id="line38">
 <td>38</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 39" id="line39">
-<td>39</td><td></td><td>2</td><td><code>  void _add(BatchOperation op) {</code></td>
+<tr class="lineNoCov" title="Line 39" id="line39">
+<td>39</td><td></td><td>0</td><td><code>  void _add(BatchOperation op) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 40" id="line40">
-<td>40</td><td></td><td>4</td><td><code>    if (_ops.length &gt;= 100) {</code></td>
+<tr class="lineNoCov" title="Line 40" id="line40">
+<td>40</td><td></td><td>0</td><td><code>    if (_ops.length &gt;= 100) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 41" id="line41">
 <td>41</td><td></td><td>0</td><td><code>      throw Exception('Transactional batch is limited to 100 operations.');</code></td>
@@ -185,26 +185,26 @@
 <tr class="noop" title="Line 42" id="line42">
 <td>42</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="lineCov" title="Line 43" id="line43">
-<td>43</td><td></td><td>3</td><td><code>    _ops.add(op);</code></td>
+<tr class="lineNoCov" title="Line 43" id="line43">
+<td>43</td><td></td><td>0</td><td><code>    _ops.add(op);</code></td>
 </tr>
-<tr class="lineCov" title="Line 44" id="line44">
-<td>44</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 44" id="line44">
+<td>44</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 45" id="line45">
 <td>45</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 46" id="line46">
-<td>46</td><td></td><td>2</td><td><code>  void create(T item, {PartitionKey? partitionKey}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 46" id="line46">
+<td>46</td><td></td><td>0</td><td><code>  void create(T item, {PartitionKey? partitionKey}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 47" id="line47">
-<td>47</td><td></td><td>3</td><td><code>      _add(BatchOperationCreate(item,</code></td>
+<tr class="lineNoCov" title="Line 47" id="line47">
+<td>47</td><td></td><td>0</td><td><code>      _add(BatchOperationCreate(item,</code></td>
 </tr>
-<tr class="lineCov" title="Line 48" id="line48">
-<td>48</td><td></td><td>3</td><td><code>          partitionKeySpec: container.partitionKeySpec,</code></td>
+<tr class="lineNoCov" title="Line 48" id="line48">
+<td>48</td><td></td><td>0</td><td><code>          partitionKeySpec: container.partitionKeySpec,</code></td>
 </tr>
-<tr class="lineCov" title="Line 49" id="line49">
-<td>49</td><td></td><td>1</td><td><code>          partitionKey: partitionKey));</code></td>
+<tr class="lineNoCov" title="Line 49" id="line49">
+<td>49</td><td></td><td>0</td><td><code>          partitionKey: partitionKey));</code></td>
 </tr>
 <tr class="noop" title="Line 50" id="line50">
 <td>50</td><td></td><td></td><td><code></code></td>
@@ -224,14 +224,14 @@
 <tr class="noop" title="Line 55" id="line55">
 <td>55</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 56" id="line56">
-<td>56</td><td></td><td>1</td><td><code>  void read(String id, {PartitionKey? partitionKey}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 56" id="line56">
+<td>56</td><td></td><td>0</td><td><code>  void read(String id, {PartitionKey? partitionKey}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 57" id="line57">
-<td>57</td><td></td><td>3</td><td><code>      _add(BatchOperationRead(id,</code></td>
+<tr class="lineNoCov" title="Line 57" id="line57">
+<td>57</td><td></td><td>0</td><td><code>      _add(BatchOperationRead(id,</code></td>
 </tr>
-<tr class="lineCov" title="Line 58" id="line58">
-<td>58</td><td></td><td>2</td><td><code>          partitionKeySpec: container.partitionKeySpec,</code></td>
+<tr class="lineNoCov" title="Line 58" id="line58">
+<td>58</td><td></td><td>0</td><td><code>          partitionKeySpec: container.partitionKeySpec,</code></td>
 </tr>
 <tr class="noop" title="Line 59" id="line59">
 <td>59</td><td></td><td></td><td><code>          partitionKey: partitionKey));</code></td>
@@ -239,14 +239,14 @@
 <tr class="noop" title="Line 60" id="line60">
 <td>60</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 61" id="line61">
-<td>61</td><td></td><td>1</td><td><code>  void delete(String id, {PartitionKey? partitionKey}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 61" id="line61">
+<td>61</td><td></td><td>0</td><td><code>  void delete(String id, {PartitionKey? partitionKey}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 62" id="line62">
-<td>62</td><td></td><td>3</td><td><code>      _add(BatchOperationDelete(id,</code></td>
+<tr class="lineNoCov" title="Line 62" id="line62">
+<td>62</td><td></td><td>0</td><td><code>      _add(BatchOperationDelete(id,</code></td>
 </tr>
-<tr class="lineCov" title="Line 63" id="line63">
-<td>63</td><td></td><td>2</td><td><code>          partitionKeySpec: container.partitionKeySpec,</code></td>
+<tr class="lineNoCov" title="Line 63" id="line63">
+<td>63</td><td></td><td>0</td><td><code>          partitionKeySpec: container.partitionKeySpec,</code></td>
 </tr>
 <tr class="noop" title="Line 64" id="line64">
 <td>64</td><td></td><td></td><td><code>          partitionKey: partitionKey));</code></td>
@@ -254,20 +254,20 @@
 <tr class="noop" title="Line 65" id="line65">
 <td>65</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 66" id="line66">
-<td>66</td><td></td><td>2</td><td><code>  Future&lt;BatchResponse&lt;T&gt;&gt; execute({CosmosDbPermission? permission}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 66" id="line66">
+<td>66</td><td></td><td>0</td><td><code>  Future&lt;BatchResponse&lt;T&gt;&gt; execute({CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 67" id="line67">
-<td>67</td><td></td><td>3</td><td><code>      container.execute&lt;T&gt;(this, permission: permission);</code></td>
+<tr class="lineNoCov" title="Line 67" id="line67">
+<td>67</td><td></td><td>0</td><td><code>      container.execute&lt;T&gt;(this, permission: permission);</code></td>
 </tr>
 <tr class="noop" title="Line 68" id="line68">
 <td>68</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 69" id="line69">
-<td>69</td><td></td><td>1</td><td><code>  @override</code></td>
+<tr class="lineNoCov" title="Line 69" id="line69">
+<td>69</td><td></td><td>0</td><td><code>  @override</code></td>
 </tr>
 <tr class="lineCov" title="Line 70" id="line70">
-<td>70</td><td></td><td>6</td><td><code>  List&lt;dynamic&gt; toJson() =&gt; _ops.map((o) =&gt; o.toJson()).toList();</code></td>
+<td>70</td><td></td><td>1</td><td><code>  List&lt;dynamic&gt; toJson() =&gt; _ops.map((o) =&gt; o.toJson()).toList();</code></td>
 </tr>
 <tr class="noop" title="Line 71" id="line71">
 <td>71</td><td></td><td></td><td><code>}</code></td>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="geospatial_config.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="9" lines-valid="9" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="geospatial_config.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.33333334" lines-covered="3" lines-valid="9" package="/src/indexing" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'indexing_policy.dart';</code>
@@ -50,46 +50,40 @@
 <line>
 <code>  /// if [indexingPolicy] or [IndexingPolicy.spatialIndexes] is `null`.</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  static GeospatialConfig? forPolicy(IndexingPolicy? indexingPolicy) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>    final spatialIndexes = indexingPolicy?.spatialIndexes;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    if (spatialIndexes == null) return null;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>    if (spatialIndexes.any((index) =&gt; index.boundingBox != null)) {</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>      return GeospatialConfig.geometry;</code>
+<code>    if (spatialIndexes.any((index) =&gt; index.boundingBox != null)) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      return GeospatialConfig.geometry;</code>
 </line>
 <line>
 <code>    } else {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      return GeospatialConfig.geography;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="4">
+<line hits="1">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'type': name};</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

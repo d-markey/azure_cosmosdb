@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>165</td><td>177</td><td class="high">93.2%</td>
+<th scope="row">Lines</th><td>0</td><td>177</td><td class="low">0.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -119,8 +119,8 @@
 <tr class="noop" title="Line 20" id="line20">
 <td>20</td><td></td><td></td><td><code>class CosmosDbContainer extends BaseDocument {</code></td>
 </tr>
-<tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>2</td><td><code>  CosmosDbContainer(this.database, this.id,</code></td>
+<tr class="lineNoCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>0</td><td><code>  CosmosDbContainer(this.database, this.id,</code></td>
 </tr>
 <tr class="noop" title="Line 22" id="line22">
 <td>22</td><td></td><td></td><td><code>      {PartitionKeySpec? partitionKeySpec,</code></td>
@@ -131,17 +131,17 @@
 <tr class="noop" title="Line 24" id="line24">
 <td>24</td><td></td><td></td><td><code>      GeospatialConfig? geospatialConfig})</code></td>
 </tr>
-<tr class="lineCov" title="Line 25" id="line25">
-<td>25</td><td></td><td>3</td><td><code>      : url = '${database.url}/colls/$id',</code></td>
+<tr class="lineNoCov" title="Line 25" id="line25">
+<td>25</td><td></td><td>0</td><td><code>      : url = '${database.url}/colls/$id',</code></td>
 </tr>
-<tr class="lineCov" title="Line 26" id="line26">
-<td>26</td><td></td><td>2</td><td><code>        partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id,</code></td>
+<tr class="lineNoCov" title="Line 26" id="line26">
+<td>26</td><td></td><td>0</td><td><code>        partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id,</code></td>
 </tr>
 <tr class="noop" title="Line 27" id="line27">
 <td>27</td><td></td><td></td><td><code>        _indexingPolicy = indexingPolicy,</code></td>
 </tr>
-<tr class="lineCov" title="Line 28" id="line28">
-<td>28</td><td></td><td>1</td><td><code>        _geospatialConfig = geospatialConfig;</code></td>
+<tr class="lineNoCov" title="Line 28" id="line28">
+<td>28</td><td></td><td>0</td><td><code>        _geospatialConfig = geospatialConfig;</code></td>
 </tr>
 <tr class="noop" title="Line 29" id="line29">
 <td>29</td><td></td><td></td><td><code></code></td>
@@ -170,8 +170,8 @@
 <tr class="noop" title="Line 37" id="line37">
 <td>37</td><td></td><td></td><td><code>  /// `null` if no check has been made yet.</code></td>
 </tr>
-<tr class="lineCov" title="Line 38" id="line38">
-<td>38</td><td></td><td>2</td><td><code>  bool? get exists =&gt; _exists;</code></td>
+<tr class="lineNoCov" title="Line 38" id="line38">
+<td>38</td><td></td><td>0</td><td><code>  bool? get exists =&gt; _exists;</code></td>
 </tr>
 <tr class="noop" title="Line 39" id="line39">
 <td>39</td><td></td><td></td><td><code>  bool? _exists;</code></td>
@@ -212,11 +212,11 @@
 <tr class="noop" title="Line 51" id="line51">
 <td>51</td><td></td><td></td><td><code>  /// The container's geospatial configuration.</code></td>
 </tr>
-<tr class="lineCov" title="Line 52" id="line52">
-<td>52</td><td></td><td>2</td><td><code>  GeospatialConfig? get geospatialConfig =&gt;</code></td>
+<tr class="lineNoCov" title="Line 52" id="line52">
+<td>52</td><td></td><td>0</td><td><code>  GeospatialConfig? get geospatialConfig =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 53" id="line53">
-<td>53</td><td></td><td>4</td><td><code>      _geospatialConfig ?? GeospatialConfig.forPolicy(_indexingPolicy);</code></td>
+<tr class="lineNoCov" title="Line 53" id="line53">
+<td>53</td><td></td><td>0</td><td><code>      _geospatialConfig ?? GeospatialConfig.forPolicy(_indexingPolicy);</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 54" id="line54">
 <td>54</td><td></td><td>0</td><td><code>  GeospatialConfig? _geospatialConfig;</code></td>
@@ -224,32 +224,32 @@
 <tr class="noop" title="Line 55" id="line55">
 <td>55</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 56" id="line56">
-<td>56</td><td></td><td>1</td><td><code>  @override</code></td>
+<tr class="lineNoCov" title="Line 56" id="line56">
+<td>56</td><td></td><td>0</td><td><code>  @override</code></td>
 </tr>
-<tr class="lineCov" title="Line 57" id="line57">
-<td>57</td><td></td><td>2</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code></td>
+<tr class="lineNoCov" title="Line 57" id="line57">
+<td>57</td><td></td><td>0</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code></td>
 </tr>
-<tr class="lineCov" title="Line 58" id="line58">
-<td>58</td><td></td><td>3</td><td><code>        'id': id,</code></td>
+<tr class="lineNoCov" title="Line 58" id="line58">
+<td>58</td><td></td><td>0</td><td><code>        'id': id,</code></td>
 </tr>
-<tr class="lineCov" title="Line 59" id="line59">
-<td>59</td><td></td><td>4</td><td><code>        'partitionKey': partitionKeySpec.toJson(),</code></td>
+<tr class="lineNoCov" title="Line 59" id="line59">
+<td>59</td><td></td><td>0</td><td><code>        'partitionKey': partitionKeySpec.toJson(),</code></td>
 </tr>
-<tr class="lineCov" title="Line 60" id="line60">
-<td>60</td><td></td><td>2</td><td><code>        if (_indexingPolicy != null)</code></td>
+<tr class="lineNoCov" title="Line 60" id="line60">
+<td>60</td><td></td><td>0</td><td><code>        if (_indexingPolicy != null)</code></td>
 </tr>
-<tr class="lineCov" title="Line 61" id="line61">
-<td>61</td><td></td><td>4</td><td><code>          'indexingPolicy': _indexingPolicy!.toJson(),</code></td>
+<tr class="lineNoCov" title="Line 61" id="line61">
+<td>61</td><td></td><td>0</td><td><code>          'indexingPolicy': _indexingPolicy!.toJson(),</code></td>
 </tr>
-<tr class="lineCov" title="Line 62" id="line62">
-<td>62</td><td></td><td>2</td><td><code>        if (geospatialConfig != null)</code></td>
+<tr class="lineNoCov" title="Line 62" id="line62">
+<td>62</td><td></td><td>0</td><td><code>        if (geospatialConfig != null)</code></td>
 </tr>
-<tr class="lineCov" title="Line 63" id="line63">
-<td>63</td><td></td><td>4</td><td><code>          'geospatialConfig': geospatialConfig!.toJson(),</code></td>
+<tr class="lineNoCov" title="Line 63" id="line63">
+<td>63</td><td></td><td>0</td><td><code>          'geospatialConfig': geospatialConfig!.toJson(),</code></td>
 </tr>
-<tr class="lineCov" title="Line 64" id="line64">
-<td>64</td><td></td><td>1</td><td><code>      };</code></td>
+<tr class="lineNoCov" title="Line 64" id="line64">
+<td>64</td><td></td><td>0</td><td><code>      };</code></td>
 </tr>
 <tr class="noop" title="Line 65" id="line65">
 <td>65</td><td></td><td></td><td><code></code></td>
@@ -275,11 +275,11 @@
 <tr class="noop" title="Line 72" id="line72">
 <td>72</td><td></td><td></td><td><code>  /// this container-wide [permission].</code></td>
 </tr>
-<tr class="lineCov" title="Line 73" id="line73">
-<td>73</td><td></td><td>1</td><td><code>  void usePermission(CosmosDbPermission permission) {</code></td>
+<tr class="lineNoCov" title="Line 73" id="line73">
+<td>73</td><td></td><td>0</td><td><code>  void usePermission(CosmosDbPermission permission) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 74" id="line74">
-<td>74</td><td></td><td>2</td><td><code>    _token = permission.token;</code></td>
+<tr class="lineNoCov" title="Line 74" id="line74">
+<td>74</td><td></td><td>0</td><td><code>    _token = permission.token;</code></td>
 </tr>
 <tr class="noop" title="Line 75" id="line75">
 <td>75</td><td></td><td></td><td><code>  }</code></td>
@@ -317,8 +317,8 @@
 <tr class="noop" title="Line 86" id="line86">
 <td>86</td><td></td><td></td><td><code>  /// will replace the expired one.</code></td>
 </tr>
-<tr class="lineCov" title="Line 87" id="line87">
-<td>87</td><td></td><td>1</td><td><code>  FutureCallback&lt;CosmosDbPermission?&gt;? onForbidden;</code></td>
+<tr class="lineNoCov" title="Line 87" id="line87">
+<td>87</td><td></td><td>0</td><td><code>  FutureCallback&lt;CosmosDbPermission?&gt;? onForbidden;</code></td>
 </tr>
 <tr class="noop" title="Line 88" id="line88">
 <td>88</td><td></td><td></td><td><code></code></td>
@@ -329,26 +329,26 @@
 <tr class="noop" title="Line 90" id="line90">
 <td>90</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 91" id="line91">
-<td>91</td><td></td><td>2</td><td><code>  Future&lt;CosmosDbPermission?&gt; _refreshPermission() async {</code></td>
+<tr class="lineNoCov" title="Line 91" id="line91">
+<td>91</td><td></td><td>0</td><td><code>  Future&lt;CosmosDbPermission?&gt; _refreshPermission() async {</code></td>
 </tr>
-<tr class="lineCov" title="Line 92" id="line92">
-<td>92</td><td></td><td>1</td><td><code>    CosmosDbPermission? permission;</code></td>
+<tr class="lineNoCov" title="Line 92" id="line92">
+<td>92</td><td></td><td>0</td><td><code>    CosmosDbPermission? permission;</code></td>
 </tr>
-<tr class="lineCov" title="Line 93" id="line93">
-<td>93</td><td></td><td>1</td><td><code>    final callback = onForbidden;</code></td>
+<tr class="lineNoCov" title="Line 93" id="line93">
+<td>93</td><td></td><td>0</td><td><code>    final callback = onForbidden;</code></td>
 </tr>
-<tr class="lineCov" title="Line 94" id="line94">
-<td>94</td><td></td><td>2</td><td><code>    if (_token != null &amp;&amp; callback != null) {</code></td>
+<tr class="lineNoCov" title="Line 94" id="line94">
+<td>94</td><td></td><td>0</td><td><code>    if (_token != null &amp;&amp; callback != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 95" id="line95">
-<td>95</td><td></td><td>2</td><td><code>      permission = await callback();</code></td>
+<tr class="lineNoCov" title="Line 95" id="line95">
+<td>95</td><td></td><td>0</td><td><code>      permission = await callback();</code></td>
 </tr>
 <tr class="noop" title="Line 96" id="line96">
 <td>96</td><td></td><td></td><td><code>      if (permission != null) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 97" id="line97">
-<td>97</td><td></td><td>2</td><td><code>        _token = permission.token;</code></td>
+<tr class="lineNoCov" title="Line 97" id="line97">
+<td>97</td><td></td><td>0</td><td><code>        _token = permission.token;</code></td>
 </tr>
 <tr class="noop" title="Line 98" id="line98">
 <td>98</td><td></td><td></td><td><code>      }</code></td>
@@ -356,11 +356,11 @@
 <tr class="noop" title="Line 99" id="line99">
 <td>99</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="lineCov" title="Line 100" id="line100">
-<td>100</td><td></td><td>1</td><td><code>    return permission;</code></td>
+<tr class="lineNoCov" title="Line 100" id="line100">
+<td>100</td><td></td><td>0</td><td><code>    return permission;</code></td>
 </tr>
-<tr class="lineCov" title="Line 101" id="line101">
-<td>101</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 101" id="line101">
+<td>101</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 102" id="line102">
 <td>102</td><td></td><td></td><td><code></code></td>
@@ -368,11 +368,11 @@
 <tr class="noop" title="Line 103" id="line103">
 <td>103</td><td></td><td></td><td><code>  /// Register a [DocumentBuilder] for specified type `T`.</code></td>
 </tr>
-<tr class="lineCov" title="Line 104" id="line104">
-<td>104</td><td></td><td>1</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 104" id="line104">
+<td>104</td><td></td><td>0</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 105" id="line105">
-<td>105</td><td></td><td>3</td><td><code>      database.registerBuilder&lt;T&gt;(builder);</code></td>
+<tr class="lineNoCov" title="Line 105" id="line105">
+<td>105</td><td></td><td>0</td><td><code>      database.registerBuilder&lt;T&gt;(builder);</code></td>
 </tr>
 <tr class="noop" title="Line 106" id="line106">
 <td>106</td><td></td><td></td><td><code></code></td>
@@ -380,74 +380,74 @@
 <tr class="noop" title="Line 107" id="line107">
 <td>107</td><td></td><td></td><td><code>  /// Gets information for this [CosmosDbContainer].</code></td>
 </tr>
-<tr class="lineCov" title="Line 108" id="line108">
-<td>108</td><td></td><td>2</td><td><code>  Future&lt;CosmosDbContainer&gt; getInfo({CosmosDbPermission? permission}) async {</code></td>
+<tr class="lineNoCov" title="Line 108" id="line108">
+<td>108</td><td></td><td>0</td><td><code>  Future&lt;CosmosDbContainer&gt; getInfo({CosmosDbPermission? permission}) async {</code></td>
 </tr>
-<tr class="lineCov" title="Line 109" id="line109">
-<td>109</td><td></td><td>3</td><td><code>    final coll = await client.get&lt;CosmosDbContainer&gt;(</code></td>
+<tr class="lineNoCov" title="Line 109" id="line109">
+<td>109</td><td></td><td>0</td><td><code>    final coll = await client.get&lt;CosmosDbContainer&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 110" id="line110">
-<td>110</td><td></td><td>1</td><td><code>        url,</code></td>
+<tr class="lineNoCov" title="Line 110" id="line110">
+<td>110</td><td></td><td>0</td><td><code>        url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 111" id="line111">
-<td>111</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 111" id="line111">
+<td>111</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 112" id="line112">
 <td>112</td><td></td><td></td><td><code>          type: 'colls',</code></td>
 </tr>
-<tr class="lineCov" title="Line 113" id="line113">
-<td>113</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 113" id="line113">
+<td>113</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 114" id="line114">
 <td>114</td><td></td><td></td><td><code>          throwOnNotFound: true,</code></td>
 </tr>
-<tr class="lineCov" title="Line 115" id="line115">
-<td>115</td><td></td><td>4</td><td><code>          builder: database.containers.fromJson,</code></td>
+<tr class="lineNoCov" title="Line 115" id="line115">
+<td>115</td><td></td><td>0</td><td><code>          builder: database.containers.fromJson,</code></td>
 </tr>
 <tr class="noop" title="Line 116" id="line116">
 <td>116</td><td></td><td></td><td><code>        ));</code></td>
 </tr>
-<tr class="lineCov" title="Line 117" id="line117">
-<td>117</td><td></td><td>1</td><td><code>    return coll!;</code></td>
+<tr class="lineNoCov" title="Line 117" id="line117">
+<td>117</td><td></td><td>0</td><td><code>    return coll!;</code></td>
 </tr>
-<tr class="lineCov" title="Line 118" id="line118">
-<td>118</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 118" id="line118">
+<td>118</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 119" id="line119">
 <td>119</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 120" id="line120">
-<td>120</td><td></td><td>1</td><td><code>  Future&lt;Iterable&lt;PartitionKeyRange&gt;&gt; getPkRanges(</code></td>
+<tr class="lineNoCov" title="Line 120" id="line120">
+<td>120</td><td></td><td>0</td><td><code>  Future&lt;Iterable&lt;PartitionKeyRange&gt;&gt; getPkRanges(</code></td>
 </tr>
 <tr class="noop" title="Line 121" id="line121">
 <td>121</td><td></td><td></td><td><code>          {CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 122" id="line122">
-<td>122</td><td></td><td>3</td><td><code>      client.getMany&lt;PartitionKeyRange&gt;(</code></td>
+<tr class="lineNoCov" title="Line 122" id="line122">
+<td>122</td><td></td><td>0</td><td><code>      client.getMany&lt;PartitionKeyRange&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 123" id="line123">
-<td>123</td><td></td><td>2</td><td><code>          '$url/pkranges',</code></td>
+<tr class="lineNoCov" title="Line 123" id="line123">
+<td>123</td><td></td><td>0</td><td><code>          '$url/pkranges',</code></td>
 </tr>
 <tr class="noop" title="Line 124" id="line124">
 <td>124</td><td></td><td></td><td><code>          'PartitionKeyRanges',</code></td>
 </tr>
-<tr class="lineCov" title="Line 125" id="line125">
-<td>125</td><td></td><td>2</td><td><code>          Context(</code></td>
+<tr class="lineNoCov" title="Line 125" id="line125">
+<td>125</td><td></td><td>0</td><td><code>          Context(</code></td>
 </tr>
-<tr class="lineCov" title="Line 126" id="line126">
-<td>126</td><td></td><td>1</td><td><code>              resId: url,</code></td>
+<tr class="lineNoCov" title="Line 126" id="line126">
+<td>126</td><td></td><td>0</td><td><code>              resId: url,</code></td>
 </tr>
 <tr class="noop" title="Line 127" id="line127">
 <td>127</td><td></td><td></td><td><code>              type: 'pkranges',</code></td>
 </tr>
-<tr class="lineCov" title="Line 128" id="line128">
-<td>128</td><td></td><td>1</td><td><code>              token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 128" id="line128">
+<td>128</td><td></td><td>0</td><td><code>              token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 129" id="line129">
 <td>129</td><td></td><td></td><td><code>              throwOnNotFound: true,</code></td>
 </tr>
-<tr class="lineCov" title="Line 130" id="line130">
-<td>130</td><td></td><td>1</td><td><code>              builder: PartitionKeyRange.fromJson));</code></td>
+<tr class="lineNoCov" title="Line 130" id="line130">
+<td>130</td><td></td><td>0</td><td><code>              builder: PartitionKeyRange.fromJson));</code></td>
 </tr>
 <tr class="noop" title="Line 131" id="line131">
 <td>131</td><td></td><td></td><td><code></code></td>
@@ -455,8 +455,8 @@
 <tr class="noop" title="Line 132" id="line132">
 <td>132</td><td></td><td></td><td><code>  /// Gets information for this [CosmosDbContainer].</code></td>
 </tr>
-<tr class="lineCov" title="Line 133" id="line133">
-<td>133</td><td></td><td>2</td><td><code>  Future&lt;void&gt; setIndexingPolicy(IndexingPolicy indexingPolicy,</code></td>
+<tr class="lineNoCov" title="Line 133" id="line133">
+<td>133</td><td></td><td>0</td><td><code>  Future&lt;void&gt; setIndexingPolicy(IndexingPolicy indexingPolicy,</code></td>
 </tr>
 <tr class="noop" title="Line 134" id="line134">
 <td>134</td><td></td><td></td><td><code>      {GeospatialConfig? geospatialConfig,</code></td>
@@ -464,17 +464,17 @@
 <tr class="noop" title="Line 135" id="line135">
 <td>135</td><td></td><td></td><td><code>      CosmosDbPermission? permission}) async {</code></td>
 </tr>
-<tr class="lineCov" title="Line 136" id="line136">
-<td>136</td><td></td><td>2</td><td><code>    final prevIndexingPolicy = _indexingPolicy;</code></td>
+<tr class="lineNoCov" title="Line 136" id="line136">
+<td>136</td><td></td><td>0</td><td><code>    final prevIndexingPolicy = _indexingPolicy;</code></td>
 </tr>
-<tr class="lineCov" title="Line 137" id="line137">
-<td>137</td><td></td><td>1</td><td><code>    final prevGeospatialConfig = _geospatialConfig;</code></td>
+<tr class="lineNoCov" title="Line 137" id="line137">
+<td>137</td><td></td><td>0</td><td><code>    final prevGeospatialConfig = _geospatialConfig;</code></td>
 </tr>
-<tr class="lineCov" title="Line 138" id="line138">
-<td>138</td><td></td><td>1</td><td><code>    _indexingPolicy = indexingPolicy;</code></td>
+<tr class="lineNoCov" title="Line 138" id="line138">
+<td>138</td><td></td><td>0</td><td><code>    _indexingPolicy = indexingPolicy;</code></td>
 </tr>
-<tr class="lineCov" title="Line 139" id="line139">
-<td>139</td><td></td><td>1</td><td><code>    if (geospatialConfig != null) {</code></td>
+<tr class="lineNoCov" title="Line 139" id="line139">
+<td>139</td><td></td><td>0</td><td><code>    if (geospatialConfig != null) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 140" id="line140">
 <td>140</td><td></td><td>0</td><td><code>      _geospatialConfig = geospatialConfig;</code></td>
@@ -485,26 +485,26 @@
 <tr class="noop" title="Line 142" id="line142">
 <td>142</td><td></td><td></td><td><code>    try {</code></td>
 </tr>
-<tr class="lineCov" title="Line 143" id="line143">
-<td>143</td><td></td><td>3</td><td><code>      await client.put&lt;CosmosDbContainer&gt;(</code></td>
+<tr class="lineNoCov" title="Line 143" id="line143">
+<td>143</td><td></td><td>0</td><td><code>      await client.put&lt;CosmosDbContainer&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 144" id="line144">
-<td>144</td><td></td><td>1</td><td><code>          url,</code></td>
+<tr class="lineNoCov" title="Line 144" id="line144">
+<td>144</td><td></td><td>0</td><td><code>          url,</code></td>
 </tr>
 <tr class="noop" title="Line 145" id="line145">
 <td>145</td><td></td><td></td><td><code>          this,</code></td>
 </tr>
-<tr class="lineCov" title="Line 146" id="line146">
-<td>146</td><td></td><td>2</td><td><code>          Context(</code></td>
+<tr class="lineNoCov" title="Line 146" id="line146">
+<td>146</td><td></td><td>0</td><td><code>          Context(</code></td>
 </tr>
 <tr class="noop" title="Line 147" id="line147">
 <td>147</td><td></td><td></td><td><code>            type: 'colls',</code></td>
 </tr>
-<tr class="lineCov" title="Line 148" id="line148">
-<td>148</td><td></td><td>1</td><td><code>            token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 148" id="line148">
+<td>148</td><td></td><td>0</td><td><code>            token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 149" id="line149">
-<td>149</td><td></td><td>4</td><td><code>            builder: database.containers.fromJson,</code></td>
+<tr class="lineNoCov" title="Line 149" id="line149">
+<td>149</td><td></td><td>0</td><td><code>            builder: database.containers.fromJson,</code></td>
 </tr>
 <tr class="noop" title="Line 150" id="line150">
 <td>150</td><td></td><td></td><td><code>          ));</code></td>
@@ -524,8 +524,8 @@
 <tr class="noop" title="Line 155" id="line155">
 <td>155</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="lineCov" title="Line 156" id="line156">
-<td>156</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 156" id="line156">
+<td>156</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 157" id="line157">
 <td>157</td><td></td><td></td><td><code></code></td>
@@ -539,8 +539,8 @@
 <tr class="noop" title="Line 160" id="line160">
 <td>160</td><td></td><td></td><td><code>  /// will throw a [NotFoundException] instead.</code></td>
 </tr>
-<tr class="lineCov" title="Line 161" id="line161">
-<td>161</td><td></td><td>2</td><td><code>  Future&lt;T?&gt; find&lt;T extends BaseDocument&gt;(dynamic id,</code></td>
+<tr class="lineNoCov" title="Line 161" id="line161">
+<td>161</td><td></td><td>0</td><td><code>  Future&lt;T?&gt; find&lt;T extends BaseDocument&gt;(dynamic id,</code></td>
 </tr>
 <tr class="noop" title="Line 162" id="line162">
 <td>162</td><td></td><td></td><td><code>      {bool throwOnNotFound = false,</code></td>
@@ -551,17 +551,17 @@
 <tr class="noop" title="Line 164" id="line164">
 <td>164</td><td></td><td></td><td><code>      CosmosDbPermission? permission}) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 165" id="line165">
-<td>165</td><td></td><td>2</td><td><code>    final document = DocumentWithId(id);</code></td>
+<tr class="lineNoCov" title="Line 165" id="line165">
+<td>165</td><td></td><td>0</td><td><code>    final document = DocumentWithId(id);</code></td>
 </tr>
-<tr class="lineCov" title="Line 166" id="line166">
-<td>166</td><td></td><td>3</td><td><code>    return client.get&lt;T&gt;(</code></td>
+<tr class="lineNoCov" title="Line 166" id="line166">
+<td>166</td><td></td><td>0</td><td><code>    return client.get&lt;T&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 167" id="line167">
-<td>167</td><td></td><td>4</td><td><code>      '$url/docs/${document.id}',</code></td>
+<tr class="lineNoCov" title="Line 167" id="line167">
+<td>167</td><td></td><td>0</td><td><code>      '$url/docs/${document.id}',</code></td>
 </tr>
-<tr class="lineCov" title="Line 168" id="line168">
-<td>168</td><td></td><td>2</td><td><code>      Context(</code></td>
+<tr class="lineNoCov" title="Line 168" id="line168">
+<td>168</td><td></td><td>0</td><td><code>      Context(</code></td>
 </tr>
 <tr class="noop" title="Line 169" id="line169">
 <td>169</td><td></td><td></td><td><code>        type: 'docs',</code></td>
@@ -572,14 +572,14 @@
 <tr class="noop" title="Line 171" id="line171">
 <td>171</td><td></td><td></td><td><code>        partitionKey:</code></td>
 </tr>
-<tr class="lineCov" title="Line 172" id="line172">
-<td>172</td><td></td><td>3</td><td><code>            partitionKey ?? partitionKeySpec.from(document) ?? PartitionKey.all,</code></td>
+<tr class="lineNoCov" title="Line 172" id="line172">
+<td>172</td><td></td><td>0</td><td><code>            partitionKey ?? partitionKeySpec.from(document) ?? PartitionKey.all,</code></td>
 </tr>
-<tr class="lineCov" title="Line 173" id="line173">
-<td>173</td><td></td><td>2</td><td><code>        token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 173" id="line173">
+<td>173</td><td></td><td>0</td><td><code>        token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 174" id="line174">
-<td>174</td><td></td><td>2</td><td><code>        onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 174" id="line174">
+<td>174</td><td></td><td>0</td><td><code>        onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 175" id="line175">
 <td>175</td><td></td><td></td><td><code>      ),</code></td>
@@ -587,8 +587,8 @@
 <tr class="noop" title="Line 176" id="line176">
 <td>176</td><td></td><td></td><td><code>    );</code></td>
 </tr>
-<tr class="lineCov" title="Line 177" id="line177">
-<td>177</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 177" id="line177">
+<td>177</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 178" id="line178">
 <td>178</td><td></td><td></td><td><code></code></td>
@@ -596,8 +596,8 @@
 <tr class="noop" title="Line 179" id="line179">
 <td>179</td><td></td><td></td><td><code>  /// Returns the latest version of the document.</code></td>
 </tr>
-<tr class="lineCov" title="Line 180" id="line180">
-<td>180</td><td></td><td>2</td><td><code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(T document,</code></td>
+<tr class="lineNoCov" title="Line 180" id="line180">
+<td>180</td><td></td><td>0</td><td><code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(T document,</code></td>
 </tr>
 <tr class="noop" title="Line 181" id="line181">
 <td>181</td><td></td><td></td><td><code>          {bool throwOnNotFound = false,</code></td>
@@ -608,17 +608,17 @@
 <tr class="noop" title="Line 183" id="line183">
 <td>183</td><td></td><td></td><td><code>          CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 184" id="line184">
-<td>184</td><td></td><td>2</td><td><code>      client</code></td>
+<tr class="lineNoCov" title="Line 184" id="line184">
+<td>184</td><td></td><td>0</td><td><code>      client</code></td>
 </tr>
-<tr class="lineCov" title="Line 185" id="line185">
-<td>185</td><td></td><td>1</td><td><code>          .get&lt;T&gt;(</code></td>
+<tr class="lineNoCov" title="Line 185" id="line185">
+<td>185</td><td></td><td>0</td><td><code>          .get&lt;T&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 186" id="line186">
-<td>186</td><td></td><td>4</td><td><code>            '$url/docs/${document.id}',</code></td>
+<tr class="lineNoCov" title="Line 186" id="line186">
+<td>186</td><td></td><td>0</td><td><code>            '$url/docs/${document.id}',</code></td>
 </tr>
-<tr class="lineCov" title="Line 187" id="line187">
-<td>187</td><td></td><td>2</td><td><code>            Context(</code></td>
+<tr class="lineNoCov" title="Line 187" id="line187">
+<td>187</td><td></td><td>0</td><td><code>            Context(</code></td>
 </tr>
 <tr class="noop" title="Line 188" id="line188">
 <td>188</td><td></td><td></td><td><code>              type: 'docs',</code></td>
@@ -626,11 +626,11 @@
 <tr class="noop" title="Line 189" id="line189">
 <td>189</td><td></td><td></td><td><code>              throwOnNotFound: throwOnNotFound,</code></td>
 </tr>
-<tr class="lineCov" title="Line 190" id="line190">
-<td>190</td><td></td><td>2</td><td><code>              headers: (document is EtagMixin)</code></td>
+<tr class="lineNoCov" title="Line 190" id="line190">
+<td>190</td><td></td><td>0</td><td><code>              headers: (document is EtagMixin)</code></td>
 </tr>
-<tr class="lineCov" title="Line 191" id="line191">
-<td>191</td><td></td><td>3</td><td><code>                  ? {HttpHeader.ifNoneMatch: document.etag}</code></td>
+<tr class="lineNoCov" title="Line 191" id="line191">
+<td>191</td><td></td><td>0</td><td><code>                  ? {HttpHeader.ifNoneMatch: document.etag}</code></td>
 </tr>
 <tr class="noop" title="Line 192" id="line192">
 <td>192</td><td></td><td></td><td><code>                  : null,</code></td>
@@ -638,17 +638,17 @@
 <tr class="noop" title="Line 193" id="line193">
 <td>193</td><td></td><td></td><td><code>              partitionKey: partitionKey ??</code></td>
 </tr>
-<tr class="lineCov" title="Line 194" id="line194">
-<td>194</td><td></td><td>3</td><td><code>                  partitionKeySpec.from(document) ??</code></td>
+<tr class="lineNoCov" title="Line 194" id="line194">
+<td>194</td><td></td><td>0</td><td><code>                  partitionKeySpec.from(document) ??</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 195" id="line195">
 <td>195</td><td></td><td>0</td><td><code>                  PartitionKey.all,</code></td>
 </tr>
-<tr class="lineCov" title="Line 196" id="line196">
-<td>196</td><td></td><td>2</td><td><code>              token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 196" id="line196">
+<td>196</td><td></td><td>0</td><td><code>              token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 197" id="line197">
-<td>197</td><td></td><td>2</td><td><code>              onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 197" id="line197">
+<td>197</td><td></td><td>0</td><td><code>              onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 198" id="line198">
 <td>198</td><td></td><td></td><td><code>            ),</code></td>
@@ -656,8 +656,8 @@
 <tr class="noop" title="Line 199" id="line199">
 <td>199</td><td></td><td></td><td><code>          )</code></td>
 </tr>
-<tr class="lineCov" title="Line 200" id="line200">
-<td>200</td><td></td><td>3</td><td><code>          .onError&lt;NotModifiedException&gt;((error, stackTrace) =&gt; document);</code></td>
+<tr class="lineNoCov" title="Line 200" id="line200">
+<td>200</td><td></td><td>0</td><td><code>          .onError&lt;NotModifiedException&gt;((error, stackTrace) =&gt; document);</code></td>
 </tr>
 <tr class="noop" title="Line 201" id="line201">
 <td>201</td><td></td><td></td><td><code></code></td>
@@ -665,44 +665,44 @@
 <tr class="noop" title="Line 202" id="line202">
 <td>202</td><td></td><td></td><td><code>  /// Lists all documents from this container.</code></td>
 </tr>
-<tr class="lineCov" title="Line 203" id="line203">
-<td>203</td><td></td><td>2</td><td><code>  Future&lt;Iterable&lt;T&gt;&gt; list&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineNoCov" title="Line 203" id="line203">
+<td>203</td><td></td><td>0</td><td><code>  Future&lt;Iterable&lt;T&gt;&gt; list&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 204" id="line204">
 <td>204</td><td></td><td></td><td><code>          {PartitionKey? partitionKey, CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 205" id="line205">
-<td>205</td><td></td><td>3</td><td><code>      client.getMany&lt;T&gt;(</code></td>
+<tr class="lineNoCov" title="Line 205" id="line205">
+<td>205</td><td></td><td>0</td><td><code>      client.getMany&lt;T&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 206" id="line206">
-<td>206</td><td></td><td>3</td><td><code>        '$url/docs',</code></td>
+<tr class="lineNoCov" title="Line 206" id="line206">
+<td>206</td><td></td><td>0</td><td><code>        '$url/docs',</code></td>
 </tr>
 <tr class="noop" title="Line 207" id="line207">
 <td>207</td><td></td><td></td><td><code>        'Documents',</code></td>
 </tr>
-<tr class="lineCov" title="Line 208" id="line208">
-<td>208</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 208" id="line208">
+<td>208</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 209" id="line209">
 <td>209</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 210" id="line210">
-<td>210</td><td></td><td>1</td><td><code>          resId: url,</code></td>
+<tr class="lineNoCov" title="Line 210" id="line210">
+<td>210</td><td></td><td>0</td><td><code>          resId: url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 211" id="line211">
-<td>211</td><td></td><td>1</td><td><code>          partitionKey: partitionKey ?? PartitionKey.all,</code></td>
+<tr class="lineNoCov" title="Line 211" id="line211">
+<td>211</td><td></td><td>0</td><td><code>          partitionKey: partitionKey ?? PartitionKey.all,</code></td>
 </tr>
-<tr class="lineCov" title="Line 212" id="line212">
-<td>212</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 212" id="line212">
+<td>212</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 213" id="line213">
-<td>213</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 213" id="line213">
+<td>213</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 214" id="line214">
 <td>214</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 215" id="line215">
-<td>215</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 215" id="line215">
+<td>215</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 216" id="line216">
 <td>216</td><td></td><td></td><td><code></code></td>
@@ -710,17 +710,17 @@
 <tr class="noop" title="Line 217" id="line217">
 <td>217</td><td></td><td></td><td><code>  /// Loads documents from this container matching the provided [query].</code></td>
 </tr>
-<tr class="lineCov" title="Line 218" id="line218">
-<td>218</td><td></td><td>2</td><td><code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(Query query,</code></td>
+<tr class="lineNoCov" title="Line 218" id="line218">
+<td>218</td><td></td><td>0</td><td><code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(Query query,</code></td>
 </tr>
 <tr class="noop" title="Line 219" id="line219">
 <td>219</td><td></td><td></td><td><code>          {CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 220" id="line220">
-<td>220</td><td></td><td>3</td><td><code>      client.query&lt;T&gt;(</code></td>
+<tr class="lineNoCov" title="Line 220" id="line220">
+<td>220</td><td></td><td>0</td><td><code>      client.query&lt;T&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 221" id="line221">
-<td>221</td><td></td><td>3</td><td><code>        '$url/docs',</code></td>
+<tr class="lineNoCov" title="Line 221" id="line221">
+<td>221</td><td></td><td>0</td><td><code>        '$url/docs',</code></td>
 </tr>
 <tr class="noop" title="Line 222" id="line222">
 <td>222</td><td></td><td></td><td><code>        query,</code></td>
@@ -728,26 +728,26 @@
 <tr class="noop" title="Line 223" id="line223">
 <td>223</td><td></td><td></td><td><code>        'Documents',</code></td>
 </tr>
-<tr class="lineCov" title="Line 224" id="line224">
-<td>224</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 224" id="line224">
+<td>224</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 225" id="line225">
 <td>225</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 226" id="line226">
-<td>226</td><td></td><td>1</td><td><code>          resId: url,</code></td>
+<tr class="lineNoCov" title="Line 226" id="line226">
+<td>226</td><td></td><td>0</td><td><code>          resId: url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 227" id="line227">
-<td>227</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 227" id="line227">
+<td>227</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 228" id="line228">
-<td>228</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 228" id="line228">
+<td>228</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 229" id="line229">
 <td>229</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 230" id="line230">
-<td>230</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 230" id="line230">
+<td>230</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 231" id="line231">
 <td>231</td><td></td><td></td><td><code></code></td>
@@ -755,14 +755,14 @@
 <tr class="noop" title="Line 232" id="line232">
 <td>232</td><td></td><td></td><td><code>  /// Loads documents from this container matching the provided [query].</code></td>
 </tr>
-<tr class="lineCov" title="Line 233" id="line233">
-<td>233</td><td></td><td>2</td><td><code>  Future&lt;dynamic&gt; rawQuery(Query query, {CosmosDbPermission? permission}) =&gt;</code></td>
+<tr class="lineNoCov" title="Line 233" id="line233">
+<td>233</td><td></td><td>0</td><td><code>  Future&lt;dynamic&gt; rawQuery(Query query, {CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 234" id="line234">
-<td>234</td><td></td><td>3</td><td><code>      client.rawQuery(</code></td>
+<tr class="lineNoCov" title="Line 234" id="line234">
+<td>234</td><td></td><td>0</td><td><code>      client.rawQuery(</code></td>
 </tr>
-<tr class="lineCov" title="Line 235" id="line235">
-<td>235</td><td></td><td>3</td><td><code>        '$url/docs',</code></td>
+<tr class="lineNoCov" title="Line 235" id="line235">
+<td>235</td><td></td><td>0</td><td><code>        '$url/docs',</code></td>
 </tr>
 <tr class="noop" title="Line 236" id="line236">
 <td>236</td><td></td><td></td><td><code>        query,</code></td>
@@ -770,26 +770,26 @@
 <tr class="noop" title="Line 237" id="line237">
 <td>237</td><td></td><td></td><td><code>        'Documents',</code></td>
 </tr>
-<tr class="lineCov" title="Line 238" id="line238">
-<td>238</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 238" id="line238">
+<td>238</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 239" id="line239">
 <td>239</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 240" id="line240">
-<td>240</td><td></td><td>1</td><td><code>          resId: url,</code></td>
+<tr class="lineNoCov" title="Line 240" id="line240">
+<td>240</td><td></td><td>0</td><td><code>          resId: url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 241" id="line241">
-<td>241</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 241" id="line241">
+<td>241</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 242" id="line242">
-<td>242</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 242" id="line242">
+<td>242</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 243" id="line243">
 <td>243</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 244" id="line244">
-<td>244</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 244" id="line244">
+<td>244</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 245" id="line245">
 <td>245</td><td></td><td></td><td><code></code></td>
@@ -797,44 +797,44 @@
 <tr class="noop" title="Line 246" id="line246">
 <td>246</td><td></td><td></td><td><code>  /// Adds a new [document] to this container.</code></td>
 </tr>
-<tr class="lineCov" title="Line 247" id="line247">
-<td>247</td><td></td><td>2</td><td><code>  Future&lt;T&gt; add&lt;T extends BaseDocument&gt;(T document,</code></td>
+<tr class="lineNoCov" title="Line 247" id="line247">
+<td>247</td><td></td><td>0</td><td><code>  Future&lt;T&gt; add&lt;T extends BaseDocument&gt;(T document,</code></td>
 </tr>
 <tr class="noop" title="Line 248" id="line248">
 <td>248</td><td></td><td></td><td><code>          {PartitionKey? partitionKey, CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 249" id="line249">
-<td>249</td><td></td><td>3</td><td><code>      client.post(</code></td>
+<tr class="lineNoCov" title="Line 249" id="line249">
+<td>249</td><td></td><td>0</td><td><code>      client.post(</code></td>
 </tr>
-<tr class="lineCov" title="Line 250" id="line250">
-<td>250</td><td></td><td>3</td><td><code>        '$url/docs',</code></td>
+<tr class="lineNoCov" title="Line 250" id="line250">
+<td>250</td><td></td><td>0</td><td><code>        '$url/docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 251" id="line251">
-<td>251</td><td></td><td>1</td><td><code>        document,</code></td>
+<tr class="lineNoCov" title="Line 251" id="line251">
+<td>251</td><td></td><td>0</td><td><code>        document,</code></td>
 </tr>
-<tr class="lineCov" title="Line 252" id="line252">
-<td>252</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 252" id="line252">
+<td>252</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 253" id="line253">
 <td>253</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 254" id="line254">
-<td>254</td><td></td><td>1</td><td><code>          resId: url,</code></td>
+<tr class="lineNoCov" title="Line 254" id="line254">
+<td>254</td><td></td><td>0</td><td><code>          resId: url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 255" id="line255">
-<td>255</td><td></td><td>3</td><td><code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
+<tr class="lineNoCov" title="Line 255" id="line255">
+<td>255</td><td></td><td>0</td><td><code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
 </tr>
-<tr class="lineCov" title="Line 256" id="line256">
-<td>256</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 256" id="line256">
+<td>256</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 257" id="line257">
-<td>257</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 257" id="line257">
+<td>257</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 258" id="line258">
 <td>258</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 259" id="line259">
-<td>259</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 259" id="line259">
+<td>259</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 260" id="line260">
 <td>260</td><td></td><td></td><td><code></code></td>
@@ -842,47 +842,47 @@
 <tr class="noop" title="Line 261" id="line261">
 <td>261</td><td></td><td></td><td><code>  /// Adds or updates (replaces) a [document] in this container.</code></td>
 </tr>
-<tr class="lineCov" title="Line 262" id="line262">
-<td>262</td><td></td><td>2</td><td><code>  Future&lt;T&gt; upsert&lt;T extends BaseDocument&gt;(T document,</code></td>
+<tr class="lineNoCov" title="Line 262" id="line262">
+<td>262</td><td></td><td>0</td><td><code>  Future&lt;T&gt; upsert&lt;T extends BaseDocument&gt;(T document,</code></td>
 </tr>
 <tr class="noop" title="Line 263" id="line263">
 <td>263</td><td></td><td></td><td><code>          {PartitionKey? partitionKey, CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 264" id="line264">
-<td>264</td><td></td><td>3</td><td><code>      client.post(</code></td>
+<tr class="lineNoCov" title="Line 264" id="line264">
+<td>264</td><td></td><td>0</td><td><code>      client.post(</code></td>
 </tr>
-<tr class="lineCov" title="Line 265" id="line265">
-<td>265</td><td></td><td>3</td><td><code>        '$url/docs',</code></td>
+<tr class="lineNoCov" title="Line 265" id="line265">
+<td>265</td><td></td><td>0</td><td><code>        '$url/docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 266" id="line266">
-<td>266</td><td></td><td>1</td><td><code>        document,</code></td>
+<tr class="lineNoCov" title="Line 266" id="line266">
+<td>266</td><td></td><td>0</td><td><code>        document,</code></td>
 </tr>
-<tr class="lineCov" title="Line 267" id="line267">
-<td>267</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 267" id="line267">
+<td>267</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 268" id="line268">
 <td>268</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 269" id="line269">
-<td>269</td><td></td><td>1</td><td><code>          resId: url,</code></td>
+<tr class="lineNoCov" title="Line 269" id="line269">
+<td>269</td><td></td><td>0</td><td><code>          resId: url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 270" id="line270">
-<td>270</td><td></td><td>1</td><td><code>          headers: HttpHeader.isUpsert,</code></td>
+<tr class="lineNoCov" title="Line 270" id="line270">
+<td>270</td><td></td><td>0</td><td><code>          headers: HttpHeader.isUpsert,</code></td>
 </tr>
-<tr class="lineCov" title="Line 271" id="line271">
-<td>271</td><td></td><td>3</td><td><code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
+<tr class="lineNoCov" title="Line 271" id="line271">
+<td>271</td><td></td><td>0</td><td><code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
 </tr>
-<tr class="lineCov" title="Line 272" id="line272">
-<td>272</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 272" id="line272">
+<td>272</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 273" id="line273">
-<td>273</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 273" id="line273">
+<td>273</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 274" id="line274">
 <td>274</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 275" id="line275">
-<td>275</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 275" id="line275">
+<td>275</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 276" id="line276">
 <td>276</td><td></td><td></td><td><code></code></td>
@@ -893,8 +893,8 @@
 <tr class="noop" title="Line 278" id="line278">
 <td>278</td><td></td><td></td><td><code>  /// [EtagMixin], its [EtagMixin.etag] must be known.</code></td>
 </tr>
-<tr class="lineCov" title="Line 279" id="line279">
-<td>279</td><td></td><td>2</td><td><code>  Future&lt;T&gt; replace&lt;T extends BaseDocument&gt;(T document,</code></td>
+<tr class="lineNoCov" title="Line 279" id="line279">
+<td>279</td><td></td><td>0</td><td><code>  Future&lt;T&gt; replace&lt;T extends BaseDocument&gt;(T document,</code></td>
 </tr>
 <tr class="noop" title="Line 280" id="line280">
 <td>280</td><td></td><td></td><td><code>          {bool checkEtag = true,</code></td>
@@ -905,44 +905,44 @@
 <tr class="noop" title="Line 282" id="line282">
 <td>282</td><td></td><td></td><td><code>          CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 283" id="line283">
-<td>283</td><td></td><td>3</td><td><code>      client.put(</code></td>
+<tr class="lineNoCov" title="Line 283" id="line283">
+<td>283</td><td></td><td>0</td><td><code>      client.put(</code></td>
 </tr>
-<tr class="lineCov" title="Line 284" id="line284">
-<td>284</td><td></td><td>4</td><td><code>        '$url/docs/${document.id}',</code></td>
+<tr class="lineNoCov" title="Line 284" id="line284">
+<td>284</td><td></td><td>0</td><td><code>        '$url/docs/${document.id}',</code></td>
 </tr>
 <tr class="noop" title="Line 285" id="line285">
 <td>285</td><td></td><td></td><td><code>        document,</code></td>
 </tr>
-<tr class="lineCov" title="Line 286" id="line286">
-<td>286</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 286" id="line286">
+<td>286</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 287" id="line287">
 <td>287</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 288" id="line288">
-<td>288</td><td></td><td>2</td><td><code>          headers: (document is EtagMixin &amp;&amp; checkEtag)</code></td>
+<tr class="lineNoCov" title="Line 288" id="line288">
+<td>288</td><td></td><td>0</td><td><code>          headers: (document is EtagMixin &amp;&amp; checkEtag)</code></td>
 </tr>
-<tr class="lineCov" title="Line 289" id="line289">
-<td>289</td><td></td><td>3</td><td><code>              ? {HttpHeader.ifMatch: document.etag}</code></td>
+<tr class="lineNoCov" title="Line 289" id="line289">
+<td>289</td><td></td><td>0</td><td><code>              ? {HttpHeader.ifMatch: document.etag}</code></td>
 </tr>
 <tr class="noop" title="Line 290" id="line290">
 <td>290</td><td></td><td></td><td><code>              : null,</code></td>
 </tr>
-<tr class="lineCov" title="Line 291" id="line291">
-<td>291</td><td></td><td>3</td><td><code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
+<tr class="lineNoCov" title="Line 291" id="line291">
+<td>291</td><td></td><td>0</td><td><code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
 </tr>
-<tr class="lineCov" title="Line 292" id="line292">
-<td>292</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 292" id="line292">
+<td>292</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 293" id="line293">
-<td>293</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 293" id="line293">
+<td>293</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 294" id="line294">
 <td>294</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 295" id="line295">
-<td>295</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 295" id="line295">
+<td>295</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 296" id="line296">
 <td>296</td><td></td><td></td><td><code></code></td>
@@ -953,50 +953,50 @@
 <tr class="noop" title="Line 298" id="line298">
 <td>298</td><td></td><td></td><td><code>  /// operations.</code></td>
 </tr>
-<tr class="lineCov" title="Line 299" id="line299">
-<td>299</td><td></td><td>2</td><td><code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(T document, Patch patch,</code></td>
+<tr class="lineNoCov" title="Line 299" id="line299">
+<td>299</td><td></td><td>0</td><td><code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(T document, Patch patch,</code></td>
 </tr>
 <tr class="noop" title="Line 300" id="line300">
 <td>300</td><td></td><td></td><td><code>          {PartitionKey? partitionKey, CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 301" id="line301">
-<td>301</td><td></td><td>3</td><td><code>      client.patch(</code></td>
+<tr class="lineNoCov" title="Line 301" id="line301">
+<td>301</td><td></td><td>0</td><td><code>      client.patch(</code></td>
 </tr>
-<tr class="lineCov" title="Line 302" id="line302">
-<td>302</td><td></td><td>4</td><td><code>        '$url/docs/${document.id}',</code></td>
+<tr class="lineNoCov" title="Line 302" id="line302">
+<td>302</td><td></td><td>0</td><td><code>        '$url/docs/${document.id}',</code></td>
 </tr>
 <tr class="noop" title="Line 303" id="line303">
 <td>303</td><td></td><td></td><td><code>        patch,</code></td>
 </tr>
-<tr class="lineCov" title="Line 304" id="line304">
-<td>304</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 304" id="line304">
+<td>304</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 305" id="line305">
 <td>305</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 306" id="line306">
-<td>306</td><td></td><td>1</td><td><code>          headers: HttpHeader.patchPayload,</code></td>
+<tr class="lineNoCov" title="Line 306" id="line306">
+<td>306</td><td></td><td>0</td><td><code>          headers: HttpHeader.patchPayload,</code></td>
 </tr>
 <tr class="noop" title="Line 307" id="line307">
 <td>307</td><td></td><td></td><td><code>          partitionKey: partitionKey ??</code></td>
 </tr>
-<tr class="lineCov" title="Line 308" id="line308">
-<td>308</td><td></td><td>3</td><td><code>              partitionKeySpec.from(document) ??</code></td>
+<tr class="lineNoCov" title="Line 308" id="line308">
+<td>308</td><td></td><td>0</td><td><code>              partitionKeySpec.from(document) ??</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 309" id="line309">
 <td>309</td><td></td><td>0</td><td><code>              PartitionKey.all,</code></td>
 </tr>
-<tr class="lineCov" title="Line 310" id="line310">
-<td>310</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 310" id="line310">
+<td>310</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 311" id="line311">
-<td>311</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 311" id="line311">
+<td>311</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 312" id="line312">
 <td>312</td><td></td><td></td><td><code>        ),</code></td>
 </tr>
-<tr class="lineCov" title="Line 313" id="line313">
-<td>313</td><td></td><td>1</td><td><code>      );</code></td>
+<tr class="lineNoCov" title="Line 313" id="line313">
+<td>313</td><td></td><td>0</td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 314" id="line314">
 <td>314</td><td></td><td></td><td><code></code></td>
@@ -1016,8 +1016,8 @@
 <tr class="noop" title="Line 319" id="line319">
 <td>319</td><td></td><td></td><td><code>  /// its [EtagMixin.etag] must be known.</code></td>
 </tr>
-<tr class="lineCov" title="Line 320" id="line320">
-<td>320</td><td></td><td>2</td><td><code>  Future&lt;bool&gt; delete(</code></td>
+<tr class="lineNoCov" title="Line 320" id="line320">
+<td>320</td><td></td><td>0</td><td><code>  Future&lt;bool&gt; delete(</code></td>
 </tr>
 <tr class="noop" title="Line 321" id="line321">
 <td>321</td><td></td><td></td><td><code>      {String? id,</code></td>
@@ -1037,8 +1037,8 @@
 <tr class="noop" title="Line 326" id="line326">
 <td>326</td><td></td><td></td><td><code>      CosmosDbPermission? permission}) {</code></td>
 </tr>
-<tr class="lineCov" title="Line 327" id="line327">
-<td>327</td><td></td><td>1</td><td><code>    if (document == null &amp;&amp; id == null) {</code></td>
+<tr class="lineNoCov" title="Line 327" id="line327">
+<td>327</td><td></td><td>0</td><td><code>    if (document == null &amp;&amp; id == null) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 328" id="line328">
 <td>328</td><td></td><td>0</td><td><code>      throw Exception();</code></td>
@@ -1046,17 +1046,17 @@
 <tr class="noop" title="Line 329" id="line329">
 <td>329</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="lineCov" title="Line 330" id="line330">
-<td>330</td><td></td><td>1</td><td><code>    document ??= DocumentWithId(id);</code></td>
+<tr class="lineNoCov" title="Line 330" id="line330">
+<td>330</td><td></td><td>0</td><td><code>    document ??= DocumentWithId(id);</code></td>
 </tr>
-<tr class="lineCov" title="Line 331" id="line331">
-<td>331</td><td></td><td>3</td><td><code>    return client.delete(</code></td>
+<tr class="lineNoCov" title="Line 331" id="line331">
+<td>331</td><td></td><td>0</td><td><code>    return client.delete(</code></td>
 </tr>
-<tr class="lineCov" title="Line 332" id="line332">
-<td>332</td><td></td><td>4</td><td><code>      '$url/docs/${document.id}',</code></td>
+<tr class="lineNoCov" title="Line 332" id="line332">
+<td>332</td><td></td><td>0</td><td><code>      '$url/docs/${document.id}',</code></td>
 </tr>
-<tr class="lineCov" title="Line 333" id="line333">
-<td>333</td><td></td><td>2</td><td><code>      Context(</code></td>
+<tr class="lineNoCov" title="Line 333" id="line333">
+<td>333</td><td></td><td>0</td><td><code>      Context(</code></td>
 </tr>
 <tr class="noop" title="Line 334" id="line334">
 <td>334</td><td></td><td></td><td><code>        type: 'docs',</code></td>
@@ -1064,23 +1064,23 @@
 <tr class="noop" title="Line 335" id="line335">
 <td>335</td><td></td><td></td><td><code>        throwOnNotFound: throwOnNotFound,</code></td>
 </tr>
-<tr class="lineCov" title="Line 336" id="line336">
-<td>336</td><td></td><td>2</td><td><code>        headers: (document is EtagMixin &amp;&amp; checkEtag)</code></td>
+<tr class="lineNoCov" title="Line 336" id="line336">
+<td>336</td><td></td><td>0</td><td><code>        headers: (document is EtagMixin &amp;&amp; checkEtag)</code></td>
 </tr>
-<tr class="lineCov" title="Line 337" id="line337">
-<td>337</td><td></td><td>3</td><td><code>            ? {HttpHeader.ifMatch: document.etag}</code></td>
+<tr class="lineNoCov" title="Line 337" id="line337">
+<td>337</td><td></td><td>0</td><td><code>            ? {HttpHeader.ifMatch: document.etag}</code></td>
 </tr>
 <tr class="noop" title="Line 338" id="line338">
 <td>338</td><td></td><td></td><td><code>            : null,</code></td>
 </tr>
-<tr class="lineCov" title="Line 339" id="line339">
-<td>339</td><td></td><td>3</td><td><code>        partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
+<tr class="lineNoCov" title="Line 339" id="line339">
+<td>339</td><td></td><td>0</td><td><code>        partitionKey: partitionKey ?? partitionKeySpec.from(document),</code></td>
 </tr>
-<tr class="lineCov" title="Line 340" id="line340">
-<td>340</td><td></td><td>2</td><td><code>        token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 340" id="line340">
+<td>340</td><td></td><td>0</td><td><code>        token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 341" id="line341">
-<td>341</td><td></td><td>2</td><td><code>        onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 341" id="line341">
+<td>341</td><td></td><td>0</td><td><code>        onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 342" id="line342">
 <td>342</td><td></td><td></td><td><code>      ),</code></td>
@@ -1088,8 +1088,8 @@
 <tr class="noop" title="Line 343" id="line343">
 <td>343</td><td></td><td></td><td><code>    );</code></td>
 </tr>
-<tr class="lineCov" title="Line 344" id="line344">
-<td>344</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="lineNoCov" title="Line 344" id="line344">
+<td>344</td><td></td><td>0</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 345" id="line345">
 <td>345</td><td></td><td></td><td><code></code></td>
@@ -1097,8 +1097,8 @@
 <tr class="noop" title="Line 346" id="line346">
 <td>346</td><td></td><td></td><td><code>  /// Prepare a batch for this container.</code></td>
 </tr>
-<tr class="lineCov" title="Line 347" id="line347">
-<td>347</td><td></td><td>1</td><td><code>  TransactionalBatch&lt;T&gt; prepareBatch&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineNoCov" title="Line 347" id="line347">
+<td>347</td><td></td><td>0</td><td><code>  TransactionalBatch&lt;T&gt; prepareBatch&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 348" id="line348">
 <td>348</td><td></td><td></td><td><code>          {bool isAtomic = false, bool continueOnError = true}) =&gt;</code></td>
@@ -1106,11 +1106,11 @@
 <tr class="noop" title="Line 349" id="line349">
 <td>349</td><td></td><td></td><td><code>      isAtomic</code></td>
 </tr>
-<tr class="lineCov" title="Line 350" id="line350">
-<td>350</td><td></td><td>1</td><td><code>          ? TransactionalBatch&lt;T&gt;.atomic(this)</code></td>
+<tr class="lineNoCov" title="Line 350" id="line350">
+<td>350</td><td></td><td>0</td><td><code>          ? TransactionalBatch&lt;T&gt;.atomic(this)</code></td>
 </tr>
-<tr class="lineCov" title="Line 351" id="line351">
-<td>351</td><td></td><td>1</td><td><code>          : TransactionalBatch&lt;T&gt;(this, continueOnError: continueOnError);</code></td>
+<tr class="lineNoCov" title="Line 351" id="line351">
+<td>351</td><td></td><td>0</td><td><code>          : TransactionalBatch&lt;T&gt;(this, continueOnError: continueOnError);</code></td>
 </tr>
 <tr class="noop" title="Line 352" id="line352">
 <td>352</td><td></td><td></td><td><code></code></td>
@@ -1118,8 +1118,8 @@
 <tr class="noop" title="Line 353" id="line353">
 <td>353</td><td></td><td></td><td><code>  /// Executes the batch in this container.</code></td>
 </tr>
-<tr class="lineCov" title="Line 354" id="line354">
-<td>354</td><td></td><td>1</td><td><code>  Future&lt;BatchResponse&lt;T&gt;&gt; execute&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineNoCov" title="Line 354" id="line354">
+<td>354</td><td></td><td>0</td><td><code>  Future&lt;BatchResponse&lt;T&gt;&gt; execute&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 355" id="line355">
 <td>355</td><td></td><td></td><td><code>          TransactionalBatch&lt;T&gt; batch,</code></td>
@@ -1127,29 +1127,29 @@
 <tr class="noop" title="Line 356" id="line356">
 <td>356</td><td></td><td></td><td><code>          {CosmosDbPermission? permission}) =&gt;</code></td>
 </tr>
-<tr class="lineCov" title="Line 357" id="line357">
-<td>357</td><td></td><td>3</td><td><code>      client.batch&lt;T&gt;(</code></td>
+<tr class="lineNoCov" title="Line 357" id="line357">
+<td>357</td><td></td><td>0</td><td><code>      client.batch&lt;T&gt;(</code></td>
 </tr>
-<tr class="lineCov" title="Line 358" id="line358">
-<td>358</td><td></td><td>3</td><td><code>        '$url/docs',</code></td>
+<tr class="lineNoCov" title="Line 358" id="line358">
+<td>358</td><td></td><td>0</td><td><code>        '$url/docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 359" id="line359">
-<td>359</td><td></td><td>1</td><td><code>        batch,</code></td>
+<tr class="lineNoCov" title="Line 359" id="line359">
+<td>359</td><td></td><td>0</td><td><code>        batch,</code></td>
 </tr>
-<tr class="lineCov" title="Line 360" id="line360">
-<td>360</td><td></td><td>2</td><td><code>        Context(</code></td>
+<tr class="lineNoCov" title="Line 360" id="line360">
+<td>360</td><td></td><td>0</td><td><code>        Context(</code></td>
 </tr>
 <tr class="noop" title="Line 361" id="line361">
 <td>361</td><td></td><td></td><td><code>          type: 'docs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 362" id="line362">
-<td>362</td><td></td><td>1</td><td><code>          resId: url,</code></td>
+<tr class="lineNoCov" title="Line 362" id="line362">
+<td>362</td><td></td><td>0</td><td><code>          resId: url,</code></td>
 </tr>
-<tr class="lineCov" title="Line 363" id="line363">
-<td>363</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
+<tr class="lineNoCov" title="Line 363" id="line363">
+<td>363</td><td></td><td>0</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 364" id="line364">
-<td>364</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>
+<tr class="lineNoCov" title="Line 364" id="line364">
+<td>364</td><td></td><td>0</td><td><code>          onForbidden: _refreshPermission,</code></td>
 </tr>
 <tr class="noop" title="Line 365" id="line365">
 <td>365</td><td></td><td></td><td><code>        ),</code></td>
@@ -1169,14 +1169,14 @@
 <tr class="noop" title="Line 370" id="line370">
 <td>370</td><td></td><td></td><td><code>extension ContainerExt on CosmosDbContainer {</code></td>
 </tr>
-<tr class="lineCov" title="Line 371" id="line371">
-<td>371</td><td></td><td>3</td><td><code>  void setExists(bool exists) =&gt; _exists = exists;</code></td>
+<tr class="lineNoCov" title="Line 371" id="line371">
+<td>371</td><td></td><td>0</td><td><code>  void setExists(bool exists) =&gt; _exists = exists;</code></td>
 </tr>
 <tr class="noop" title="Line 372" id="line372">
 <td>372</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 373" id="line373">
-<td>373</td><td></td><td>4</td><td><code>  Client get client =&gt; database.client;</code></td>
+<tr class="lineNoCov" title="Line 373" id="line373">
+<td>373</td><td></td><td>0</td><td><code>  Client get client =&gt; database.client;</code></td>
 </tr>
 <tr class="noop" title="Line 374" id="line374">
 <td>374</td><td></td><td></td><td><code>}</code></td>

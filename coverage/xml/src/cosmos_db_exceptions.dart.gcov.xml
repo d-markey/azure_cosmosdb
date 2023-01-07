@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_exceptions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8" lines-covered="52" lines-valid="65" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_exceptions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.13846155" lines-covered="9" lines-valid="65" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -50,9 +50,9 @@
 <line>
 <code>class ApplicationException extends InternalException {</code>
 </line>
-<line hits="3">
+<line hits="2">
 <code>  ApplicationException(String message) : super._(message);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -88,17 +88,14 @@
 <line>
 <code>abstract class ContextualizedException extends InternalException {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  ContextualizedException._(String method, this.url, String? message)</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      : method = method.toUpperCase(),</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>        super._(message);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -145,122 +142,99 @@
 <line>
 <code>class CosmosDbException extends ContextualizedException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  CosmosDbException._(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String method, String url, this.statusCode, String? message)</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      : super._(method, url, message ?? 'Error $statusCode');</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  factory CosmosDbException._internal(String method, String url, int statusCode,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      [String? message]) {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    message ??= 'Error $statusCode';</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>    switch (statusCode) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      case HttpStatusCode.notModified:</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        return NotModifiedException._('', '', message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      case HttpStatusCode.unauthorized:</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        return UnauthorizedException._('', '', message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      case HttpStatusCode.forbidden:</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        return ForbiddenException._('', '', message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      case HttpStatusCode.notFound:</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        return NotFoundException._('', '', message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      case HttpStatusCode.conflict:</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        return ConflictException._('', '', message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      case HttpStatusCode.preconditionFailure:</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        return PreconditionFailureException._('', '', message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      default:</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        return CosmosDbException._('', '', statusCode, message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  factory CosmosDbException(int statusCode, [String? message]) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>      CosmosDbException._internal('', '', statusCode, message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>  CosmosDbException _withContext(String method, String url) =&gt;</code>
 </line>
 <line hits="1">
-<code>  CosmosDbException _withContext(String method, String url) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
 <code>      CosmosDbException._internal(method, url, statusCode, message);</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -277,13 +251,11 @@
 <line>
 <code>class NotModifiedException extends CosmosDbException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  NotModifiedException._(String method, String url, [String? message])</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : super._(method, url, HttpStatusCode.notModified, message);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -294,13 +266,11 @@
 <line>
 <code>class UnauthorizedException extends CosmosDbException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  UnauthorizedException._(String method, String url, [String? message])</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : super._(method, url, HttpStatusCode.unauthorized, message);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -311,13 +281,11 @@
 <line>
 <code>class ForbiddenException extends CosmosDbException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  ForbiddenException._(String method, String url, [String? message])</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : super._(method, url, HttpStatusCode.forbidden, message);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -328,13 +296,11 @@
 <line>
 <code>class ConflictException extends CosmosDbException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  ConflictException._(String method, String url, [String? message])</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : super._(method, url, HttpStatusCode.conflict, message);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -345,13 +311,11 @@
 <line>
 <code>class NotFoundException extends CosmosDbException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  NotFoundException._(String method, String url, [String? message])</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : super._(method, url, HttpStatusCode.notFound, message);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -362,13 +326,11 @@
 <line>
 <code>class PreconditionFailureException extends CosmosDbException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  PreconditionFailureException._(String method, String url, [String? message])</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      : super._(method, url, HttpStatusCode.preconditionFailure, message);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -379,35 +341,30 @@
 <line>
 <code>class UnknownDocumentTypeException extends ContextualizedException {</code>
 </line>
-<line hits="2">
+<line hits="0">
 <code>  UnknownDocumentTypeException._(String method, String url, this.docType)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>      : super._(method, url, 'Unknown document type $docType');</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  UnknownDocumentTypeException(Type docType) : this._('', '', docType);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  @override</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>  UnknownDocumentTypeException _withContext(String method, String url) =&gt;</code>
 </line>
 <line hits="1">
-<code>  UnknownDocumentTypeException _withContext(String method, String url) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
 <code>      UnknownDocumentTypeException._(method, url, docType);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -465,13 +422,13 @@
 <code>  Future&lt;T&gt; rethrowContextualizedException(HttpCall call) =&gt;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>      onError&lt;ContextualizedException&gt;((error, stackTrace) =&gt;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="1">
 <code>          throw error._withContext(call.method.name, call.uri));</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

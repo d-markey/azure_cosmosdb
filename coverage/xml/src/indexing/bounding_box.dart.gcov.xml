@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="bounding_box.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="7" lines-valid="7" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="bounding_box.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="7" package="/src/indexing" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>/// Class representing a bounding box for spatial indexing.</code>
@@ -7,9 +7,8 @@
 <line>
 <code>class BoundingBox {</code>
 </line>
-<line hits="1">
+<line hits="0">
 <code>  BoundingBox(this.xmin, this.ymin, this.xmax, this.ymax);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -29,29 +28,23 @@
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="0">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        'xmin': xmin,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        'ymin': ymin,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        'xmax': xmax,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="0">
 <code>        'ymax': ymax,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>      };</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
