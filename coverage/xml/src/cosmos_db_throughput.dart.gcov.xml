@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.05263158" lines-covered="1" lines-valid="19" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.68421054" lines-covered="13" lines-valid="19" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -25,20 +25,24 @@
 <line>
 <code>class CosmosDbThroughput {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  CosmosDbThroughput(int throughput)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      : header = {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          HttpHeader.msOfferThroughput: throughput.toString(),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        } {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    if (throughput &lt; _min) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      throw ApplicationException(</code>
@@ -49,8 +53,9 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>    if (throughput % 100 != 0) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      throw ApplicationException(</code>
@@ -61,29 +66,34 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  CosmosDbThroughput.autoScale(int maxThroughput)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      : header = {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          HttpHeader.msCosmosOfferAutopilotSettings:</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>              jsonEncode({'maxThroughput': maxThroughput}),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        } {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    if (maxThroughput &lt; _minAutoScale) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      throw ApplicationException(</code>
@@ -94,8 +104,9 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>    if (maxThroughput % 1000 != 0) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      throw ApplicationException(</code>
@@ -106,15 +117,16 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="4">
 <code>  static final minimum = CosmosDbThroughput(400);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
