@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="partition_key.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8" lines-covered="4" lines-valid="5" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="partition_key.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="6" lines-valid="6" package="/src/partition" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -35,8 +35,9 @@
 <line>
 <code>  /// Partition key with a single property.</code>
 </line>
-<line hits="0">
+<line hits="5">
 <code>  PartitionKey(String value) : this._(List.unmodifiable([value]));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -44,9 +45,9 @@
 <line>
 <code>  /// Creates a partition key for multiple keys.</code>
 </line>
-<line hits="3">
+<line hits="4">
 <code>  PartitionKey.multi(List&lt;dynamic&gt; values) : this._(List.unmodifiable(values));</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -63,16 +64,17 @@
 <line>
 <code>  /// The HTTP header representing the target partition.</code>
 </line>
-<line hits="2">
-<code>  Map&lt;String, String&gt; get header =&gt; (this == all)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>      ? HttpHeader.enableCrossPartition</code>
-</line>
 <line hits="3">
-<code>      : {HttpHeader.msDocumentDbPartitionKey: jsonEncode(values)};</code>
+<code>  Map&lt;String, String&gt; get header =&gt; (this == all)</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      ? HttpHeader.enableCrossPartition</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      : {HttpHeader.msDocumentDbPartitionKey: jsonEncode(values)};</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

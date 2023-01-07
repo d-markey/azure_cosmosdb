@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="_authorization.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="9" lines-valid="9" package="/src/_internal" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="_authorization.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="12" lines-valid="12" package="/src/_internal" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -14,7 +14,7 @@
 <code/>
 </line>
 <line>
-<code>import '../_internal/_http_status_codes.dart';</code>
+<code>import '../client/http_status_codes.dart';</code>
 </line>
 <line>
 <code>import '../cosmos_db_exceptions.dart';</code>
@@ -38,9 +38,9 @@
 <line>
 <code>    if (key == null) {</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>      throw CosmosDbException(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        HttpStatusCode.unauthorized,</code>
@@ -54,17 +54,17 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="3">
+<line hits="4">
 <code>    date = DateTime.now().toImfFixedString();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    final payload = '$method\n$type\n$resId\n${date.toLowerCase()}\n\n';</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
-<code>    final signature = base64Encode(key.convert(utf8.encode(payload)).bytes);</code>
+<code>    final payload = '$method\n$type\n$resId\n${date.toLowerCase()}\n\n';</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>    final signature = base64Encode(key.convert(utf8.encode(payload)).bytes);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
 <code>    token = Uri.encodeComponent('type=master&amp;ver=1.0&amp;sig=$signature');</code>
@@ -76,29 +76,32 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>  Authorization.fromToken(String token) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="4">
 <code>    date = DateTime.now().toImfFixedString();</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>    this.token = Uri.encodeComponent(token);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line>
+<line hits="1">
 <code>  late final String date;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>  late final String token;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

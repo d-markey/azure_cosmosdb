@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="indexing_mode.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="indexing_mode.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/indexing" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>/// Constants for indexing modes.</code>
@@ -33,7 +33,7 @@
 <code>  /// Lazy mode. Lazy indexing is not supported in serverless mode, and new</code>
 </line>
 <line>
-<code>  /// collections cannot select lazy indexing unless an exemption was granted</code>
+<code>  /// containers cannot select lazy indexing unless an exemption was granted</code>
 </line>
 <line>
 <code>  /// by Microsoft.</code>
@@ -42,7 +42,7 @@
 <code>  @Deprecated(</code>
 </line>
 <line>
-<code>      'Lazy indexing is not supported in serverless mode, and new collections cannot select lazy indexing unless an exemption was granted by Microsoft')</code>
+<code>      'Lazy indexing is not supported in serverless mode, and new containers cannot select lazy indexing unless an exemption was granted by Microsoft')</code>
 </line>
 <line>
 <code>  static const lazy = IndexingMode._('lazy');</code>

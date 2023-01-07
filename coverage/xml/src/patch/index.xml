@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.5986842" lines-covered="91" lines-valid="152" package="/src/patch" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9891892" lines-covered="183" lines-valid="185" package="/src/patch" testname="lcov.info" version="1.5">
 <sources>
-<source branches-hit="0" branches-valid="0" filename="patch.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="44" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib"/>
-<source branches-hit="0" branches-valid="0" filename="patch_operation.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="18" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="patch.dart" functions-hit="0" functions-valid="0" lines-hit="55" lines-valid="57" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="55" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="tokenizer.dart" functions-hit="0" functions-valid="0" lines-hit="90" lines-valid="90" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="90" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="patch_operation.dart" functions-hit="0" functions-valid="0" lines-hit="19" lines-valid="19" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="19" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="tokenizer.dart" functions-hit="0" functions-valid="0" lines-hit="109" lines-valid="109" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="109" name="&lt;unnamed&gt;"/>
 </source>
 </sources>
 <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>

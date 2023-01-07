@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="partition_key_range.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="9" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="partition_key_range.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="12" package="/src/partition" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -8,7 +8,7 @@
 <code/>
 </line>
 <line>
-<code>import 'package:azure_cosmosdb/azure_cosmosdb.dart';</code>
+<code>import '../base_document.dart';</code>
 </line>
 <line>
 <code/>
@@ -46,7 +46,7 @@
 <line hits="0">
 <code>  @override</code>
 </line>
-<line>
+<line hits="0">
 <code>  dynamic toJson() =&gt;</code>
 </line>
 <line hits="0">
@@ -65,21 +65,21 @@
 <code/>
 </line>
 <line hits="0">
-<code>  static PartitionKeyRange fromJson(dynamic body) {</code>
+<code>  static PartitionKeyRange fromJson(dynamic json) {</code>
 </line>
 <line hits="0">
 <code>    final pkRange = PartitionKeyRange(</code>
 </line>
 <line hits="0">
-<code>        body['id'], body['minInclusive'], body['maxExclusive']);</code>
+<code>        json['id'], json['minInclusive'], json['maxExclusive']);</code>
 </line>
 <line hits="0">
-<code>    pkRange.setEtag(body);</code>
+<code>    pkRange.setEtag(json);</code>
 </line>
-<line>
+<line hits="0">
 <code>    return pkRange;</code>
 </line>
-<line>
+<line hits="0">
 <code>  }</code>
 </line>
 <line>

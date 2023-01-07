@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-04</dd>
+<dd>2023-01-07</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>17</td><td>18</td><td class="high">94.4%</td>
+<th scope="row">Lines</th><td>21</td><td>22</td><td class="high">95.5%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -96,19 +96,19 @@
 <td>12</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>1</td><td><code>  static PermissionMode parse(String name) {</code></td>
+<td>13</td><td></td><td>2</td><td><code>  static PermissionMode parse(String name) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>2</td><td><code>    if (name == read.name) return read;</code></td>
+<td>14</td><td></td><td>3</td><td><code>    if (name == read.name) return read;</code></td>
 </tr>
 <tr class="lineCov" title="Line 15" id="line15">
-<td>15</td><td></td><td>2</td><td><code>    if (name == all.name) return all;</code></td>
+<td>15</td><td></td><td>3</td><td><code>    if (name == all.name) return all;</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 16" id="line16">
 <td>16</td><td></td><td>0</td><td><code>    throw BadResponseException('Unsupported permission mode');</code></td>
 </tr>
-<tr class="noop" title="Line 17" id="line17">
-<td>17</td><td></td><td></td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 17" id="line17">
+<td>17</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 18" id="line18">
 <td>18</td><td></td><td></td><td><code>}</code></td>
@@ -123,7 +123,7 @@
 <td>21</td><td></td><td></td><td><code>class CosmosDbPermission extends BaseDocument with EtagMixin {</code></td>
 </tr>
 <tr class="lineCov" title="Line 22" id="line22">
-<td>22</td><td></td><td>1</td><td><code>  CosmosDbPermission(this.id, this.mode, this.resource, [this.token]);</code></td>
+<td>22</td><td></td><td>2</td><td><code>  CosmosDbPermission(this.id, this.mode, this.resource, [this.token]);</code></td>
 </tr>
 <tr class="noop" title="Line 23" id="line23">
 <td>23</td><td></td><td></td><td><code></code></td>
@@ -168,19 +168,19 @@
 <td>36</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
 <tr class="lineCov" title="Line 37" id="line37">
-<td>37</td><td></td><td>1</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code></td>
+<td>37</td><td></td><td>2</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code></td>
 </tr>
 <tr class="lineCov" title="Line 38" id="line38">
-<td>38</td><td></td><td>1</td><td><code>        'id': id,</code></td>
+<td>38</td><td></td><td>2</td><td><code>        'id': id,</code></td>
 </tr>
 <tr class="lineCov" title="Line 39" id="line39">
-<td>39</td><td></td><td>2</td><td><code>        'permissionMode': mode.name,</code></td>
+<td>39</td><td></td><td>3</td><td><code>        'permissionMode': mode.name,</code></td>
 </tr>
 <tr class="lineCov" title="Line 40" id="line40">
-<td>40</td><td></td><td>1</td><td><code>        'resource': resource,</code></td>
+<td>40</td><td></td><td>2</td><td><code>        'resource': resource,</code></td>
 </tr>
-<tr class="noop" title="Line 41" id="line41">
-<td>41</td><td></td><td></td><td><code>      };</code></td>
+<tr class="lineCov" title="Line 41" id="line41">
+<td>41</td><td></td><td>1</td><td><code>      };</code></td>
 </tr>
 <tr class="noop" title="Line 42" id="line42">
 <td>42</td><td></td><td></td><td><code></code></td>
@@ -189,31 +189,31 @@
 <td>43</td><td></td><td></td><td><code>  /// Builds a [CosmosDbPermission] from a CosmosDB JSON object.</code></td>
 </tr>
 <tr class="lineCov" title="Line 44" id="line44">
-<td>44</td><td></td><td>1</td><td><code>  static CosmosDbPermission build(Map json) {</code></td>
+<td>44</td><td></td><td>2</td><td><code>  static CosmosDbPermission build(Map json) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 45" id="line45">
 <td>45</td><td></td><td>1</td><td><code>    final permission = CosmosDbPermission(</code></td>
 </tr>
 <tr class="lineCov" title="Line 46" id="line46">
-<td>46</td><td></td><td>1</td><td><code>        json['id'],</code></td>
+<td>46</td><td></td><td>2</td><td><code>        json['id'],</code></td>
 </tr>
 <tr class="lineCov" title="Line 47" id="line47">
-<td>47</td><td></td><td>2</td><td><code>        PermissionMode.parse(json['permissionMode']),</code></td>
+<td>47</td><td></td><td>3</td><td><code>        PermissionMode.parse(json['permissionMode']),</code></td>
 </tr>
 <tr class="lineCov" title="Line 48" id="line48">
-<td>48</td><td></td><td>1</td><td><code>        json['resource'],</code></td>
+<td>48</td><td></td><td>2</td><td><code>        json['resource'],</code></td>
 </tr>
 <tr class="lineCov" title="Line 49" id="line49">
-<td>49</td><td></td><td>1</td><td><code>        json['_token']);</code></td>
+<td>49</td><td></td><td>2</td><td><code>        json['_token']);</code></td>
 </tr>
 <tr class="lineCov" title="Line 50" id="line50">
 <td>50</td><td></td><td>1</td><td><code>    permission.setEtag(json);</code></td>
 </tr>
-<tr class="noop" title="Line 51" id="line51">
-<td>51</td><td></td><td></td><td><code>    return permission;</code></td>
+<tr class="lineCov" title="Line 51" id="line51">
+<td>51</td><td></td><td>1</td><td><code>    return permission;</code></td>
 </tr>
-<tr class="noop" title="Line 52" id="line52">
-<td>52</td><td></td><td></td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 52" id="line52">
+<td>52</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 53" id="line53">
 <td>53</td><td></td><td></td><td><code>}</code></td>

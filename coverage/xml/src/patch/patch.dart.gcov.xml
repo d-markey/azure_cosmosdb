@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="patch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="44" package="/src/patch" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="patch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9649123" lines-covered="55" lines-valid="57" package="/src/patch" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -19,107 +19,134 @@
 <line>
 <code>  String? _condition;</code>
 </line>
-<line>
+<line hits="1">
 <code>  final _ops = &lt;PatchOperation&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>  Map&lt;String, dynamic&gt;? _parameters;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  void setCondition(String condition) =&gt; _condition = condition;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  void withParam(String name, dynamic value) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      (_parameters ??= {})[name] = value;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  String _getCondition() {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    var cond = _condition!;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    if (_parameters != null) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      final parser = Tokenizer(cond);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      final parts = &lt;String&gt;[];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      var needSpace = false;</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      for (var token in parser.getTokens(_parameters)) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        switch (token.type) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          case Token.parameterValue:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          case Token.identifier:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>            if (needSpace) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>              parts.add(' ');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            }</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>            parts.add(token.text);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>            needSpace = true;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>            break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          case Token.number:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          case Token.string:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>            if (needSpace) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>              parts.add(' ');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            }</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>            parts.add(token.text);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            needSpace = true;</code>
 </line>
-<line>
+<line hits="1">
 <code>            break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          case Token.separator:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>            if (token.text == ':') {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>              parts.add(' ');</code>
@@ -127,35 +154,44 @@
 <line>
 <code>            }</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>            parts.add(token.text);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="5">
 <code>            needSpace = (token.text == ',' || token.text == ':');</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>            break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          case Token.operator:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>            needSpace = (token.text != '.');</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>            if (needSpace) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>              parts.add(' ');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            }</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>            parts.add(token.text);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>            break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        }</code>
@@ -163,68 +199,82 @@
 <line>
 <code>      }</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      cond = parts.join();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line>
+<line hits="1">
 <code>    return cond;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void add(String path, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      _ops.add(PatchOperation.add(path, value));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void set(String path, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      _ops.add(PatchOperation.set(path, value));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void replace(String path, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      _ops.add(PatchOperation.replace(path, value));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void increment(String path, [num value = 1]) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      _ops.add(PatchOperation.incr(path, value));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void decrement(String path, [num value = 1]) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      _ops.add(PatchOperation.decr(path, value));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="5">
 <code>  void remove(String path) =&gt; _ops.add(PatchOperation.remove(path));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -238,20 +288,25 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>        if (_condition != null) 'condition': _getCondition(),</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="7">
 <code>        'operations': _ops.map((o) =&gt; o.toJson()).toList(),</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

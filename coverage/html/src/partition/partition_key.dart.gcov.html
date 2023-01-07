@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-04</dd>
+<dd>2023-01-07</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>4</td><td>5</td><td class="med">80.0%</td>
+<th scope="row">Lines</th><td>6</td><td>6</td><td class="high">100.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -92,8 +92,8 @@
 <tr class="noop" title="Line 11" id="line11">
 <td>11</td><td></td><td></td><td><code>  /// Partition key with a single property.</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 12" id="line12">
-<td>12</td><td></td><td>0</td><td><code>  PartitionKey(String value) : this._(List.unmodifiable([value]));</code></td>
+<tr class="lineCov" title="Line 12" id="line12">
+<td>12</td><td></td><td>5</td><td><code>  PartitionKey(String value) : this._(List.unmodifiable([value]));</code></td>
 </tr>
 <tr class="noop" title="Line 13" id="line13">
 <td>13</td><td></td><td></td><td><code></code></td>
@@ -102,7 +102,7 @@
 <td>14</td><td></td><td></td><td><code>  /// Creates a partition key for multiple keys.</code></td>
 </tr>
 <tr class="lineCov" title="Line 15" id="line15">
-<td>15</td><td></td><td>3</td><td><code>  PartitionKey.multi(List&lt;dynamic&gt; values) : this._(List.unmodifiable(values));</code></td>
+<td>15</td><td></td><td>4</td><td><code>  PartitionKey.multi(List&lt;dynamic&gt; values) : this._(List.unmodifiable(values));</code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
 <td>16</td><td></td><td></td><td><code></code></td>
@@ -120,13 +120,13 @@
 <td>20</td><td></td><td></td><td><code>  /// The HTTP header representing the target partition.</code></td>
 </tr>
 <tr class="lineCov" title="Line 21" id="line21">
-<td>21</td><td></td><td>2</td><td><code>  Map&lt;String, String&gt; get header =&gt; (this == all)</code></td>
+<td>21</td><td></td><td>3</td><td><code>  Map&lt;String, String&gt; get header =&gt; (this == all)</code></td>
 </tr>
-<tr class="noop" title="Line 22" id="line22">
-<td>22</td><td></td><td></td><td><code>      ? HttpHeader.enableCrossPartition</code></td>
+<tr class="lineCov" title="Line 22" id="line22">
+<td>22</td><td></td><td>1</td><td><code>      ? HttpHeader.enableCrossPartition</code></td>
 </tr>
 <tr class="lineCov" title="Line 23" id="line23">
-<td>23</td><td></td><td>3</td><td><code>      : {HttpHeader.msDocumentDbPartitionKey: jsonEncode(values)};</code></td>
+<td>23</td><td></td><td>4</td><td><code>      : {HttpHeader.msDocumentDbPartitionKey: jsonEncode(values)};</code></td>
 </tr>
 <tr class="noop" title="Line 24" id="line24">
 <td>24</td><td></td><td></td><td><code>}</code></td>

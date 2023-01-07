@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="batch_response.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8947368" lines-covered="17" lines-valid="19" package="/src/batch" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line>
+<code>import '../base_document.dart';</code>
+</line>
+<line>
+<code>import '../client/http_status_codes.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>class BatchResponse&lt;T extends BaseDocument&gt; {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  final _results = &lt;BatchOperationResult&lt;T&gt;&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>  int get length =&gt; _results.length;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>  T? operator [](int i) =&gt; _results[i].item;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="6">
+<code>  bool get success =&gt; _results.every((r) =&gt; r.success);</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>  Iterable&lt;BatchOperationResult&lt;T&gt;&gt; get results =&gt; _results.asIterable();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  Iterable&lt;BatchOperationResult&lt;T&gt;&gt; get errors =&gt;</code>
+</line>
+<line hits="0">
+<code>      _results.where((r) =&gt; !r.success);</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  static BatchResponse&lt;T&gt; build&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      List json, DocumentBuilder&lt;T&gt; builder) {</code>
+</line>
+<line hits="1">
+<code>    final resp = BatchResponse&lt;T&gt;();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    for (var i = 0; i &lt; json.length; i++) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      final entry = json[i];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      final item = entry['resourceBody'];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      final doc = (item == null) ? null : builder(item);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>      resp._results.add(BatchOperationResult(i, entry['statusCode'], doc));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>    return resp;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class BatchOperationResult&lt;T extends BaseDocument&gt; {</code>
+</line>
+<line hits="2">
+<code>  BatchOperationResult(this.index, this.statusCode, this.item);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final int index;</code>
+</line>
+<line>
+<code>  final int statusCode;</code>
+</line>
+<line>
+<code>  final T? item;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>  bool get success =&gt; HttpStatusCode.success(statusCode);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-04</dd>
+<dd>2023-01-07</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -69,7 +69,7 @@
 <td>3</td><td></td><td></td><td><code>import 'client/_context.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
-<td>4</td><td></td><td></td><td><code>import 'cosmos_db_collections.dart';</code></td>
+<td>4</td><td></td><td></td><td><code>import 'cosmos_db_containers.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
 <td>5</td><td></td><td></td><td><code>import 'permissions/cosmos_db_permission.dart';</code></td>
@@ -90,7 +90,7 @@
 <td>10</td><td></td><td></td><td><code>class CosmosDbDatabase extends BaseDocument {</code></td>
 </tr>
 <tr class="lineCov" title="Line 11" id="line11">
-<td>11</td><td></td><td>2</td><td><code>  CosmosDbDatabase(this.server, this.id) : url = 'dbs/$id';</code></td>
+<td>11</td><td></td><td>3</td><td><code>  CosmosDbDatabase(this.server, this.id) : url = 'dbs/$id';</code></td>
 </tr>
 <tr class="noop" title="Line 12" id="line12">
 <td>12</td><td></td><td></td><td><code></code></td>
@@ -141,7 +141,7 @@
 <td>27</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
 <tr class="lineCov" title="Line 28" id="line28">
-<td>28</td><td></td><td>2</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'id': id};</code></td>
+<td>28</td><td></td><td>3</td><td><code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'id': id};</code></td>
 </tr>
 <tr class="noop" title="Line 29" id="line29">
 <td>29</td><td></td><td></td><td><code></code></td>
@@ -150,7 +150,7 @@
 <td>30</td><td></td><td>1</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 31" id="line31">
-<td>31</td><td></td><td>2</td><td><code>      client.registerBuilder&lt;T&gt;(builder);</code></td>
+<td>31</td><td></td><td>3</td><td><code>      client.registerBuilder&lt;T&gt;(builder);</code></td>
 </tr>
 <tr class="noop" title="Line 32" id="line32">
 <td>32</td><td></td><td></td><td><code></code></td>
@@ -165,7 +165,7 @@
 <td>35</td><td></td><td>1</td><td><code>      url,</code></td>
 </tr>
 <tr class="lineCov" title="Line 36" id="line36">
-<td>36</td><td></td><td>1</td><td><code>      Context(</code></td>
+<td>36</td><td></td><td>2</td><td><code>      Context(</code></td>
 </tr>
 <tr class="noop" title="Line 37" id="line37">
 <td>37</td><td></td><td></td><td><code>        type: 'dbs',</code></td>
@@ -180,10 +180,10 @@
 <td>40</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 41" id="line41">
-<td>41</td><td></td><td></td><td><code>  /// Provides access to collections in this [CosmosDbDatabase].</code></td>
+<td>41</td><td></td><td></td><td><code>  /// Provides access to containers in this [CosmosDbDatabase].</code></td>
 </tr>
 <tr class="lineCov" title="Line 42" id="line42">
-<td>42</td><td></td><td>2</td><td><code>  late final CosmosDbCollections collections = CosmosDbCollections(this);</code></td>
+<td>42</td><td></td><td>3</td><td><code>  late final CosmosDbContainers containers = CosmosDbContainers(this);</code></td>
 </tr>
 <tr class="noop" title="Line 43" id="line43">
 <td>43</td><td></td><td></td><td><code></code></td>
@@ -192,7 +192,7 @@
 <td>44</td><td></td><td></td><td><code>  /// Provides access to users in this [CosmosDbDatabase].</code></td>
 </tr>
 <tr class="lineCov" title="Line 45" id="line45">
-<td>45</td><td></td><td>2</td><td><code>  late final CosmosDbUsers users = CosmosDbUsers(this);</code></td>
+<td>45</td><td></td><td>3</td><td><code>  late final CosmosDbUsers users = CosmosDbUsers(this);</code></td>
 </tr>
 <tr class="noop" title="Line 46" id="line46">
 <td>46</td><td></td><td></td><td><code>}</code></td>
@@ -207,13 +207,13 @@
 <td>49</td><td></td><td></td><td><code>extension DatabaseExt on CosmosDbDatabase {</code></td>
 </tr>
 <tr class="lineCov" title="Line 50" id="line50">
-<td>50</td><td></td><td>2</td><td><code>  void setExists(bool exists) =&gt; _exists = exists;</code></td>
+<td>50</td><td></td><td>3</td><td><code>  void setExists(bool exists) =&gt; _exists = exists;</code></td>
 </tr>
 <tr class="noop" title="Line 51" id="line51">
 <td>51</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 52" id="line52">
-<td>52</td><td></td><td>3</td><td><code>  Client get client =&gt; server.client;</code></td>
+<td>52</td><td></td><td>4</td><td><code>  Client get client =&gt; server.client;</code></td>
 </tr>
 <tr class="noop" title="Line 53" id="line53">
 <td>53</td><td></td><td></td><td><code>}</code></td>

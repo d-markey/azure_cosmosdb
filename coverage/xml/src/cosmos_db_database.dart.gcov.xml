@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="cosmos_db_database.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9285714" lines-covered="13" lines-valid="14" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_database.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9285714" lines-covered="13" lines-valid="14" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'base_document.dart';</code>
@@ -11,7 +11,7 @@
 <code>import 'client/_context.dart';</code>
 </line>
 <line>
-<code>import 'cosmos_db_collections.dart';</code>
+<code>import 'cosmos_db_containers.dart';</code>
 </line>
 <line>
 <code>import 'permissions/cosmos_db_permission.dart';</code>
@@ -31,9 +31,9 @@
 <line>
 <code>class CosmosDbDatabase extends BaseDocument {</code>
 </line>
-<line hits="2">
+<line hits="3">
 <code>  CosmosDbDatabase(this.server, this.id) : url = 'dbs/$id';</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -85,9 +85,9 @@
 <code>  @override</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'id': id};</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -96,9 +96,9 @@
 <code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>      client.registerBuilder&lt;T&gt;(builder);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -114,9 +114,9 @@
 <code>      url,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>      Context(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        type: 'dbs',</code>
@@ -131,11 +131,11 @@
 <code/>
 </line>
 <line>
-<code>  /// Provides access to collections in this [CosmosDbDatabase].</code>
+<code>  /// Provides access to containers in this [CosmosDbDatabase].</code>
 </line>
-<line hits="2">
-<code>  late final CosmosDbCollections collections = CosmosDbCollections(this);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="3">
+<code>  late final CosmosDbContainers containers = CosmosDbContainers(this);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -143,9 +143,9 @@
 <line>
 <code>  /// Provides access to users in this [CosmosDbDatabase].</code>
 </line>
-<line hits="2">
+<line hits="3">
 <code>  late final CosmosDbUsers users = CosmosDbUsers(this);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -159,16 +159,16 @@
 <line>
 <code>extension DatabaseExt on CosmosDbDatabase {</code>
 </line>
-<line hits="2">
+<line hits="3">
 <code>  void setExists(bool exists) =&gt; _exists = exists;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="4">
 <code>  Client get client =&gt; server.client;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

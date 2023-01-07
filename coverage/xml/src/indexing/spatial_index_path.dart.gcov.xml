@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-04" filename="spatial_index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="6" lines-valid="6" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="spatial_index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="7" lines-valid="7" package="/src/indexing" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'bounding_box.dart';</code>
@@ -20,9 +20,9 @@
 <code>  SpatialIndexPath(this.path, {Iterable&lt;DataType&gt;? types, this.boundingBox})</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>      : types = (types == null) ? null : List&lt;DataType&gt;.unmodifiable(types);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -54,24 +54,25 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>        'path': path,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="6">
+<line hits="7">
 <code>        'types': (types ?? DataType.spatial).map((t) =&gt; t.name).toList(),</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>        if (boundingBox != null) 'boundingBox': boundingBox!.toJson(),</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>        if (boundingBox != null) 'boundingBox': boundingBox!.toJson(),</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line>
 <code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
