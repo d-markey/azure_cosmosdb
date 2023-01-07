@@ -235,14 +235,18 @@ void run(CosmosDbServer cosmosDB) {
 
   test('Get containers partition key ranges - large database', () async {
     cosmosDB.enableLog();
+    CosmosDbContainer? coll;
     try {
-      final coll = await database_20000RU.containers.create(ctnrTest1,
+      coll = await database_20000RU.containers.create(getTempName(),
           partitionKey: PartitionKeySpec.id,
           throughput: CosmosDbThroughput(20000));
       final pkranges = await coll.getPkRanges();
       expect(pkranges, isNotEmpty);
       expect(pkranges.length, greaterThanOrEqualTo(2));
     } finally {
+      if (coll != null) {
+        database_20000RU.containers.delete(coll);
+      }
       cosmosDB.disableLog();
     }
   });
