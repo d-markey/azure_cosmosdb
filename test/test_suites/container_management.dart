@@ -34,16 +34,25 @@ void run(CosmosDbServer cosmosDB) {
 
   late CosmosDbDatabase database;
   late CosmosDbDatabase database_4000RU;
+  late CosmosDbDatabase database_20000RU;
 
   setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempName());
+    database = await cosmosDB.databases.create(getTempName('small'));
     database_4000RU = await cosmosDB.databases
-        .create(getTempName(), throughput: CosmosDbThroughput(4000));
+        .create(getTempName('medium'), throughput: CosmosDbThroughput(4000));
+    cosmosDB.enableLog();
+    try {
+      database_20000RU = await cosmosDB.databases
+          .create(getTempName('large'), throughput: CosmosDbThroughput(20000));
+    } finally {
+      cosmosDB.disableLog();
+    }
   });
 
   tearDownAll(() async {
     await cosmosDB.databases.delete(database);
     await cosmosDB.databases.delete(database_4000RU);
+    await cosmosDB.databases.delete(database_20000RU);
   });
 
   test('List containers before creation', () async {
@@ -222,6 +231,20 @@ void run(CosmosDbServer cosmosDB) {
     final coll = await database.containers.openOrCreate(ctnrTest1);
     final pkranges = await coll.getPkRanges();
     expect(pkranges, isNotEmpty);
+  });
+
+  test('Get containers partition key ranges - large database', () async {
+    cosmosDB.enableLog();
+    try {
+      final coll = await database_20000RU.containers.create(ctnrTest1,
+          partitionKey: PartitionKeySpec.id,
+          throughput: CosmosDbThroughput(20000));
+      final pkranges = await coll.getPkRanges();
+      expect(pkranges, isNotEmpty);
+      expect(pkranges.length, greaterThanOrEqualTo(2));
+    } finally {
+      cosmosDB.disableLog();
+    }
   });
 
   test('Delete container', () async {
