@@ -110,6 +110,10 @@ class Client {
 
     var result = await _sendWithAuth(call, body, context, auth);
 
+    context.paging?.setContinuation(
+      result.headers[HttpHeader.msContinuation] ?? '',
+    );
+
     switch (result.statusCode) {
       case HttpStatusCode.forbidden:
         // try to get a new permission from the onForbidden callback
@@ -130,14 +134,23 @@ class Client {
           result = await _sendWithAuth(call, body, context, auth);
         }
         break;
+      case HttpStatusCode.noContent:
+        // no content: return null (https://github.com/d-markey/azure_cosmosdb/issues/1)
+        return null;
     }
 
-    final contentType = result.headers[HttpHeader.contentType];
-    if (contentType != MimeType.json) {
-      throw BadResponseException('Unsupported content-type: $contentType');
+    dynamic data;
+
+    final length = int.tryParse(result.headers[HttpHeader.contentLength] ?? '');
+    if (length == null || length > 0) {
+      // only check content-type and parse body if content-length > 0
+      final contentType = result.headers[HttpHeader.contentType];
+      if (contentType != MimeType.json) {
+        throw BadResponseException('Unsupported content-type: $contentType');
+      }
+      final response = await result.stream.bytesToString();
+      data = response.isEmpty ? {} : jsonDecode(response);
     }
-    final response = await result.stream.bytesToString();
-    dynamic data = response.isEmpty ? {} : jsonDecode(response);
 
     if (!HttpStatusCode.success(result.statusCode)) {
       final message = (data is Map && data.containsKey('message'))
@@ -151,9 +164,6 @@ class Client {
       data = null;
     }
 
-    context.paging?.setContinuation(
-      result.headers[HttpHeader.msContinuation] ?? '',
-    );
     return data;
   }
 

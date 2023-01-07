@@ -2,6 +2,7 @@ import '_mime_type.dart';
 
 abstract class HttpHeader {
   static const contentType = 'content-type';
+  static const contentLength = 'content-length';
   static const authorization = 'authorization';
   static const ifMatch = 'if-match';
   static const ifNoneMatch = 'if-none-match';

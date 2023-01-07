@@ -1,5 +1,6 @@
 abstract class HttpStatusCode {
   static const ok = 200;
+  static const noContent = 204;
   static const notModified = 304;
   static const notFound = 404;
   static const unauthorized = 401;

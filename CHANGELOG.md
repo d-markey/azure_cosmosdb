@@ -1,3 +1,7 @@
+## 1.8.1
+
+- `_client.dart`: return early with `null` upon a "204 - No Content" status code (fix for https://github.com/d-markey/azure_cosmosdb/issues/1). Also skip parsing the response body if `content-length` is zero.
+
 ## 1.8.0
 
 - Added support for patching documents. A document may be patched conditionally and the condition can be parameterized (parameter values are integrated into the condition client-side, as Cosmos DB does not accept parameterized conditions out-of-the-box). Variable names MUST start with `@`.
