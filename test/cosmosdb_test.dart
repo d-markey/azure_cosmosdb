@@ -8,6 +8,7 @@ import 'test_suites/expression_tokenizer.dart' as tokenizer_tests;
 import 'test_suites/geometry_shapes.dart' as geometry_tests;
 import 'test_suites/geography_shapes.dart' as geography_tests;
 import 'test_suites/path_parser.dart' as path_parser_tests;
+import 'test_suites/partition_keys.dart' as pk_tests;
 import 'test_suites/database_management.dart' as db_tests;
 import 'test_suites/user_management.dart' as user_tests;
 import 'test_suites/permission_management.dart' as permission_tests;
@@ -27,6 +28,8 @@ void main() async {
   group('GEOGRAPHY SHAPES -', () => geography_tests.run());
 
   group('PATH PARSER -', () => path_parser_tests.run());
+
+  group('PARTITION KEYS -', () => pk_tests.run());
 
   final currentCosmosDb = await getTestInstance(preview: false);
   final previewCosmosDb = await getTestInstance(preview: true);

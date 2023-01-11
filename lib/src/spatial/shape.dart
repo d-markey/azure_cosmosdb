@@ -65,16 +65,16 @@ abstract class Shape {
     final type = json['type']?.toString() ?? '';
     if (type.toLowerCase() != spatialType.name.toLowerCase()) {
       throw BadResponseException(
-          'Invalid type \'$type\'. Expected ${spatialType.name}');
+          'Invalid type "$type". Expected ${spatialType.name}.');
     }
     final coords = json['coordinates'] as List?;
     if (coords == null) {
       throw BadResponseException(
-          'Invalid GeoJSON: missing entry \'coordinates\'');
+          'Invalid GeoJSON: missing entry "coordinates".');
     }
     final loader = _loaders[spatialType]?[config];
     if (loader == null) {
-      throw BadResponseException('No loader for type \'${spatialType.name}\'');
+      throw BadResponseException('No loader for type "${spatialType.name}".');
     }
     return loader(coords) as T;
   }

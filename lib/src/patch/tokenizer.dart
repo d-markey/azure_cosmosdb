@@ -65,7 +65,7 @@ class Tokenizer {
     var p = pos;
     if (this[p] == '0' && _hexMarks.contains(this[p + 1])) {
       if (!_hexDigits.contains(this[p + 2])) {
-        throw InvalidTokenException('Malformed hexadecimal number (pos=$pos)');
+        throw InvalidTokenException('Malformed hexadecimal number (pos=$pos).');
       }
       p = _skipHexDigits(p + 3);
     } else {
@@ -82,7 +82,7 @@ class Tokenizer {
         var start = p + (_signs.contains(this[p + 1]) ? 2 : 1);
         var idx = _skipDigits(start);
         if (idx == start) {
-          throw InvalidTokenException('Malformed exponent (pos=$pos)');
+          throw InvalidTokenException('Malformed exponent (pos=$pos).');
         }
         p = idx;
       }
@@ -105,7 +105,7 @@ class Tokenizer {
         p++;
       }
     }
-    throw InvalidTokenException('Malformed string (pos=$pos)');
+    throw InvalidTokenException('Malformed string (pos=$pos).');
   }
 
   int _skipOperator(int pos) {

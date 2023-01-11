@@ -1,8 +1,6 @@
-import 'package:azure_cosmosdb/azure_cosmosdb.dart';
-
 import 'test_document.dart';
 
-class TestDocumentSyntheticPK extends TestDocument with PartitionKeyMixin {
+class TestDocumentSyntheticPK extends TestDocument {
   TestDocumentSyntheticPK(String id, this.type, String label, List<int> data)
       : super(id, label, data);
 
@@ -10,7 +8,7 @@ class TestDocumentSyntheticPK extends TestDocument with PartitionKeyMixin {
 
   @override
   Map<String, dynamic> toJson() =>
-      super.toJson()..addAll({'t': type, 'pk': keys.first});
+      super.toJson()..addAll({'t': type, 'pk': syntheticKey});
 
   static TestDocumentSyntheticPK fromJson(Map json) {
     final doc = TestDocumentSyntheticPK(
@@ -26,6 +24,5 @@ class TestDocumentSyntheticPK extends TestDocument with PartitionKeyMixin {
     return doc;
   }
 
-  @override
-  List<String> get keys => ['$id:$type'];
+  String get syntheticKey => '$id.$type';
 }

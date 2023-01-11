@@ -1,8 +1,6 @@
-import 'package:azure_cosmosdb/azure_cosmosdb.dart';
-
 import 'test_document.dart';
 
-class TestTypedDocument extends TestDocument with PartitionKeyMixin {
+class TestTypedDocument extends TestDocument {
   TestTypedDocument(String id, this.type, String label, List<int> data)
       : super(id, label, data);
 
@@ -26,5 +24,22 @@ class TestTypedDocument extends TestDocument with PartitionKeyMixin {
   }
 
   @override
-  List<String> get keys => [type];
+  int get hashCode => (id.hashCode << 2) ^ type.hashCode;
+
+  @override
+  bool operator ==(dynamic other) {
+    if (other is! TestTypedDocument ||
+        id != other.id ||
+        type != other.type ||
+        label != other.label ||
+        data.length != other.data.length) {
+      return false;
+    }
+    for (var i = 0; i < data.length; i++) {
+      if (data[i] != other.data[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

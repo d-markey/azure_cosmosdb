@@ -1,6 +1,6 @@
 import 'package:azure_cosmosdb/azure_cosmosdb.dart';
 
-class TestDocumentMultiPK extends BaseDocument with PartitionKeyMixin {
+class TestDocumentMultiPK extends BaseDocument {
   TestDocumentMultiPK(this.id, this.tenantId, this.userId, this.label);
 
   @override
@@ -20,7 +20,4 @@ class TestDocumentMultiPK extends BaseDocument with PartitionKeyMixin {
         json['uid'],
         json['l'],
       );
-
-  @override
-  List<String> get keys => [tenantId, userId];
 }

@@ -12,7 +12,7 @@ class Authorization {
     if (key == null) {
       throw CosmosDbException(
         HttpStatusCode.unauthorized,
-        'Missing master key',
+        'Missing master key.',
       );
     }
     date = DateTime.now().toImfFixedString();

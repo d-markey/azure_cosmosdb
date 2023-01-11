@@ -117,9 +117,14 @@ class CosmosDbContainer extends BaseDocument {
     return coll!;
   }
 
+  final _pkRanges = <PartitionKeyRange>[];
+
+  /// Gets the partition key ranges for this [CosmosDbContainer].
   Future<Iterable<PartitionKeyRange>> getPkRanges(
-          {CosmosDbPermission? permission}) =>
-      client.getMany<PartitionKeyRange>(
+      {CosmosDbPermission? permission, bool force = false}) async {
+    if (_pkRanges.isEmpty || force) {
+      _pkRanges.clear();
+      _pkRanges.addAll(await client.getMany<PartitionKeyRange>(
           '$url/pkranges',
           'PartitionKeyRanges',
           Context(
@@ -127,7 +132,10 @@ class CosmosDbContainer extends BaseDocument {
               type: 'pkranges',
               token: permission?.token ?? _token,
               throwOnNotFound: true,
-              builder: PartitionKeyRange.fromJson));
+              builder: PartitionKeyRange.fromJson)));
+    }
+    return _pkRanges;
+  }
 
   /// Gets information for this [CosmosDbContainer].
   Future<void> setIndexingPolicy(IndexingPolicy indexingPolicy,
@@ -325,7 +333,7 @@ class CosmosDbContainer extends BaseDocument {
       PartitionKey? partitionKey,
       CosmosDbPermission? permission}) {
     if (document == null && id == null) {
-      throw Exception();
+      throw ApplicationException('Missing document and document id.');
     }
     document ??= DocumentWithId(id);
     return client.delete(
@@ -352,18 +360,21 @@ class CosmosDbContainer extends BaseDocument {
 
   /// Executes the batch in this container.
   Future<BatchResponse<T>> execute<T extends BaseDocument>(
-          TransactionalBatch<T> batch,
-          {CosmosDbPermission? permission}) =>
-      client.batch<T>(
-        '$url/docs',
-        batch,
-        Context(
-          type: 'docs',
-          resId: url,
-          token: permission?.token ?? _token,
-          onForbidden: _refreshPermission,
-        ),
-      );
+      TransactionalBatch<T> batch,
+      {CosmosDbPermission? permission}) async {
+    await getPkRanges(permission: permission);
+    return await client.batch<T>(
+      '$url/docs',
+      batch,
+      _pkRanges,
+      Context(
+        type: 'docs',
+        resId: url,
+        token: permission?.token ?? _token,
+        onForbidden: _refreshPermission,
+      ),
+    );
+  }
 }
 
 // internal use

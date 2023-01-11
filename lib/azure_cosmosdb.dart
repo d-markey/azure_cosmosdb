@@ -28,6 +28,7 @@ export 'src/indexing/indexing_mode.dart';
 export 'src/indexing/indexing_policy.dart';
 export 'src/partition/partition_key_spec.dart';
 export 'src/partition/partition_key.dart';
+export 'src/partition/partition_key_range.dart';
 export 'src/indexing/spatial_index_path.dart';
 export 'src/patch/patch.dart';
 export 'src/permissions/cosmos_db_permission.dart';

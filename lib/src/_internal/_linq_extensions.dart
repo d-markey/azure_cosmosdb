@@ -5,8 +5,9 @@ class LinqException implements Exception {
 }
 
 T _identity<T>(T item) => item;
+bool _notNull(dynamic item) => item != null;
 
-extension Linq<T> on Iterable<T> {
+extension LinqExt<T> on Iterable<T> {
   Iterable<T> asIterable() => map(_identity);
 
   Iterable<T> skipLast() {
@@ -28,11 +29,24 @@ extension Linq<T> on Iterable<T> {
     for (var item in this) {
       if (predicate(item)) {
         if (found != null) {
-          throw LinqException('Several items match the predicate');
+          throw LinqException('Several items match the predicate.');
         }
         found = item;
       }
     }
     return found;
   }
+
+  Iterable<T> distinct() sync* {
+    final seen = <T>{};
+    for (var item in this) {
+      if (seen.add(item)) {
+        yield item;
+      }
+    }
+  }
+}
+
+extension NullableLinqExt<T> on Iterable<T?> {
+  Iterable<T> whereNotNull() => where(_notNull).cast<T>();
 }

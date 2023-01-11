@@ -18,17 +18,20 @@ class PartitionKeySpec {
     return cached;
   }
 
-  factory PartitionKeySpec._v2(List<String> paths) =>
-      PartitionKeySpec._cached(paths,
-          kind: (paths.length > 1) ? 'MultiHash' : 'Hash', version: 2);
+  factory PartitionKeySpec._v2(String kind, List<String> paths) =>
+      PartitionKeySpec._cached(paths, kind: kind, version: 2);
 
   /// Partition key with a single property.
   factory PartitionKeySpec(String partitionKey) =>
-      PartitionKeySpec._v2(List.unmodifiable([partitionKey]));
+      PartitionKeySpec._v2('Hash', List.unmodifiable([partitionKey]));
+
+  /// Partition key range with a single property.
+  factory PartitionKeySpec.range(String partitionKey) =>
+      PartitionKeySpec._v2('Range', List.unmodifiable([partitionKey]));
 
   /// Creates a partition for multiple keys.
   factory PartitionKeySpec.multi(List<String> partitionKeys) =>
-      PartitionKeySpec._v2(List.unmodifiable(partitionKeys));
+      PartitionKeySpec._v2('MultiHash', List.unmodifiable(partitionKeys));
 
   /// Default partition key.
   static final id = PartitionKeySpec._(['/id'], 'Hash', 2);

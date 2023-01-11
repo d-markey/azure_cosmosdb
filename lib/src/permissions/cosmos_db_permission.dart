@@ -13,7 +13,7 @@ class PermissionMode {
   static PermissionMode parse(String name) {
     if (name == read.name) return read;
     if (name == all.name) return all;
-    throw BadResponseException('Unsupported permission mode');
+    throw BadResponseException('Unsupported permission mode.');
   }
 }
 

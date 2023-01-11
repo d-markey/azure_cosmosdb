@@ -24,6 +24,8 @@ abstract class BatchOperation {
   final PartitionKey? partitionKey;
   final PartitionKeySpec? partitionKeySpec;
 
+  PartitionKey? getPartitionKey() => partitionKey;
+
   BatchOperationType get op;
 
   Map<String, dynamic> toJson() => {'operationType': op.name};
@@ -36,6 +38,10 @@ abstract class BatchOperationOnItem<T extends BaseDocument>
       : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);
 
   final T item;
+
+  @override
+  PartitionKey? getPartitionKey() =>
+      super.getPartitionKey() ?? partitionKeySpec?.from(item);
 
   @override
   Map<String, dynamic> toJson() => super.toJson()

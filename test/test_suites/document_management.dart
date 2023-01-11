@@ -249,13 +249,13 @@ void run(CosmosDbServer cosmosDB) {
       ..add('/counter', 3)
       ..increment('/counter', 7);
     var patched = await containerSyntheticPK.patch(doc, patch);
-    expect(patched.keys, equals(doc.keys));
+    expect(patched.syntheticKey, equals(doc.syntheticKey));
     expect(patched.label, endsWith('(PATCHED)'));
     expect(patched.props['counter'], equals(3 + 7));
 
     patch = Patch()..decrement('/counter', 5);
     patched = await containerSyntheticPK.patch(doc, patch);
-    expect(patched.keys, equals(doc.keys));
+    expect(patched.syntheticKey, equals(doc.syntheticKey));
     expect(patched.label, endsWith('(PATCHED)'));
     expect(patched.props['counter'], equals(3 + 7 - 5));
 
@@ -263,7 +263,7 @@ void run(CosmosDbServer cosmosDB) {
       ..replace('/counter', -1)
       ..replace('/l', 'OVERWRITTEN');
     patched = await containerSyntheticPK.patch(doc, patch);
-    expect(patched.keys, equals(doc.keys));
+    expect(patched.syntheticKey, equals(doc.syntheticKey));
     expect(patched.label, equals('OVERWRITTEN'));
     expect(patched.props['counter'], equals(-1));
 
@@ -281,13 +281,13 @@ void run(CosmosDbServer cosmosDB) {
           'from c where c.counter = @neg and CONTAINS(c.l, \'OVER\')')
       ..withParam('@neg', -1);
     patched = await containerSyntheticPK.patch(doc, patch);
-    expect(patched.keys, equals(doc.keys));
+    expect(patched.syntheticKey, equals(doc.syntheticKey));
     expect(patched.label, equals('OVERWRITTEN'));
     expect(patched.props['counter'], isNull);
 
     final after = await containerSyntheticPK.list<TestDocumentSyntheticPK>();
     expect(after.length, equals(before.length));
-    expect(after.where((d) => d.keys.first == doc.keys.first), isNotEmpty);
+    expect(after.where((d) => d.syntheticKey == doc.syntheticKey), isNotEmpty);
   });
 
   test('Replace a document - etag mismatch', () async {
@@ -319,7 +319,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(after.where((d) => d.id == doc.id), isNotEmpty);
     expect(after.where((d) => d.label.endsWith('(MUST NOT BE REPLACED)')),
         isEmpty);
-    expect(after.where((d) => d.keys.first == doc.keys.first).first.label,
+    expect(after.where((d) => d.syntheticKey == doc.syntheticKey).first.label,
         equals(label));
   });
 

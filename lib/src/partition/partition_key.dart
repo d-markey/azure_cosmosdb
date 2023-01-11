@@ -9,7 +9,7 @@ class PartitionKey {
   final List<dynamic> values;
 
   /// Partition key with a single property.
-  PartitionKey(String value) : this._(List.unmodifiable([value]));
+  PartitionKey(dynamic value) : this._(List.unmodifiable([value]));
 
   /// Creates a partition key for multiple keys.
   PartitionKey.multi(List<dynamic> values) : this._(List.unmodifiable(values));

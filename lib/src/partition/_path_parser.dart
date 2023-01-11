@@ -1,3 +1,5 @@
+import '../cosmos_db_exceptions.dart';
+
 class PathParser {
   List<PathComponent> parse(String path) {
     final state = ParserState(path);
@@ -11,7 +13,8 @@ class PathParser {
           components.add(state.getArrayIndex());
           break;
         default:
-          throw Exception();
+          throw InvalidTokenException(
+              'Unexpected token ${state.current}; expecting "/" or "[".');
       }
     }
     return components;
@@ -70,11 +73,11 @@ class ParserState {
       _pos++;
     }
     if (end < 0) {
-      throw Exception();
+      throw InvalidTokenException('Missing token: "]".');
     }
     final idx = int.tryParse(_chars.sublist(start, end).join());
     if (idx == null) {
-      throw Exception();
+      throw InvalidTokenException('Integer value expected in array accessor.');
     }
     return ArrayIndex(idx);
   }

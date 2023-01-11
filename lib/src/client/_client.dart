@@ -8,6 +8,7 @@ import 'package:retry/retry.dart';
 import '../_internal/_authorization.dart';
 import '../_internal/_http_call.dart';
 import '../_internal/_http_header.dart';
+import '../partition/partition_key_range.dart';
 import 'http_status_codes.dart';
 import '../_internal/_mime_type.dart';
 import '../base_document.dart';
@@ -149,7 +150,7 @@ class Client {
       // only check content-type and parse body if content-length > 0
       final contentType = result.headers[HttpHeader.contentType];
       if (contentType != MimeType.json) {
-        throw BadResponseException('Unsupported content-type: $contentType');
+        throw BadResponseException('Unsupported content-type: $contentType.');
       }
       final response = await result.stream.bytesToString();
       data = response.isEmpty ? {} : jsonDecode(response);
@@ -222,14 +223,17 @@ class Client {
   }
 
   Future<BatchResponse<T>> batch<T extends BaseDocument>(
-      String path, TransactionalBatch<T> batch, Context context) {
+      String path,
+      TransactionalBatch<T> batch,
+      List<PartitionKeyRange> pkRanges,
+      Context context) {
     final call = HttpCall.post(path, version);
     final builder = _getBuilder<T>(context);
     return _send(
             call,
             batch,
             context.copyWith(
-              headers: batch.headers,
+              headers: batch.getHeaders(pkRanges),
             ))
         .then((data) => BatchResponse.build<T>(data, builder))
         .rethrowContextualizedException(call);

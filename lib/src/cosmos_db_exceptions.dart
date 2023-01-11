@@ -53,19 +53,21 @@ class CosmosDbException extends ContextualizedException {
     message ??= 'Error $statusCode';
     switch (statusCode) {
       case HttpStatusCode.notModified:
-        return NotModifiedException._('', '', message);
+        return NotModifiedException._(method, url, message);
       case HttpStatusCode.unauthorized:
-        return UnauthorizedException._('', '', message);
+        return UnauthorizedException._(method, url, message);
+      case HttpStatusCode.badRequest:
+        return BadRequestException._(method, url, message);
       case HttpStatusCode.forbidden:
-        return ForbiddenException._('', '', message);
+        return ForbiddenException._(method, url, message);
       case HttpStatusCode.notFound:
-        return NotFoundException._('', '', message);
+        return NotFoundException._(method, url, message);
       case HttpStatusCode.conflict:
-        return ConflictException._('', '', message);
+        return ConflictException._(method, url, message);
       case HttpStatusCode.preconditionFailure:
-        return PreconditionFailureException._('', '', message);
+        return PreconditionFailureException._(method, url, message);
       default:
-        return CosmosDbException._('', '', statusCode, message);
+        return CosmosDbException._(method, url, statusCode, message);
     }
   }
 
@@ -107,6 +109,17 @@ class NotFoundException extends CosmosDbException {
 class PreconditionFailureException extends CosmosDbException {
   PreconditionFailureException._(String method, String url, [String? message])
       : super._(method, url, HttpStatusCode.preconditionFailure, message);
+}
+
+class BadRequestException extends CosmosDbException {
+  BadRequestException._(String method, String url, String message)
+      : super._(method, url, HttpStatusCode.badRequest, message);
+
+  BadRequestException(String message) : this._('', '', message);
+
+  @override
+  BadRequestException _withContext(String method, String url) =>
+      BadRequestException._(method, url, message);
 }
 
 class UnknownDocumentTypeException extends ContextualizedException {

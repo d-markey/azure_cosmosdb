@@ -1,5 +1,4 @@
-import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
-
+import '../_internal/_http_header.dart';
 import '../client/_context.dart';
 import 'cosmos_db_permission.dart';
 import 'cosmos_db_user.dart';

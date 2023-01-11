@@ -2,7 +2,9 @@ import '../_internal/_http_header.dart';
 import '../_internal/_linq_extensions.dart';
 import '../base_document.dart';
 import '../cosmos_db_container.dart';
+import '../cosmos_db_exceptions.dart';
 import '../partition/partition_key.dart';
+import '../partition/partition_key_range.dart';
 import '../permissions/cosmos_db_permission.dart';
 import 'batch_operation.dart';
 import 'batch_operation_create.dart';
@@ -21,13 +23,29 @@ class TransactionalBatch<T extends BaseDocument> extends SpecialDocument {
 
   final CosmosDbContainer container;
 
-  Map<String, String> get headers => {
+  Map<String, String> getHeaders(Iterable<PartitionKeyRange> pkRanges) {
+    final pkr = _ops
+        .map((op) => op.getPartitionKey())
+        .whereNotNull()
+        .distinct()
+        .map((pk) => pkRanges.findFor(pk))
+        .whereNotNull()
+        .distinct();
+    if (pkr.isEmpty) {
+      throw PartitionKeyException('Missing partition key.');
+    } else if (pkr.length > 1) {
+      throw PartitionKeyException(
+          'Partition keys map to several partition key ranges.');
+    } else {
+      return {
         HttpHeader.msCosmosIsBatchRequest: 'true',
         HttpHeader.msCosmosBatchAtomic: isAtomic ? 'true' : 'false',
         HttpHeader.msCosmosBatchContinueOnError:
             continueOnError ? 'true' : 'false',
-        HttpHeader.msDocumentDbPartitionKeyRangeId: '0',
+        HttpHeader.msDocumentDbPartitionKeyRangeId: pkr.single.id,
       };
+    }
+  }
 
   final bool isAtomic;
   final bool continueOnError;
@@ -38,7 +56,8 @@ class TransactionalBatch<T extends BaseDocument> extends SpecialDocument {
 
   void _add(BatchOperation op) {
     if (_ops.length >= 100) {
-      throw Exception('Transactional batch is limited to 100 operations.');
+      throw ApplicationException(
+          'Transactional batch is limited to 100 operations.');
     }
     _ops.add(op);
   }
