@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.89411765" lines-covered="76" lines-valid="85" package="/src/batch" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9519231" lines-covered="99" lines-valid="104" package="/src/batch" testname="lcov.info" version="1.5">
 <sources>
 <source branches-hit="0" branches-valid="0" filename="batch_operation_read.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="9" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
@@ -7,18 +7,20 @@
 <source branches-hit="0" branches-valid="0" filename="batch_response.dart" functions-hit="0" functions-valid="0" lines-hit="17" lines-valid="19" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="17" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="batch_operation_upsert.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="2" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib"/>
+<source branches-hit="0" branches-valid="0" filename="batch_operation_upsert.dart" functions-hit="0" functions-valid="0" lines-hit="2" lines-valid="2" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="2" name="&lt;unnamed&gt;"/>
+</source>
 <source branches-hit="0" branches-valid="0" filename="batch_operation_delete.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="9" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="batch_operation_create.dart" functions-hit="0" functions-valid="0" lines-hit="2" lines-valid="2" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="2" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="transactional_batch.dart" functions-hit="0" functions-valid="0" lines-hit="25" lines-valid="29" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="25" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="transactional_batch.dart" functions-hit="0" functions-valid="0" lines-hit="42" lines-valid="44" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="42" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="batch_operation.dart" functions-hit="0" functions-valid="0" lines-hit="14" lines-valid="15" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="14" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="batch_operation.dart" functions-hit="0" functions-valid="0" lines-hit="18" lines-valid="19" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="18" name="&lt;unnamed&gt;"/>
 </source>
 </sources>
 <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>

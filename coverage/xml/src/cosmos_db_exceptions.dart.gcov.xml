@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_exceptions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8" lines-covered="52" lines-valid="65" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="cosmos_db_exceptions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9041096" lines-covered="66" lines-valid="73" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -32,14 +32,17 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  String toString() =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="6">
 <code>      message.isNotEmpty ? '$runtimeType: $message' : runtimeType.toString();</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -76,8 +79,9 @@
 <line>
 <code>class PartitionKeyException extends ApplicationException {</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>  PartitionKeyException(String message) : super(message);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -118,20 +122,24 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="6">
 <code>  bool get hasContext =&gt; method.isNotEmpty &amp;&amp; url.isNotEmpty;</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  String toString() =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="6">
 <code>      hasContext ? '$method $url: ${super.toString()}' : super.toString();</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
@@ -145,16 +153,16 @@
 <line>
 <code>class CosmosDbException extends ContextualizedException {</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>  CosmosDbException._(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      String method, String url, this.statusCode, String? message)</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>      : super._(method, url, message ?? 'Error $statusCode');</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -179,7 +187,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        return NotModifiedException._('', '', message);</code>
+<code>        return NotModifiedException._(method, url, message);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -187,7 +195,15 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        return UnauthorizedException._('', '', message);</code>
+<code>        return UnauthorizedException._(method, url, message);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      case HttpStatusCode.badRequest:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        return BadRequestException._(method, url, message);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -195,7 +211,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        return ForbiddenException._('', '', message);</code>
+<code>        return ForbiddenException._(method, url, message);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -203,7 +219,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        return NotFoundException._('', '', message);</code>
+<code>        return NotFoundException._(method, url, message);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -211,7 +227,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        return ConflictException._('', '', message);</code>
+<code>        return ConflictException._(method, url, message);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -219,15 +235,14 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        return PreconditionFailureException._('', '', message);</code>
+<code>        return PreconditionFailureException._(method, url, message);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      default:</code>
 </line>
-<line hits="2">
-<code>        return CosmosDbException._('', '', statusCode, message);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="0">
+<code>        return CosmosDbException._(method, url, statusCode, message);</code>
 </line>
 <line>
 <code>    }</code>
@@ -369,6 +384,44 @@
 <line hits="1">
 <code>      : super._(method, url, HttpStatusCode.preconditionFailure, message);</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class BadRequestException extends CosmosDbException {</code>
+</line>
+<line hits="2">
+<code>  BadRequestException._(String method, String url, String message)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : super._(method, url, HttpStatusCode.badRequest, message);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  BadRequestException(String message) : this._('', '', message);</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  BadRequestException _withContext(String method, String url) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      BadRequestException._(method, url, message);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

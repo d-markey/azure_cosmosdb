@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.5555556" lines-covered="5" lines-valid="9" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8333333" lines-covered="5" lines-valid="6" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>/// Function definition to hydrate (deserialize) CosmosDB documents.</code>
@@ -125,51 +125,6 @@
 <line hits="10">
 <code>  void setEtag(Map json) =&gt; _etag = json['_etag'];</code>
 <hit count="10" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>}</code>
-</line>
-<line>
-<code/>
-</line>
-<line>
-<code>/// Mixin to add custom partition key on [BaseDocument].</code>
-</line>
-<line>
-<code>mixin PartitionKeyMixin on BaseDocument {</code>
-</line>
-<line>
-<code>  /// The document's partition key. Override this to provide a custom partition</code>
-</line>
-<line>
-<code>  /// key. By default, [id] is used as the partition key. When overriding,</code>
-</line>
-<line>
-<code>  /// make sure this value is serialized in accordance with the container's</code>
-</line>
-<line>
-<code>  /// partition key definition.</code>
-</line>
-<line hits="0">
-<code>  List&lt;dynamic&gt; get keys =&gt; [id];</code>
-</line>
-<line>
-<code>}</code>
-</line>
-<line>
-<code/>
-</line>
-<line>
-<code>// For internal use</code>
-</line>
-<line>
-<code>extension PartitionKeyExt on BaseDocument {</code>
-</line>
-<line hits="0">
-<code>  List&lt;dynamic&gt; getKeys() =&gt;</code>
-</line>
-<line hits="0">
-<code>      (this is PartitionKeyMixin) ? (this as PartitionKeyMixin).keys : [id];</code>
 </line>
 <line>
 <code>}</code>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="partition_key_spec.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.94" lines-covered="47" lines-valid="50" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="partition_key_spec.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9411765" lines-covered="48" lines-valid="51" package="/src/partition" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -70,17 +70,13 @@
 <line>
 <code/>
 </line>
-<line hits="2">
-<code>  factory PartitionKeySpec._v2(List&lt;String&gt; paths) =&gt;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="1">
+<code>  factory PartitionKeySpec._v2(String kind, List&lt;String&gt; paths) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      PartitionKeySpec._cached(paths,</code>
+<code>      PartitionKeySpec._cached(paths, kind: kind, version: 2);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>          kind: (paths.length &gt; 1) ? 'MultiHash' : 'Hash', version: 2);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -93,8 +89,20 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
-<code>      PartitionKeySpec._v2(List.unmodifiable([partitionKey]));</code>
+<code>      PartitionKeySpec._v2('Hash', List.unmodifiable([partitionKey]));</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Partition key range with a single property.</code>
+</line>
+<line hits="0">
+<code>  factory PartitionKeySpec.range(String partitionKey) =&gt;</code>
+</line>
+<line hits="0">
+<code>      PartitionKeySpec._v2('Range', List.unmodifiable([partitionKey]));</code>
 </line>
 <line>
 <code/>
@@ -107,7 +115,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>      PartitionKeySpec._v2(List.unmodifiable(partitionKeys));</code>
+<code>      PartitionKeySpec._v2('MultiHash', List.unmodifiable(partitionKeys));</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -205,8 +213,9 @@
 <code>        other.kind != kind) {</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      return false;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    } else {</code>
@@ -219,8 +228,9 @@
 <code>        if (other.paths[i] != paths[i]) {</code>
 <hit count="6" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          return false;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        }</code>

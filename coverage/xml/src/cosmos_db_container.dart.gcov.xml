@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_container.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9322034" lines-covered="165" lines-valid="177" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="cosmos_db_container.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9347826" lines-covered="172" lines-valid="184" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_internal/_http_header.dart';</code>
@@ -395,20 +395,38 @@
 <line>
 <code/>
 </line>
+<line hits="1">
+<code>  final _pkRanges = &lt;PartitionKeyRange&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Gets the partition key ranges for this [CosmosDbContainer].</code>
+</line>
 <line hits="2">
 <code>  Future&lt;Iterable&lt;PartitionKeyRange&gt;&gt; getPkRanges(</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>          {CosmosDbPermission? permission}) =&gt;</code>
+<code>      {CosmosDbPermission? permission, bool force = false}) async {</code>
 </line>
 <line hits="3">
-<code>      client.getMany&lt;PartitionKeyRange&gt;(</code>
+<code>    if (_pkRanges.isEmpty || force) {</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
+<code>      _pkRanges.clear();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>      _pkRanges.addAll(await client.getMany&lt;PartitionKeyRange&gt;(</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
 <code>          '$url/pkranges',</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          'PartitionKeyRanges',</code>
@@ -424,15 +442,26 @@
 <line>
 <code>              type: 'pkranges',</code>
 </line>
-<line hits="2">
+<line hits="1">
 <code>              token: permission?.token ?? _token,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>              throwOnNotFound: true,</code>
 </line>
 <line hits="1">
-<code>              builder: PartitionKeyRange.fromJson));</code>
+<code>              builder: PartitionKeyRange.fromJson)));</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="2">
+<code>    return _pkRanges;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -1125,7 +1154,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
-<code>      throw Exception();</code>
+<code>      throw ApplicationException('Missing document and document id.');</code>
 </line>
 <line>
 <code>    }</code>
@@ -1215,52 +1244,63 @@
 <line>
 <code>  /// Executes the batch in this container.</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>  Future&lt;BatchResponse&lt;T&gt;&gt; execute&lt;T extends BaseDocument&gt;(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>          TransactionalBatch&lt;T&gt; batch,</code>
+<code>      TransactionalBatch&lt;T&gt; batch,</code>
 </line>
 <line>
-<code>          {CosmosDbPermission? permission}) =&gt;</code>
+<code>      {CosmosDbPermission? permission}) async {</code>
+</line>
+<line hits="2">
+<code>    await getPkRanges(permission: permission);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>      client.batch&lt;T&gt;(</code>
+<code>    return await client.batch&lt;T&gt;(</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>        '$url/docs',</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>      '$url/docs',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      batch,</code>
 </line>
 <line hits="1">
-<code>        batch,</code>
+<code>      _pkRanges,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        Context(</code>
+<code>      Context(</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>          type: 'docs',</code>
+<code>        type: 'docs',</code>
 </line>
 <line hits="1">
-<code>          resId: url,</code>
+<code>        resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        token: permission?.token ?? _token,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>          token: permission?.token ?? _token,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>          onForbidden: _refreshPermission,</code>
+<code>        onForbidden: _refreshPermission,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>        ),</code>
+<code>      ),</code>
 </line>
 <line>
-<code>      );</code>
+<code>    );</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

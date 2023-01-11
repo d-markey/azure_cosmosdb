@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="transactional_batch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.86206895" lines-covered="25" lines-valid="29" package="/src/batch" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="transactional_batch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95454544" lines-covered="42" lines-valid="44" package="/src/batch" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../_internal/_http_header.dart';</code>
@@ -14,7 +14,13 @@
 <code>import '../cosmos_db_container.dart';</code>
 </line>
 <line>
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line>
 <code>import '../partition/partition_key.dart';</code>
+</line>
+<line>
+<code>import '../partition/partition_key_range.dart';</code>
 </line>
 <line>
 <code>import '../permissions/cosmos_db_permission.dart';</code>
@@ -72,9 +78,62 @@
 <line>
 <code/>
 </line>
+<line hits="2">
+<code>  Map&lt;String, String&gt; getHeaders(Iterable&lt;PartitionKeyRange&gt; pkRanges) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    final pkr = _ops</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        .map((op) =&gt; op.getPartitionKey())</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        .whereNotNull()</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .distinct()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        .map((pk) =&gt; pkRanges.findFor(pk))</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        .whereNotNull()</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .distinct();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    if (pkr.isEmpty) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      throw PartitionKeyException('Missing partition key.');</code>
+</line>
 <line hits="3">
-<code>  Map&lt;String, String&gt; get headers =&gt; {</code>
+<code>    } else if (pkr.length &gt; 1) {</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      throw PartitionKeyException(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          'Partition keys map to several partition key ranges.');</code>
+</line>
+<line>
+<code>    } else {</code>
+</line>
+<line hits="2">
+<code>      return {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        HttpHeader.msCosmosIsBatchRequest: 'true',</code>
@@ -90,11 +149,19 @@
 <code>            continueOnError ? 'true' : 'false',</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line>
-<code>        HttpHeader.msDocumentDbPartitionKeyRangeId: '0',</code>
+<line hits="3">
+<code>        HttpHeader.msDocumentDbPartitionKeyRangeId: pkr.single.id,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      };</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -131,7 +198,10 @@
 <hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
-<code>      throw Exception('Transactional batch is limited to 100 operations.');</code>
+<code>      throw ApplicationException(</code>
+</line>
+<line>
+<code>          'Transactional batch is limited to 100 operations.');</code>
 </line>
 <line>
 <code>    }</code>
@@ -166,17 +236,21 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  void upsert(T item, {PartitionKey? partitionKey}) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      _add(BatchOperationUpsert(item,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          partitionKeySpec: container.partitionKeySpec,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line>
+<line hits="1">
 <code>          partitionKey: partitionKey));</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>

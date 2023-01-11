@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.98013246" lines-covered="148" lines-valid="151" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.98013246" lines-covered="148" lines-valid="151" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -30,6 +30,9 @@
 </line>
 <line>
 <code>import '../_internal/_http_header.dart';</code>
+</line>
+<line>
+<code>import '../partition/partition_key_range.dart';</code>
 </line>
 <line>
 <code>import 'http_status_codes.dart';</code>
@@ -525,7 +528,7 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
-<code>        throw BadResponseException('Unsupported content-type: $contentType');</code>
+<code>        throw BadResponseException('Unsupported content-type: $contentType.');</code>
 </line>
 <line>
 <code>      }</code>
@@ -789,7 +792,16 @@
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>      String path, TransactionalBatch&lt;T&gt; batch, Context context) {</code>
+<code>      String path,</code>
+</line>
+<line>
+<code>      TransactionalBatch&lt;T&gt; batch,</code>
+</line>
+<line>
+<code>      List&lt;PartitionKeyRange&gt; pkRanges,</code>
+</line>
+<line>
+<code>      Context context) {</code>
 </line>
 <line hits="3">
 <code>    final call = HttpCall.post(path, version);</code>
@@ -814,9 +826,9 @@
 <code>            context.copyWith(</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
-<code>              headers: batch.headers,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>              headers: batch.getHeaders(pkRanges),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>            ))</code>
