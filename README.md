@@ -14,7 +14,7 @@
 [![Code Lines](https://img.shields.io/badge/dynamic/json?color=blue&label=code%20lines&query=%24.linesValid&url=https%3A%2F%2Fraw.githubusercontent.com%2Fd-markey%2Fazure_cosmosdb%2Fmain%2Fcoverage.json)](https://github.com/d-markey/azure_cosmosdb/tree/main/coverage/html)
 [![Code Coverage](https://img.shields.io/badge/dynamic/json?color=blue&label=code%20coverage&query=%24.lineRate&suffix=%25&url=https%3A%2F%2Fraw.githubusercontent.com%2Fd-markey%2Fazure_cosmosdb%2Fmain%2Fcoverage.json)](https://github.com/d-markey/azure_cosmosdb/tree/main/coverage/html)
 
-Connector for Azure Cosmos DB on Dart and Flutter platforms. Supports Cosmos DB SQL API, batch requests (experimental), multi-hash partition keys (preview), indexing policies, users, permissions, and spatial types.
+Connector for Azure Cosmos DB on Dart and Flutter platforms. Supports Cosmos DB SQL API, indexing policies, users, permissions, spatial types, batch operations, and hierarchical partition keys (preview/experimental).
 
 ## Summary
 
