@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>36</td><td>151</td><td class="low">23.8%</td>
+<th scope="row">Lines</th><td>148</td><td>151</td><td class="high">98.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -155,8 +155,8 @@
 <tr class="noop" title="Line 32" id="line32">
 <td>32</td><td></td><td></td><td><code>    required this.version,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 33" id="line33">
-<td>33</td><td></td><td>0</td><td><code>  })  : httpClient = httpClient ?? http.Client(),</code></td>
+<tr class="lineCov" title="Line 33" id="line33">
+<td>33</td><td></td><td>1</td><td><code>  })  : httpClient = httpClient ?? http.Client(),</code></td>
 </tr>
 <tr class="lineCov" title="Line 34" id="line34">
 <td>34</td><td></td><td>1</td><td><code>        _retry = retryOptions ?? RetryOptions(),</code></td>
@@ -173,8 +173,8 @@
 <tr class="noop" title="Line 38" id="line38">
 <td>38</td><td></td><td></td><td><code>    } else {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 39" id="line39">
-<td>39</td><td></td><td>0</td><td><code>      _key = null;</code></td>
+<tr class="lineCov" title="Line 39" id="line39">
+<td>39</td><td></td><td>1</td><td><code>      _key = null;</code></td>
 </tr>
 <tr class="noop" title="Line 40" id="line40">
 <td>40</td><td></td><td></td><td><code>    }</code></td>
@@ -221,35 +221,35 @@
 <tr class="noop" title="Line 54" id="line54">
 <td>54</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 55" id="line55">
-<td>55</td><td></td><td>0</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) {</code></td>
+<tr class="lineCov" title="Line 55" id="line55">
+<td>55</td><td></td><td>2</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 56" id="line56">
-<td>56</td><td></td><td>0</td><td><code>    _builders[T] = builder;</code></td>
+<tr class="lineCov" title="Line 56" id="line56">
+<td>56</td><td></td><td>3</td><td><code>    _builders[T] = builder;</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 57" id="line57">
-<td>57</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 57" id="line57">
+<td>57</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 58" id="line58">
 <td>58</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 59" id="line59">
-<td>59</td><td></td><td>0</td><td><code>  DocumentBuilder&lt;T&gt; _getBuilder&lt;T extends BaseDocument&gt;([Context? context]) {</code></td>
+<tr class="lineCov" title="Line 59" id="line59">
+<td>59</td><td></td><td>2</td><td><code>  DocumentBuilder&lt;T&gt; _getBuilder&lt;T extends BaseDocument&gt;([Context? context]) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 60" id="line60">
-<td>60</td><td></td><td>0</td><td><code>    final builder = context?.builder ?? _builders[T];</code></td>
+<tr class="lineCov" title="Line 60" id="line60">
+<td>60</td><td></td><td>4</td><td><code>    final builder = context?.builder ?? _builders[T];</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 61" id="line61">
-<td>61</td><td></td><td>0</td><td><code>    if (builder == null) throw UnknownDocumentTypeException(T);</code></td>
+<tr class="lineCov" title="Line 61" id="line61">
+<td>61</td><td></td><td>2</td><td><code>    if (builder == null) throw UnknownDocumentTypeException(T);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 62" id="line62">
-<td>62</td><td></td><td>0</td><td><code>    return (data) {</code></td>
+<tr class="lineCov" title="Line 62" id="line62">
+<td>62</td><td></td><td>2</td><td><code>    return (data) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 63" id="line63">
-<td>63</td><td></td><td>0</td><td><code>      try {</code></td>
+<tr class="lineCov" title="Line 63" id="line63">
+<td>63</td><td></td><td>1</td><td><code>      try {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 64" id="line64">
-<td>64</td><td></td><td>0</td><td><code>        return builder(data) as T;</code></td>
+<tr class="lineCov" title="Line 64" id="line64">
+<td>64</td><td></td><td>2</td><td><code>        return builder(data) as T;</code></td>
 </tr>
 <tr class="noop" title="Line 65" id="line65">
 <td>65</td><td></td><td></td><td><code>      } catch (ex) {</code></td>
@@ -260,41 +260,41 @@
 <tr class="noop" title="Line 67" id="line67">
 <td>67</td><td></td><td></td><td><code>      }</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 68" id="line68">
-<td>68</td><td></td><td>0</td><td><code>    };</code></td>
+<tr class="lineCov" title="Line 68" id="line68">
+<td>68</td><td></td><td>1</td><td><code>    };</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 69" id="line69">
-<td>69</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 69" id="line69">
+<td>69</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 70" id="line70">
 <td>70</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 71" id="line71">
-<td>71</td><td></td><td>0</td><td><code>  T? _build&lt;T extends BaseDocument&gt;(Context context, Map? item) {</code></td>
+<tr class="lineCov" title="Line 71" id="line71">
+<td>71</td><td></td><td>2</td><td><code>  T? _build&lt;T extends BaseDocument&gt;(Context context, Map? item) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 72" id="line72">
-<td>72</td><td></td><td>0</td><td><code>    final builder = _getBuilder&lt;T&gt;(context);</code></td>
+<tr class="lineCov" title="Line 72" id="line72">
+<td>72</td><td></td><td>2</td><td><code>    final builder = _getBuilder&lt;T&gt;(context);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 73" id="line73">
-<td>73</td><td></td><td>0</td><td><code>    return (item == null || item.isEmpty) ? null : builder(item);</code></td>
+<tr class="lineCov" title="Line 73" id="line73">
+<td>73</td><td></td><td>3</td><td><code>    return (item == null || item.isEmpty) ? null : builder(item);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 74" id="line74">
-<td>74</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 74" id="line74">
+<td>74</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 75" id="line75">
 <td>75</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 76" id="line76">
-<td>76</td><td></td><td>0</td><td><code>  Iterable&lt;T&gt; _buildMany&lt;T extends BaseDocument&gt;(Context context, List? items) {</code></td>
+<tr class="lineCov" title="Line 76" id="line76">
+<td>76</td><td></td><td>2</td><td><code>  Iterable&lt;T&gt; _buildMany&lt;T extends BaseDocument&gt;(Context context, List? items) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 77" id="line77">
-<td>77</td><td></td><td>0</td><td><code>    final builder = _getBuilder&lt;T&gt;(context);</code></td>
+<tr class="lineCov" title="Line 77" id="line77">
+<td>77</td><td></td><td>2</td><td><code>    final builder = _getBuilder&lt;T&gt;(context);</code></td>
 </tr>
 <tr class="lineCov" title="Line 78" id="line78">
-<td>78</td><td></td><td>1</td><td><code>    return (items ?? []).map((item) =&gt; builder(item));</code></td>
+<td>78</td><td></td><td>4</td><td><code>    return (items ?? []).map((item) =&gt; builder(item));</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 79" id="line79">
-<td>79</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 79" id="line79">
+<td>79</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 80" id="line80">
 <td>80</td><td></td><td></td><td><code></code></td>
@@ -332,11 +332,11 @@
 <tr class="lineCov" title="Line 91" id="line91">
 <td>91</td><td></td><td>1</td><td><code>        if (document != null) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 92" id="line92">
-<td>92</td><td></td><td>0</td><td><code>          request.headers.addAll(HttpHeader.jsonPayload);</code></td>
+<tr class="lineCov" title="Line 92" id="line92">
+<td>92</td><td></td><td>3</td><td><code>          request.headers.addAll(HttpHeader.jsonPayload);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 93" id="line93">
-<td>93</td><td></td><td>0</td><td><code>          request.body = jsonEncode(document);</code></td>
+<tr class="lineCov" title="Line 93" id="line93">
+<td>93</td><td></td><td>2</td><td><code>          request.body = jsonEncode(document);</code></td>
 </tr>
 <tr class="noop" title="Line 94" id="line94">
 <td>94</td><td></td><td></td><td><code>        }</code></td>
@@ -390,7 +390,7 @@
 <td>110</td><td></td><td></td><td><code>  ) async {</code></td>
 </tr>
 <tr class="lineCov" title="Line 111" id="line111">
-<td>111</td><td></td><td>2</td><td><code>    String resId = context.resId ?? call.uri;</code></td>
+<td>111</td><td></td><td>3</td><td><code>    String resId = context.resId ?? call.uri;</code></td>
 </tr>
 <tr class="noop" title="Line 112" id="line112">
 <td>112</td><td></td><td></td><td><code></code></td>
@@ -398,8 +398,8 @@
 <tr class="lineCov" title="Line 113" id="line113">
 <td>113</td><td></td><td>1</td><td><code>    var auth = (context.token != null)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 114" id="line114">
-<td>114</td><td></td><td>0</td><td><code>        ? Authorization.fromToken(context.token!)</code></td>
+<tr class="lineCov" title="Line 114" id="line114">
+<td>114</td><td></td><td>3</td><td><code>        ? Authorization.fromToken(context.token!)</code></td>
 </tr>
 <tr class="lineCov" title="Line 115" id="line115">
 <td>115</td><td></td><td>1</td><td><code>        : Authorization.fromKey(</code></td>
@@ -416,41 +416,41 @@
 <tr class="noop" title="Line 119" id="line119">
 <td>119</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 120" id="line120">
-<td>120</td><td></td><td>0</td><td><code>    switch (result.statusCode) {</code></td>
+<tr class="lineCov" title="Line 120" id="line120">
+<td>120</td><td></td><td>2</td><td><code>    switch (result.statusCode) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 121" id="line121">
-<td>121</td><td></td><td>0</td><td><code>      case HttpStatusCode.forbidden:</code></td>
+<tr class="lineCov" title="Line 121" id="line121">
+<td>121</td><td></td><td>1</td><td><code>      case HttpStatusCode.forbidden:</code></td>
 </tr>
 <tr class="noop" title="Line 122" id="line122">
 <td>122</td><td></td><td></td><td><code>        // try to get a new permission from the onForbidden callback</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 123" id="line123">
-<td>123</td><td></td><td>0</td><td><code>        final permission = await context.onForbidden?.call();</code></td>
+<tr class="lineCov" title="Line 123" id="line123">
+<td>123</td><td></td><td>3</td><td><code>        final permission = await context.onForbidden?.call();</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 124" id="line124">
-<td>124</td><td></td><td>0</td><td><code>        final token = permission?.token;</code></td>
+<tr class="lineCov" title="Line 124" id="line124">
+<td>124</td><td></td><td>1</td><td><code>        final token = permission?.token;</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 125" id="line125">
-<td>125</td><td></td><td>0</td><td><code>        if (token != null) {</code></td>
+<tr class="lineCov" title="Line 125" id="line125">
+<td>125</td><td></td><td>1</td><td><code>        if (token != null) {</code></td>
 </tr>
 <tr class="noop" title="Line 126" id="line126">
 <td>126</td><td></td><td></td><td><code>          // try again with this permission</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 127" id="line127">
-<td>127</td><td></td><td>0</td><td><code>          auth = Authorization.fromToken(token);</code></td>
+<tr class="lineCov" title="Line 127" id="line127">
+<td>127</td><td></td><td>2</td><td><code>          auth = Authorization.fromToken(token);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 128" id="line128">
-<td>128</td><td></td><td>0</td><td><code>          result = await _sendWithAuth(call, document, context, auth);</code></td>
+<tr class="lineCov" title="Line 128" id="line128">
+<td>128</td><td></td><td>2</td><td><code>          result = await _sendWithAuth(call, document, context, auth);</code></td>
 </tr>
 <tr class="noop" title="Line 129" id="line129">
 <td>129</td><td></td><td></td><td><code>        }</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 130" id="line130">
-<td>130</td><td></td><td>0</td><td><code>        break;</code></td>
+<tr class="lineCov" title="Line 130" id="line130">
+<td>130</td><td></td><td>1</td><td><code>        break;</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 131" id="line131">
-<td>131</td><td></td><td>0</td><td><code>      case HttpStatusCode.tooManyRequests:</code></td>
+<tr class="lineCov" title="Line 131" id="line131">
+<td>131</td><td></td><td>1</td><td><code>      case HttpStatusCode.tooManyRequests:</code></td>
 </tr>
 <tr class="noop" title="Line 132" id="line132">
 <td>132</td><td></td><td></td><td><code>        // throttling, retry after the specified delay</code></td>
@@ -458,32 +458,32 @@
 <tr class="noop" title="Line 133" id="line133">
 <td>133</td><td></td><td></td><td><code>        final delay =</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 134" id="line134">
-<td>134</td><td></td><td>0</td><td><code>            int.tryParse(result.headers[HttpHeader.msRetryAfterMs] ?? '');</code></td>
+<tr class="lineCov" title="Line 134" id="line134">
+<td>134</td><td></td><td>4</td><td><code>            int.tryParse(result.headers[HttpHeader.msRetryAfterMs] ?? '');</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 135" id="line135">
-<td>135</td><td></td><td>0</td><td><code>        if (delay != null) {</code></td>
+<tr class="lineCov" title="Line 135" id="line135">
+<td>135</td><td></td><td>1</td><td><code>        if (delay != null) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 136" id="line136">
-<td>136</td><td></td><td>0</td><td><code>          await Future.delayed(Duration(milliseconds: delay));</code></td>
+<tr class="lineCov" title="Line 136" id="line136">
+<td>136</td><td></td><td>3</td><td><code>          await Future.delayed(Duration(milliseconds: delay));</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 137" id="line137">
-<td>137</td><td></td><td>0</td><td><code>          result = await _sendWithAuth(call, document, context, auth);</code></td>
+<tr class="lineCov" title="Line 137" id="line137">
+<td>137</td><td></td><td>2</td><td><code>          result = await _sendWithAuth(call, document, context, auth);</code></td>
 </tr>
 <tr class="noop" title="Line 138" id="line138">
 <td>138</td><td></td><td></td><td><code>        }</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 139" id="line139">
-<td>139</td><td></td><td>0</td><td><code>        break;</code></td>
+<tr class="lineCov" title="Line 139" id="line139">
+<td>139</td><td></td><td>1</td><td><code>        break;</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 140" id="line140">
-<td>140</td><td></td><td>0</td><td><code>      case HttpStatusCode.noContent:</code></td>
+<tr class="lineCov" title="Line 140" id="line140">
+<td>140</td><td></td><td>1</td><td><code>      case HttpStatusCode.noContent:</code></td>
 </tr>
 <tr class="noop" title="Line 141" id="line141">
 <td>141</td><td></td><td></td><td><code>        // no content: return null (https://github.com/d-markey/azure_cosmosdb/issues/1)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 142" id="line142">
-<td>142</td><td></td><td>0</td><td><code>        return null;</code></td>
+<tr class="lineCov" title="Line 142" id="line142">
+<td>142</td><td></td><td>1</td><td><code>        return null;</code></td>
 </tr>
 <tr class="noop" title="Line 143" id="line143">
 <td>143</td><td></td><td></td><td><code>    }</code></td>
@@ -497,20 +497,20 @@
 <tr class="noop" title="Line 146" id="line146">
 <td>146</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 147" id="line147">
-<td>147</td><td></td><td>0</td><td><code>    final length = int.tryParse(result.headers[HttpHeader.contentLength] ?? '');</code></td>
+<tr class="lineCov" title="Line 147" id="line147">
+<td>147</td><td></td><td>4</td><td><code>    final length = int.tryParse(result.headers[HttpHeader.contentLength] ?? '');</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 148" id="line148">
-<td>148</td><td></td><td>0</td><td><code>    if (length == null || length &gt; 0) {</code></td>
+<tr class="lineCov" title="Line 148" id="line148">
+<td>148</td><td></td><td>2</td><td><code>    if (length == null || length &gt; 0) {</code></td>
 </tr>
 <tr class="noop" title="Line 149" id="line149">
 <td>149</td><td></td><td></td><td><code>      // only check content-type and parse body if content-length &gt; 0</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 150" id="line150">
-<td>150</td><td></td><td>0</td><td><code>      final contentType = result.headers[HttpHeader.contentType];</code></td>
+<tr class="lineCov" title="Line 150" id="line150">
+<td>150</td><td></td><td>3</td><td><code>      final contentType = result.headers[HttpHeader.contentType];</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 151" id="line151">
-<td>151</td><td></td><td>0</td><td><code>      if (contentType != MimeType.json) {</code></td>
+<tr class="lineCov" title="Line 151" id="line151">
+<td>151</td><td></td><td>1</td><td><code>      if (contentType != MimeType.json) {</code></td>
 </tr>
 <tr class="lineNoCov" title="Line 152" id="line152">
 <td>152</td><td></td><td>0</td><td><code>        throw BadResponseException('Unsupported content-type: $contentType');</code></td>
@@ -518,11 +518,11 @@
 <tr class="noop" title="Line 153" id="line153">
 <td>153</td><td></td><td></td><td><code>      }</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 154" id="line154">
-<td>154</td><td></td><td>0</td><td><code>      final response = await result.stream.bytesToString();</code></td>
+<tr class="lineCov" title="Line 154" id="line154">
+<td>154</td><td></td><td>3</td><td><code>      final response = await result.stream.bytesToString();</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 155" id="line155">
-<td>155</td><td></td><td>0</td><td><code>      data = response.isEmpty ? {} : jsonDecode(response);</code></td>
+<tr class="lineCov" title="Line 155" id="line155">
+<td>155</td><td></td><td>2</td><td><code>      data = response.isEmpty ? {} : jsonDecode(response);</code></td>
 </tr>
 <tr class="noop" title="Line 156" id="line156">
 <td>156</td><td></td><td></td><td><code>    }</code></td>
@@ -530,26 +530,26 @@
 <tr class="noop" title="Line 157" id="line157">
 <td>157</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 158" id="line158">
-<td>158</td><td></td><td>0</td><td><code>    if (!HttpStatusCode.success(result.statusCode)) {</code></td>
+<tr class="lineCov" title="Line 158" id="line158">
+<td>158</td><td></td><td>2</td><td><code>    if (!HttpStatusCode.success(result.statusCode)) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 159" id="line159">
-<td>159</td><td></td><td>0</td><td><code>      final message = (data is Map &amp;&amp; data.containsKey('message'))</code></td>
+<tr class="lineCov" title="Line 159" id="line159">
+<td>159</td><td></td><td>3</td><td><code>      final message = (data is Map &amp;&amp; data.containsKey('message'))</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 160" id="line160">
-<td>160</td><td></td><td>0</td><td><code>          ? '${result.reasonPhrase}: ${data['message']}'</code></td>
+<tr class="lineCov" title="Line 160" id="line160">
+<td>160</td><td></td><td>3</td><td><code>          ? '${result.reasonPhrase}: ${data['message']}'</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 161" id="line161">
-<td>161</td><td></td><td>0</td><td><code>          : result.reasonPhrase;</code></td>
+<tr class="lineCov" title="Line 161" id="line161">
+<td>161</td><td></td><td>2</td><td><code>          : result.reasonPhrase;</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 162" id="line162">
-<td>162</td><td></td><td>0</td><td><code>      final ex = CosmosDbException(result.statusCode, message);</code></td>
+<tr class="lineCov" title="Line 162" id="line162">
+<td>162</td><td></td><td>2</td><td><code>      final ex = CosmosDbException(result.statusCode, message);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 163" id="line163">
-<td>163</td><td></td><td>0</td><td><code>      if (ex is! NotFoundException || context.throwOnNotFound) {</code></td>
+<tr class="lineCov" title="Line 163" id="line163">
+<td>163</td><td></td><td>2</td><td><code>      if (ex is! NotFoundException || context.throwOnNotFound) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 164" id="line164">
-<td>164</td><td></td><td>0</td><td><code>        throw ex;</code></td>
+<tr class="lineCov" title="Line 164" id="line164">
+<td>164</td><td></td><td>1</td><td><code>        throw ex;</code></td>
 </tr>
 <tr class="noop" title="Line 165" id="line165">
 <td>165</td><td></td><td></td><td><code>      }</code></td>
@@ -566,17 +566,17 @@
 <tr class="noop" title="Line 169" id="line169">
 <td>169</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 170" id="line170">
-<td>170</td><td></td><td>0</td><td><code>    context.paging?.setContinuation(</code></td>
+<tr class="lineCov" title="Line 170" id="line170">
+<td>170</td><td></td><td>2</td><td><code>    context.paging?.setContinuation(</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 171" id="line171">
-<td>171</td><td></td><td>0</td><td><code>      result.headers[HttpHeader.msContinuation] ?? '',</code></td>
+<tr class="lineCov" title="Line 171" id="line171">
+<td>171</td><td></td><td>3</td><td><code>      result.headers[HttpHeader.msContinuation] ?? '',</code></td>
 </tr>
 <tr class="noop" title="Line 172" id="line172">
 <td>172</td><td></td><td></td><td><code>    );</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 173" id="line173">
-<td>173</td><td></td><td>0</td><td><code>    return data;</code></td>
+<tr class="lineCov" title="Line 173" id="line173">
+<td>173</td><td></td><td>1</td><td><code>    return data;</code></td>
 </tr>
 <tr class="lineCov" title="Line 174" id="line174">
 <td>174</td><td></td><td>1</td><td><code>  }</code></td>
@@ -584,14 +584,14 @@
 <tr class="noop" title="Line 175" id="line175">
 <td>175</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 176" id="line176">
-<td>176</td><td></td><td>0</td><td><code>  Future&lt;dynamic&gt; rawGet(String path, Context context) {</code></td>
+<tr class="lineCov" title="Line 176" id="line176">
+<td>176</td><td></td><td>1</td><td><code>  Future&lt;dynamic&gt; rawGet(String path, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 177" id="line177">
-<td>177</td><td></td><td>0</td><td><code>    final call = HttpCall.get(path, version);</code></td>
+<tr class="lineCov" title="Line 177" id="line177">
+<td>177</td><td></td><td>2</td><td><code>    final call = HttpCall.get(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 178" id="line178">
-<td>178</td><td></td><td>0</td><td><code>    return _send(call, null, context).rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 178" id="line178">
+<td>178</td><td></td><td>3</td><td><code>    return _send(call, null, context).rethrowContextualizedException(call);</code></td>
 </tr>
 <tr class="noop" title="Line 179" id="line179">
 <td>179</td><td></td><td></td><td><code>  }</code></td>
@@ -599,23 +599,23 @@
 <tr class="noop" title="Line 180" id="line180">
 <td>180</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 181" id="line181">
-<td>181</td><td></td><td>0</td><td><code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(String path, Context context) {</code></td>
+<tr class="lineCov" title="Line 181" id="line181">
+<td>181</td><td></td><td>2</td><td><code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(String path, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 182" id="line182">
-<td>182</td><td></td><td>0</td><td><code>    final call = HttpCall.get(path, version);</code></td>
+<tr class="lineCov" title="Line 182" id="line182">
+<td>182</td><td></td><td>3</td><td><code>    final call = HttpCall.get(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 183" id="line183">
-<td>183</td><td></td><td>0</td><td><code>    return _send(call, null, context)</code></td>
+<tr class="lineCov" title="Line 183" id="line183">
+<td>183</td><td></td><td>2</td><td><code>    return _send(call, null, context)</code></td>
 </tr>
 <tr class="lineCov" title="Line 184" id="line184">
-<td>184</td><td></td><td>1</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data))</code></td>
+<td>184</td><td></td><td>4</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data))</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 185" id="line185">
-<td>185</td><td></td><td>0</td><td><code>        .rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 185" id="line185">
+<td>185</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 186" id="line186">
-<td>186</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 186" id="line186">
+<td>186</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 187" id="line187">
 <td>187</td><td></td><td></td><td><code></code></td>
@@ -633,7 +633,7 @@
 <td>191</td><td></td><td>2</td><td><code>    return _send(call, null, context)</code></td>
 </tr>
 <tr class="lineCov" title="Line 192" id="line192">
-<td>192</td><td></td><td>2</td><td><code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code></td>
+<td>192</td><td></td><td>5</td><td><code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code></td>
 </tr>
 <tr class="lineCov" title="Line 193" id="line193">
 <td>193</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
@@ -644,17 +644,17 @@
 <tr class="noop" title="Line 195" id="line195">
 <td>195</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 196" id="line196">
-<td>196</td><td></td><td>0</td><td><code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineCov" title="Line 196" id="line196">
+<td>196</td><td></td><td>2</td><td><code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 197" id="line197">
 <td>197</td><td></td><td></td><td><code>      String path, Query query, String resultSet, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 198" id="line198">
-<td>198</td><td></td><td>0</td><td><code>    final call = HttpCall.post(path, version);</code></td>
+<tr class="lineCov" title="Line 198" id="line198">
+<td>198</td><td></td><td>3</td><td><code>    final call = HttpCall.post(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 199" id="line199">
-<td>199</td><td></td><td>0</td><td><code>    return _send(</code></td>
+<tr class="lineCov" title="Line 199" id="line199">
+<td>199</td><td></td><td>2</td><td><code>    return _send(</code></td>
 </tr>
 <tr class="noop" title="Line 200" id="line200">
 <td>200</td><td></td><td></td><td><code>            call,</code></td>
@@ -662,44 +662,44 @@
 <tr class="noop" title="Line 201" id="line201">
 <td>201</td><td></td><td></td><td><code>            query,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 202" id="line202">
-<td>202</td><td></td><td>0</td><td><code>            context.copyWith(</code></td>
+<tr class="lineCov" title="Line 202" id="line202">
+<td>202</td><td></td><td>2</td><td><code>            context.copyWith(</code></td>
 </tr>
 <tr class="noop" title="Line 203" id="line203">
 <td>203</td><td></td><td></td><td><code>              paging: query,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 204" id="line204">
-<td>204</td><td></td><td>0</td><td><code>              partitionKey: query.partitionKey,</code></td>
+<tr class="lineCov" title="Line 204" id="line204">
+<td>204</td><td></td><td>1</td><td><code>              partitionKey: query.partitionKey,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 205" id="line205">
-<td>205</td><td></td><td>0</td><td><code>              headers: HttpHeader.queryPayload,</code></td>
+<tr class="lineCov" title="Line 205" id="line205">
+<td>205</td><td></td><td>1</td><td><code>              headers: HttpHeader.queryPayload,</code></td>
 </tr>
 <tr class="noop" title="Line 206" id="line206">
 <td>206</td><td></td><td></td><td><code>            ))</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 207" id="line207">
-<td>207</td><td></td><td>0</td><td><code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code></td>
+<tr class="lineCov" title="Line 207" id="line207">
+<td>207</td><td></td><td>5</td><td><code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 208" id="line208">
-<td>208</td><td></td><td>0</td><td><code>        .rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 208" id="line208">
+<td>208</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 209" id="line209">
-<td>209</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 209" id="line209">
+<td>209</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 210" id="line210">
 <td>210</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 211" id="line211">
-<td>211</td><td></td><td>0</td><td><code>  Future&lt;dynamic&gt; rawQuery(</code></td>
+<tr class="lineCov" title="Line 211" id="line211">
+<td>211</td><td></td><td>1</td><td><code>  Future&lt;dynamic&gt; rawQuery(</code></td>
 </tr>
 <tr class="noop" title="Line 212" id="line212">
 <td>212</td><td></td><td></td><td><code>      String path, Query query, String resultSet, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 213" id="line213">
-<td>213</td><td></td><td>0</td><td><code>    final call = HttpCall.post(path, version);</code></td>
+<tr class="lineCov" title="Line 213" id="line213">
+<td>213</td><td></td><td>3</td><td><code>    final call = HttpCall.post(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 214" id="line214">
-<td>214</td><td></td><td>0</td><td><code>    return _send(</code></td>
+<tr class="lineCov" title="Line 214" id="line214">
+<td>214</td><td></td><td>2</td><td><code>    return _send(</code></td>
 </tr>
 <tr class="noop" title="Line 215" id="line215">
 <td>215</td><td></td><td></td><td><code>        call,</code></td>
@@ -707,20 +707,20 @@
 <tr class="noop" title="Line 216" id="line216">
 <td>216</td><td></td><td></td><td><code>        query,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 217" id="line217">
-<td>217</td><td></td><td>0</td><td><code>        context.copyWith(</code></td>
+<tr class="lineCov" title="Line 217" id="line217">
+<td>217</td><td></td><td>2</td><td><code>        context.copyWith(</code></td>
 </tr>
 <tr class="noop" title="Line 218" id="line218">
 <td>218</td><td></td><td></td><td><code>          paging: query,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 219" id="line219">
-<td>219</td><td></td><td>0</td><td><code>          partitionKey: query.partitionKey,</code></td>
+<tr class="lineCov" title="Line 219" id="line219">
+<td>219</td><td></td><td>1</td><td><code>          partitionKey: query.partitionKey,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 220" id="line220">
-<td>220</td><td></td><td>0</td><td><code>          headers: HttpHeader.queryPayload,</code></td>
+<tr class="lineCov" title="Line 220" id="line220">
+<td>220</td><td></td><td>1</td><td><code>          headers: HttpHeader.queryPayload,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 221" id="line221">
-<td>221</td><td></td><td>0</td><td><code>        )).rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 221" id="line221">
+<td>221</td><td></td><td>2</td><td><code>        )).rethrowContextualizedException(call);</code></td>
 </tr>
 <tr class="noop" title="Line 222" id="line222">
 <td>222</td><td></td><td></td><td><code>  }</code></td>
@@ -728,137 +728,137 @@
 <tr class="noop" title="Line 223" id="line223">
 <td>223</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 224" id="line224">
-<td>224</td><td></td><td>0</td><td><code>  Future&lt;BatchResponse&lt;T&gt;&gt; batch&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineCov" title="Line 224" id="line224">
+<td>224</td><td></td><td>2</td><td><code>  Future&lt;BatchResponse&lt;T&gt;&gt; batch&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 225" id="line225">
 <td>225</td><td></td><td></td><td><code>      String path, TransactionalBatch&lt;T&gt; batch, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 226" id="line226">
-<td>226</td><td></td><td>0</td><td><code>    final call = HttpCall.post(path, version);</code></td>
+<tr class="lineCov" title="Line 226" id="line226">
+<td>226</td><td></td><td>3</td><td><code>    final call = HttpCall.post(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 227" id="line227">
-<td>227</td><td></td><td>0</td><td><code>    final builder = _getBuilder&lt;T&gt;(context);</code></td>
+<tr class="lineCov" title="Line 227" id="line227">
+<td>227</td><td></td><td>2</td><td><code>    final builder = _getBuilder&lt;T&gt;(context);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 228" id="line228">
-<td>228</td><td></td><td>0</td><td><code>    return _send(</code></td>
+<tr class="lineCov" title="Line 228" id="line228">
+<td>228</td><td></td><td>2</td><td><code>    return _send(</code></td>
 </tr>
 <tr class="noop" title="Line 229" id="line229">
 <td>229</td><td></td><td></td><td><code>            call,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 230" id="line230">
-<td>230</td><td></td><td>0</td><td><code>            batch,</code></td>
+<tr class="lineCov" title="Line 230" id="line230">
+<td>230</td><td></td><td>1</td><td><code>            batch,</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 231" id="line231">
-<td>231</td><td></td><td>0</td><td><code>            context.copyWith(</code></td>
+<tr class="lineCov" title="Line 231" id="line231">
+<td>231</td><td></td><td>2</td><td><code>            context.copyWith(</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 232" id="line232">
-<td>232</td><td></td><td>0</td><td><code>              headers: batch.headers,</code></td>
+<tr class="lineCov" title="Line 232" id="line232">
+<td>232</td><td></td><td>1</td><td><code>              headers: batch.headers,</code></td>
 </tr>
 <tr class="noop" title="Line 233" id="line233">
 <td>233</td><td></td><td></td><td><code>            ))</code></td>
 </tr>
 <tr class="lineCov" title="Line 234" id="line234">
-<td>234</td><td></td><td>1</td><td><code>        .then((data) =&gt; BatchResponse.build&lt;T&gt;(data, builder))</code></td>
+<td>234</td><td></td><td>4</td><td><code>        .then((data) =&gt; BatchResponse.build&lt;T&gt;(data, builder))</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 235" id="line235">
-<td>235</td><td></td><td>0</td><td><code>        .rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 235" id="line235">
+<td>235</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 236" id="line236">
-<td>236</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 236" id="line236">
+<td>236</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 237" id="line237">
 <td>237</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 238" id="line238">
-<td>238</td><td></td><td>0</td><td><code>  Future&lt;T&gt; post&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineCov" title="Line 238" id="line238">
+<td>238</td><td></td><td>2</td><td><code>  Future&lt;T&gt; post&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 239" id="line239">
 <td>239</td><td></td><td></td><td><code>      String path, BaseDocument doc, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 240" id="line240">
-<td>240</td><td></td><td>0</td><td><code>    final call = HttpCall.post(path, version);</code></td>
+<tr class="lineCov" title="Line 240" id="line240">
+<td>240</td><td></td><td>3</td><td><code>    final call = HttpCall.post(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 241" id="line241">
-<td>241</td><td></td><td>0</td><td><code>    return _send(call, doc, context)</code></td>
+<tr class="lineCov" title="Line 241" id="line241">
+<td>241</td><td></td><td>2</td><td><code>    return _send(call, doc, context)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 242" id="line242">
-<td>242</td><td></td><td>0</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
+<tr class="lineCov" title="Line 242" id="line242">
+<td>242</td><td></td><td>4</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 243" id="line243">
-<td>243</td><td></td><td>0</td><td><code>        .rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 243" id="line243">
+<td>243</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 244" id="line244">
-<td>244</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 244" id="line244">
+<td>244</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 245" id="line245">
 <td>245</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 246" id="line246">
-<td>246</td><td></td><td>0</td><td><code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineCov" title="Line 246" id="line246">
+<td>246</td><td></td><td>2</td><td><code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 247" id="line247">
 <td>247</td><td></td><td></td><td><code>      String path, BaseDocument doc, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 248" id="line248">
-<td>248</td><td></td><td>0</td><td><code>    final call = HttpCall.patch(path, version);</code></td>
+<tr class="lineCov" title="Line 248" id="line248">
+<td>248</td><td></td><td>3</td><td><code>    final call = HttpCall.patch(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 249" id="line249">
-<td>249</td><td></td><td>0</td><td><code>    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))</code></td>
+<tr class="lineCov" title="Line 249" id="line249">
+<td>249</td><td></td><td>3</td><td><code>    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 250" id="line250">
-<td>250</td><td></td><td>0</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
+<tr class="lineCov" title="Line 250" id="line250">
+<td>250</td><td></td><td>4</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 251" id="line251">
-<td>251</td><td></td><td>0</td><td><code>        .rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 251" id="line251">
+<td>251</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 252" id="line252">
-<td>252</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 252" id="line252">
+<td>252</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 253" id="line253">
 <td>253</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 254" id="line254">
-<td>254</td><td></td><td>0</td><td><code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code></td>
+<tr class="lineCov" title="Line 254" id="line254">
+<td>254</td><td></td><td>2</td><td><code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code></td>
 </tr>
 <tr class="noop" title="Line 255" id="line255">
 <td>255</td><td></td><td></td><td><code>      String path, BaseDocument doc, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 256" id="line256">
-<td>256</td><td></td><td>0</td><td><code>    final call = HttpCall.put(path, version);</code></td>
+<tr class="lineCov" title="Line 256" id="line256">
+<td>256</td><td></td><td>3</td><td><code>    final call = HttpCall.put(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 257" id="line257">
-<td>257</td><td></td><td>0</td><td><code>    return _send(call, doc, context)</code></td>
+<tr class="lineCov" title="Line 257" id="line257">
+<td>257</td><td></td><td>2</td><td><code>    return _send(call, doc, context)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 258" id="line258">
-<td>258</td><td></td><td>0</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
+<tr class="lineCov" title="Line 258" id="line258">
+<td>258</td><td></td><td>4</td><td><code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 259" id="line259">
-<td>259</td><td></td><td>0</td><td><code>        .rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 259" id="line259">
+<td>259</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 260" id="line260">
-<td>260</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 260" id="line260">
+<td>260</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 261" id="line261">
 <td>261</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 262" id="line262">
-<td>262</td><td></td><td>0</td><td><code>  Future&lt;bool&gt; delete(String path, Context context) {</code></td>
+<tr class="lineCov" title="Line 262" id="line262">
+<td>262</td><td></td><td>2</td><td><code>  Future&lt;bool&gt; delete(String path, Context context) {</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 263" id="line263">
-<td>263</td><td></td><td>0</td><td><code>    final call = HttpCall.delete(path, version);</code></td>
+<tr class="lineCov" title="Line 263" id="line263">
+<td>263</td><td></td><td>3</td><td><code>    final call = HttpCall.delete(path, version);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 264" id="line264">
-<td>264</td><td></td><td>0</td><td><code>    return _send(call, null, context)</code></td>
+<tr class="lineCov" title="Line 264" id="line264">
+<td>264</td><td></td><td>2</td><td><code>    return _send(call, null, context)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 265" id="line265">
-<td>265</td><td></td><td>0</td><td><code>        .then((result) =&gt; true)</code></td>
+<tr class="lineCov" title="Line 265" id="line265">
+<td>265</td><td></td><td>3</td><td><code>        .then((result) =&gt; true)</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 266" id="line266">
-<td>266</td><td></td><td>0</td><td><code>        .rethrowContextualizedException(call);</code></td>
+<tr class="lineCov" title="Line 266" id="line266">
+<td>266</td><td></td><td>2</td><td><code>        .rethrowContextualizedException(call);</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 267" id="line267">
-<td>267</td><td></td><td>0</td><td><code>  }</code></td>
+<tr class="lineCov" title="Line 267" id="line267">
+<td>267</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
 <tr class="noop" title="Line 268" id="line268">
 <td>268</td><td></td><td></td><td><code>}</code></td>

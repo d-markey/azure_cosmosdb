@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="query.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="18" package="/src/queries" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="query.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9444444" lines-covered="17" lines-valid="18" package="/src/queries" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -22,8 +22,9 @@
 <line>
 <code>  /// Builds a new CosmosDB SQL query with [command] and [params].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Query(this.command,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      {int? maxCount, PartitionKey? partitionKey, Map&lt;String, dynamic&gt;? params})</code>
@@ -31,11 +32,13 @@
 <line>
 <code>      : _partitionKey = partitionKey,</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        _params = (params == null) ? null : {...params},</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        super(maxCount);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -58,8 +61,9 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  late final Map&lt;String, dynamic&gt;? _params;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -70,8 +74,9 @@
 <line>
 <code>  /// will be executed against all partitions.</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>  PartitionKey get partitionKey =&gt; _partitionKey ?? PartitionKey.all;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  PartitionKey? _partitionKey;</code>
@@ -82,8 +87,9 @@
 <line>
 <code>  /// Force the query to execute in all partitions.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  void crossPartition() =&gt; _partitionKey = null;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -91,8 +97,9 @@
 <line>
 <code>  /// Restrict the query to the partition identified by [key].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  void onPartition(PartitionKey partitionKey) =&gt; _partitionKey = partitionKey;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -100,38 +107,48 @@
 <line>
 <code>  /// Registers a paramater/value to the query.</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  void withParam(String name, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      (_params ??= &lt;String, dynamic&gt;{})[name] = value;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        'query': command,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        if (_params != null)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>          'parameters': _params!.entries</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="6">
 <code>              .map((e) =&gt; {'name': e.key, 'value': e.value})</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>              .toList()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

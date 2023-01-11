@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_containers.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.0" lines-covered="0" lines-valid="44" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_containers.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95454544" lines-covered="42" lines-valid="44" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'client/_context.dart';</code>
@@ -37,8 +37,9 @@
 <line>
 <code>class CosmosDbContainers {</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>  CosmosDbContainers(this.database) : url = '${database.url}/colls';</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -58,23 +59,29 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  CosmosDbContainer fromJson(Map json) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>    final coll = CosmosDbContainer(database, json['id'],</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    coll.setExists(true);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    return coll;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -82,29 +89,35 @@
 <line>
 <code>  /// Lists all containers from this [database].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;Iterable&lt;CosmosDbContainer&gt;&gt; list({CosmosDbPermission? permission}) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      database.client.getMany&lt;CosmosDbContainer&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        'DocumentCollections',</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          resId: database.url,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          builder: fromJson,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          token: permission?.token,</code>
@@ -112,8 +125,9 @@
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -133,23 +147,28 @@
 <line>
 <code>  /// be set to `false`.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;bool&gt; delete(CosmosDbContainer container,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, CosmosDbPermission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      database.client</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          .delete(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>        '$url/${container.id}',</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
@@ -166,17 +185,21 @@
 <line>
 <code>      )</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          .then((value) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        container.setExists(false);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>        return true;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      });</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -184,8 +207,9 @@
 <line>
 <code>  /// Creates a new [CosmosDbContainer] with the specified `name` and `partitionKeys`.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;CosmosDbContainer&gt; create(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    String name, {</code>
@@ -208,23 +232,28 @@
 <line>
 <code>  }) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      database.client.post&lt;CosmosDbContainer&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        CosmosDbContainer(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          database,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          name,</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          partitionKeySpec: partitionKey,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          indexingPolicy: indexingPolicy,</code>
@@ -235,26 +264,31 @@
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'colls',</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          resId: database.url,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          headers: (throughput ?? CosmosDbThroughput.minimum).header,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          builder: fromJson,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -262,11 +296,13 @@
 <line>
 <code>  /// Opens an existing [CosmosDbContainer] with id [name].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  Future&lt;CosmosDbContainer&gt; open(String name) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>      CosmosDbContainer(database, name).getInfo();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -274,8 +310,9 @@
 <line>
 <code>  /// Opens or creates a [CosmosDbContainer] with id [name].</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;CosmosDbContainer&gt; openOrCreate(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    String name, {</code>
@@ -295,17 +332,21 @@
 <line>
 <code>  }) async {</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    try {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      return await open(name);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    } on NotFoundException {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      return await create(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        name,</code>
@@ -328,8 +369,9 @@
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

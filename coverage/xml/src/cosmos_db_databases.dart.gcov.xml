@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_databases.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.17777778" lines-covered="8" lines-valid="45" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="cosmos_db_databases.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.93333334" lines-covered="42" lines-valid="45" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'client/_client.dart';</code>
@@ -53,20 +53,25 @@
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  CosmosDbDatabase _build(Map json) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>    final db = CosmosDbDatabase(server, json['id']);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    db.setExists(true);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    return db;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -131,23 +136,28 @@
 <line>
 <code>  /// be set to `false`.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;bool&gt; delete(CosmosDbDatabase database,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          {bool throwOnNotFound = false, CosmosDbPermission? permission}) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      client</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          .delete(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="4">
 <code>              '$_url/${database.id}',</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>              Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>                type: 'dbs',</code>
@@ -161,17 +171,21 @@
 <line>
 <code>              ))</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>          .then((value) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        database.setExists(false);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>        return true;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      });</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -179,8 +193,9 @@
 <line>
 <code>  /// Creates a new [CosmosDbDatabase] with the specified `name`.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;CosmosDbDatabase&gt; create(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    String name, {</code>
@@ -194,17 +209,21 @@
 <line>
 <code>  }) =&gt;</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>      client.post&lt;CosmosDbDatabase&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>        _url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        CosmosDbDatabase(server, name),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        Context(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          type: 'dbs',</code>
@@ -212,11 +231,13 @@
 <line>
 <code>          resId: '',</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          headers: throughput?.header,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          builder: _build,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>          token: permission?.token,</code>
@@ -224,8 +245,9 @@
 <line>
 <code>        ),</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      );</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -233,26 +255,32 @@
 <line>
 <code>  /// Opens an existing [CosmosDbDatabase] with the specified `name`.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;CosmosDbDatabase&gt; open(String name,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      {CosmosDbPermission? permission}) async {</code>
 </line>
-<line hits="0">
+<line hits="3">
 <code>    final db = CosmosDbDatabase(server, name);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    await db.getInfo(permission: permission);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    db.setExists(true);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    return db;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -260,8 +288,9 @@
 <line>
 <code>  /// Opens or creates a [CosmosDbDatabase] with the specified `name`.</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  Future&lt;CosmosDbDatabase&gt; openOrCreate(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    String name, {</code>
@@ -275,23 +304,28 @@
 <line>
 <code>  }) async {</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>    try {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      return await open(name, permission: permission);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>    } on NotFoundException {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      return await create(name, permission: permission, throughput: throughput);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>

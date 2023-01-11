@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.5273973" lines-covered="77" lines-valid="146" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.84931505" lines-covered="124" lines-valid="146" package="/src/partition" testname="lcov.info" version="1.5">
 <sources>
-<source branches-hit="0" branches-valid="0" filename="partition_key.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="6" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="partition_key.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="6" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="6" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="_path_parser.dart" functions-hit="0" functions-valid="0" lines-hit="71" lines-valid="78" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="71" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="partition_key_spec.dart" functions-hit="0" functions-valid="0" lines-hit="5" lines-valid="50" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="5" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="partition_key_spec.dart" functions-hit="0" functions-valid="0" lines-hit="47" lines-valid="50" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="47" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="partition_key_range.dart" functions-hit="0" functions-valid="0" lines-hit="0" lines-valid="12" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib"/>
 </sources>

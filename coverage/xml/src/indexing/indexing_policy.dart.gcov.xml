@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="indexing_policy.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.18181819" lines-covered="4" lines-valid="22" package="/src/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-07" filename="indexing_policy.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="22" lines-valid="22" package="/src/indexing" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'index_path.dart';</code>
@@ -19,11 +19,13 @@
 <line>
 <code>class IndexingPolicy {</code>
 </line>
-<line hits="0">
+<line hits="2">
 <code>  IndexingPolicy(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      {this.indexingMode = IndexingMode.consistent, this.automatic = true});</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -52,8 +54,9 @@
 <line>
 <code>  /// fields, or `/*` to include all sub-nodes.</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  final includedPaths = &lt;IndexPath&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -61,8 +64,9 @@
 <line>
 <code>  /// JSON paths to fields that must not be indexed. See also [includedPaths].</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  final excludedPaths = &lt;IndexPath&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -73,8 +77,9 @@
 <line>
 <code>  /// so these paths should not include the `/?` nor the `/*`suffix.</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  final compositeIndexes = &lt;List&lt;IndexPath&gt;&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -82,63 +87,76 @@
 <line>
 <code>  /// List of JSON paths for spatial indexing.</code>
 </line>
-<line hits="0">
+<line hits="1">
 <code>  final spatialIndexes = &lt;SpatialIndexPath&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        'indexingMode': indexingMode.name,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>        'automatic': automatic,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        if (includedPaths.isNotEmpty)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="7">
 <code>          'includedPaths': includedPaths.map((p) =&gt; p.toJson()).toList(),</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="7" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        if (excludedPaths.isNotEmpty)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          'excludedPaths':</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="7">
 <code>              excludedPaths.map((p) =&gt; p.toJson()..remove('order')).toList(),</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
 <code>        if (compositeIndexes.isNotEmpty)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>          'compositeIndexes': compositeIndexes</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="4">
 <code>              .where((c) =&gt; c.isNotEmpty)</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="4" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="7">
 <code>              .map((c) =&gt; c.map((p) =&gt; p.toJson()).toList())</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="0">
-<code>              .toList(),</code>
-</line>
-<line hits="0">
-<code>        if (spatialIndexes.isNotEmpty)</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>          'spatialIndexes': spatialIndexes.map((p) =&gt; p.toJson()).toList(),</code>
+<code>              .toList(),</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="3">
+<code>        if (spatialIndexes.isNotEmpty)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="7">
+<code>          'spatialIndexes': spatialIndexes.map((p) =&gt; p.toJson()).toList(),</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
 <code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>}</code>
