@@ -1,25 +1,24 @@
-import 'dart:convert';
-
 import '../base_document.dart';
 import '../partition/partition_key.dart';
-import '../partition/partition_key_spec.dart';
 import 'batch_operation.dart';
+import 'batch_operation_types.dart';
 
-class BatchOperationRead extends BatchOperation {
-  BatchOperationRead(this.id,
-      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})
-      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);
+/// Batch operation for loading a document from the target container.
+class BatchOperationRead<T extends BaseDocument>
+    extends BatchOperationOnType<T> {
+  /// Creates a batch operation for loading document with [id] and [partitionKey].
+  BatchOperationRead(this.id, {PartitionKey? partitionKey})
+      : super(partitionKey: partitionKey);
 
   @override
-  final BatchOperationType op = BatchOperationType.read;
+  final BatchOperationType type = BatchOperationType.read;
 
+  /// The target document [id].
   final String id;
 
   @override
   Map<String, dynamic> toJson() => super.toJson()
     ..addAll({
       'id': id,
-      'partitionKey': jsonEncode(
-          (partitionKey ?? partitionKeySpec?.from(DocumentWithId(id)))?.values),
     });
 }

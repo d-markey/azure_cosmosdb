@@ -21,11 +21,22 @@ void run(CosmosDbServer cosmosDB) {
   late CosmosDbDatabase database;
   late String containerUrl;
 
-  setUpAll(() async {
-    database = await cosmosDB.databases.create(getTempName());
-    database.registerBuilder<TestDocument>(TestDocument.fromJson);
+  Future<CosmosDbContainer> createContainer() async {
     final container = await database.containers
         .create(collName, partitionKey: PartitionKeySpec.id);
+    container.registerBuilder<TestDocument>(TestDocument.fromJson);
+    return container;
+  }
+
+  Future<CosmosDbContainer> openContainer() async {
+    final container = await database.containers.open(collName);
+    container.registerBuilder<TestDocument>(TestDocument.fromJson);
+    return container;
+  }
+
+  setUpAll(() async {
+    database = await cosmosDB.databases.create(getTempName());
+    final container = await createContainer();
     containerUrl = container.url;
     await container.add(TestDocument('1', 'TEST #1', [1, 2, 3]));
     await container.add(TestDocument('2', 'TEST #2', [2, 3, 5]));
@@ -80,7 +91,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readOnly, isNotNull);
     expect(readOnly!.token, isNotNull);
 
-    final roColl = await database.containers.open(collName)
+    final roColl = await openContainer()
       ..usePermission(readOnly);
 
     final doc = await roColl.find<TestDocument>('1');
@@ -93,7 +104,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readOnly, isNotNull);
     expect(readOnly!.token, isNotNull);
 
-    final roColl = await database.containers.open(collName)
+    final roColl = await openContainer()
       ..usePermission(readOnly);
 
     await expectLater(
@@ -121,7 +132,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readWrite, isNotNull);
     expect(readWrite!.token, isNotNull);
 
-    final rwColl = await database.containers.open(collName)
+    final rwColl = await openContainer()
       ..usePermission(readWrite);
 
     final doc = await rwColl.find<TestDocument>('1');
@@ -134,7 +145,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(readWrite, isNotNull);
     expect(readWrite!.token, isNotNull);
 
-    final rwColl = await database.containers.open(collName)
+    final rwColl = await openContainer()
       ..usePermission(readWrite);
 
     final doc = await rwColl.add(TestDocument('4', 'TEST #4', [11, 13, 17]));
@@ -149,7 +160,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(permission, isNotNull);
     expect(permission!.token, isNotNull);
 
-    final coll = await database.containers.open(collName)
+    final coll = await openContainer()
       ..usePermission(permission);
 
     // permissions have a resolution of 1 second with undocumented minimal

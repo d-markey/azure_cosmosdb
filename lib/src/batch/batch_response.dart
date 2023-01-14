@@ -1,40 +1,45 @@
 import '../_internal/_linq_extensions.dart';
 import '../base_document.dart';
-import '../client/http_status_codes.dart';
+import '../client/_context.dart';
+import 'batch_operation.dart';
+import 'batch_operation_result.dart';
 
-class BatchResponse<T extends BaseDocument> {
-  final _results = <BatchOperationResult<T>>[];
+/// Class containing the results of a batch operation.
+class BatchResponse {
+  final _results = <BatchOperationResult>[];
 
+  /// The number of results in this batch response.
   int get length => _results.length;
 
-  T? operator [](int i) => _results[i].item;
+  /// The item returned by Cosmos DB with this batch response.
+  T? get<T extends BaseDocument>(int index) => _results[index].item as T?;
 
-  bool get success => _results.every((r) => r.success);
+  /// Returns `true` if all batch operations succeeded, or if the result list is empty.
+  bool get isSuccess => _results.isEmpty || _results.every((r) => r.isSuccess);
 
-  Iterable<BatchOperationResult<T>> get results => _results.asIterable();
+  /// Returns all results contained in this batch response.
+  Iterable<BatchOperationResult> get results => _results.asIterable();
 
-  Iterable<BatchOperationResult<T>> get errors =>
-      _results.where((r) => !r.success);
+  /// Returns only the results that have failed.
+  Iterable<BatchOperationResult> get errors =>
+      _results.where((r) => !r.isSuccess);
+}
 
-  static BatchResponse<T> build<T extends BaseDocument>(
-      List json, DocumentBuilder<T> builder) {
-    final resp = BatchResponse<T>();
-    for (var i = 0; i < json.length; i++) {
-      final entry = json[i];
-      final item = entry['resourceBody'];
-      final doc = (item == null) ? null : builder(item);
-      resp._results.add(BatchOperationResult(i, entry['statusCode'], doc));
+// internal use
+extension BatchResponseInternalExt on BatchResponse {
+  void addAll(Iterable<BatchOperationResult> results) =>
+      _results.addAll(results);
+
+  void add(BatchOperationResult result) => _results.add(result);
+
+  static BatchResponse build(
+      List json, Iterable<BatchOperation> operations, Context context) {
+    final resp = BatchResponse();
+    var index = 0;
+    for (var op in operations) {
+      resp._results.add(op.setResult(json[index], context));
+      index += 1;
     }
     return resp;
   }
-}
-
-class BatchOperationResult<T extends BaseDocument> {
-  BatchOperationResult(this.index, this.statusCode, this.item);
-
-  final int index;
-  final int statusCode;
-  final T? item;
-
-  bool get success => HttpStatusCode.success(statusCode);
 }

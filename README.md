@@ -16,26 +16,26 @@
 
 Connector for Azure Cosmos DB on Dart and Flutter platforms. Supports Cosmos DB SQL API, indexing policies, users, permissions, spatial types, batch operations, and hierarchical partition keys (preview/experimental).
 
-## Summary
+## Table of Contents
 
 * [Features](#features)
 * [Getting Started](#started)
-* [Usage](#usage)
+* [Connecting to a Cosmos DB Database](#connect)
+* [Accessing a Cosmos DB Container](#containers)
+* [Managing Documents in a Cosmos DB Container](#documents)
+* [Batch Operations](#batch)
 * [Users and Permissions](#permissions)
+* [Disclaimer](#disclaimer)
 
 ## <a name="features"></a>Features
 
-`CosmosDbServer`: the main class used to communicate with your Azure Cosmos DB instance.
-
-`CosmosDbDatabase`: class representing a Azure Cosmos DB database hosted in `CosmosDbServer`.
-
-`CosmosDbCollection`: class representing a Azure Cosmos DB collection from a `CosmosDbDatabase`.
-
-`BaseDocument`: class representing a Azure Cosmos DB document stored in a `CosmosDbCollection`.
-
-`Query`: class representing a Azure Cosmos DB SQL query to search documents in a `CosmosDbCollection`.
-
-`CosmosDbUsers` and `CosmosDbPermissions`: to manage users and rights in the Azure Cosmos DB database.
+* `CosmosDbServer`: the main class used to communicate with your Azure Cosmos DB instance.
+* `CosmosDbDatabase`: class representing an Azure Cosmos DB database hosted in `CosmosDbServer`.
+* `CosmosDbContainer`: class representing an Azure Cosmos DB container from a `CosmosDbDatabase`.
+* `BaseDocument`: class representing an Azure Cosmos DB document stored in a `CosmosDbContainer`.
+* `Query`: class representing an Azure Cosmos DB SQL query to search documents in a `CosmosDbContainer`.
+* `TransactionalBatch`: class containing a set of operations against documents in a `CosmosDbContainer`.
+* `CosmosDbUsers` and `CosmosDbPermissions`: to manage users and rights in the Azure Cosmos DB database.
 
 ## <a name="started"></a>Getting Started
 
@@ -43,33 +43,90 @@ Import `azure_cosmosdb` from your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-   azure_cosmosdb: ^1.6.0
+   azure_cosmosdb: ^2.0.0
 ```
 
-## <a name="usage"></a>Usage
+## <a name="connect"></a>Connecting to a Cosmos DB Database
 
-You should first define a class deriving from `BaseDocument`or `BaseDocumentWithEtag` to
-model the data you need to store in Azure Cosmos DB.
+Connections to Cosmos DB are managed via a `CosmosDbServer` instance, providing your Cosmos DB endpoint and master key (or permission). The `CosmosDbServer` instance provides methods to manage Cosmos DB databases via `CosmosDbServer.databases`.
 
-This class must have an `id` and a `toJson()` method returning a `Map<String, dynamic>`
-JSON object.
+For instance, to open or create a database:
 
-It should also implement a static `fromJson(Map json)` method to build instances from a
-`Map` JSON objects returned by Azure Cosmos DB.
+```dart
+  // connect to the database, create it if necessary
+  final cosmosDB = CosmosDbServer('https://localhost:8081/', masterKey: '/* your master key*/');
+  final database = await cosmosDB.databases.openOrCreate(
+    'ToDoDb',
+    throughput: CosmosDbThroughput.minimum,
+  );
+```
+
+`CosmosDbServer` uses a default HTTP client and a default retry policy under the hood. A custom HTTP client and/or a custom retry policy may be provided when creating the `CosmosDbServer` object. For instance, `azure_cosmosdb` provides a debug HTTP client that can be used in test code or for debugging purposes.
 
 For instance:
 
 ```dart
-import 'package:azure_cosmosdb/azure_cosmosdb.dart';
+// DebugHttpClient is provided via the debug library
+import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 
+final server = CosmosDbServer(
+  'https://localhost:8081',
+  masterKey: masterKey,
+  httpClient: DebugHttpClient(),
+);
+```
+
+## <a name="containers"></a>Accessing a Cosmos DB Container
+
+Cosmos DB databases contain containers that are used to store documents. Cosmos DB containers are represented by `CosmosDbContainer` objects and managed via `CosmosDbDatabase.containers`.
+
+For instance, to open or create a container in a database:
+
+```dart
+  // open or create a container with a specific indexing policy
+  final indexingPolicy = IndexingPolicy(indexingMode: IndexingMode.consistent)
+    ..excludedPaths.add(IndexPath('/*'))
+    ..includedPaths.add(IndexPath('/"due-date"/?'))
+    ..compositeIndexes.add([
+      IndexPath('/label', order: IndexOrder.ascending),
+      IndexPath('/"due-date"', order: IndexOrder.descending)
+    ]);
+
+  final todoCollection = await database.containers.openOrCreate(
+    'todo_by_id',
+    partitionKey: PartitionKeySpec.id,
+    indexingPolicy: indexingPolicy,
+  );
+```
+
+Data in containers is organized according to a partition key. `azure_cosmosdb` provides a built-in `PartitionKeySpec.id` (where the partition key is based on the `id` property), but custom partition keys may be specified when creating the container.
+
+Data can also be indexed according to an indexing policy. By default, [Cosmos DB automatically indexes all document properties](https://learn.microsoft.com/en-us/azure/cosmos-db/index-policy).
+
+## <a name="documents"></a>Managing Documents in a Cosmos DB Container
+
+`azure_cosmosdb` provides base classes `BaseDocument` and `BaseDocumentWithEtag` to model the data you need to store in Azure Cosmos DB.
+
+These base classes impement the `id` property as well as an abstract `toJson()` method returning a `Map<String, dynamic>` JSON object. Derived classes must provide the implementation for `toJson()` and must also implement a static `fromJson(Map json)` method to rebuild instances from the `Map` JSON objects returned by Azure Cosmos DB. Implementations can be manual or generated, e.g. via package [json_serializable](https://pub.dev/packages/json_serializable).
+
+For instance:
+
+```dart
 class ToDo extends BaseDocumentWithEtag {
-  ToDo(
+  ToDo._(
     this.id,
-    this.label, {
+    this.label,
     this.description,
     this.dueDate,
-    this.done = false,
-  });
+    this.completedDate,
+  );
+
+  ToDo(
+    String label, {
+    String? description,
+    DateTime? dueDate,
+    DateTime? completedDate,
+  }) : this._(autoId(), label, description, dueDate, completedDate);
 
   @override
   final String id;
@@ -77,28 +134,24 @@ class ToDo extends BaseDocumentWithEtag {
   String label;
   String? description;
   DateTime? dueDate;
-  bool done;
+  DateTime? completedDate;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'label': label,
-        'description': description,
+        if (description != null) 'description': description,
         'due-date': dueDate?.toUtc().toIso8601String(),
-        'done': done,
+        'completed': completedDate?.toUtc().toIso8601String(),
       };
 
   static ToDo fromJson(Map json) {
-    var dueDate = json['due-date'];
-    if (dueDate != null) {
-      dueDate = DateTime.parse(dueDate).toLocal();
-    }
-    final todo = ToDo(
+    final todo = ToDo._(
       json['id'],
       json['label'],
-      description: json['description'],
-      dueDate: dueDate,
-      done: json['done'],
+      json['description'],
+      DateTime.tryParse(json['due-date'] ?? '')?.toLocal(),
+      DateTime.tryParse(json['completed'] ?? '')?.toLocal(),
     );
     todo.setEtag(json);
     return todo;
@@ -106,72 +159,66 @@ class ToDo extends BaseDocumentWithEtag {
 }
 ```
 
-To manage your documents in Azure Cosmos DB:
-* establish a connection to get hold of the Azure Cosmos DB collection
-* register the static `fromJson()` methods with the collection to enable deserialization of
-your documents
-* then add or query your documents!
+The `CosmosDbContainer` class provides methods for CRUD operations (create/upsert, replace/update/patch, find and delete). It also provides the `CosmosDbContainer.query()` method to search for documents in Cosmos DB using SQL-like queries.
 
 For instance:
 
 ```dart
-void main() async {
-  // connect to the collection
-  final cosmosDB = CosmosDbServer('https://localhost:8081/', masterKey: '/* your master key*/');
-
-  final database = await cosmosDB.databases.openOrCreate(
-    'sample',
-    throughput: CosmosDbThroughput.minimum,
-  );
-
-  final indexingPolicy =
-      IndexingPolicy(indexingMode: IndexingMode.consistent, automatic: false);
-  indexingPolicy.excludedPaths.add(IndexPath('/*'));
-  indexingPolicy.includedPaths.add(IndexPath('/"due-date"/?'));
-  indexingPolicy.compositeIndexes.add([
-    IndexPath('/label', order: IndexOrder.ascending),
-    IndexPath('/"due-date"', order: IndexOrder.descending)
-  ]);
-
-  final todoCollection = await database.collections.openOrCreate('todo',
-      partitionKeys: ['/id'], indexingPolicy: indexingPolicy);
-
   // register the builder for ToDo items
   todoCollection.registerBuilder<ToDo>(ToDo.fromJson);
 
-  // create a new item
-  final task = ToDo(
-    DateTime.now().millisecondsSinceEpoch.toString(),
+  // create a new item and save it to Cosmos DB
+  var today = DateTime.now();
+  today = DateTime(today.year, today.month, today.day);
+  final task = await todoCollection.add(ToDo(
+    'Me',
     'Improve tests',
-    dueDate: DateTime.now().add(Duration(days: 3)),
-  );
-
-  // save it to the collection
-  await todoCollection.add(task);
-
-  print('Added new task ${task.id} - ${task.label}');
+    dueDate: today.add(Duration(days: 3)),
+  ));
 
   // query the collection
-  final tasks = await todoCollection.query<ToDo>(cosmosdb.Query(
-    'SELECT * FROM c WHERE c.label = @improvetests',
-    params: {'@improvetests': task.label}));
+  final otherTasks = await todoCollection.query<ToDo>(
+    Query('SELECT * FROM c WHERE c.id != @id', params: {'@id': task.id}),
+  );
+```
 
-  print('Other tasks:');
-  for (var t in tasks.where((_) => _.id != task.id)) {
-    String status = 'still pending';
-    final dueDate = t.dueDate;
-    if (t.done) {
-      status = 'done';
-    } else if (dueDate != null) {
-      if (dueDate.isBefore(DateTime.now())) {
-        status = 'overdue since $dueDate';
-      } else {
-        status = 'expected for $dueDate';
-      }
-    }
-    print('* ${t.id} - ${t.label} - $status');
+## <a name="batch"></a>Batch Operations
+
+Batch operations on a container are supported via `CosmosDbContainer.prepareBatch()`. This method returns a `TransactionalBatch` object which will contain the individual operations to be executed. Operations are sent to Cosmos DB via `TransactionalBatch.execute()`.
+
+Batch operations can be executed atomically where all operations succeed or all fail; this is controlled by the `isAtomic` parameter. By default, transactions are not atomic and can be configured to be "fault-tolerant" and continue executing after an error occured; this behavior is controlled by the `continueOnError` parameter.
+
+Please note that operations in a `TransactionalBatch` must target documents sharing the same partition key. A `PartitionKeyException` will be thrown when calling `TransactionalBatch.execute()` if this is not the case.
+
+For instance:
+
+```dart
+  // open or create the container
+  final todoCollection = await database.containers.openOrCreate(
+    'todo_by_owner',
+    partitionKey: PartitionKeySpec('/owner'), // partition key based on the "owner" field
+  );
+
+  // register the builder for ToDo items
+  todoCollection.registerBuilder<ToDo>(ToDo.fromJson);
+  print('Container ready.');
+
+  final teams = ['DevTeam1', 'DevTeam2', 'DevTeam3'];
+  final owner = teams[rnd.nextInt(teams.length)];
+
+  // create new items and batch-save them to Cosmos DB
+  var today = DateTime.now();
+  today = DateTime(today.year, today.month, today.day);
+  final batch = todoCollection.prepareAtomicBatch();
+  final count = 1 + rnd.nextInt(4);
+  for (var i = 0; i < count; i++) {
+    batch.create(ToDo(
+      owner,
+      getLabel(),
+      dueDate: today.add(Duration(days: rnd.nextInt(5))),
+    ));
   }
-}
+  final newTasks = await batch.execute();
 ```
 
 ## <a name="permissions"></a>Users and Permissions
@@ -179,7 +226,7 @@ void main() async {
 Most APIs implemented in `azure_cosmosdb` support an optional `CosmosDbPermission` parameter
 when calling Azure Cosmos DB.
 
-This makes it possible open a connection to Azure Cosmos DB without providing the master
+This makes it possible to open a connection to Azure Cosmos DB without providing the master
 key. The master key should be kept secret and should not be provided in Web apps or even
 mobile apps.
 

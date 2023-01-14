@@ -1,25 +1,22 @@
-import 'dart:convert';
-
-import '../base_document.dart';
 import '../partition/partition_key.dart';
-import '../partition/partition_key_spec.dart';
 import 'batch_operation.dart';
+import 'batch_operation_types.dart';
 
+/// Batch operation for deleting a document from the target container.
 class BatchOperationDelete extends BatchOperation {
-  BatchOperationDelete(this.id,
-      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})
-      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);
+  /// Creates a batch operation for deleting document with [id] and [partitionKey].
+  BatchOperationDelete(this.id, {required PartitionKey partitionKey})
+      : super(partitionKey: partitionKey);
 
   @override
-  final BatchOperationType op = BatchOperationType.delete;
+  final BatchOperationType type = BatchOperationType.delete;
 
+  /// The target document [id].
   final String id;
 
   @override
   Map<String, dynamic> toJson() => super.toJson()
     ..addAll({
       'id': id,
-      'partitionKey': jsonEncode(
-          (partitionKey ?? partitionKeySpec?.from(DocumentWithId(id)))?.values),
     });
 }

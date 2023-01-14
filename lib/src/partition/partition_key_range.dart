@@ -27,9 +27,12 @@ class PartitionKeyRange extends BaseDocumentWithEtag {
   }
 }
 
+/// Extension on [Iterable] of [PartitionKeyRange].
 extension PartitionKeyRangeExt on Iterable<PartitionKeyRange> {
-  PartitionKeyRange? findFor(PartitionKey pk) {
-    final hash = PartitionKeyHashV2.multi(pk.values);
+  /// Returns the [PartitionKeyRange] for the specified [partitionKey], or `null` if
+  /// no match is found.
+  PartitionKeyRange? findRangeFor(PartitionKey partitionKey) {
+    final hash = PartitionKeyHashV2.multi(partitionKey.values);
     return cast<PartitionKeyRange?>()
         .singleWhere((r) => r!.contains(hash), orElse: () => null);
   }

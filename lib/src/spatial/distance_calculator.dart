@@ -1,9 +1,11 @@
 import 'point.dart';
 import 'shape.dart';
 
+/// Base class for distance calculation algorithms.
 abstract class DistanceCalculator {
   const DistanceCalculator();
 
+  /// Computes the distance between points [from] and [to].
   double? distance(Point from, Point to);
 
   /// Computes the length of a line or polygon by adding up distances between

@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
+import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
 import 'package:azure_cosmosdb/src/_internal/_linq_extensions.dart';
 import 'package:test/test.dart';
 
@@ -41,13 +43,72 @@ void run(CosmosDbServer cosmosDB) {
         'items_multi_pk',
         partitionKey: PartitionKeySpec.multi(['/tid', '/uid']),
       );
-      containerSyntheticPK
+      containerMultiPK
           .registerBuilder<TestDocumentMultiPK>(TestDocumentMultiPK.fromJson);
     }
   });
 
   tearDownAll(() async {
     await cosmosDB.databases.delete(database);
+  });
+
+  test('Throughput values', () {
+    var rnd = Random();
+    CosmosDbThroughput throughput;
+
+    for (var i = 0; i < 10; i++) {
+      final rus = (4 + rnd.nextInt(20)) * 100;
+      throughput = CosmosDbThroughput(rus);
+      expect(throughput.header,
+          equals({HttpHeader.msOfferThroughput: rus.toString()}));
+    }
+
+    for (var i = 0; i < 10; i++) {
+      final rus = 1 + rnd.nextInt(399);
+      try {
+        throughput = CosmosDbThroughput(rus);
+        throw Exception('Succcessfully created a throughput with RUs = $rus');
+      } on ApplicationException catch (ex) {
+        expect(ex.message.toLowerCase(), contains('invalid throughput'));
+      }
+    }
+
+    for (var i = 0; i < 10; i++) {
+      final rus = (4 + rnd.nextInt(20)) * 100 + (1 + rnd.nextInt(99));
+      try {
+        throughput = CosmosDbThroughput(rus);
+        throw Exception('Succcessfully created a throughput with RUs = $rus');
+      } on ApplicationException catch (ex) {
+        expect(ex.message.toLowerCase(), contains('invalid throughput'));
+      }
+    }
+  });
+
+  test('Throughput values - autoscale', () {
+    var rnd = Random();
+    CosmosDbThroughput throughput;
+
+    for (var i = 0; i < 10; i++) {
+      final rus = (1 + rnd.nextInt(20)) * 1000;
+      throughput = CosmosDbThroughput.autoScale(rus);
+      expect(
+          throughput.header,
+          equals({
+            HttpHeader.msCosmosOfferAutopilotSettings:
+                jsonEncode({'maxThroughput': rus})
+          }));
+    }
+
+    for (var i = 0; i < 10; i++) {
+      final rus = rnd.nextInt(20) * 1000 + (1 + rnd.nextInt(999));
+      try {
+        throughput = CosmosDbThroughput.autoScale(rus);
+        throw Exception(
+            'Succcessfully created a throughput with max RUs = $rus');
+      } on ApplicationException catch (ex) {
+        expect(ex.message.toLowerCase(), contains('invalid max throughput'));
+      }
+    }
   });
 
   test('List documents before creation', () async {
@@ -164,14 +225,14 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Upsert an existing document - synthetic PK', () async {
-    final before = await containerSyntheticPK.list<TestDocument>();
+    final before = await containerSyntheticPK.list<TestDocumentSyntheticPK>();
     final check = before.firstOrDefault((d) => d.id == '2');
     expect(check, isNotNull);
 
     await containerSyntheticPK.upsert(TestDocumentSyntheticPK(
         '2', 'triplet', 'UPSERT/REPLACE TEST #2', [7, 11, 13]));
 
-    final after = await containerSyntheticPK.list<TestDocument>();
+    final after = await containerSyntheticPK.list<TestDocumentSyntheticPK>();
     expect(after.length, equals(before.length));
 
     final doc = after.firstOrDefault((d) => d.id == '2');

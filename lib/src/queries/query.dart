@@ -27,7 +27,7 @@ class Query extends Paging implements SpecialDocument {
   /// Force the query to execute in all partitions.
   void crossPartition() => _partitionKey = null;
 
-  /// Restrict the query to the partition identified by [key].
+  /// Restrict the query to the partition identified by [partitionKey].
   void onPartition(PartitionKey partitionKey) => _partitionKey = partitionKey;
 
   /// Registers a paramater/value to the query.

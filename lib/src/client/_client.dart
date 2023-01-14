@@ -21,8 +21,6 @@ import '_context.dart';
 import 'features.dart';
 import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';
 
-typedef _DocumentBuilder = DocumentBuilder<BaseDocument>;
-
 class Client {
   Client(
     this._url, {
@@ -51,32 +49,20 @@ class Client {
   late final crypto.Hmac? _key;
   late final http.Client httpClient;
 
-  final _builders = <Type, _DocumentBuilder>{};
-
-  void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) {
-    _builders[T] = builder;
-  }
-
-  DocumentBuilder<T> _getBuilder<T extends BaseDocument>([Context? context]) {
-    final builder = context?.builder ?? _builders[T];
-    if (builder == null) throw UnknownDocumentTypeException(T);
-    return (data) {
-      try {
-        return builder(data) as T;
-      } catch (ex) {
-        throw BadResponseException(ex.toString());
-      }
-    };
-  }
-
   T? _build<T extends BaseDocument>(Context context, Map? item) {
-    final builder = _getBuilder<T>(context);
-    return (item == null || item.isEmpty) ? null : builder(item);
+    if (item == null) {
+      return null;
+    }
+    final builder = context.getBuilder<T>();
+    return builder(item);
   }
 
   Iterable<T> _buildMany<T extends BaseDocument>(Context context, List? items) {
-    final builder = _getBuilder<T>(context);
-    return (items ?? []).map((item) => builder(item));
+    if (items == null) {
+      return const [];
+    }
+    final builder = context.getBuilder<T>();
+    return items.map((item) => builder(item));
   }
 
   Future<http.StreamedResponse> _sendWithAuth(
@@ -138,6 +124,11 @@ class Client {
           result = await _sendWithAuth(call, document, context, auth);
         }
         break;
+      case HttpStatusCode.serviceUnavailable:
+        // retry once
+        await Future.delayed(Duration(milliseconds: 250));
+        result = await _sendWithAuth(call, document, context, auth);
+        break;
       case HttpStatusCode.noContent:
         // no content: return null (https://github.com/d-markey/azure_cosmosdb/issues/1)
         return null;
@@ -156,7 +147,7 @@ class Client {
       data = response.isEmpty ? {} : jsonDecode(response);
     }
 
-    if (!HttpStatusCode.success(result.statusCode)) {
+    if (!HttpStatusCode.isSuccess(result.statusCode)) {
       final message = (data is Map && data.containsKey('message'))
           ? '${result.reasonPhrase}: ${data['message']}'
           : result.reasonPhrase;
@@ -222,21 +213,22 @@ class Client {
         )).rethrowContextualizedException(call);
   }
 
-  Future<BatchResponse<T>> batch<T extends BaseDocument>(
-      String path,
-      TransactionalBatch<T> batch,
-      List<PartitionKeyRange> pkRanges,
-      Context context) {
-    final call = HttpCall.post(path, version);
-    final builder = _getBuilder<T>(context);
-    return _send(
-            call,
-            batch,
-            context.copyWith(
-              headers: batch.getHeaders(pkRanges),
-            ))
-        .then((data) => BatchResponse.build<T>(data, builder))
-        .rethrowContextualizedException(call);
+  Future<BatchResponse> batch(String path, TransactionalBatch batch,
+      List<PartitionKeyRange> pkRanges, Context context) async {
+    if (batch.operations.isEmpty) {
+      return BatchResponse();
+    } else {
+      final call = HttpCall.post(path, version);
+      return await _send(
+              call,
+              batch,
+              context.copyWith(
+                headers: batch.getHeaders(pkRanges),
+              ))
+          .then((data) =>
+              BatchResponseInternalExt.build(data, batch.operations, context))
+          .rethrowContextualizedException(call);
+    }
   }
 
   Future<T> post<T extends BaseDocument>(

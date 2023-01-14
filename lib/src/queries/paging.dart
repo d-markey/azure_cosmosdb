@@ -11,6 +11,6 @@ class Paging {
 }
 
 // internal use
-extension ContinuationExt on Paging {
+extension ContinuationInternalExt on Paging {
   void setContinuation(String value) => _continuation = value;
 }

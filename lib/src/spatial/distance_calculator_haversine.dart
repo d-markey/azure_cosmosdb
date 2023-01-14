@@ -3,12 +3,18 @@ import 'dart:math' as math;
 import 'distance_calculator.dart';
 import 'point.dart';
 
+/// The Earth's radius, in kilometers.
 const double earthRadiusInKm = 6371;
+
+/// Distance calculator for points in latitude/longitude coordinates on Earth.
 const earthDistanceCalculator = DistanceCalculatorHaversine(earthRadiusInKm);
 
+/// Distance calculator for points on a sphere (latitude/longitude coordinates),
+/// based on the Haversine algorithm.
 class DistanceCalculatorHaversine extends DistanceCalculator {
   const DistanceCalculatorHaversine(this.radius);
 
+  /// The sphere's radius.
   final double radius;
 
   static double _rad(double degrees) => degrees * math.pi / 180;

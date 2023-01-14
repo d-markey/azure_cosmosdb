@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 import 'package:azure_cosmosdb/src/partition/_partition_key_hash_v2.dart';
 import 'package:test/test.dart';
@@ -12,57 +14,9 @@ void main() async {
   }
 }
 
-class PKInfo {
-  PKInfo(this.value)
-      : pk = PartitionKey(value),
-        hash = PartitionKeyHashV2.string(value);
-
-  final String value;
-  final PartitionKey pk;
-  final PartitionKeyHashV2 hash;
-}
-
 void run(CosmosDbServer cosmosDB) {
   late final CosmosDbDatabase database;
   late final CosmosDbContainer typedContainer;
-
-  PKInfo pk1 = PKInfo('1');
-  PKInfo pk2 = PKInfo('2');
-  PKInfo pk3 = PKInfo('3');
-
-  final doc1_1 = TestTypedDocument('1', pk1.value, 'Positive', [1, 2, 3, 4]);
-  final doc1_2 = TestTypedDocument('2', pk1.value, 'Prime', [2, 3, 5, 7]);
-  final doc1_3 = TestTypedDocument('3', pk1.value, 'Even', [2, 4, 6, 8]);
-  final doc1_4 = TestTypedDocument('4', pk1.value, 'Odd', [3, 5, 7, 9]);
-  final doc1_5 = TestTypedDocument('5', pk1.value, 'Zero', [0, 0, 0, 0]);
-  final doc1_6 =
-      TestTypedDocument('6', pk1.value, 'Negative', [-1, -2, -3, -4]);
-
-  // ignore: unused_local_variable
-  final doc2_1 = TestTypedDocument('1', pk2.value, 'Positive', [1, 2, 3, 4]);
-  final doc2_2 = TestTypedDocument('2', pk2.value, 'Prime', [2, 3, 5, 7]);
-  // ignore: unused_local_variable
-  final doc2_3 = TestTypedDocument('3', pk2.value, 'Even', [2, 4, 6, 8]);
-  // ignore: unused_local_variable
-  final doc2_4 = TestTypedDocument('4', pk2.value, 'Odd', [3, 5, 7, 9]);
-  // ignore: unused_local_variable
-  final doc2_5 = TestTypedDocument('5', pk2.value, 'Zero', [0, 0, 0, 0]);
-  // ignore: unused_local_variable
-  final doc2_6 =
-      TestTypedDocument('6', pk2.value, 'Negative', [-1, -2, -3, -4]);
-
-  // ignore: unused_local_variable
-  final doc3_1 = TestTypedDocument('1', pk3.value, 'Positive', [1, 2, 3, 4]);
-  final doc3_2 = TestTypedDocument('2', pk3.value, 'Prime', [2, 3, 5, 7]);
-  // ignore: unused_local_variable
-  final doc3_3 = TestTypedDocument('3', pk3.value, 'Even', [2, 4, 6, 8]);
-  // ignore: unused_local_variable
-  final doc3_4 = TestTypedDocument('4', pk3.value, 'Odd', [3, 5, 7, 9]);
-  // ignore: unused_local_variable
-  final doc3_5 = TestTypedDocument('5', pk3.value, 'Zero', [0, 0, 0, 0]);
-  // ignore: unused_local_variable
-  final doc3_6 =
-      TestTypedDocument('6', pk3.value, 'Negative', [-1, -2, -3, -4]);
 
   setUpAll(() async {
     database = await cosmosDB.databases.create(getTempName());
@@ -78,9 +32,9 @@ void run(CosmosDbServer cosmosDB) {
     // print(pkRanges);
     expect(pkRanges, hasLength(greaterThan(1)));
 
-    final pkr1 = pkRanges.findFor(pk1.pk);
-    final pkr2 = pkRanges.findFor(pk2.pk);
-    final pkr3 = pkRanges.findFor(pk3.pk);
+    final pkr1 = pkRanges.findRangeFor(pk1.pk);
+    final pkr2 = pkRanges.findRangeFor(pk2.pk);
+    final pkr3 = pkRanges.findRangeFor(pk3.pk);
     // print('${pk1.value} -> ${pk1.hash.hex} -> $pkr1');
     // print('${pk2.value} -> ${pk2.hash.hex} -> $pkr2');
     // print('${pk3.value} -> ${pk3.hash.hex} -> $pkr3');
@@ -93,532 +47,308 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   group('Atomic -', () {
-    test('Create', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.create(doc1_1);
-      batch.upsert(doc1_2);
-      batch.create(doc1_3);
-      batch.read('2', partitionKey: pk1.pk);
-
-      final resp = await batch.execute();
-      expect(resp.success, isTrue);
-      expect(resp.length, equals(batch.operations.length));
-
-      for (var res in resp.results) {
-        expect(res.success, isTrue);
-        expect(res.item, isA<TestTypedDocument>());
-      }
-
-      expect(resp[0]!.id, equals(doc1_1.id));
-      expect(resp[1]!.id, equals(doc1_2.id));
-      expect(resp[2]!.id, equals(doc1_3.id));
-      expect(resp[3]!.id, equals(doc1_2.id));
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_1.id));
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_2.id));
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_3.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_3.id));
-    });
-
-    test('Create with errors', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.create(doc1_4);
-      batch.create(doc1_5);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.create(doc1_2);
-      batch.create(doc1_6);
-
-      final resp = await batch.execute();
-      expect(resp.success, isFalse);
-      expect(resp.length, equals(batch.operations.length));
-
-      for (var res in resp.results) {
-        expect(res.success, isFalse);
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_4.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_5.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_6.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-    });
-
-    test('Delete', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.delete(doc1_1.id, partitionKey: pk1.pk);
-      batch.delete(doc1_2.id, partitionKey: pk1.pk);
-      batch.delete(doc1_3.id, partitionKey: pk1.pk);
-
-      final resp = await batch.execute();
-      expect(resp.success, isTrue);
-      expect(resp.length, equals(batch.operations.length));
-
-      for (var res in resp.results) {
-        expect(res.success, isTrue);
-        expect(res.item, isNull);
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_6.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-    });
-
-    test('Create - in different partition key ranges', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.create(doc1_1);
-      batch.create(doc1_2);
-      batch.create(doc2_2);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.read('2', partitionKey: pk2.pk);
-
-      try {
-        await batch.execute();
-        throw Exception('The request did not fail');
-      } on PartitionKeyException catch (ex) {
-        expect(ex.toString().toLowerCase(), contains('several partition key'));
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc2_2.id,
-          partitionKey: pk2.pk);
-      expect(doc, isNull);
-    });
-
-    test('Create - in same partition key range with different partition key',
-        () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.create(doc1_1);
-      batch.create(doc1_2);
-      batch.create(doc3_2);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.read('2', partitionKey: pk3.pk);
-
-      try {
-        await batch.execute();
-        throw Exception('The request did not fail');
-      } on BadRequestException catch (ex) {
-        expect(ex.toString().toLowerCase(),
-            contains('different partition key values'));
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc2_2.id,
-          partitionKey: pk2.pk);
-      expect(doc, isNull);
-    });
+    runTests(() => typedContainer.prepareAtomicBatch());
   });
 
   group('Non-Atomic - Fail on error -', () {
-    test('Create', () async {
-      var batch = typedContainer.prepareBatch<TestTypedDocument>(
-          continueOnError: false);
-
-      batch.create(doc1_1);
-      batch.upsert(doc1_2);
-      batch.create(doc1_3);
-      batch.read('2', partitionKey: pk1.pk);
-
-      final resp = await batch.execute();
-      expect(resp.success, isTrue);
-      expect(resp.length, equals(batch.operations.length));
-
-      for (var res in resp.results) {
-        expect(res.success, isTrue);
-        expect(res.item, isA<TestTypedDocument>());
-      }
-
-      expect(resp[0]!.id, equals(doc1_1.id));
-      expect(resp[1]!.id, equals(doc1_2.id));
-      expect(resp[2]!.id, equals(doc1_3.id));
-      expect(resp[3]!.id, equals(doc1_2.id));
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_1.id));
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_2.id));
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_3.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_3.id));
-    });
-
-    test('Create with errors', () async {
-      var batch = typedContainer.prepareBatch<TestTypedDocument>(
-          continueOnError: false);
-
-      batch.create(doc1_4);
-      batch.create(doc1_5);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.create(doc1_2);
-      batch.create(doc1_6);
-
-      final resp = await batch.execute();
-      expect(resp.success, isFalse);
-      expect(resp.length, equals(batch.operations.length));
-
-      final results = resp.results.toList();
-
-      expect(results[0].success, isTrue);
-      expect(results[0].item, isNotNull);
-      expect(results[0].item!.id, equals(doc1_4.id));
-
-      expect(results[1].success, isTrue);
-      expect(results[1].item, isNotNull);
-      expect(results[1].item!.id, equals(doc1_5.id));
-
-      expect(results[2].success, isTrue);
-      expect(results[2].item, isNotNull);
-      expect(results[2].item!.id, equals(doc1_2.id));
-
-      expect(results[3].success, isFalse);
-      expect(results[3].item, isNull);
-
-      expect(results[4].success, isFalse);
-      expect(results[4].item, isNull);
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_4.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_5.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_6.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-    });
-
-    test('Delete', () async {
-      var batch = typedContainer.prepareBatch<TestTypedDocument>(
-          continueOnError: false);
-
-      batch.delete(doc1_1.id, partitionKey: pk1.pk);
-      batch.delete(doc1_2.id, partitionKey: pk1.pk);
-      batch.delete(doc1_3.id, partitionKey: pk1.pk);
-      batch.delete(doc1_4.id, partitionKey: pk1.pk);
-      batch.delete(doc1_5.id, partitionKey: pk1.pk);
-
-      final resp = await batch.execute();
-      expect(resp.success, isTrue);
-      expect(resp.length, equals(batch.operations.length));
-
-      for (var res in resp.results) {
-        expect(res.success, isTrue);
-        expect(res.item, isNull);
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_6.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-    });
-
-    test('Create - in different partition key ranges', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.create(doc1_1);
-      batch.create(doc1_2);
-      batch.create(doc2_2);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.read('2', partitionKey: pk2.pk);
-
-      try {
-        await batch.execute();
-        throw Exception('The request did not fail');
-      } on PartitionKeyException catch (ex) {
-        expect(ex.toString().toLowerCase(), contains('several partition key'));
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc2_2.id,
-          partitionKey: pk2.pk);
-      expect(doc, isNull);
-    });
-
-    test('Create - in same partition key range with different partition key',
-        () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.create(doc1_1);
-      batch.create(doc1_2);
-      batch.create(doc3_2);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.read('2', partitionKey: pk3.pk);
-
-      try {
-        await batch.execute();
-        throw Exception('The request did not fail');
-      } on BadRequestException catch (ex) {
-        expect(ex.toString().toLowerCase(),
-            contains('different partition key values'));
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc2_2.id,
-          partitionKey: pk2.pk);
-      expect(doc, isNull);
-    });
+    runTests(() => typedContainer.prepareBatch(continueOnError: false));
   });
 
   group('Non-Atomic - Continue on error -', () {
-    test('Create', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(continueOnError: true);
+    runTests(() => typedContainer.prepareBatch(continueOnError: true));
+  });
 
-      batch.create(doc1_1);
-      batch.upsert(doc1_2);
-      batch.create(doc1_3);
-      batch.read('2', partitionKey: pk1.pk);
+  group('Cross-partition -', () {
+    runTests(() => typedContainer.prepareCrossPartitionBatch());
+  });
+}
 
-      final resp = await batch.execute();
-      expect(resp.success, isTrue);
-      expect(resp.length, equals(batch.operations.length));
+class PKInfo {
+  PKInfo(this.value)
+      : pk = PartitionKey(value),
+        hash = PartitionKeyHashV2.string(value);
 
-      for (var res in resp.results) {
-        expect(res.success, isTrue);
-        expect(res.item, isA<TestTypedDocument>());
+  final String value;
+  final PartitionKey pk;
+  final PartitionKeyHashV2 hash;
+}
+
+final pk1 = PKInfo('1');
+final pk2 = PKInfo('2');
+final pk3 = PKInfo('3');
+
+final doc1_1 = TestTypedDocument('1', pk1.value, 'Positive', [1, 2, 3, 4]);
+final doc1_2 = TestTypedDocument('2', pk1.value, 'Prime', [2, 3, 5, 7]);
+final doc1_3 = TestTypedDocument('3', pk1.value, 'Even', [2, 4, 6, 8]);
+final doc1_4 = TestTypedDocument('4', pk1.value, 'Odd', [3, 5, 7, 9]);
+final doc1_5 = TestTypedDocument('5', pk1.value, 'Zero', [0, 0, 0, 0]);
+final doc1_6 = TestTypedDocument('6', pk1.value, 'Negative', [-1, -2, -3, -4]);
+
+final doc2_2 = TestTypedDocument('2', pk2.value, 'Prime', [2, 3, 5, 7]);
+
+final doc3_2 = TestTypedDocument('2', pk3.value, 'Prime', [2, 3, 5, 7]);
+
+// ignore: no_leading_underscores_for_local_identifiers, non_constant_identifier_names
+final _300 = Iterable<int>.generate(300);
+
+void checkResult(BatchOperationResult res, int statusCode,
+    [BaseDocument? doc]) {
+  final item = res.item;
+  if (HttpStatusCode.isSuccess(statusCode)) {
+    expect(res.isSuccess, isTrue);
+    if (doc == null) {
+      expect(item, isNull);
+    } else {
+      expect(item, isNotNull);
+      expect(item!.id, equals(doc.id));
+      if (doc is! DocumentWithId) {
+        final json = jsonEncode(item.toJson());
+        final expected = jsonEncode(doc.toJson());
+        expect(json, equals(expected));
       }
+    }
+  } else {
+    expect(res.isSuccess, isFalse);
+    expect(res.statusCode, equals(statusCode));
+    expect(item, isNull);
+  }
+}
 
-      expect(resp[0]!.id, equals(doc1_1.id));
-      expect(resp[1]!.id, equals(doc1_2.id));
-      expect(resp[2]!.id, equals(doc1_3.id));
-      expect(resp[3]!.id, equals(doc1_2.id));
+void runTests(Batch Function() buildTestBatch) {
+  test('Create', () async {
+    final batch = buildTestBatch();
 
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_1.id));
+    batch.create(doc1_1);
+    batch.upsert(doc1_2);
+    batch.create(doc1_3);
+    batch.read<TestTypedDocument>('2', partitionKey: pk1.pk);
 
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_2.id));
+    var resp = await batch.execute();
+    expect(resp.isSuccess, isTrue);
 
-      doc = await typedContainer.find<TestTypedDocument>(doc1_3.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-      expect(doc!.id, equals(doc1_3.id));
-    });
+    var results = resp.results.toList();
+    expect(results.length, equals(batch.length));
 
-    test('Create with errors', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(continueOnError: true);
+    checkResult(results[0], HttpStatusCode.ok, doc1_1);
+    checkResult(results[1], HttpStatusCode.ok, doc1_2);
+    checkResult(results[2], HttpStatusCode.ok, doc1_3);
+    checkResult(results[3], HttpStatusCode.ok, doc1_2);
 
-      batch.create(doc1_4);
-      batch.create(doc1_5);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.create(doc1_2);
-      batch.create(doc1_6);
+    batch.recycle();
+    batch.delete(doc1_1.id, partitionKey: pk1.pk);
+    batch.delete(doc1_2.id, partitionKey: pk1.pk);
+    batch.delete(doc1_3.id, partitionKey: pk1.pk);
+    resp = await batch.execute();
+    expect(resp.isSuccess, isTrue);
+  });
 
-      final resp = await batch.execute();
-      expect(resp.success, isFalse);
-      expect(resp.length, equals(batch.operations.length));
+  test('Create with conflict', () async {
+    final batch = buildTestBatch();
 
-      final results = resp.results.toList();
+    batch.create(doc1_4);
+    batch.create(doc1_2);
+    batch.create(doc1_5);
+    batch.read<TestTypedDocument>('2', partitionKey: pk1.pk);
+    batch.create(doc1_2);
+    batch.create(doc1_6);
 
-      expect(results[0].success, isTrue);
-      expect(results[0].item, isNotNull);
-      expect(results[0].item!.id, equals(doc1_4.id));
+    var resp = await batch.execute();
+    expect(resp.isSuccess, isFalse);
 
-      expect(results[1].success, isTrue);
-      expect(results[1].item, isNotNull);
-      expect(results[1].item!.id, equals(doc1_5.id));
+    final results = resp.results.toList();
+    expect(resp.length, equals(batch.length));
 
-      expect(results[2].success, isTrue);
-      expect(results[2].item, isNotNull);
-      expect(results[2].item!.id, equals(doc1_2.id));
+    if (batch.isAtomic) {
+      checkResult(results[0], HttpStatusCode.failedDependency);
+      checkResult(results[1], HttpStatusCode.failedDependency);
+      checkResult(results[2], HttpStatusCode.failedDependency);
+      checkResult(results[3], HttpStatusCode.failedDependency);
+    } else {
+      checkResult(results[0], HttpStatusCode.ok, doc1_4);
+      checkResult(results[1], HttpStatusCode.ok, doc1_2);
+      checkResult(results[2], HttpStatusCode.ok, doc1_5);
+      checkResult(results[3], HttpStatusCode.ok, doc1_2);
+    }
 
-      expect(results[3].success, isFalse);
-      expect(results[3].item, isNull);
+    checkResult(results[4], HttpStatusCode.conflict);
 
-      expect(results[4].success, isTrue);
-      expect(results[4].item, isNotNull);
-      expect(results[4].item!.id, equals(doc1_6.id));
+    if (batch.continueOnError) {
+      checkResult(results[5], HttpStatusCode.ok, doc1_6);
+    } else {
+      checkResult(results[5], HttpStatusCode.failedDependency);
+    }
 
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_4.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_5.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_6.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNotNull);
-    });
-
-    test('Delete', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(continueOnError: true);
-
-      batch.delete(doc1_1.id, partitionKey: pk1.pk);
-      batch.delete(doc1_2.id, partitionKey: pk1.pk);
-      batch.delete(doc1_3.id, partitionKey: pk1.pk);
+    batch.recycle();
+    if (!batch.isAtomic) {
       batch.delete(doc1_4.id, partitionKey: pk1.pk);
+      batch.delete(doc1_2.id, partitionKey: pk1.pk);
       batch.delete(doc1_5.id, partitionKey: pk1.pk);
-      batch.delete(doc1_6.id, partitionKey: pk1.pk);
-
-      final resp = await batch.execute();
-      expect(resp.success, isTrue);
-      expect(resp.length, equals(batch.operations.length));
-
-      for (var res in resp.results) {
-        expect(res.success, isTrue);
-        expect(res.item, isNull);
+      if (batch.continueOnError) {
+        batch.delete(doc1_6.id, partitionKey: pk1.pk);
       }
+      resp = await batch.execute();
+      expect(resp.isSuccess, isTrue);
+    }
+  });
 
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
+  test('100+ operations', () async {
+    final batch = buildTestBatch();
 
-      doc = await typedContainer.find<TestTypedDocument>(doc1_6.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-    });
+    int count = 0;
+    try {
+      for (var i in _300) {
+        batch.create(TestTypedDocument('OK-$i', pk1.value, 'Label $i', [i]));
+        count++;
+      }
+      if (batch.isAtomic) {
+        throw Exception('Atomic batch cannot have more than 100 operations');
+      }
+    } on ApplicationException catch (ex) {
+      if (!batch.isAtomic) {
+        rethrow;
+      } else {
+        expect(ex.message.toLowerCase(), contains('limited to 100'));
+      }
+    }
 
-    test('Create - in different partition key ranges', () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
+    var resp = await batch.execute();
+    expect(resp.isSuccess, isTrue);
 
+    batch.recycle();
+    for (var i = 0; i < count; i++) {
+      batch.delete('OK-$i', partitionKey: pk1.pk);
+    }
+    resp = await batch.execute();
+    expect(resp.isSuccess, isTrue);
+  });
+
+  test('100+ operations with conflict', () async {
+    final batch = buildTestBatch();
+
+    bool collide(int i) => (i > 0 && i % 37 == 0) || (197 <= i && i <= 333);
+
+    var count = 0;
+    try {
+      for (var i in _300) {
+        var id = collide(i) ? 0 : i;
+        batch.create(TestTypedDocument('OK-$id', pk1.value, 'Label $i', [i]));
+        count++;
+      }
+      if (batch.isAtomic) {
+        throw Exception('Atomic batch cannot have more than 100 operations');
+      }
+    } on ApplicationException catch (ex) {
+      if (!batch.isAtomic) {
+        rethrow;
+      } else {
+        expect(ex.message.toLowerCase(), contains('limited to 100'));
+      }
+    }
+
+    var resp = await batch.execute();
+    expect(resp.isSuccess, isFalse);
+
+    var results = resp.results.toList();
+
+    batch.recycle();
+    var ok = true;
+    for (var i = 0; i < count; i++) {
+      if (batch.isAtomic) {
+        if (ok && collide(i)) {
+          checkResult(results[i], HttpStatusCode.conflict);
+          ok = false;
+        } else {
+          checkResult(results[i], HttpStatusCode.failedDependency);
+        }
+      } else if (batch.continueOnError) {
+        if (collide(i)) {
+          checkResult(results[i], HttpStatusCode.conflict);
+        } else {
+          checkResult(results[i], HttpStatusCode.ok, DocumentWithId('OK-$i'));
+          batch.delete('OK-$i', partitionKey: pk1.pk);
+        }
+      } else {
+        if (!ok) {
+          checkResult(results[i], HttpStatusCode.failedDependency);
+        } else if (collide(i)) {
+          checkResult(results[i], HttpStatusCode.conflict);
+          ok = false;
+        } else {
+          checkResult(results[i], HttpStatusCode.ok, DocumentWithId('OK-$i'));
+          batch.delete('OK-$i', partitionKey: pk1.pk);
+        }
+      }
+    }
+
+    if (batch.operations.isNotEmpty) {
+      resp = await batch.execute();
+      expect(resp.isSuccess, isTrue);
+    }
+  });
+
+  test('Create with multiple partition keys (same range)', () async {
+    final batch = buildTestBatch();
+
+    try {
       batch.create(doc1_1);
+      batch.upsert(doc3_2);
       batch.create(doc1_2);
+      batch.read<TestTypedDocument>('2', partitionKey: pk3.pk);
+
+      var resp = await batch.execute();
+      expect(resp.isSuccess, isTrue);
+
+      var results = resp.results.toList();
+      expect(results.length, equals(batch.length));
+
+      checkResult(results[0], HttpStatusCode.ok, doc1_1);
+      checkResult(results[1], HttpStatusCode.ok, doc3_2);
+      checkResult(results[2], HttpStatusCode.ok, doc1_2);
+      checkResult(results[3], HttpStatusCode.ok, doc3_2);
+
+      batch.recycle();
+      batch.delete(doc1_1.id, partitionKey: pk1.pk);
+      batch.delete(doc3_2.id, partitionKey: pk3.pk);
+      batch.delete(doc1_2.id, partitionKey: pk1.pk);
+      resp = await batch.execute();
+      expect(resp.isSuccess, isTrue);
+    } on PartitionKeyException {
+      if (batch.isCrossPartition) {
+        rethrow;
+      }
+    }
+  });
+
+  test('Create with multiple partition keys (different ranges)', () async {
+    final batch = buildTestBatch();
+
+    try {
+      batch.create(doc1_2);
+      batch.upsert(doc3_2);
       batch.create(doc2_2);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.read('2', partitionKey: pk2.pk);
+      batch.read<TestTypedDocument>('2', partitionKey: pk2.pk);
 
-      try {
-        await batch.execute();
-        throw Exception('The request did not fail');
-      } on PartitionKeyException catch (ex) {
-        expect(ex.toString().toLowerCase(), contains('several partition key'));
+      var resp = await batch.execute();
+      expect(resp.isSuccess, isTrue);
+
+      var results = resp.results.toList();
+      expect(results.length, equals(batch.length));
+
+      checkResult(results[0], HttpStatusCode.ok, doc1_2);
+      checkResult(results[1], HttpStatusCode.ok, doc3_2);
+      checkResult(results[2], HttpStatusCode.ok, doc2_2);
+      checkResult(results[3], HttpStatusCode.ok, doc2_2);
+
+      batch.recycle();
+      batch.delete(doc1_2.id, partitionKey: pk1.pk);
+      batch.delete(doc3_2.id, partitionKey: pk3.pk);
+      batch.delete(doc2_2.id, partitionKey: pk2.pk);
+      resp = await batch.execute();
+      expect(resp.isSuccess, isTrue);
+    } on PartitionKeyException {
+      if (batch.isCrossPartition) {
+        rethrow;
       }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc2_2.id,
-          partitionKey: pk2.pk);
-      expect(doc, isNull);
-    });
-
-    test('Create - in same partition key range with different partition key',
-        () async {
-      var batch =
-          typedContainer.prepareBatch<TestTypedDocument>(isAtomic: true);
-
-      batch.create(doc1_1);
-      batch.create(doc1_2);
-      batch.create(doc3_2);
-      batch.read('2', partitionKey: pk1.pk);
-      batch.read('2', partitionKey: pk3.pk);
-
-      try {
-        await batch.execute();
-        throw Exception('The request did not fail');
-      } on BadRequestException catch (ex) {
-        expect(ex.toString().toLowerCase(),
-            contains('different partition key values'));
-      }
-
-      var doc = await typedContainer.find<TestTypedDocument>(doc1_1.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc1_2.id,
-          partitionKey: pk1.pk);
-      expect(doc, isNull);
-
-      doc = await typedContainer.find<TestTypedDocument>(doc2_2.id,
-          partitionKey: pk2.pk);
-      expect(doc, isNull);
-    });
+    }
   });
 }

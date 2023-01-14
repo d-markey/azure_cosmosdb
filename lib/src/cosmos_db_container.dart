@@ -1,6 +1,8 @@
 import '_internal/_http_header.dart';
 import 'base_document.dart';
+import 'batch/batch.dart';
 import 'batch/batch_response.dart';
+import 'batch/cross_partition_batch.dart';
 import 'batch/transactional_batch.dart';
 import 'client/_client.dart';
 import 'client/_context.dart';
@@ -100,9 +102,11 @@ class CosmosDbContainer extends BaseDocument {
     return permission;
   }
 
+  final _builders = <Type, DocumentBuilder>{};
+
   /// Register a [DocumentBuilder] for specified type `T`.
   void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) =>
-      database.registerBuilder<T>(builder);
+      _builders[T] = builder;
 
   /// Gets information for this [CosmosDbContainer].
   Future<CosmosDbContainer> getInfo({CosmosDbPermission? permission}) async {
@@ -178,6 +182,7 @@ class CosmosDbContainer extends BaseDocument {
         throwOnNotFound: throwOnNotFound,
         partitionKey:
             partitionKey ?? partitionKeySpec.from(document) ?? PartitionKey.all,
+        builders: _builders,
         token: permission?.token ?? _token,
         onForbidden: _refreshPermission,
       ),
@@ -201,6 +206,7 @@ class CosmosDbContainer extends BaseDocument {
               partitionKey: partitionKey ??
                   partitionKeySpec.from(document) ??
                   PartitionKey.all,
+              builders: _builders,
               token: permission?.token ?? _token,
               onForbidden: _refreshPermission,
             ),
@@ -217,6 +223,7 @@ class CosmosDbContainer extends BaseDocument {
           type: 'docs',
           resId: url,
           partitionKey: partitionKey ?? PartitionKey.all,
+          builders: _builders,
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
@@ -233,6 +240,7 @@ class CosmosDbContainer extends BaseDocument {
           type: 'docs',
           resId: url,
           token: permission?.token ?? _token,
+          builders: _builders,
           onForbidden: _refreshPermission,
         ),
       );
@@ -261,6 +269,7 @@ class CosmosDbContainer extends BaseDocument {
           type: 'docs',
           resId: url,
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
+          builders: _builders,
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
@@ -277,6 +286,7 @@ class CosmosDbContainer extends BaseDocument {
           resId: url,
           headers: HttpHeader.isUpsert,
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
+          builders: _builders,
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
@@ -297,6 +307,7 @@ class CosmosDbContainer extends BaseDocument {
               ? {HttpHeader.ifMatch: document.etag}
               : null,
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
+          builders: _builders,
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
@@ -315,6 +326,7 @@ class CosmosDbContainer extends BaseDocument {
           partitionKey: partitionKey ??
               partitionKeySpec.from(document) ??
               PartitionKey.all,
+          builders: _builders,
           token: permission?.token ?? _token,
           onForbidden: _refreshPermission,
         ),
@@ -352,33 +364,40 @@ class CosmosDbContainer extends BaseDocument {
   }
 
   /// Prepare a batch for this container.
-  TransactionalBatch<T> prepareBatch<T extends BaseDocument>(
-          {bool isAtomic = false, bool continueOnError = true}) =>
-      isAtomic
-          ? TransactionalBatch<T>.atomic(this)
-          : TransactionalBatch<T>(this, continueOnError: continueOnError);
+  Batch prepareBatch({bool continueOnError = true}) =>
+      TransactionalBatch(this, continueOnError: continueOnError);
+
+  /// Prepare a batch for this container (atomic).
+  Batch prepareAtomicBatch() => TransactionalBatch.atomic(this);
+
+  /// Prepare a batch for this container (cross-partition).
+  Batch prepareCrossPartitionBatch() => CrossPartitionBatch(this);
 
   /// Executes the batch in this container.
-  Future<BatchResponse<T>> execute<T extends BaseDocument>(
-      TransactionalBatch<T> batch,
+  Future<BatchResponse> execute(TransactionalBatch batch,
       {CosmosDbPermission? permission}) async {
-    await getPkRanges(permission: permission);
-    return await client.batch<T>(
-      '$url/docs',
-      batch,
-      _pkRanges,
-      Context(
-        type: 'docs',
-        resId: url,
-        token: permission?.token ?? _token,
-        onForbidden: _refreshPermission,
-      ),
-    );
+    if (batch.operations.isEmpty) {
+      return BatchResponse();
+    } else {
+      await getPkRanges(permission: permission);
+      return await client.batch(
+        '$url/docs',
+        batch,
+        _pkRanges,
+        Context(
+          type: 'docs',
+          resId: url,
+          token: permission?.token ?? _token,
+          builders: _builders,
+          onForbidden: _refreshPermission,
+        ),
+      );
+    }
   }
 }
 
 // internal use
-extension ContainerExt on CosmosDbContainer {
+extension CosmosDbContainerInternalExt on CosmosDbContainer {
   void setExists(bool exists) => _exists = exists;
 
   Client get client => database.client;

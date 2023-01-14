@@ -1,5 +1,6 @@
 import '../_internal/_http_header.dart';
 import '../base_document.dart';
+import '../cosmos_db_exceptions.dart';
 import '../partition/partition_key.dart';
 import '../permissions/cosmos_db_permission.dart';
 import '../queries/paging.dart';
@@ -18,6 +19,7 @@ class Context {
     this.token,
     this.onForbidden,
     this.builder,
+    this.builders = const {},
   }) {
     if (headers != null) {
       _headers = {...headers};
@@ -32,8 +34,21 @@ class Context {
   final String? token;
   final FutureCallback<CosmosDbPermission?>? onForbidden;
   final DocumentBuilder? builder;
+  final Map<Type, DocumentBuilder> builders;
 
   Map<String, String>? _headers;
+
+  DocumentBuilder<T> getBuilder<T extends BaseDocument>() {
+    final builder = this.builder ?? builders[T];
+    if (builder == null) throw UnknownDocumentTypeException(T);
+    return (data) {
+      try {
+        return builder(data) as T;
+      } catch (ex) {
+        throw BadResponseException(ex.toString());
+      }
+    };
+  }
 
   void addHeader(String name, String value) => (_headers ??= {})[name] = value;
 

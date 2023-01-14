@@ -5,6 +5,7 @@ import 'distance_calculator_3d.dart';
 import 'point.dart';
 import 'shape.dart';
 
+/// Euclidean distance calculator for points in a 2D plane (X/Y coordinates).
 class DistanceCalculator2D extends DistanceCalculator {
   /// Computes the 2D distance between [from] and [to] positions. This
   /// implementation ignores all [Point.altitude] values. [from] and [to]

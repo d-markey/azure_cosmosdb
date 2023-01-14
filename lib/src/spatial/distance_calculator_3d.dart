@@ -5,6 +5,7 @@ import 'distance_calculator_2d.dart';
 import 'point.dart';
 import 'shape.dart';
 
+/// Euclidean distance calculator for points in a 3D space (X/Y/Z coordinates).
 class DistanceCalculator3D extends DistanceCalculator {
   /// Computes the distance between [from] and [to] positions. Returns a 3D
   /// distance when [Point.altitude] are set in both positions, otherwise
@@ -16,9 +17,7 @@ class DistanceCalculator3D extends DistanceCalculator {
     if (!from.isGeometry || !to.isGeometry) return null;
     var dx = to.x! - from.x!;
     var dy = to.y! - from.y!;
-    var dz = (from.altitude != null && to.altitude != null)
-        ? (to.altitude! - from.altitude!)
-        : 0;
+    var dz = (from.z != null && to.z != null) ? (to.z! - from.z!) : 0;
     return sqrt(dx * dx + dy * dy + dz * dz);
   }
 

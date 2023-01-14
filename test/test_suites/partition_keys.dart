@@ -10,6 +10,95 @@ void main() async {
 }
 
 void run() {
+  test('Equality - bool', () {
+    for (var b1 in [true, false]) {
+      for (var b2 in [true, false]) {
+        final pk1 = PartitionKey(b1);
+        final pk2 = PartitionKey(b2);
+        expect(pk1 == pk2, equals(b1 == b2));
+      }
+    }
+  });
+
+  test('Equality - num', () {
+    for (var n1 in <int>[0, 1, 2, 7, -2]) {
+      for (var n2 in <double>[0.0, 1.0, 2.0, 3.5, 7.0, -2.0, -2.5]) {
+        final pk1 = PartitionKey(n1);
+        final pk2 = PartitionKey(n2);
+        expect(pk1 == pk2, equals(n1.compareTo(n2) == 0));
+      }
+    }
+
+    for (var n1 in <num>[0, 1, 2, 7, -2, 3.5, -2.5]) {
+      for (var n2 in <double>[0.0, 1.0, 2.0, 3.5, 7.0, -2.0, -2.5]) {
+        final pk1 = PartitionKey(n1);
+        final pk2 = PartitionKey(n2);
+        expect(pk1 == pk2, equals(n1.compareTo(n2) == 0));
+      }
+    }
+  });
+
+  test('Equality - String', () {
+    for (var s1 in ['', 'aa', 'abcd', 'avec caractères spéciaux']) {
+      for (var s2 in ['', 'aa', 'abcd', 'avec caractères spéciaux']) {
+        final pk1 = PartitionKey(s1);
+        final pk2 = PartitionKey(s2);
+        expect(pk1 == pk2, equals(s1 == s2));
+      }
+    }
+  });
+
+  test('Equality - List', () {
+    var pk1 = PartitionKey([]);
+    var pk2 = PartitionKey([]);
+    expect(pk1.values == pk2.values, isFalse);
+    expect(pk1 == pk2, isTrue);
+
+    pk1 = PartitionKey(['abc', 'def']);
+    pk2 = PartitionKey(['abc', 'def']);
+    expect(pk1.values == pk2.values, isFalse);
+    expect(pk1 == pk2, isTrue);
+
+    pk1 = PartitionKey([true, true]);
+    pk2 = PartitionKey([true, true]);
+    expect(pk1.values == pk2.values, isFalse);
+    expect(pk1 == pk2, isTrue);
+
+    pk1 = PartitionKey(<num>[-1, 2.5]);
+    pk2 = PartitionKey(<double>[-1.0, 2.5]);
+    expect(pk1.values == pk2.values, isFalse);
+    expect(pk1 == pk2, isTrue);
+
+    pk1 = PartitionKey(['abc', true, 'def']);
+    pk2 = PartitionKey(['abc', true, 'def']);
+    expect(pk1.values == pk2.values, isFalse);
+    expect(pk1 == pk2, isTrue);
+
+    pk1 = PartitionKey([]);
+    pk2 = PartitionKey([null]);
+    expect(pk1 == pk2, isFalse);
+
+    pk1 = PartitionKey(['abc', 'def']);
+    pk2 = PartitionKey(['def', 'abc']);
+    expect(pk1 == pk2, isFalse);
+
+    pk1 = PartitionKey(['abc', 'def']);
+    pk2 = PartitionKey(['abc', 'def', 'abc']);
+    expect(pk1 == pk2, isFalse);
+  });
+
+  test('Equality - other objects', () {
+    final obj1 = Object();
+    final obj2 = {};
+    for (var o1 in [1, 2.5, true, "abcd", obj1, obj2, {}, Object()]) {
+      for (var o2 in [obj1, obj2, {}, Object()]) {
+        final pk1 = PartitionKey(o1);
+        final pk2 = PartitionKey(o2);
+        expect(pk1 == pk2, isFalse);
+      }
+    }
+  });
+
   group('SPEC', () {
     test('Simple PK', () {
       final pk = PartitionKeySpec('/id');
@@ -149,7 +238,7 @@ void run() {
 
       for (var test in testCases.entries) {
         final pk = PartitionKey(test.key);
-        final range = ranges.findFor(pk);
+        final range = ranges.findRangeFor(pk);
         expect(range, isNotNull);
 
         final hash = PartitionKeyHashV2.multi(pk.values);

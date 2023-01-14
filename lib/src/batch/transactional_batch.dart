@@ -1,89 +1,104 @@
 import '../_internal/_http_header.dart';
 import '../_internal/_linq_extensions.dart';
-import '../base_document.dart';
+import '../client/http_status_codes.dart';
 import '../cosmos_db_container.dart';
 import '../cosmos_db_exceptions.dart';
-import '../partition/partition_key.dart';
 import '../partition/partition_key_range.dart';
 import '../permissions/cosmos_db_permission.dart';
+import 'batch.dart';
 import 'batch_operation.dart';
-import 'batch_operation_create.dart';
-import 'batch_operation_delete.dart';
-import 'batch_operation_read.dart';
-import 'batch_operation_upsert.dart';
 import 'batch_response.dart';
 
-class TransactionalBatch<T extends BaseDocument> extends SpecialDocument {
-  TransactionalBatch.atomic(this.container)
-      : isAtomic = true,
-        continueOnError = false;
+class TransactionalBatch extends Batch {
+  TransactionalBatch._(this.container,
+      {required this.isAtomic, required this.continueOnError});
 
-  TransactionalBatch(this.container, {this.continueOnError = true})
-      : isAtomic = false;
+  TransactionalBatch.atomic(CosmosDbContainer container)
+      : this._(container, isAtomic: true, continueOnError: false);
 
+  TransactionalBatch(CosmosDbContainer container, {bool continueOnError = true})
+      : this._(container, isAtomic: false, continueOnError: continueOnError);
+
+  @override
   final CosmosDbContainer container;
 
+  /// Returns the HTTP headers for this batch request (retrieves the partition key
+  /// range ID and maps properties [isAtomic] and [continueOnError]).
   Map<String, String> getHeaders(Iterable<PartitionKeyRange> pkRanges) {
-    final pkr = _ops
-        .map((op) => op.getPartitionKey())
-        .whereNotNull()
-        .distinct()
-        .map((pk) => pkRanges.findFor(pk))
-        .whereNotNull()
-        .distinct();
-    if (pkr.isEmpty) {
+    final pk = _ops.map((op) => op.partitionKey).whereNotNull().distinct();
+    if (pk.isEmpty) {
       throw PartitionKeyException('Missing partition key.');
-    } else if (pkr.length > 1) {
+    } else if (pk.length > 1) {
       throw PartitionKeyException(
           'Partition keys map to several partition key ranges.');
-    } else {
-      return {
-        HttpHeader.msCosmosIsBatchRequest: 'true',
-        HttpHeader.msCosmosBatchAtomic: isAtomic ? 'true' : 'false',
-        HttpHeader.msCosmosBatchContinueOnError:
-            continueOnError ? 'true' : 'false',
-        HttpHeader.msDocumentDbPartitionKeyRangeId: pkr.single.id,
-      };
     }
+    final pkr = pkRanges.findRangeFor(pk.single);
+    return {
+      HttpHeader.msCosmosIsBatchRequest: 'true',
+      HttpHeader.msCosmosBatchAtomic: isAtomic ? 'true' : 'false',
+      HttpHeader.msCosmosBatchContinueOnError:
+          continueOnError ? 'true' : 'false',
+      HttpHeader.msDocumentDbPartitionKeyRangeId: pkr!.id,
+    };
   }
 
-  final bool isAtomic;
+  @override
   final bool continueOnError;
+
+  @override
+  final bool isAtomic;
+
+  @override
+  final bool isCrossPartition = false;
+
+  @override
+  int get length => _ops.length;
+
+  @override
+  Iterable<BatchOperation> get operations => _ops.asIterable();
 
   final _ops = <BatchOperation>[];
 
-  Iterable<BatchOperation> get operations => _ops.asIterable();
+  @override
+  void recycle() => _ops.clear();
 
-  void _add(BatchOperation op) {
-    if (_ops.length >= 100) {
+  @override
+  void add(BatchOperation op) {
+    if (_ops.length >= 100 && isAtomic) {
       throw ApplicationException(
           'Transactional batch is limited to 100 operations.');
     }
     _ops.add(op);
   }
 
-  void create(T item, {PartitionKey? partitionKey}) =>
-      _add(BatchOperationCreate(item,
-          partitionKeySpec: container.partitionKeySpec,
-          partitionKey: partitionKey));
+  @override
+  Future<BatchResponse> execute({CosmosDbPermission? permission}) async {
+    if (_ops.length <= 100) {
+      return await container.execute(this, permission: permission);
+    } else {
+      final resp = BatchResponse();
+      final batch = _clone();
+      var index = 0;
+      while (index < _ops.length) {
+        batch._ops.clear();
+        batch._ops.addAll(_ops.skip(index).take(100));
+        index += 100;
+        final r = await batch.execute(permission: permission);
+        resp.addAll(r.results);
+        if (!continueOnError && !r.isSuccess) {
+          final err = {'statusCode': HttpStatusCode.failedDependency};
+          for (var i = index; i < _ops.length; i++) {
+            resp.add(_ops[i].setResult(err, null));
+          }
+          break;
+        }
+      }
+      return resp;
+    }
+  }
 
-  void upsert(T item, {PartitionKey? partitionKey}) =>
-      _add(BatchOperationUpsert(item,
-          partitionKeySpec: container.partitionKeySpec,
-          partitionKey: partitionKey));
-
-  void read(String id, {PartitionKey? partitionKey}) =>
-      _add(BatchOperationRead(id,
-          partitionKeySpec: container.partitionKeySpec,
-          partitionKey: partitionKey));
-
-  void delete(String id, {PartitionKey? partitionKey}) =>
-      _add(BatchOperationDelete(id,
-          partitionKeySpec: container.partitionKeySpec,
-          partitionKey: partitionKey));
-
-  Future<BatchResponse<T>> execute({CosmosDbPermission? permission}) =>
-      container.execute<T>(this, permission: permission);
+  TransactionalBatch _clone() => TransactionalBatch._(container,
+      isAtomic: isAtomic, continueOnError: continueOnError);
 
   @override
   List<dynamic> toJson() => _ops.map((o) => o.toJson()).toList();

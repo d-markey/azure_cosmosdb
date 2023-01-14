@@ -27,9 +27,6 @@ class CosmosDbDatabase extends BaseDocument {
   @override
   Map<String, dynamic> toJson() => {'id': id};
 
-  void registerBuilder<T extends BaseDocument>(DocumentBuilder<T> builder) =>
-      client.registerBuilder<T>(builder);
-
   /// Gets information for this [CosmosDbDatabase].
   Future<dynamic> getInfo({CosmosDbPermission? permission}) => client.rawGet(
       url,
@@ -46,7 +43,7 @@ class CosmosDbDatabase extends BaseDocument {
 }
 
 // internal use
-extension DatabaseExt on CosmosDbDatabase {
+extension CosmosDbDatabaseInternalExt on CosmosDbDatabase {
   void setExists(bool exists) => _exists = exists;
 
   Client get client => server.client;

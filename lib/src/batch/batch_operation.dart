@@ -1,55 +1,99 @@
 import 'dart:convert';
 
 import '../base_document.dart';
+import '../client/_context.dart';
 import '../partition/partition_key.dart';
 import '../partition/partition_key_spec.dart';
+import 'batch.dart';
+import 'batch_operation_create.dart';
+import 'batch_operation_read.dart';
+import 'batch_operation_result.dart';
+import 'batch_operation_types.dart';
 
-class BatchOperationType {
-  const BatchOperationType._(this.name);
-
-  final String name;
-
-  static const create = BatchOperationType._('Create');
-  static const upsert = BatchOperationType._('Upsert');
-  static const read = BatchOperationType._('Read');
-  static const delete = BatchOperationType._('Delete');
-  static const replace = BatchOperationType._('Replace');
-  static const patch = BatchOperationType._('Patch');
-}
-
+/// Base class for batch operations.
 abstract class BatchOperation {
-  BatchOperation({PartitionKeySpec? partitionKeySpec, this.partitionKey})
-      : partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id;
+  /// Creates a new batch operation targeting [partitionKey].
+  BatchOperation({PartitionKey? partitionKey}) : _partitionKey = partitionKey;
 
-  final PartitionKey? partitionKey;
-  final PartitionKeySpec? partitionKeySpec;
+  final PartitionKey? _partitionKey;
 
-  PartitionKey? getPartitionKey() => partitionKey;
+  /// The operation's target [partitionKey].
+  PartitionKey? get partitionKey => _partitionKey;
 
-  BatchOperationType get op;
+  /// The operation's type.
+  BatchOperationType get type;
 
-  Map<String, dynamic> toJson() => {'operationType': op.name};
+  /// The operation's JSON payload.
+  Map<String, dynamic> toJson() => {
+        'operationType': type.name,
+        'partitionKey': jsonEncode(partitionKey?.values),
+      };
+
+  BatchOperationResult? _result;
+
+  /// The operation's result. This property will be set after calling [Batch.execute]; it
+  /// returns `null` if the batch has not been executed yet.
+  BatchOperationResult? get result => _result;
+
+  BatchOperationResult _setResult(Map res, Context? context) {
+    final statusCode = res['statusCode'];
+    final result = BatchOperationResult.withoutItem(this, statusCode);
+    _result = result;
+    return result;
+  }
 }
 
-abstract class BatchOperationOnItem<T extends BaseDocument>
+/// Base class for batch operations on specific document types, e.g. [BatchOperationRead].
+abstract class BatchOperationOnType<T extends BaseDocument>
     extends BatchOperation {
-  BatchOperationOnItem(this.item,
-      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})
-      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);
-
-  final T item;
+  BatchOperationOnType({PartitionKey? partitionKey})
+      : super(partitionKey: partitionKey);
 
   @override
-  PartitionKey? getPartitionKey() =>
-      super.getPartitionKey() ?? partitionKeySpec?.from(item);
+  BatchOperationResult<T>? get result => _result as BatchOperationResult<T>?;
+
+  @override
+  BatchOperationResult<T> _setResult(Map res, Context? context) {
+    final statusCode = res['statusCode'];
+    final json = res['resourceBody'];
+    T? doc;
+    if (json != null) {
+      final builder = context!.getBuilder<T>();
+      doc = builder(json);
+    }
+    final result = BatchOperationResult<T>(this, statusCode, doc);
+    _result = result;
+    return result;
+  }
+}
+
+/// Base class for batch operations on specific items, e.g. [BatchOperationCreate].
+abstract class BatchOperationOnItem<T extends BaseDocument>
+    extends BatchOperationOnType<T> {
+  BatchOperationOnItem(this.item,
+      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})
+      : _partitionKeySpec = partitionKeySpec,
+        super(partitionKey: partitionKey);
+
+  /// The operation's target [item].
+  final T item;
+
+  final PartitionKeySpec? _partitionKeySpec;
+
+  @override
+  PartitionKey? get partitionKey =>
+      super.partitionKey ?? _partitionKeySpec?.from(item);
 
   @override
   Map<String, dynamic> toJson() => super.toJson()
     ..addAll({
       'id': item.id,
-      'partitionKey': jsonEncode(
-          (partitionKey ?? (partitionKeySpec ?? PartitionKeySpec.id).from(item))
-              ?.values),
       'resourceBody': item.toJson(),
     });
+}
+
+// internal use
+extension BatchOperationInternalExt on BatchOperation {
+  BatchOperationResult setResult(Map res, Context? context) =>
+      _setResult(res, context);
 }

@@ -34,11 +34,9 @@ void main() async {
   final currentCosmosDb = await getTestInstance(preview: false);
   final previewCosmosDb = await getTestInstance(preview: true);
 
-  group('CURRENT ($currentApiVersion) -',
-      () => runCosmosDbTests(currentCosmosDb));
+  group('CURRENT -', () => runCosmosDbTests(currentCosmosDb));
 
-  group('PREVIEW ($previewApiVersion) -',
-      () => runCosmosDbTests(previewCosmosDb));
+  group('PREVIEW -', () => runCosmosDbTests(previewCosmosDb));
 }
 
 void runCosmosDbTests(CosmosDbServer? cosmosDb) {

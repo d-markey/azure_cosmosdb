@@ -79,6 +79,6 @@ class CosmosDbUsers {
 }
 
 // internal use
-extension CosmosDbUsersExt on CosmosDbUsers {
+extension CosmosDbUsersInternalExt on CosmosDbUsers {
   Client get client => database.client;
 }

@@ -147,7 +147,7 @@ class BadResponseException extends ContextualizedException {
 }
 
 // internal use
-extension ContextualizedExceptionExt<T> on Future<T> {
+extension ContextualizedExceptionInternalExt<T> on Future<T> {
   Future<T> rethrowContextualizedException(HttpCall call) =>
       onError<ContextualizedException>((error, stackTrace) =>
           throw error._withContext(call.method.name, call.uri));

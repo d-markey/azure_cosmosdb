@@ -66,7 +66,7 @@ extension CosmosDbServerDbgExt on CosmosDbServer {
   /// }
   /// ```
   void useLogger(void Function(Object?) logger,
-      {bool withBody = true, bool withHeader = false}) {
+      {bool withBody = false, bool withHeader = false}) {
     final dbgClient = dbgHttpClient;
     if (dbgClient != null) {
       dbgClient.log = logger;
@@ -88,8 +88,8 @@ extension CosmosDbServerDbgExt on CosmosDbServer {
   }
 }
 
-/// internal use
-extension CosmosDbServerExt on CosmosDbServer {
+// internal use
+extension CosmosDbServerInternalExt on CosmosDbServer {
   /// The CosmosDB client used for this instance.
   Client get client => _client;
 }
