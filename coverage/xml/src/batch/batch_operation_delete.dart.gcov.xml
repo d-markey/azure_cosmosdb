@@ -1,40 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="batch_operation_delete.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="9" lines-valid="9" package="/src/batch" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="batch_operation_delete.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="7" lines-valid="7" package="/src/batch" testname="lcov.info" version="1.5">
 <lines>
 <line>
-<code>import 'dart:convert';</code>
-</line>
-<line>
-<code/>
-</line>
-<line>
-<code>import '../base_document.dart';</code>
-</line>
-<line>
 <code>import '../partition/partition_key.dart';</code>
-</line>
-<line>
-<code>import '../partition/partition_key_spec.dart';</code>
 </line>
 <line>
 <code>import 'batch_operation.dart';</code>
 </line>
 <line>
+<code>import 'batch_operation_types.dart';</code>
+</line>
+<line>
 <code/>
+</line>
+<line>
+<code>/// Batch operation for deleting a document from the target container.</code>
 </line>
 <line>
 <code>class BatchOperationDelete extends BatchOperation {</code>
 </line>
-<line hits="2">
-<code>  BatchOperationDelete(this.id,</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
 <line>
-<code>      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})</code>
+<code>  /// Creates a batch operation for deleting document with [id] and [partitionKey].</code>
 </line>
-<line hits="2">
-<code>      : super(partitionKey: partitionKey, partitionKeySpec: partitionKeySpec);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="1">
+<code>  BatchOperationDelete(this.id, {required PartitionKey partitionKey})</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      : super(partitionKey: partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -43,10 +37,13 @@
 <code>  @override</code>
 </line>
 <line>
-<code>  final BatchOperationType op = BatchOperationType.delete;</code>
+<code>  final BatchOperationType type = BatchOperationType.delete;</code>
 </line>
 <line>
 <code/>
+</line>
+<line>
+<code>  /// The target document [id].</code>
 </line>
 <line>
 <code>  final String id;</code>
@@ -69,14 +66,6 @@
 <line hits="2">
 <code>      'id': id,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>      'partitionKey': jsonEncode(</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>          (partitionKey ?? partitionKeySpec?.from(DocumentWithId(id)))?.values),</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    });</code>

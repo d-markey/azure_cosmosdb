@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="distance_calculator.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="11" lines-valid="11" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="distance_calculator.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="11" lines-valid="11" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'point.dart';</code>
@@ -11,6 +11,9 @@
 <code/>
 </line>
 <line>
+<code>/// Base class for distance calculation algorithms.</code>
+</line>
+<line>
 <code>abstract class DistanceCalculator {</code>
 </line>
 <line hits="2">
@@ -19,6 +22,9 @@
 </line>
 <line>
 <code/>
+</line>
+<line>
+<code>  /// Computes the distance between points [from] and [to].</code>
 </line>
 <line>
 <code>  double? distance(Point from, Point to);</code>

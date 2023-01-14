@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="batch_operation_types.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/batch" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>/// Constants for batch operation types.</code>
+</line>
+<line>
+<code>class BatchOperationType {</code>
+</line>
+<line hits="1">
+<code>  const BatchOperationType._(this.name);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Name of the batch operation type.</code>
+</line>
+<line>
+<code>  final String name;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `Create` operation type.</code>
+</line>
+<line>
+<code>  static const create = BatchOperationType._('Create');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `Upsert` operation type.</code>
+</line>
+<line>
+<code>  static const upsert = BatchOperationType._('Upsert');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `Read` operation type.</code>
+</line>
+<line>
+<code>  static const read = BatchOperationType._('Read');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `Delete` operation type.</code>
+</line>
+<line>
+<code>  static const delete = BatchOperationType._('Delete');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `Replace` operation type.</code>
+</line>
+<line>
+<code>  static const replace = BatchOperationType._('Replace');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// `Patch` operation type.</code>
+</line>
+<line>
+<code>  static const patch = BatchOperationType._('Patch');</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

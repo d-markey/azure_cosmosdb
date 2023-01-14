@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="cosmos_db_database.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9285714" lines-covered="13" lines-valid="14" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="cosmos_db_database.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9166667" lines-covered="11" lines-valid="12" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'base_document.dart';</code>
@@ -92,17 +92,6 @@
 <line>
 <code/>
 </line>
-<line hits="1">
-<code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>      client.registerBuilder&lt;T&gt;(builder);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
 <line>
 <code>  /// Gets information for this [CosmosDbDatabase].</code>
 </line>
@@ -157,7 +146,7 @@
 <code>// internal use</code>
 </line>
 <line>
-<code>extension DatabaseExt on CosmosDbDatabase {</code>
+<code>extension CosmosDbDatabaseInternalExt on CosmosDbDatabase {</code>
 </line>
 <line hits="3">
 <code>  void setExists(bool exists) =&gt; _exists = exists;</code>

@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-11</dd>
+<dd>2023-01-14</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -72,37 +72,46 @@
 <td>4</td><td></td><td></td><td><code>import 'batch_operation.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 5" id="line5">
-<td>5</td><td></td><td></td><td><code></code></td>
+<td>5</td><td></td><td></td><td><code>import 'batch_operation_types.dart';</code></td>
 </tr>
 <tr class="noop" title="Line 6" id="line6">
-<td>6</td><td></td><td></td><td><code>class BatchOperationUpsert&lt;T extends BaseDocument&gt;</code></td>
+<td>6</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 7" id="line7">
-<td>7</td><td></td><td></td><td><code>    extends BatchOperationOnItem&lt;T&gt; {</code></td>
+<td>7</td><td></td><td></td><td><code>/// Batch operation for upserting a document in the target container.</code></td>
 </tr>
-<tr class="lineCov" title="Line 8" id="line8">
-<td>8</td><td></td><td>2</td><td><code>  BatchOperationUpsert(T item,</code></td>
+<tr class="noop" title="Line 8" id="line8">
+<td>8</td><td></td><td></td><td><code>class BatchOperationUpsert&lt;T extends BaseDocument&gt;</code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
-<td>9</td><td></td><td></td><td><code>      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})</code></td>
+<td>9</td><td></td><td></td><td><code>    extends BatchOperationOnItem&lt;T&gt; {</code></td>
 </tr>
-<tr class="lineCov" title="Line 10" id="line10">
-<td>10</td><td></td><td>1</td><td><code>      : super(item,</code></td>
+<tr class="noop" title="Line 10" id="line10">
+<td>10</td><td></td><td></td><td><code>  /// Creates a batch operation for upserting document [item].</code></td>
 </tr>
-<tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>            partitionKeySpec: partitionKeySpec, partitionKey: partitionKey);</code></td>
+<tr class="lineCov" title="Line 11" id="line11">
+<td>11</td><td></td><td>2</td><td><code>  BatchOperationUpsert(T item,</code></td>
 </tr>
 <tr class="noop" title="Line 12" id="line12">
-<td>12</td><td></td><td></td><td><code></code></td>
+<td>12</td><td></td><td></td><td><code>      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})</code></td>
 </tr>
-<tr class="noop" title="Line 13" id="line13">
-<td>13</td><td></td><td></td><td><code>  @override</code></td>
+<tr class="lineCov" title="Line 13" id="line13">
+<td>13</td><td></td><td>1</td><td><code>      : super(item,</code></td>
 </tr>
 <tr class="noop" title="Line 14" id="line14">
-<td>14</td><td></td><td></td><td><code>  final BatchOperationType op = BatchOperationType.upsert;</code></td>
+<td>14</td><td></td><td></td><td><code>            partitionKeySpec: partitionKeySpec, partitionKey: partitionKey);</code></td>
 </tr>
 <tr class="noop" title="Line 15" id="line15">
-<td>15</td><td></td><td></td><td><code>}</code></td>
+<td>15</td><td></td><td></td><td><code></code></td>
+</tr>
+<tr class="noop" title="Line 16" id="line16">
+<td>16</td><td></td><td></td><td><code>  @override</code></td>
+</tr>
+<tr class="noop" title="Line 17" id="line17">
+<td>17</td><td></td><td></td><td><code>  final BatchOperationType type = BatchOperationType.upsert;</code></td>
+</tr>
+<tr class="noop" title="Line 18" id="line18">
+<td>18</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

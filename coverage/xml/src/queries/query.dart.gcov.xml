@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="query.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9444444" lines-covered="17" lines-valid="18" package="/src/queries" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="query.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8947368" lines-covered="17" lines-valid="19" package="/src/queries" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -46,7 +46,7 @@
 <line hits="0">
 <code>  @override</code>
 </line>
-<line>
+<line hits="0">
 <code>  String get id =&gt; '';</code>
 </line>
 <line>
@@ -95,7 +95,7 @@
 <code/>
 </line>
 <line>
-<code>  /// Restrict the query to the partition identified by [key].</code>
+<code>  /// Restrict the query to the partition identified by [partitionKey].</code>
 </line>
 <line hits="2">
 <code>  void onPartition(PartitionKey partitionKey) =&gt; _partitionKey = partitionKey;</code>

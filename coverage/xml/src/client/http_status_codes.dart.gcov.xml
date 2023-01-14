@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="http_status_codes.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="http_status_codes.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
+<line>
+<code>/// Constants for HTTP status codes.</code>
+</line>
 <line>
 <code>abstract class HttpStatusCode {</code>
 </line>
@@ -44,10 +47,16 @@
 <code>  static const serverError = 500;</code>
 </line>
 <line>
+<code>  static const serviceUnavailable = 503;</code>
+</line>
+<line>
 <code/>
 </line>
+<line>
+<code>  /// Returns `true` if [code] is in the range 200-299, `false` otherwise.</code>
+</line>
 <line hits="3">
-<code>  static bool success(int statusCode) =&gt; 200 &lt;= statusCode &amp;&amp; statusCode &lt; 300;</code>
+<code>  static bool isSuccess(int code) =&gt; 200 &lt;= code &amp;&amp; code &lt; 300;</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>

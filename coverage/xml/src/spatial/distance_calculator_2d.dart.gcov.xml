@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="distance_calculator_2d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="10" lines-valid="10" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="distance_calculator_2d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="10" lines-valid="10" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:math';</code>
@@ -21,6 +21,9 @@
 </line>
 <line>
 <code/>
+</line>
+<line>
+<code>/// Euclidean distance calculator for points in a 2D plane (X/Y coordinates).</code>
 </line>
 <line hits="1">
 <code>class DistanceCalculator2D extends DistanceCalculator {</code>

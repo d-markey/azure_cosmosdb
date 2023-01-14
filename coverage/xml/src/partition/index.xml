@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.89497715" lines-covered="196" lines-valid="219" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.90204084" lines-covered="221" lines-valid="245" package="/src/partition" testname="lcov.info" version="1.5">
 <sources>
-<source branches-hit="0" branches-valid="0" filename="_partition_key_hash_v2.dart" functions-hit="0" functions-valid="0" lines-hit="56" lines-valid="66" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="56" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="_partition_key_hash_v2.dart" functions-hit="0" functions-valid="0" lines-hit="55" lines-valid="66" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="55" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="partition_key.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="6" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
-<testCase branch-hit="0" function-hit="0" line-hit="6" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="partition_key.dart" functions-hit="0" functions-valid="0" lines-hit="32" lines-valid="32" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
+<testCase branch-hit="0" function-hit="0" line-hit="32" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="_path_parser.dart" functions-hit="0" functions-valid="0" lines-hit="71" lines-valid="79" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib">
 <testCase branch-hit="0" function-hit="0" line-hit="71" name="&lt;unnamed&gt;"/>

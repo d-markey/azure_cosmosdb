@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.98013246" lines-covered="148" lines-valid="151" package="/src/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95238096" lines-covered="140" lines-valid="147" package="/src/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -66,12 +66,6 @@
 </line>
 <line>
 <code>import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';</code>
-</line>
-<line>
-<code/>
-</line>
-<line>
-<code>typedef _DocumentBuilder = DocumentBuilder&lt;BaseDocument&gt;;</code>
 </line>
 <line>
 <code/>
@@ -170,83 +164,28 @@
 <line>
 <code/>
 </line>
-<line hits="1">
-<code>  final _builders = &lt;Type, _DocumentBuilder&gt;{};</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
-<line hits="2">
-<code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="3">
-<code>    _builders[T] = builder;</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
-<line hits="2">
-<code>  DocumentBuilder&lt;T&gt; _getBuilder&lt;T extends BaseDocument&gt;([Context? context]) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="4">
-<code>    final builder = context?.builder ?? _builders[T];</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    if (builder == null) throw UnknownDocumentTypeException(T);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    return (data) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>      try {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>        return builder(data) as T;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>      } catch (ex) {</code>
-</line>
-<line hits="0">
-<code>        throw BadResponseException(ex.toString());</code>
-</line>
-<line>
-<code>      }</code>
-</line>
-<line hits="1">
-<code>    };</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="1">
-<code>  }</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code/>
-</line>
 <line hits="2">
 <code>  T? _build&lt;T extends BaseDocument&gt;(Context context, Map? item) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
+<line hits="1">
+<code>    if (item == null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      return null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
 <line hits="2">
-<code>    final builder = _getBuilder&lt;T&gt;(context);</code>
+<code>    final builder = context.getBuilder&lt;T&gt;();</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
-<code>    return (item == null || item.isEmpty) ? null : builder(item);</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>    return builder(item);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>  }</code>
@@ -259,12 +198,22 @@
 <code>  Iterable&lt;T&gt; _buildMany&lt;T extends BaseDocument&gt;(Context context, List? items) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
+<line hits="1">
+<code>    if (items == null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      return const [];</code>
+</line>
+<line>
+<code>    }</code>
+</line>
 <line hits="2">
-<code>    final builder = _getBuilder&lt;T&gt;(context);</code>
+<code>    final builder = context.getBuilder&lt;T&gt;();</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
-<code>    return (items ?? []).map((item) =&gt; builder(item));</code>
+<code>    return items.map((item) =&gt; builder(item));</code>
 <hit count="4" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
@@ -486,6 +435,22 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
+<code>      case HttpStatusCode.serviceUnavailable:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        // retry once</code>
+</line>
+<line hits="0">
+<code>        await Future.delayed(Duration(milliseconds: 250));</code>
+</line>
+<line hits="0">
+<code>        result = await _sendWithAuth(call, document, context, auth);</code>
+</line>
+<line hits="0">
+<code>        break;</code>
+</line>
+<line hits="1">
 <code>      case HttpStatusCode.noContent:</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
@@ -548,7 +513,7 @@
 <code/>
 </line>
 <line hits="2">
-<code>    if (!HttpStatusCode.success(result.statusCode)) {</code>
+<code>    if (!HttpStatusCode.isSuccess(result.statusCode)) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
@@ -788,58 +753,61 @@
 <code/>
 </line>
 <line hits="2">
-<code>  Future&lt;BatchResponse&lt;T&gt;&gt; batch&lt;T extends BaseDocument&gt;(</code>
+<code>  Future&lt;BatchResponse&gt; batch(String path, TransactionalBatch batch,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>      String path,</code>
-</line>
-<line>
-<code>      TransactionalBatch&lt;T&gt; batch,</code>
-</line>
-<line>
-<code>      List&lt;PartitionKeyRange&gt; pkRanges,</code>
-</line>
-<line>
-<code>      Context context) {</code>
+<code>      List&lt;PartitionKeyRange&gt; pkRanges, Context context) async {</code>
 </line>
 <line hits="3">
-<code>    final call = HttpCall.post(path, version);</code>
+<code>    if (batch.operations.isEmpty) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      return BatchResponse();</code>
+</line>
+<line>
+<code>    } else {</code>
+</line>
+<line hits="2">
+<code>      final call = HttpCall.post(path, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      return await _send(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>              call,</code>
+</line>
+<line>
+<code>              batch,</code>
+</line>
+<line hits="2">
+<code>              context.copyWith(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>                headers: batch.getHeaders(pkRanges),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>              ))</code>
+</line>
+<line hits="3">
+<code>          .then((data) =&gt;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>              BatchResponseInternalExt.build(data, batch.operations, context))</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>    final builder = _getBuilder&lt;T&gt;(context);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>    return _send(</code>
+<code>          .rethrowContextualizedException(call);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>            call,</code>
-</line>
-<line hits="1">
-<code>            batch,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>            context.copyWith(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>              headers: batch.getHeaders(pkRanges),</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>            ))</code>
-</line>
-<line hits="4">
-<code>        .then((data) =&gt; BatchResponse.build&lt;T&gt;(data, builder))</code>
-<hit count="4" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>        .rethrowContextualizedException(call);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<code>    }</code>
 </line>
 <line hits="1">
 <code>  }</code>

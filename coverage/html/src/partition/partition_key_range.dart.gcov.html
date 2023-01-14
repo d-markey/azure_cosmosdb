@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-11</dd>
+<dd>2023-01-14</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -147,25 +147,34 @@
 <td>29</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 30" id="line30">
-<td>30</td><td></td><td></td><td><code>extension PartitionKeyRangeExt on Iterable&lt;PartitionKeyRange&gt; {</code></td>
+<td>30</td><td></td><td></td><td><code>/// Extension on [Iterable] of [PartitionKeyRange].</code></td>
 </tr>
-<tr class="lineCov" title="Line 31" id="line31">
-<td>31</td><td></td><td>2</td><td><code>  PartitionKeyRange? findFor(PartitionKey pk) {</code></td>
+<tr class="noop" title="Line 31" id="line31">
+<td>31</td><td></td><td></td><td><code>extension PartitionKeyRangeExt on Iterable&lt;PartitionKeyRange&gt; {</code></td>
 </tr>
-<tr class="lineCov" title="Line 32" id="line32">
-<td>32</td><td></td><td>3</td><td><code>    final hash = PartitionKeyHashV2.multi(pk.values);</code></td>
+<tr class="noop" title="Line 32" id="line32">
+<td>32</td><td></td><td></td><td><code>  /// Returns the [PartitionKeyRange] for the specified [partitionKey], or `null` if</code></td>
 </tr>
-<tr class="lineCov" title="Line 33" id="line33">
-<td>33</td><td></td><td>2</td><td><code>    return cast&lt;PartitionKeyRange?&gt;()</code></td>
+<tr class="noop" title="Line 33" id="line33">
+<td>33</td><td></td><td></td><td><code>  /// no match is found.</code></td>
 </tr>
 <tr class="lineCov" title="Line 34" id="line34">
-<td>34</td><td></td><td>4</td><td><code>        .singleWhere((r) =&gt; r!.contains(hash), orElse: () =&gt; null);</code></td>
+<td>34</td><td></td><td>2</td><td><code>  PartitionKeyRange? findRangeFor(PartitionKey partitionKey) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 35" id="line35">
-<td>35</td><td></td><td>1</td><td><code>  }</code></td>
+<td>35</td><td></td><td>3</td><td><code>    final hash = PartitionKeyHashV2.multi(partitionKey.values);</code></td>
 </tr>
-<tr class="noop" title="Line 36" id="line36">
-<td>36</td><td></td><td></td><td><code>}</code></td>
+<tr class="lineCov" title="Line 36" id="line36">
+<td>36</td><td></td><td>2</td><td><code>    return cast&lt;PartitionKeyRange?&gt;()</code></td>
+</tr>
+<tr class="lineCov" title="Line 37" id="line37">
+<td>37</td><td></td><td>4</td><td><code>        .singleWhere((r) =&gt; r!.contains(hash), orElse: () =&gt; null);</code></td>
+</tr>
+<tr class="lineCov" title="Line 38" id="line38">
+<td>38</td><td></td><td>1</td><td><code>  }</code></td>
+</tr>
+<tr class="noop" title="Line 39" id="line39">
+<td>39</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-11</dd>
+<dd>2023-01-14</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>13</td><td>14</td><td class="high">92.9%</td>
+<th scope="row">Lines</th><td>11</td><td>12</td><td class="high">91.7%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -146,77 +146,68 @@
 <tr class="noop" title="Line 29" id="line29">
 <td>29</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 30" id="line30">
-<td>30</td><td></td><td>1</td><td><code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code></td>
+<tr class="noop" title="Line 30" id="line30">
+<td>30</td><td></td><td></td><td><code>  /// Gets information for this [CosmosDbDatabase].</code></td>
 </tr>
 <tr class="lineCov" title="Line 31" id="line31">
-<td>31</td><td></td><td>3</td><td><code>      client.registerBuilder&lt;T&gt;(builder);</code></td>
+<td>31</td><td></td><td>3</td><td><code>  Future&lt;dynamic&gt; getInfo({CosmosDbPermission? permission}) =&gt; client.rawGet(</code></td>
 </tr>
-<tr class="noop" title="Line 32" id="line32">
-<td>32</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 32" id="line32">
+<td>32</td><td></td><td>1</td><td><code>      url,</code></td>
 </tr>
-<tr class="noop" title="Line 33" id="line33">
-<td>33</td><td></td><td></td><td><code>  /// Gets information for this [CosmosDbDatabase].</code></td>
+<tr class="lineCov" title="Line 33" id="line33">
+<td>33</td><td></td><td>2</td><td><code>      Context(</code></td>
 </tr>
-<tr class="lineCov" title="Line 34" id="line34">
-<td>34</td><td></td><td>3</td><td><code>  Future&lt;dynamic&gt; getInfo({CosmosDbPermission? permission}) =&gt; client.rawGet(</code></td>
+<tr class="noop" title="Line 34" id="line34">
+<td>34</td><td></td><td></td><td><code>        type: 'dbs',</code></td>
 </tr>
-<tr class="lineCov" title="Line 35" id="line35">
-<td>35</td><td></td><td>1</td><td><code>      url,</code></td>
+<tr class="lineNoCov" title="Line 35" id="line35">
+<td>35</td><td></td><td>0</td><td><code>        token: permission?.token,</code></td>
 </tr>
-<tr class="lineCov" title="Line 36" id="line36">
-<td>36</td><td></td><td>2</td><td><code>      Context(</code></td>
+<tr class="noop" title="Line 36" id="line36">
+<td>36</td><td></td><td></td><td><code>      ));</code></td>
 </tr>
 <tr class="noop" title="Line 37" id="line37">
-<td>37</td><td></td><td></td><td><code>        type: 'dbs',</code></td>
+<td>37</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 38" id="line38">
-<td>38</td><td></td><td>0</td><td><code>        token: permission?.token,</code></td>
+<tr class="noop" title="Line 38" id="line38">
+<td>38</td><td></td><td></td><td><code>  /// Provides access to containers in this [CosmosDbDatabase].</code></td>
 </tr>
-<tr class="noop" title="Line 39" id="line39">
-<td>39</td><td></td><td></td><td><code>      ));</code></td>
+<tr class="lineCov" title="Line 39" id="line39">
+<td>39</td><td></td><td>3</td><td><code>  late final CosmosDbContainers containers = CosmosDbContainers(this);</code></td>
 </tr>
 <tr class="noop" title="Line 40" id="line40">
 <td>40</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 41" id="line41">
-<td>41</td><td></td><td></td><td><code>  /// Provides access to containers in this [CosmosDbDatabase].</code></td>
+<td>41</td><td></td><td></td><td><code>  /// Provides access to users in this [CosmosDbDatabase].</code></td>
 </tr>
 <tr class="lineCov" title="Line 42" id="line42">
-<td>42</td><td></td><td>3</td><td><code>  late final CosmosDbContainers containers = CosmosDbContainers(this);</code></td>
+<td>42</td><td></td><td>3</td><td><code>  late final CosmosDbUsers users = CosmosDbUsers(this);</code></td>
 </tr>
 <tr class="noop" title="Line 43" id="line43">
-<td>43</td><td></td><td></td><td><code></code></td>
+<td>43</td><td></td><td></td><td><code>}</code></td>
 </tr>
 <tr class="noop" title="Line 44" id="line44">
-<td>44</td><td></td><td></td><td><code>  /// Provides access to users in this [CosmosDbDatabase].</code></td>
+<td>44</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineCov" title="Line 45" id="line45">
-<td>45</td><td></td><td>3</td><td><code>  late final CosmosDbUsers users = CosmosDbUsers(this);</code></td>
+<tr class="noop" title="Line 45" id="line45">
+<td>45</td><td></td><td></td><td><code>// internal use</code></td>
 </tr>
 <tr class="noop" title="Line 46" id="line46">
-<td>46</td><td></td><td></td><td><code>}</code></td>
+<td>46</td><td></td><td></td><td><code>extension CosmosDbDatabaseInternalExt on CosmosDbDatabase {</code></td>
 </tr>
-<tr class="noop" title="Line 47" id="line47">
-<td>47</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 47" id="line47">
+<td>47</td><td></td><td>3</td><td><code>  void setExists(bool exists) =&gt; _exists = exists;</code></td>
 </tr>
 <tr class="noop" title="Line 48" id="line48">
-<td>48</td><td></td><td></td><td><code>// internal use</code></td>
+<td>48</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="noop" title="Line 49" id="line49">
-<td>49</td><td></td><td></td><td><code>extension DatabaseExt on CosmosDbDatabase {</code></td>
+<tr class="lineCov" title="Line 49" id="line49">
+<td>49</td><td></td><td>4</td><td><code>  Client get client =&gt; server.client;</code></td>
 </tr>
-<tr class="lineCov" title="Line 50" id="line50">
-<td>50</td><td></td><td>3</td><td><code>  void setExists(bool exists) =&gt; _exists = exists;</code></td>
-</tr>
-<tr class="noop" title="Line 51" id="line51">
-<td>51</td><td></td><td></td><td><code></code></td>
-</tr>
-<tr class="lineCov" title="Line 52" id="line52">
-<td>52</td><td></td><td>4</td><td><code>  Client get client =&gt; server.client;</code></td>
-</tr>
-<tr class="noop" title="Line 53" id="line53">
-<td>53</td><td></td><td></td><td><code>}</code></td>
+<tr class="noop" title="Line 50" id="line50">
+<td>50</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

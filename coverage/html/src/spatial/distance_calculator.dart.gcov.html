@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-01-11</dd>
+<dd>2023-01-14</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -69,70 +69,76 @@
 <td>3</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 4" id="line4">
-<td>4</td><td></td><td></td><td><code>abstract class DistanceCalculator {</code></td>
+<td>4</td><td></td><td></td><td><code>/// Base class for distance calculation algorithms.</code></td>
 </tr>
-<tr class="lineCov" title="Line 5" id="line5">
-<td>5</td><td></td><td>2</td><td><code>  const DistanceCalculator();</code></td>
+<tr class="noop" title="Line 5" id="line5">
+<td>5</td><td></td><td></td><td><code>abstract class DistanceCalculator {</code></td>
 </tr>
-<tr class="noop" title="Line 6" id="line6">
-<td>6</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 6" id="line6">
+<td>6</td><td></td><td>2</td><td><code>  const DistanceCalculator();</code></td>
 </tr>
 <tr class="noop" title="Line 7" id="line7">
-<td>7</td><td></td><td></td><td><code>  double? distance(Point from, Point to);</code></td>
+<td>7</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 8" id="line8">
-<td>8</td><td></td><td></td><td><code></code></td>
+<td>8</td><td></td><td></td><td><code>  /// Computes the distance between points [from] and [to].</code></td>
 </tr>
 <tr class="noop" title="Line 9" id="line9">
-<td>9</td><td></td><td></td><td><code>  /// Computes the length of a line or polygon by adding up distances between</code></td>
+<td>9</td><td></td><td></td><td><code>  double? distance(Point from, Point to);</code></td>
 </tr>
 <tr class="noop" title="Line 10" id="line10">
-<td>10</td><td></td><td></td><td><code>  /// consecutive [Point]s making it up. Returns `null` if [distance] return</code></td>
+<td>10</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 11" id="line11">
-<td>11</td><td></td><td></td><td><code>  /// `null` for any two consecutive [Point]s.</code></td>
+<td>11</td><td></td><td></td><td><code>  /// Computes the length of a line or polygon by adding up distances between</code></td>
 </tr>
-<tr class="lineCov" title="Line 12" id="line12">
-<td>12</td><td></td><td>2</td><td><code>  double? measure(Shape shape) {</code></td>
+<tr class="noop" title="Line 12" id="line12">
+<td>12</td><td></td><td></td><td><code>  /// consecutive [Point]s making it up. Returns `null` if [distance] return</code></td>
 </tr>
-<tr class="lineCov" title="Line 13" id="line13">
-<td>13</td><td></td><td>1</td><td><code>    double dist = 0;</code></td>
+<tr class="noop" title="Line 13" id="line13">
+<td>13</td><td></td><td></td><td><code>  /// `null` for any two consecutive [Point]s.</code></td>
 </tr>
 <tr class="lineCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>3</td><td><code>    for (var path in shape.paths) {</code></td>
+<td>14</td><td></td><td>2</td><td><code>  double? measure(Shape shape) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 15" id="line15">
-<td>15</td><td></td><td>2</td><td><code>      var current = path.first;</code></td>
+<td>15</td><td></td><td>1</td><td><code>    double dist = 0;</code></td>
 </tr>
 <tr class="lineCov" title="Line 16" id="line16">
-<td>16</td><td></td><td>3</td><td><code>      for (var next in path.skip(1)) {</code></td>
+<td>16</td><td></td><td>3</td><td><code>    for (var path in shape.paths) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 17" id="line17">
-<td>17</td><td></td><td>2</td><td><code>        var d = distance(current, next);</code></td>
+<td>17</td><td></td><td>2</td><td><code>      var current = path.first;</code></td>
 </tr>
 <tr class="lineCov" title="Line 18" id="line18">
-<td>18</td><td></td><td>1</td><td><code>        if (d == null) return null;</code></td>
+<td>18</td><td></td><td>3</td><td><code>      for (var next in path.skip(1)) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 19" id="line19">
-<td>19</td><td></td><td>2</td><td><code>        dist += d;</code></td>
+<td>19</td><td></td><td>2</td><td><code>        var d = distance(current, next);</code></td>
 </tr>
-<tr class="noop" title="Line 20" id="line20">
-<td>20</td><td></td><td></td><td><code>        current = next;</code></td>
+<tr class="lineCov" title="Line 20" id="line20">
+<td>20</td><td></td><td>1</td><td><code>        if (d == null) return null;</code></td>
 </tr>
-<tr class="noop" title="Line 21" id="line21">
-<td>21</td><td></td><td></td><td><code>      }</code></td>
+<tr class="lineCov" title="Line 21" id="line21">
+<td>21</td><td></td><td>2</td><td><code>        dist += d;</code></td>
 </tr>
 <tr class="noop" title="Line 22" id="line22">
-<td>22</td><td></td><td></td><td><code>    }</code></td>
+<td>22</td><td></td><td></td><td><code>        current = next;</code></td>
 </tr>
-<tr class="lineCov" title="Line 23" id="line23">
-<td>23</td><td></td><td>1</td><td><code>    return dist;</code></td>
+<tr class="noop" title="Line 23" id="line23">
+<td>23</td><td></td><td></td><td><code>      }</code></td>
 </tr>
-<tr class="lineCov" title="Line 24" id="line24">
-<td>24</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="noop" title="Line 24" id="line24">
+<td>24</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="noop" title="Line 25" id="line25">
-<td>25</td><td></td><td></td><td><code>}</code></td>
+<tr class="lineCov" title="Line 25" id="line25">
+<td>25</td><td></td><td>1</td><td><code>    return dist;</code></td>
+</tr>
+<tr class="lineCov" title="Line 26" id="line26">
+<td>26</td><td></td><td>1</td><td><code>  }</code></td>
+</tr>
+<tr class="noop" title="Line 27" id="line27">
+<td>27</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>

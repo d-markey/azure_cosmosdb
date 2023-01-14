@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="partition_key_range.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.88235295" lines-covered="15" lines-valid="17" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="partition_key_range.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.88235295" lines-covered="15" lines-valid="17" package="/src/partition" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -99,14 +99,23 @@
 <code/>
 </line>
 <line>
+<code>/// Extension on [Iterable] of [PartitionKeyRange].</code>
+</line>
+<line>
 <code>extension PartitionKeyRangeExt on Iterable&lt;PartitionKeyRange&gt; {</code>
 </line>
+<line>
+<code>  /// Returns the [PartitionKeyRange] for the specified [partitionKey], or `null` if</code>
+</line>
+<line>
+<code>  /// no match is found.</code>
+</line>
 <line hits="2">
-<code>  PartitionKeyRange? findFor(PartitionKey pk) {</code>
+<code>  PartitionKeyRange? findRangeFor(PartitionKey partitionKey) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>    final hash = PartitionKeyHashV2.multi(pk.values);</code>
+<code>    final hash = PartitionKeyHashV2.multi(partitionKey.values);</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">

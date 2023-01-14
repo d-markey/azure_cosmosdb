@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="cosmos_db_container.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9347826" lines-covered="172" lines-valid="184" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="cosmos_db_container.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.93401015" lines-covered="184" lines-valid="197" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '_internal/_http_header.dart';</code>
@@ -8,7 +8,13 @@
 <code>import 'base_document.dart';</code>
 </line>
 <line>
+<code>import 'batch/batch.dart';</code>
+</line>
+<line>
 <code>import 'batch/batch_response.dart';</code>
+</line>
+<line>
+<code>import 'batch/cross_partition_batch.dart';</code>
 </line>
 <line>
 <code>import 'batch/transactional_batch.dart';</code>
@@ -334,15 +340,22 @@
 <line>
 <code/>
 </line>
+<line hits="1">
+<code>  final _builders = &lt;Type, DocumentBuilder&gt;{};</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
 <line>
 <code>  /// Register a [DocumentBuilder] for specified type `T`.</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>      database.registerBuilder&lt;T&gt;(builder);</code>
+<code>      _builders[T] = builder;</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
@@ -608,6 +621,10 @@
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
+<code>        builders: _builders,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
 <code>        token: permission?.token ?? _token,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
@@ -688,6 +705,10 @@
 <code>                  PartitionKey.all,</code>
 </line>
 <line hits="2">
+<code>              builders: _builders,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
 <code>              token: permission?.token ?? _token,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
@@ -745,6 +766,10 @@
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
+<code>          builders: _builders,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
@@ -799,6 +824,10 @@
 </line>
 <line hits="2">
 <code>          token: permission?.token ?? _token,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          builders: _builders,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
@@ -903,6 +932,10 @@
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
+<code>          builders: _builders,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
@@ -960,6 +993,10 @@
 <line hits="3">
 <code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          builders: _builders,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>          token: permission?.token ?? _token,</code>
@@ -1032,6 +1069,10 @@
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
+<code>          builders: _builders,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
@@ -1093,6 +1134,10 @@
 </line>
 <line hits="0">
 <code>              PartitionKey.all,</code>
+</line>
+<line hits="2">
+<code>          builders: _builders,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>          token: permission?.token ?? _token,</code>
@@ -1221,22 +1266,32 @@
 <code>  /// Prepare a batch for this container.</code>
 </line>
 <line hits="1">
-<code>  TransactionalBatch&lt;T&gt; prepareBatch&lt;T extends BaseDocument&gt;(</code>
+<code>  Batch prepareBatch({bool continueOnError = true}) =&gt;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      TransactionalBatch(this, continueOnError: continueOnError);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>          {bool isAtomic = false, bool continueOnError = true}) =&gt;</code>
+<code/>
 </line>
 <line>
-<code>      isAtomic</code>
+<code>  /// Prepare a batch for this container (atomic).</code>
 </line>
-<line hits="1">
-<code>          ? TransactionalBatch&lt;T&gt;.atomic(this)</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line hits="2">
+<code>  Batch prepareAtomicBatch() =&gt; TransactionalBatch.atomic(this);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
-<code>          : TransactionalBatch&lt;T&gt;(this, continueOnError: continueOnError);</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Prepare a batch for this container (cross-partition).</code>
+</line>
+<line hits="2">
+<code>  Batch prepareCrossPartitionBatch() =&gt; CrossPartitionBatch(this);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -1245,58 +1300,72 @@
 <code>  /// Executes the batch in this container.</code>
 </line>
 <line hits="2">
-<code>  Future&lt;BatchResponse&lt;T&gt;&gt; execute&lt;T extends BaseDocument&gt;(</code>
+<code>  Future&lt;BatchResponse&gt; execute(TransactionalBatch batch,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line>
-<code>      TransactionalBatch&lt;T&gt; batch,</code>
 </line>
 <line>
 <code>      {CosmosDbPermission? permission}) async {</code>
 </line>
+<line hits="3">
+<code>    if (batch.operations.isEmpty) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      return BatchResponse();</code>
+</line>
+<line>
+<code>    } else {</code>
+</line>
 <line hits="2">
-<code>    await getPkRanges(permission: permission);</code>
+<code>      await getPkRanges(permission: permission);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
-<code>    return await client.batch&lt;T&gt;(</code>
+<code>      return await client.batch(</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      '$url/docs',</code>
+<code>        '$url/docs',</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>      batch,</code>
+<code>        batch,</code>
 </line>
 <line hits="1">
-<code>      _pkRanges,</code>
+<code>        _pkRanges,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>      Context(</code>
+<code>        Context(</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>        type: 'docs',</code>
+<code>          type: 'docs',</code>
 </line>
 <line hits="1">
-<code>        resId: url,</code>
+<code>          resId: url,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
-<code>        token: permission?.token ?? _token,</code>
+<code>          token: permission?.token ?? _token,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          builders: _builders,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
-<code>        onForbidden: _refreshPermission,</code>
+<code>          onForbidden: _refreshPermission,</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>      ),</code>
+<code>        ),</code>
 </line>
 <line>
-<code>    );</code>
+<code>      );</code>
+</line>
+<line>
+<code>    }</code>
 </line>
 <line hits="1">
 <code>  }</code>
@@ -1312,7 +1381,7 @@
 <code>// internal use</code>
 </line>
 <line>
-<code>extension ContainerExt on CosmosDbContainer {</code>
+<code>extension CosmosDbContainerInternalExt on CosmosDbContainer {</code>
 </line>
 <line hits="3">
 <code>  void setExists(bool exists) =&gt; _exists = exists;</code>

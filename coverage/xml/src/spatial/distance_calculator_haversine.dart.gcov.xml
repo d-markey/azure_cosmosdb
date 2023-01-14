@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="distance_calculator_haversine.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="14" lines-valid="14" package="/src/spatial" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="distance_calculator_haversine.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="14" lines-valid="14" package="/src/spatial" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:math' as math;</code>
@@ -17,13 +17,28 @@
 <code/>
 </line>
 <line>
+<code>/// The Earth's radius, in kilometers.</code>
+</line>
+<line>
 <code>const double earthRadiusInKm = 6371;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Distance calculator for points in latitude/longitude coordinates on Earth.</code>
 </line>
 <line>
 <code>const earthDistanceCalculator = DistanceCalculatorHaversine(earthRadiusInKm);</code>
 </line>
 <line>
 <code/>
+</line>
+<line>
+<code>/// Distance calculator for points on a sphere (latitude/longitude coordinates),</code>
+</line>
+<line>
+<code>/// based on the Haversine algorithm.</code>
 </line>
 <line>
 <code>class DistanceCalculatorHaversine extends DistanceCalculator {</code>
@@ -34,6 +49,9 @@
 </line>
 <line>
 <code/>
+</line>
+<line>
+<code>  /// The sphere's radius.</code>
 </line>
 <line>
 <code>  final double radius;</code>

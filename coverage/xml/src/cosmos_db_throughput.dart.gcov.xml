@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.68421054" lines-covered="13" lines-valid="19" package="/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="19" lines-valid="19" package="/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -44,11 +44,13 @@
 <code>    if (throughput &lt; _min) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      throw ApplicationException(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          'Invalid throughput: minimum value is $_min RUs.');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -57,8 +59,9 @@
 <code>    if (throughput % 100 != 0) {</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      throw ApplicationException(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          'Invalid throughput: value must be a multiple of 100 RUs.');</code>
@@ -95,11 +98,13 @@
 <code>    if (maxThroughput &lt; _minAutoScale) {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>      throw ApplicationException(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="1">
 <code>          'Invalid max throughput: minimum value is $_minAutoScale RUs.');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>    }</code>
@@ -108,8 +113,9 @@
 <code>    if (maxThroughput % 1000 != 0) {</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="0">
+<line hits="2">
 <code>      throw ApplicationException(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          'Invalid max throughput: value must be a multiple of 1000 RUs.');</code>

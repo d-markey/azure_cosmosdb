@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-11" filename="_partition_key_hash_v2.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8484849" lines-covered="56" lines-valid="66" package="/src/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-14" filename="_partition_key_hash_v2.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8333333" lines-covered="55" lines-valid="66" package="/src/partition" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -239,9 +239,9 @@
 <line>
 <code/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>  factory PartitionKeyHashV2.string(String value) =&gt; value.isEmpty</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="0">
 <code>      ? _emptyString</code>
@@ -254,9 +254,8 @@
 <code>          ? PartitionKeyHashV2.multi([value])</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="0">
 <code>          : throw PartitionKeyException('Partition key value is too long.');</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
