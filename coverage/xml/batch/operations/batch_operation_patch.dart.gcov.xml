@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="batch_operation_patch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.6666667" lines-covered="16" lines-valid="24" package="/batch/operations" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import '../../base_document.dart';</code>
+</line>
+<line>
+<code>import '../../partition/partition_key.dart';</code>
+</line>
+<line>
+<code>import '../../patch/patch.dart';</code>
+</line>
+<line>
+<code>import '../batch_operation.dart';</code>
+</line>
+<line>
+<code>import '../batch_operation_type.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Batch operation for patching documents in the target container.</code>
+</line>
+<line>
+<code>class BatchOperationPatch&lt;T extends BaseDocument&gt;</code>
+</line>
+<line>
+<code>    extends BatchOperationOnType&lt;T&gt; implements Patch {</code>
+</line>
+<line>
+<code>  /// Creates a batch operation for patching document with [id].</code>
+</line>
+<line hits="2">
+<code>  BatchOperationPatch(this.id, {PartitionKey? partitionKey})</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      : super(partitionKey: partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  @override</code>
+</line>
+<line>
+<code>  final BatchOperationType type = BatchOperationType.patch;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The target document [id].</code>
+</line>
+<line>
+<code>  @override</code>
+</line>
+<line>
+<code>  final String id;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final Patch _patch = Patch();</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  void add(String path, value) =&gt; _patch.add(path, value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  void decrement(String path, [num value = 1]) =&gt; _patch.decrement(path, value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  void increment(String path, [num value = 1]) =&gt; _patch.increment(path, value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  void remove(String path) =&gt; _patch.remove(path);</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  void replace(String path, value) =&gt; _patch.replace(path, value);</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  void set(String path, value) =&gt; _patch.set(path, value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  void setCondition(String condition) =&gt; _patch.setCondition(condition);</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  void withParam(String name, value) =&gt; _patch.withParam(name, value);</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; super.toJson()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    ..addAll({</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      'id': id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      'resourceBody': _patch.toJson(),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    });</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

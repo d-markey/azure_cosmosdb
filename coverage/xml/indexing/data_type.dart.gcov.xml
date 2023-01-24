@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="data_type.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="3" lines-valid="3" package="/indexing" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Constants for data types.</code>
+</line>
+<line>
+<code>class DataType {</code>
+</line>
+<line hits="1">
+<code>  const DataType._(this.name);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// The [name] of this instance.</code>
+</line>
+<line>
+<code>  final String name;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// String type.</code>
+</line>
+<line>
+<code>  static const string = DataType._('String');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Numeric type.</code>
+</line>
+<line>
+<code>  static const number = DataType._('Number');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Point type.</code>
+</line>
+<line>
+<code>  static const point = DataType._('Point');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Polygon type.</code>
+</line>
+<line>
+<code>  static const polygon = DataType._('Polygon');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Multi-polygon type.</code>
+</line>
+<line>
+<code>  static const multiPolygon = DataType._('MultiPolygon');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Line-string type.</code>
+</line>
+<line>
+<code>  static const lineString = DataType._('LineString');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// List of spatial data types.</code>
+</line>
+<line>
+<code>  static const spatial = [point, polygon, multiPolygon, lineString];</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  static const _types = [string, number, ...spatial];</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Returns the [DataType] constant corresponding to the specified [type].</code>
+</line>
+<line hits="2">
+<code>  static DataType? tryParse(dynamic type) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>      _types.firstOrDefault((m) =&gt; m.name == type);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

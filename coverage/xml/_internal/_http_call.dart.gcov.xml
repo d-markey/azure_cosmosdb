@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="_http_call.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="16" lines-valid="16" package="/_internal" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'package:http/http.dart' as http;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import '_authorization.dart';</code>
+</line>
+<line>
+<code>import '_http_header.dart';</code>
+</line>
+<line>
+<code>import '_http_methods.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class HttpCall {</code>
+</line>
+<line hits="1">
+<code>  const HttpCall(this.method, this.uri, this.version);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  const HttpCall.get(String uri, String version)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : this(HttpMethod.get, uri, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  const HttpCall.post(String uri, String version)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : this(HttpMethod.post, uri, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  const HttpCall.put(String uri, String version)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : this(HttpMethod.put, uri, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  const HttpCall.patch(String uri, String version)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : this(HttpMethod.patch, uri, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  const HttpCall.delete(String uri, String version)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      : this(HttpMethod.delete, uri, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final HttpMethod method;</code>
+</line>
+<line>
+<code>  final String uri;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String version;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  http.Request getRequest(String root, Authorization authorization) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="7">
+<code>    final request = http.Request(method.name, Uri.parse(root + uri));</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    request.headers[HttpHeader.authorization] = authorization.token;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    request.headers[HttpHeader.msDate] = authorization.date;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    request.headers[HttpHeader.msVersion] = version;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    return request;</code>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

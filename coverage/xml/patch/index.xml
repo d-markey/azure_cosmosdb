@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9945946" lines-covered="184" lines-valid="185" package="/patch" testname="lcov.info" version="1.5">
+<sources>
+<source branches-hit="0" branches-valid="0" filename="patch.dart" functions-hit="0" functions-valid="0" lines-hit="56" lines-valid="57" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
+<testCase branch-hit="0" function-hit="0" line-hit="56" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="patch_operation.dart" functions-hit="0" functions-valid="0" lines-hit="18" lines-valid="18" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
+<testCase branch-hit="0" function-hit="0" line-hit="18" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="_token.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="1" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
+<testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="_tokenizer.dart" functions-hit="0" functions-valid="0" lines-hit="108" lines-valid="108" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
+<testCase branch-hit="0" function-hit="0" line-hit="108" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="patch_operation_type.dart" functions-hit="0" functions-valid="0" lines-hit="1" lines-valid="1" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
+<testCase branch-hit="0" function-hit="0" line-hit="1" name="&lt;unnamed&gt;"/>
+</source>
+</sources>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

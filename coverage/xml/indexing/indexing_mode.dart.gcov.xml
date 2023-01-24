@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="indexing_mode.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="3" lines-valid="3" package="/indexing" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Constants for indexing modes.</code>
+</line>
+<line>
+<code>class IndexingMode {</code>
+</line>
+<line hits="1">
+<code>  const IndexingMode._(this.name);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String name;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Consistent mode.</code>
+</line>
+<line>
+<code>  static const consistent = IndexingMode._('consistent');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Lazy mode. Lazy indexing is not supported in serverless mode, and new</code>
+</line>
+<line>
+<code>  /// containers cannot select lazy indexing unless an exemption was granted</code>
+</line>
+<line>
+<code>  /// by Microsoft.</code>
+</line>
+<line>
+<code>  @Deprecated(</code>
+</line>
+<line>
+<code>      'Lazy indexing is not supported in serverless mode, and new containers cannot select lazy indexing unless an exemption was granted by Microsoft')</code>
+</line>
+<line>
+<code>  static const lazy = IndexingMode._('lazy');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// No indexing.</code>
+</line>
+<line>
+<code>  static const none = IndexingMode._('none');</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  // ignore: deprecated_member_use_from_same_package</code>
+</line>
+<line>
+<code>  static const _modes = [consistent, lazy, none];</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Returns the [IndexingMode] constant corresponding to the specified [mode].</code>
+</line>
+<line hits="2">
+<code>  static IndexingMode? tryParse(dynamic mode) =&gt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>      _modes.firstOrDefault((m) =&gt; m.name == mode);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

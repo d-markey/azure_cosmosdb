@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="distance_calculator_2d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="10" lines-valid="10" package="/spatial" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:math';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'distance_calculator.dart';</code>
+</line>
+<line>
+<code>import 'distance_calculator_3d.dart';</code>
+</line>
+<line>
+<code>import 'point.dart';</code>
+</line>
+<line>
+<code>import 'shape.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Euclidean distance calculator for points in a 2D plane (X/Y coordinates).</code>
+</line>
+<line hits="1">
+<code>class DistanceCalculator2D extends DistanceCalculator {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  /// Computes the 2D distance between [from] and [to] positions. This</code>
+</line>
+<line>
+<code>  /// implementation ignores all [Point.altitude] values. [from] and [to]</code>
+</line>
+<line>
+<code>  /// must have geometry-based coordinates; if this is not the case, the</code>
+</line>
+<line>
+<code>  /// function returns `null`. See also [DistanceCalculator3D].</code>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  double? distance(Point from, Point to) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    if (!from.isGeometry || !to.isGeometry) return null;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    var dx = to.x! - from.x!;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    var dy = to.y! - from.y!;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>    return sqrt(dx * dx + dy * dy);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Computes the 2D length of a line string or polygon. `null` is returned iif</code>
+</line>
+<line>
+<code>  /// any [Point] in the lines or polygon is not geometry-based.</code>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  double? measure(Shape shape) =&gt; super.measure(shape);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

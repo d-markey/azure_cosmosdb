@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.89506173" lines-covered="145" lines-valid="162" package="/client" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:async';</code>
+</line>
+<line>
+<code>import 'dart:convert';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'package:crypto/crypto.dart' as crypto;</code>
+</line>
+<line>
+<code>import 'package:http/http.dart' as http;</code>
+</line>
+<line>
+<code>import 'package:retry/retry.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import '../_internal/_authorization.dart';</code>
+</line>
+<line>
+<code>import '../_internal/_http_call.dart';</code>
+</line>
+<line>
+<code>import '../_internal/_http_header.dart';</code>
+</line>
+<line>
+<code>import '../_internal/_mime_type.dart';</code>
+</line>
+<line>
+<code>import '../base_document.dart';</code>
+</line>
+<line>
+<code>import '../batch/batch_operation.dart';</code>
+</line>
+<line>
+<code>import '../batch/batch_response.dart';</code>
+</line>
+<line>
+<code>import '../batch/transactional_batch.dart';</code>
+</line>
+<line>
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line>
+<code>import '../partition/partition_key_range.dart';</code>
+</line>
+<line>
+<code>import '../queries/paging.dart';</code>
+</line>
+<line>
+<code>import '../queries/query.dart';</code>
+</line>
+<line>
+<code>import '_context.dart';</code>
+</line>
+<line>
+<code>import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';</code>
+</line>
+<line>
+<code>import 'features.dart';</code>
+</line>
+<line>
+<code>import 'http_status_codes.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>class Client {</code>
+</line>
+<line hits="2">
+<code>  Client(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    this._url, {</code>
+</line>
+<line>
+<code>    String? masterKey,</code>
+</line>
+<line>
+<code>    this.multipleWriteLocations = false,</code>
+</line>
+<line>
+<code>    http.Client? httpClient,</code>
+</line>
+<line>
+<code>    RetryOptions? retryOptions,</code>
+</line>
+<line>
+<code>    required this.version,</code>
+</line>
+<line hits="1">
+<code>  })  : httpClient = httpClient ?? http.Client(),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        _retry = retryOptions ?? RetryOptions(),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        features = Features.getFeatures(version) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    if (masterKey != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    } else {</code>
+</line>
+<line hits="1">
+<code>      _key = null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String version;</code>
+</line>
+<line>
+<code>  final Features features;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  final String _url;</code>
+</line>
+<line>
+<code>  final bool multipleWriteLocations;</code>
+</line>
+<line>
+<code>  final RetryOptions _retry;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  late final crypto.Hmac? _key;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  late final http.Client httpClient;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  T? _build&lt;T extends BaseDocument&gt;(Context context, Map? item) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    if (item == null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      return null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="2">
+<code>    final builder = context.getBuilder&lt;T&gt;();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return builder(item);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Iterable&lt;T&gt; _buildMany&lt;T extends BaseDocument&gt;(Context context, List? items) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    if (items == null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      return const [];</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="2">
+<code>    final builder = context.getBuilder&lt;T&gt;();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    return items.map((item) =&gt; builder(item));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;http.StreamedResponse&gt; _sendWithAuth(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    HttpCall call,</code>
+</line>
+<line>
+<code>    BaseDocument? document,</code>
+</line>
+<line>
+<code>    Context context,</code>
+</line>
+<line>
+<code>    Authorization authorization,</code>
+</line>
+<line>
+<code>  ) {</code>
+</line>
+<line hits="3">
+<code>    return _retry.retry(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      () {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        final request = call.getRequest(_url, authorization);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>        if (document != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>          request.headers.addAll(HttpHeader.jsonPayload);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          request.body = jsonEncode(document);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line hits="1">
+<code>        if (multipleWriteLocations &amp;&amp; !call.method.isReadOnly) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>          request.headers.addAll(HttpHeader.allowTentativeWrites);</code>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>        request.headers.addAll(context.getHeaders());</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>        return httpClient.send(request).timeout(Duration(seconds: 5));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      },</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      retryIf: (e) =&gt; retryIf(httpClient, e),</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    );</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;dynamic&gt; _send(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    HttpCall call,</code>
+</line>
+<line>
+<code>    BaseDocument? document,</code>
+</line>
+<line>
+<code>    Context context,</code>
+</line>
+<line>
+<code>  ) async {</code>
+</line>
+<line hits="3">
+<code>    String resId = context.resId ?? call.uri;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>    var auth = (context.token != null)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        ? Authorization.fromToken(context.token!)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        : Authorization.fromKey(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>            _key, call.method.name.toLowerCase(), context.type, resId);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>    var result = await _sendWithAuth(call, document, context, auth);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>    switch (result.statusCode) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      case HttpStatusCode.forbidden:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        // try to get a new permission from the onForbidden callback</code>
+</line>
+<line hits="3">
+<code>        final permission = await context.onForbidden?.call();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        final token = permission?.token;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        if (token != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          // try again with this permission</code>
+</line>
+<line hits="2">
+<code>          auth = Authorization.fromToken(token);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          result = await _sendWithAuth(call, document, context, auth);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line hits="1">
+<code>        break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      case HttpStatusCode.tooManyRequests:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        // throttling, retry after the specified delay</code>
+</line>
+<line>
+<code>        final delay =</code>
+</line>
+<line hits="4">
+<code>            int.tryParse(result.headers[HttpHeader.msRetryAfterMs] ?? '');</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        if (delay != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>          await Future.delayed(Duration(milliseconds: delay));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          result = await _sendWithAuth(call, document, context, auth);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line hits="1">
+<code>        break;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      case HttpStatusCode.serviceUnavailable:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        // retry once</code>
+</line>
+<line hits="0">
+<code>        await Future.delayed(Duration(milliseconds: 250));</code>
+</line>
+<line hits="0">
+<code>        result = await _sendWithAuth(call, document, context, auth);</code>
+</line>
+<line hits="0">
+<code>        break;</code>
+</line>
+<line hits="1">
+<code>      case HttpStatusCode.noContent:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        // no content: return null (https://github.com/d-markey/azure_cosmosdb/issues/1)</code>
+</line>
+<line hits="1">
+<code>        return null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>    dynamic data;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="4">
+<code>    final length = int.tryParse(result.headers[HttpHeader.contentLength] ?? '');</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    if (length == null || length &gt; 0) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      // only check content-type and parse body if content-length &gt; 0</code>
+</line>
+<line hits="3">
+<code>      final contentType = result.headers[HttpHeader.contentType];</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      if (contentType != MimeType.json) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>        throw BadResponseException('Unsupported content-type: $contentType.');</code>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line hits="3">
+<code>      final response = await result.stream.bytesToString();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      data = response.isEmpty ? {} : jsonDecode(response);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>    if (!HttpStatusCode.isSuccess(result.statusCode)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      final message = (data is Map &amp;&amp; data.containsKey('message'))</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>          ? '${result.reasonPhrase}: ${data['message']}'</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          : result.reasonPhrase;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      final ex = CosmosDbException(result.statusCode, message);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      if (ex is! NotFoundException || context.throwOnNotFound) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        throw ex;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line>
+<code>      // set data to null when ignoring the error</code>
+</line>
+<line>
+<code>      data = null;</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>    context.paging?.setContinuation(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>      result.headers[HttpHeader.msContinuation] ?? '',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    );</code>
+</line>
+<line hits="1">
+<code>    return data;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  Future&lt;dynamic&gt; rawGet(String path, Context context) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    final call = HttpCall.get(path, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    return _send(call, null, context).rethrowContextualizedException(call);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(String path, Context context) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.get(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(call, null, context)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data))</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;Iterable&lt;T&gt;&gt; getMany&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String path, String resultSet, Context context) {</code>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.get(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(call, null, context)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String path, Query query, String resultSet, Context context) {</code>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.post(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>            call,</code>
+</line>
+<line>
+<code>            query,</code>
+</line>
+<line hits="2">
+<code>            context.copyWith(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>              paging: query,</code>
+</line>
+<line hits="1">
+<code>              partitionKey: query.partitionKey,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>              headers: HttpHeader.queryPayload,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>            ))</code>
+</line>
+<line hits="5">
+<code>        .then((result) =&gt; _buildMany&lt;T&gt;(context, result![resultSet]))</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  Future&lt;dynamic&gt; rawQuery(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String path, Query query, String resultSet, Context context) {</code>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.post(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        call,</code>
+</line>
+<line>
+<code>        query,</code>
+</line>
+<line hits="2">
+<code>        context.copyWith(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          paging: query,</code>
+</line>
+<line hits="1">
+<code>          partitionKey: query.partitionKey,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>          headers: HttpHeader.queryPayload,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        )).rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;BatchResponse&gt; batch(String path, TransactionalBatch batch,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      List&lt;PartitionKeyRange&gt; pkRanges, Context context) async {</code>
+</line>
+<line hits="3">
+<code>    if (batch.operations.isEmpty) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      return BatchResponse();</code>
+</line>
+<line>
+<code>    } else {</code>
+</line>
+<line hits="2">
+<code>      final call = HttpCall.post(path, version);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      final response = await _send(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>              call,</code>
+</line>
+<line>
+<code>              batch,</code>
+</line>
+<line hits="2">
+<code>              context.copyWith(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>                headers: batch.getHeaders(pkRanges),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>              ))</code>
+</line>
+<line hits="3">
+<code>          .then((data) =&gt;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>              BatchResponseInternalExt.build(data, batch.operations, context))</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>          .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      // check results, some operations may require a replay</code>
+</line>
+<line>
+<code>      List&lt;BatchOperation&gt;? retryOps;</code>
+</line>
+<line>
+<code>      int? retryAfterMs;</code>
+</line>
+<line hits="3">
+<code>      for (var r in response.results) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        var retry = r.retryAfterMs ?? 0;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        if (retry &gt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>          retryOps ??= &lt;BatchOperation&gt;[];</code>
+</line>
+<line hits="0">
+<code>          retryOps.add(r.operation);</code>
+</line>
+<line hits="0">
+<code>          if (retryAfterMs == null || retry &gt; retryAfterMs) {</code>
+</line>
+<line>
+<code>            retryAfterMs = retry;</code>
+</line>
+<line>
+<code>          }</code>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line hits="1">
+<code>      if (retryOps != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        // re-run operations</code>
+</line>
+<line hits="0">
+<code>        await Future.delayed(Duration(milliseconds: retryAfterMs!));</code>
+</line>
+<line hits="0">
+<code>        final replay = batch.clone();</code>
+</line>
+<line hits="0">
+<code>        for (var op in retryOps) {</code>
+</line>
+<line hits="0">
+<code>          op.clearResult();</code>
+</line>
+<line hits="0">
+<code>          replay.add(op);</code>
+</line>
+<line>
+<code>        }</code>
+</line>
+<line hits="0">
+<code>        final newResults = await this.batch(path, replay, pkRanges, context);</code>
+</line>
+<line hits="0">
+<code>        response.update(newResults);</code>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line hits="1">
+<code>      return response;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;T&gt; post&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String path, BaseDocument doc, Context context) {</code>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.post(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(call, doc, context)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String path, BaseDocument doc, Context context) {</code>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.patch(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;T&gt; put&lt;T extends BaseDocument&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String path, BaseDocument doc, Context context) {</code>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.put(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(call, doc, context)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        .then((data) =&gt; _build&lt;T&gt;(context, data)!)</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;bool&gt; delete(String path, Context context) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    final call = HttpCall.delete(path, version);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    return _send(call, null, context)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        .then((result) =&gt; true)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        .rethrowContextualizedException(call);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

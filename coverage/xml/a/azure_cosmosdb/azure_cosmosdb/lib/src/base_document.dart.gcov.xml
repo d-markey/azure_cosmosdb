@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="base_document.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="2" lines-valid="2" package="/a/azure_cosmosdb/azure_cosmosdb/lib/src" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>/// Function definition to hydrate (deserialize) CosmosDB documents.</code>
+</line>
+<line>
+<code>typedef DocumentBuilder&lt;T extends BaseDocument&gt; = T Function(Map json);</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Base class for CosmosDB documents.</code>
+</line>
+<line>
+<code>abstract class BaseDocument {</code>
+</line>
+<line>
+<code>  /// The document's [id].</code>
+</line>
+<line>
+<code>  dynamic get id;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Serializes this instance to a JSON object.</code>
+</line>
+<line>
+<code>  dynamic toJson();</code>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Base class for CosmosDB documents including the `etag` property.</code>
+</line>
+<line>
+<code>abstract class BaseDocumentWithEtag extends BaseDocument with EtagMixin {}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Base class for CosmosDB documents including the `etag` property.</code>
+</line>
+<line>
+<code>mixin EtagMixin on BaseDocument {</code>
+</line>
+<line>
+<code>  /// The document's `etag` property.</code>
+</line>
+<line hits="3">
+<code>  String get etag =&gt; _etag ?? '';</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  String? _etag;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Set `etag` from a JSON map; to be called by [DocumentBuilder] methods.</code>
+</line>
+<line hits="10">
+<code>  void setEtag(Map json) =&gt; _etag = json['_etag'];</code>
+<hit count="10" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Internal use: base class for query/patch/batch requests.</code>
+</line>
+<line>
+<code>abstract class SpecialDocument implements BaseDocument {</code>
+</line>
+<line>
+<code>  @override</code>
+</line>
+<line>
+<code>  final String id = '';</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../../../../../"/>
+<base href="../../../../../"/>
+</coverage>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="_retry_if_vm.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="6" lines-valid="6" package="/client" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:async';</code>
+</line>
+<line>
+<code>import 'dart:io';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'package:http/http.dart' as http;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'debug_http_client.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>bool retryIf(http.Client client, Exception e) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  final retry = e is SocketException ||</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      e is TimeoutException ||</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      e is http.ClientException;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>  if (client is DebugHttpClient &amp;&amp; client.trace) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    final action = retry ? 'retrying' : 'ignoring';</code>
+</line>
+<line hits="4">
+<code>    client.log('!!! received exception ${e.runtimeType}: $action');</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code>  return retry;</code>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

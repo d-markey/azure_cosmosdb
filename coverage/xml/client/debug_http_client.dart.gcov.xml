@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-01-24" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8181818" lines-covered="63" lines-valid="77" package="/client" testname="lcov.info" version="1.5">
+<lines>
+<line>
+<code>import 'dart:async';</code>
+</line>
+<line>
+<code>import 'dart:developer' as dev;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import 'package:http/http.dart' as http;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>import '../_internal/_http_header.dart';</code>
+</line>
+<line>
+<code>import 'http_status_codes.dart';</code>
+</line>
+<line>
+<code>import '_debug_http_overrides_web.dart'</code>
+</line>
+<line>
+<code>    if (dart.library.io) '_debug_http_overrides_vm.dart';</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>/// Debug HTTP client that can be used to trace request/responses. This client also</code>
+</line>
+<line>
+<code>/// installs a global HTTP override object to accept self-signed certificates.</code>
+</line>
+<line>
+<code>/// DO NOT USE IN PRODUCTION.</code>
+</line>
+<line>
+<code>class DebugHttpClient extends http.BaseClient {</code>
+</line>
+<line hits="1">
+<code>  DebugHttpClient({this.trace = false}) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    allowSelfSignedCertificates();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>    _http = http.Client();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>  }</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Enable/disable request/response tracing.</code>
+</line>
+<line>
+<code>  bool trace;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Enable/disable headers tracing.</code>
+</line>
+<line>
+<code>  bool traceHeaders = false;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Enable/disable body tracing.</code>
+</line>
+<line>
+<code>  bool traceBody = false;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Enable/disable forced forbidden (status code 403) response.</code>
+</line>
+<line>
+<code>  bool forceForbidden = false;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Enable/disable forced throttled delay.</code>
+</line>
+<line>
+<code>  Duration? forceThrottleDelay;</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Enable/disable forced timeout response. When set, the next request will</code>
+</line>
+<line>
+<code>  /// throw the exception and reset [forceException].</code>
+</line>
+<line>
+<code>  Object? forceException;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  late final http.Client _http;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Log function based on `dart:developer`'s [dev.log].</code>
+</line>
+<line hits="0">
+<code>  static void defaultLog(Object? object) =&gt; dev.log(object.toString());</code>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>  /// Log function ([defaultLog] by default).</code>
+</line>
+<line hits="1">
+<code>  void Function(Object? object) log = defaultLog;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="0">
+<code>  @override</code>
+</line>
+<line hits="0">
+<code>  void close() =&gt; _http.close();</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;http.BaseRequest&gt; _logRequest(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String ts, http.BaseRequest request) async {</code>
+</line>
+<line hits="3">
+<code>    log('&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;');</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6">
+<code>    log('[$ts] --&gt; ${request.method} ${request.url}');</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>    if (traceHeaders) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      for (var h in request.headers.entries) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6">
+<code>        log('[$ts] --&gt; ${h.key} = ${h.value}');</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>    if (traceBody) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      if (request is http.Request) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5">
+<code>        log('[$ts] --&gt; body = ${request.body}');</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0">
+<code>      } else if (request is http.StreamedRequest) {</code>
+</line>
+<line>
+<code>        // get the request bytes for logging</code>
+</line>
+<line hits="0">
+<code>        final bodyBytes = await request.finalize().toBytes();</code>
+</line>
+<line hits="0">
+<code>        final body = String.fromCharCodes(bodyBytes);</code>
+</line>
+<line hits="0">
+<code>        log('[$ts] --&gt; body = $body');</code>
+</line>
+<line>
+<code>        // rebuild the request for sending</code>
+</line>
+<line hits="0">
+<code>        var req = http.Request(request.method, request.url);</code>
+</line>
+<line hits="0">
+<code>        req.bodyBytes = bodyBytes;</code>
+</line>
+<line hits="0">
+<code>        req.headers.addAll(request.headers);</code>
+</line>
+<line hits="0">
+<code>        req.followRedirects = request.followRedirects;</code>
+</line>
+<line hits="0">
+<code>        req.maxRedirects = request.maxRedirects;</code>
+</line>
+<line hits="0">
+<code>        req.persistentConnection = request.persistentConnection;</code>
+</line>
+<line>
+<code>        request = req;</code>
+</line>
+<line>
+<code>      } else {</code>
+</line>
+<line hits="0">
+<code>        log('[$ts] --&gt; no body in $request');</code>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="1">
+<code>    return request;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;http.StreamedResponse&gt; _logResponse(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      String ts, http.StreamedResponse response) async {</code>
+</line>
+<line hits="6">
+<code>    log('[$ts] &lt;-- COSMOS DB Status = ${response.statusCode} ${response.reasonPhrase}');</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    if (traceHeaders) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>      for (var h in response.headers.entries) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6">
+<code>        log('[$ts] &lt;-- ${h.key} = ${h.value}');</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="2">
+<code>    if (traceBody) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      // get the response bytes for logging</code>
+</line>
+<line hits="2">
+<code>      final resp = await http.Response.fromStream(response);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6">
+<code>      log('[$ts] &lt;-- COSMOS DB ${resp.statusCode} Payload = ${resp.body}');</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      // rebuild the response</code>
+</line>
+<line hits="2">
+<code>      response = http.StreamedResponse(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        Stream.fromIterable([resp.bodyBytes]),</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        resp.statusCode,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        contentLength: resp.contentLength,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        headers: resp.headers,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        reasonPhrase: resp.reasonPhrase,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        isRedirect: resp.isRedirect,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        request: response.request,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      );</code>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line hits="3">
+<code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>    return response;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  Future&lt;void&gt; _logException(String ts, dynamic exception) async {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    log('[$ts] &lt;-- EXCEPTION CAUGHT: $exception');</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>    log('&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;');</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  Future&lt;http.StreamedResponse&gt; send(http.BaseRequest request) async {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>    String ts = DateTime.now().toUtc().toIso8601String();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="3">
+<code>    request = trace ? await _logRequest(ts, request) : request;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line>
+<code>    http.StreamedResponse response;</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>    try {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      final ex = forceException;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      if (ex != null) {</code>
+</line>
+<line hits="1">
+<code>        forceException = null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        throw ex;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line hits="2">
+<code>      if (forceThrottleDelay != null) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        final delay = forceThrottleDelay!.inMilliseconds;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>        forceThrottleDelay = null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        response = http.StreamedResponse(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          HttpStatusCode.tooManyRequests,</code>
+</line>
+<line>
+<code>          reasonPhrase: 'Forced Throttle',</code>
+</line>
+<line hits="3">
+<code>          headers: {HttpHeader.msRetryAfterMs: delay.toString()},</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>        );</code>
+</line>
+<line hits="2">
+<code>      } else if (forceForbidden) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        response = http.StreamedResponse(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>          Stream&lt;List&lt;int&gt;&gt;.fromIterable([]),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>          HttpStatusCode.forbidden,</code>
+</line>
+<line>
+<code>          reasonPhrase: 'Forced Forbidden',</code>
+</line>
+<line>
+<code>        );</code>
+</line>
+<line>
+<code>      } else {</code>
+</line>
+<line hits="3">
+<code>        response = await _http.send(request);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line hits="3">
+<code>      response = trace ? await _logResponse(ts, response) : response;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    } catch (ex) {</code>
+</line>
+<line hits="1">
+<code>      if (trace) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>        _logException(ts, ex);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>      }</code>
+</line>
+<line hits="1">
+<code>      rethrow;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    }</code>
+</line>
+<line>
+<code/>
+</line>
+<line hits="1">
+<code>    return response;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>  }</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>
