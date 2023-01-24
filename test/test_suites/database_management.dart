@@ -22,12 +22,8 @@ void run(CosmosDbServer cosmosDB) {
 
   test('Requests fail when master key and permission are missing', () async {
     final server = CosmosDbServer('https://localhost:8081');
-    try {
-      await expectLater(
-          server.databases.list(), throwsA(isA<UnauthorizedException>()));
-    } finally {
-      server.dbgHttpClient?.close();
-    }
+    await expectLater(
+        server.databases.list(), throwsA(isA<UnauthorizedException>()));
   });
 
   test('List databases before creation', () async {
@@ -121,7 +117,7 @@ void run(CosmosDbServer cosmosDB) {
 
   test('Create database with openOrCreate() - auto-scale', () async {
     final database = await cosmosDB.databases.openOrCreate(getTempName(),
-        throughput: CosmosDbThroughput.autoScale(50000));
+        throughput: CosmosDbThroughput.autoScale(5000));
     expect(database, isNotNull);
     expect(database.exists, isTrue);
     await cosmosDB.databases.delete(database);

@@ -113,27 +113,29 @@ void run() {
       expect(pk, equals(PartitionKeySpec.id));
       expect(pk, equals(PartitionKeySpec('/id')));
       expect(pk, isNot(equals(PartitionKeySpec('/a'))));
-      expect(pk, isNot(equals(PartitionKeySpec.multi(['/id']))));
+      expect(pk, isNot(equals(PartitionKeySpec.hierarchical(['/id']))));
     });
 
     test('Multi PK', () {
-      final pk = PartitionKeySpec.multi(['/tenant', '/user']);
+      final pk = PartitionKeySpec.hierarchical(['/tenant', '/user']);
       expect(pk.kind, equals('MultiHash'));
       expect(pk.version, equals(2));
       expect(pk.paths, equals(['/tenant', '/user']));
     });
 
     test('Multi PK - equality', () {
-      final pk = PartitionKeySpec.multi(['/a', '/b']);
+      final pk = PartitionKeySpec.hierarchical(['/a', '/b']);
       expect(pk, equals(pk));
-      expect(pk, equals(PartitionKeySpec.multi(['/a', '/b'])));
+      expect(pk, equals(PartitionKeySpec.hierarchical(['/a', '/b'])));
       expect(pk, isNot(equals(PartitionKeySpec('/a'))));
       expect(pk, isNot(equals(PartitionKeySpec('/b'))));
-      expect(pk, isNot(equals(PartitionKeySpec.multi(['/a']))));
-      expect(pk, isNot(equals(PartitionKeySpec.multi(['/b']))));
-      expect(pk, isNot(equals(PartitionKeySpec.multi(['/b', '/a']))));
-      expect(pk, isNot(equals(PartitionKeySpec.multi(['/a', '/b', '/c']))));
-      expect(pk, isNot(equals(PartitionKeySpec.multi(['/a', '/c', '/b']))));
+      expect(pk, isNot(equals(PartitionKeySpec.hierarchical(['/a']))));
+      expect(pk, isNot(equals(PartitionKeySpec.hierarchical(['/b']))));
+      expect(pk, isNot(equals(PartitionKeySpec.hierarchical(['/b', '/a']))));
+      expect(
+          pk, isNot(equals(PartitionKeySpec.hierarchical(['/a', '/b', '/c']))));
+      expect(
+          pk, isNot(equals(PartitionKeySpec.hierarchical(['/a', '/c', '/b']))));
     });
   });
 
@@ -177,7 +179,7 @@ void run() {
     test('Test cases (all platforms)', () {
       for (var test in testCases.entries) {
         final pk = PartitionKey(test.key);
-        final pkHash = PartitionKeyHashV2.multi(pk.values);
+        final pkHash = PartitionKeyHashV2.hierarchical(pk.values);
         expect(pkHash.hex, equals(test.value));
         if (test.key == null) {
           expect(pkHash, equals(PartitionKeyHashV2.nullKey()));
@@ -203,7 +205,7 @@ void run() {
     test('Test cases (VM only)', () {
       for (var test in vmTestCases.entries) {
         final pk = PartitionKey(test.key.toInt());
-        final hash = PartitionKeyHashV2.multi(pk.values);
+        final hash = PartitionKeyHashV2.hierarchical(pk.values);
         expect(hash.hex, equals(test.value));
       }
     }, testOn: '!browser');
@@ -241,7 +243,7 @@ void run() {
         final range = ranges.findRangeFor(pk);
         expect(range, isNotNull);
 
-        final hash = PartitionKeyHashV2.multi(pk.values);
+        final hash = PartitionKeyHashV2.hierarchical(pk.values);
         expect(range!.minInclusive.compareTo(hash.hex), lessThanOrEqualTo(0));
         expect(range.maxExclusive.compareTo(hash.hex), greaterThan(0));
       }

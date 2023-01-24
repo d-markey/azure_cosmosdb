@@ -1,3 +1,4 @@
+import 'package:azure_cosmosdb/src/partition/_path_component.dart';
 import 'package:azure_cosmosdb/src/partition/_path_parser.dart';
 import 'package:test/test.dart';
 
@@ -7,8 +8,7 @@ void main() async {
 
 void run() {
   test('Simple path', () {
-    final path = PathParser();
-    final components = path.parse('/id');
+    final components = PathParser.parse('/id');
     expect(components, equals([PathSegment('id')]));
 
     final json = {'id': 'ok'};
@@ -16,8 +16,7 @@ void run() {
   });
 
   test('Simple path with escaped name', () {
-    final path = PathParser();
-    final components = path.parse('/"due-date"');
+    final components = PathParser.parse('/"due-date"');
     expect(components, equals([PathSegment('due-date')]));
 
     final date = DateTime.now().toUtc();
@@ -26,8 +25,7 @@ void run() {
   });
 
   test('Composite path', () {
-    final path = PathParser();
-    final components = path.parse('/pos/lat');
+    final components = PathParser.parse('/pos/lat');
     expect(components, equals([PathSegment('pos'), PathSegment('lat')]));
 
     final json = {
@@ -37,8 +35,7 @@ void run() {
   });
 
   test('Array index', () {
-    final path = PathParser();
-    final components = path.parse('/groups[1]');
+    final components = PathParser.parse('/groups[1]');
     expect(components, equals([PathSegment('groups'), ArrayIndex(1)]));
 
     final json = {

@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
+import 'package:test/test.dart';
 
 const masterKey =
     'C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==';
@@ -31,6 +33,11 @@ String getTempName([String? prefix]) {
   _globalCounter++;
   return '${prefix ?? 'temp'}_${_globalCounter}_$secondsSinceEpoch';
 }
+
+void checkDocument(BaseDocument doc, BaseDocument expected) => expect(
+      jsonEncode(doc.toJson()),
+      jsonEncode(expected.toJson()),
+    );
 
 extension LogExt on CosmosDbServer {
   // enabling logging is based on the `print`method

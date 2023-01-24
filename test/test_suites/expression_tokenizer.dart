@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:azure_cosmosdb/src/cosmos_db_exceptions.dart';
-import 'package:azure_cosmosdb/src/patch/tokenizer.dart';
+import 'package:azure_cosmosdb/src/patch/_token.dart';
+import 'package:azure_cosmosdb/src/patch/_tokenizer.dart';
 import 'package:test/test.dart';
 
 void main() {

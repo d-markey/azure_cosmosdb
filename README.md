@@ -184,11 +184,11 @@ For instance:
 
 ## <a name="batch"></a>Batch Operations
 
-Batch operations on a container are supported via `CosmosDbContainer.prepareBatch()`. This method returns a `TransactionalBatch` object which will contain the individual operations to be executed. Operations are sent to Cosmos DB via `TransactionalBatch.execute()`.
+Batch operations on a container are supported via `CosmosDbContainer.prepare*Batch()`. These methods return a `Batch` object which will contain the individual operations to be executed. Operations are sent to Cosmos DB via `Batch.execute()`.
 
-Batch operations can be executed atomically where all operations succeed or all fail; this is controlled by the `isAtomic` parameter. By default, transactions are not atomic and can be configured to be "fault-tolerant" and continue executing after an error occured; this behavior is controlled by the `continueOnError` parameter.
+`CosmosDbContainer.prepareBatch()` creates a `TransactionalBatch` instance where changes are applied and persisted one after the other. The behavior can be customised with the `continueOnError` flag. If an error occurs and `continueOnError` is `false`, processing is stopped and all subsequent operations will also fail with `statusCode` = `HttpStatusCode.failedDependency`. But if `continueOnError` is `true`, the subsequent operations will be executed anyway (and might eventually fail individually). Please note that operations in a `TransactionalBatch` must target documents in a single partition key. A `PartitionKeyException` will be thrown when calling `TransactionalBatch.execute()` if this is not the case.
 
-Please note that operations in a `TransactionalBatch` must target documents sharing the same partition key. A `PartitionKeyException` will be thrown when calling `TransactionalBatch.execute()` if this is not the case.
+Batch operations can be executed atomically where all operations succeed or all fail; to create an atomic batch, call `CosmosDbContainer.prepareAtomicBatch()`. Atomic batches have their `continueOnError` flag forced to `false`. If an error occurs, the unsuccessfull operation will report its own status code and all other operations will fail with `statusCode` = `HttpStatusCode.failedDependency`.
 
 For instance:
 
@@ -220,6 +220,10 @@ For instance:
   }
   final newTasks = await batch.execute();
 ```
+
+This package also implements cross-partition batches via `CosmosDbContainer.prepareCrossPartitionBatch()` which returns a `CrossPartitionBatch` instance. When `CrossPartitionBatch.execute()` is called, operations are grouped by partition keys and submitted to Cosmos DB separately. Cross-partition batches have their flages forced to `isAtomic` = `false` and `continueOnError` = `true`.
+
+Please note that Cosmos DB has a limit of 100 operations per batch. `TransactionalBatch` instances enforce this limit when `isAtomic` = `true`. For non-atomic batches, more than 100 operations can be registered with the `Batch` instance and operations will be sent to Cosmos DB in chunks of 100 operations. If `continueOnError` = `false` and a chunk operation fails, subsequent chunks are not sent to CosmosDB and those operations will complete immediately with `statusCode` = `HttpStatusCode.failedDependency`. 
 
 ## <a name="permissions"></a>Users and Permissions
 

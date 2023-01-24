@@ -94,7 +94,7 @@ void run(CosmosDbServer cosmosDB) {
     final roColl = await openContainer()
       ..usePermission(readOnly);
 
-    final doc = await roColl.find<TestDocument>('1');
+    final doc = await roColl.find<TestDocument>('1', PartitionKey('1'));
     expect(doc, isNotNull);
     expect(doc!.label, equals('TEST #1'));
   });
@@ -135,7 +135,7 @@ void run(CosmosDbServer cosmosDB) {
     final rwColl = await openContainer()
       ..usePermission(readWrite);
 
-    final doc = await rwColl.find<TestDocument>('1');
+    final doc = await rwColl.find<TestDocument>('1', PartitionKey('1'));
     expect(doc, isNotNull);
     expect(doc!.label, equals('TEST #1'));
   });
@@ -178,7 +178,7 @@ void run(CosmosDbServer cosmosDB) {
     };
 
     try {
-      final doc = await coll.find<TestDocument>('1');
+      final doc = await coll.find<TestDocument>('1', PartitionKey('1'));
       // if the permission was properly refreshed, handled should be true
       // and the document was found
       expect(handled, isTrue);

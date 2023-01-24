@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 
 import '../classes/test_document.dart';
 import '../classes/test_document_synthetic_pk.dart';
-import '../classes/test_document_multi_pk.dart';
+import '../classes/test_document_hierarchical_pk.dart';
 import '../classes/test_document_without_builder.dart';
 import '../classes/test_helpers.dart';
 
@@ -23,28 +23,28 @@ void run(CosmosDbServer cosmosDB) {
   late final CosmosDbDatabase database;
   late final CosmosDbContainer container;
   late final CosmosDbContainer containerSyntheticPK;
-  late final CosmosDbContainer containerMultiPK;
+  late final CosmosDbContainer containerHierarchicalPK;
 
   setUpAll(() async {
     database = await cosmosDB.databases.create(getTempName());
     container = await database.containers.create(
-      'items',
+      getTempName('items'),
       partitionKey: PartitionKeySpec.id,
     );
     container.registerBuilder<TestDocument>(TestDocument.fromJson);
     containerSyntheticPK = await database.containers.create(
-      'items_synthetic_pk',
+      getTempName('items_synth_pk'),
       partitionKey: PartitionKeySpec('/pk'),
     );
     containerSyntheticPK.registerBuilder<TestDocumentSyntheticPK>(
         TestDocumentSyntheticPK.fromJson);
-    if (cosmosDB.features.multiHash) {
-      containerMultiPK = await database.containers.create(
-        'items_multi_pk',
-        partitionKey: PartitionKeySpec.multi(['/tid', '/uid']),
+    if (cosmosDB.features.hierarchicalPartitioning) {
+      containerHierarchicalPK = await database.containers.create(
+        getTempName('items_hierarch_pk'),
+        partitionKey: PartitionKeySpec.hierarchical(['/tid', '/uid']),
       );
-      containerMultiPK
-          .registerBuilder<TestDocumentMultiPK>(TestDocumentMultiPK.fromJson);
+      containerHierarchicalPK.registerBuilder<TestDocumentHierarchicalPK>(
+          TestDocumentHierarchicalPK.fromJson);
     }
   });
 
@@ -148,17 +148,18 @@ void run(CosmosDbServer cosmosDB) {
     expect(list.every((d) => d.etag.isNotEmpty), isTrue);
   });
 
-  test('Add documents - multi PK', () async {
-    await containerMultiPK
-        .add(TestDocumentMultiPK('001', 'tenant-1', 'user-1', 'T1 > U1: 001'));
-    await containerMultiPK
-        .add(TestDocumentMultiPK('002', 'tenant-1', 'user-2', 'T1 > U2: 002'));
-    await containerMultiPK
-        .add(TestDocumentMultiPK('003', 'tenant-2', 'user-1', 'T2 > U1: 003'));
+  test('Add documents - hierarchical PK', () async {
+    await containerHierarchicalPK.add(TestDocumentHierarchicalPK(
+        '001', 'tenant-1', 'user-1', 'T1 > U1: 001'));
+    await containerHierarchicalPK.add(TestDocumentHierarchicalPK(
+        '002', 'tenant-1', 'user-2', 'T1 > U2: 002'));
+    await containerHierarchicalPK.add(TestDocumentHierarchicalPK(
+        '003', 'tenant-2', 'user-1', 'T2 > U1: 003'));
 
-    final list = await containerMultiPK.list<TestDocumentMultiPK>();
+    final list =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     expect(list.length, equals(3));
-  }, skip: !cosmosDB.features.multiHash);
+  }, skip: !cosmosDB.features.hierarchicalPartitioning);
 
   test('Upsert a non-existing document', () async {
     final before = await container.list<TestDocument>();
@@ -192,21 +193,23 @@ void run(CosmosDbServer cosmosDB) {
     expect(doc!.label, equals('UPSERT/CREATE TEST #3'));
   });
 
-  test('Upsert a non-existing document - multi PK', () async {
-    final before = await containerMultiPK.list<TestDocumentMultiPK>();
+  test('Upsert a non-existing document - hierarchical PK', () async {
+    final before =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     final check = before.firstOrDefault((d) => d.id == '004');
     expect(check, isNull);
 
-    await containerMultiPK.upsert(
-        TestDocumentMultiPK('004', 'tenant-1', 'user-2', 'T1 > U2: 004'));
+    await containerHierarchicalPK.upsert(TestDocumentHierarchicalPK(
+        '004', 'tenant-1', 'user-2', 'T1 > U2: 004'));
 
-    final after = await containerMultiPK.list<TestDocumentMultiPK>();
+    final after =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     expect(after.length, equals(before.length + 1));
 
     final doc = after.firstOrDefault((d) => d.id == '004');
     expect(doc, isNotNull);
     expect(doc!.label, equals('T1 > U2: 004'));
-  }, skip: !cosmosDB.features.multiHash);
+  }, skip: !cosmosDB.features.hierarchicalPartitioning);
 
   test('Upsert an existing document', () async {
     final before = await container.list<TestDocument>();
@@ -240,21 +243,23 @@ void run(CosmosDbServer cosmosDB) {
     expect(doc!.label, equals('UPSERT/REPLACE TEST #2'));
   });
 
-  test('Upsert an existing document - multi PK', () async {
-    final before = await containerMultiPK.list<TestDocumentMultiPK>();
+  test('Upsert an existing document - hierarchical PK', () async {
+    final before =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     final check = before.firstOrDefault((d) => d.id == '002');
     expect(check, isNotNull);
 
-    await containerMultiPK.upsert(TestDocumentMultiPK(
+    await containerHierarchicalPK.upsert(TestDocumentHierarchicalPK(
         '002', 'tenant-1', 'user-2', 'T1 > U2: 002 (updated)'));
 
-    final after = await containerMultiPK.list<TestDocumentMultiPK>();
+    final after =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     expect(after.length, equals(before.length));
 
     final doc = after.firstOrDefault((d) => d.id == '002');
     expect(doc, isNotNull);
     expect(doc!.label, equals('T1 > U2: 002 (updated)'));
-  }, skip: !cosmosDB.features.multiHash);
+  }, skip: !cosmosDB.features.hierarchicalPartitioning);
 
   test('Replace a document', () async {
     final before = await container.list<TestDocument>();
@@ -269,18 +274,20 @@ void run(CosmosDbServer cosmosDB) {
         after.where((d) => d.id == doc.id).first.label, endsWith('(REPLACED)'));
   });
 
-  test('Replace a document - multi PK', () async {
-    final before = await containerMultiPK.list<TestDocumentMultiPK>();
+  test('Replace a document - hierarchical PK', () async {
+    final before =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     var doc = before.skip(Random().nextInt(before.length - 1)).first;
-    doc = (await containerMultiPK.get(doc))!;
+    doc = (await containerHierarchicalPK.get(doc))!;
     doc.label = '${doc.label} (REPLACED)';
-    await containerMultiPK.replace(doc);
-    final after = await containerMultiPK.list<TestDocumentMultiPK>();
+    await containerHierarchicalPK.replace(doc);
+    final after =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     expect(after.length, equals(before.length));
     expect(after.where((d) => d.id == doc.id), isNotEmpty);
     expect(
         after.where((d) => d.id == doc.id).first.label, endsWith('(REPLACED)'));
-  }, skip: !cosmosDB.features.multiHash);
+  }, skip: !cosmosDB.features.hierarchicalPartitioning);
 
   test('Patch a document', () async {
     final before = await container.list<TestDocument>();
@@ -400,10 +407,15 @@ void run(CosmosDbServer cosmosDB) {
     expect(after.length, equals(before.length - 1));
     expect(after.every((d) => d.etag.isNotEmpty), isTrue);
 
-    expect(await container.delete(id: doc.id), isTrue);
+    expect(
+        await container.delete(id: doc.id, partitionKey: PartitionKey(doc.id)),
+        isTrue);
 
     await expectLater(
-      container.delete(id: doc.id, throwOnNotFound: true),
+      container.delete(
+          id: doc.id,
+          partitionKey: PartitionKey(doc.id),
+          throwOnNotFound: true),
       throwsA(isA<NotFoundException>()),
     );
   });
@@ -426,22 +438,24 @@ void run(CosmosDbServer cosmosDB) {
     );
   });
 
-  test('Delete document - multi PK', () async {
-    final before = await containerMultiPK.list<TestDocumentMultiPK>();
+  test('Delete document - hierarchical PK', () async {
+    final before =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
 
     var doc = before.firstWhere((d) => d.id == '003');
-    expect(await containerMultiPK.delete(document: doc), isTrue);
+    expect(await containerHierarchicalPK.delete(document: doc), isTrue);
 
-    final after = await containerMultiPK.list<TestDocumentMultiPK>();
+    final after =
+        await containerHierarchicalPK.list<TestDocumentHierarchicalPK>();
     expect(after.length, equals(before.length - 1));
 
-    expect(await containerMultiPK.delete(document: doc), isTrue);
+    expect(await containerHierarchicalPK.delete(document: doc), isTrue);
 
     await expectLater(
-      containerMultiPK.delete(document: doc, throwOnNotFound: true),
+      containerHierarchicalPK.delete(document: doc, throwOnNotFound: true),
       throwsA(isA<NotFoundException>()),
     );
-  }, skip: !cosmosDB.features.multiHash);
+  }, skip: !cosmosDB.features.hierarchicalPartitioning);
 
   test('Delete document - etag mismatch', () async {
     final before = await container.list<TestDocument>();
@@ -468,7 +482,7 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Throttling', () async {
-    final delay = Duration(milliseconds: 200);
+    final delay = Duration(milliseconds: 600);
 
     expect(cosmosDB.dbgHttpClient?.forceThrottleDelay, isNull);
     var sw = Stopwatch()..start();

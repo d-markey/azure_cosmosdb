@@ -2,4 +2,9 @@ platforms:
   - vm
   - chrome
 
+override_platforms:
+  chrome:
+    settings:
+      arguments: --allow-insecure-localhost
+
 chain_stack_traces: true
