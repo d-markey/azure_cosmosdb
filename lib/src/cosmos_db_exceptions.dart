@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:meta/meta.dart';
+
 import '_internal/_http_call.dart';
 import 'client/http_status_codes.dart';
 
@@ -147,6 +149,7 @@ class BadResponseException extends ContextualizedException {
 }
 
 // internal use
+@internal
 extension ContextualizedExceptionInternalExt<T> on Future<T> {
   Future<T> rethrowContextualizedException(HttpCall call) =>
       onError<ContextualizedException>((error, stackTrace) =>

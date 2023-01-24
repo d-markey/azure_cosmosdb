@@ -6,25 +6,8 @@ abstract class BaseDocument {
   /// The document's [id].
   dynamic get id;
 
-  /// Serialization to a JSON map.
+  /// Serializes this instance to a JSON object.
   dynamic toJson();
-}
-
-/// Base class for query/patch documents.
-abstract class SpecialDocument implements BaseDocument {
-  @override
-  String get id => '';
-}
-
-/// Base class for a document with an id.
-class DocumentWithId implements BaseDocument {
-  DocumentWithId(this.id);
-
-  @override
-  final dynamic id;
-
-  @override
-  dynamic toJson() => {'id': id};
 }
 
 /// Base class for CosmosDB documents including the `etag` property.
@@ -38,4 +21,10 @@ mixin EtagMixin on BaseDocument {
 
   /// Set `etag` from a JSON map; to be called by [DocumentBuilder] methods.
   void setEtag(Map json) => _etag = json['_etag'];
+}
+
+/// Internal use: base class for query/patch/batch requests.
+abstract class SpecialDocument implements BaseDocument {
+  @override
+  final String id = '';
 }

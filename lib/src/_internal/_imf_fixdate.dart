@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 const _days = [
   'Mon',
   'Tue',
@@ -22,6 +24,7 @@ const _months = [
   'Dec'
 ];
 
+@internal
 extension DateTimeFormatExt on DateTime {
   // ignore: non_constant_identifier_names
   static String _00(int n) => (n < 10) ? '0$n' : n.toString();

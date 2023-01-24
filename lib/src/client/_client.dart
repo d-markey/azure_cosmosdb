@@ -8,18 +8,19 @@ import 'package:retry/retry.dart';
 import '../_internal/_authorization.dart';
 import '../_internal/_http_call.dart';
 import '../_internal/_http_header.dart';
-import '../partition/partition_key_range.dart';
-import 'http_status_codes.dart';
 import '../_internal/_mime_type.dart';
 import '../base_document.dart';
+import '../batch/batch_operation.dart';
 import '../batch/batch_response.dart';
 import '../batch/transactional_batch.dart';
 import '../cosmos_db_exceptions.dart';
+import '../partition/partition_key_range.dart';
 import '../queries/paging.dart';
 import '../queries/query.dart';
 import '_context.dart';
-import 'features.dart';
 import '_retry_if_web.dart' if (dart.library.io) '_retry_if_vm.dart';
+import 'features.dart';
+import 'http_status_codes.dart';
 
 class Client {
   Client(
@@ -219,7 +220,7 @@ class Client {
       return BatchResponse();
     } else {
       final call = HttpCall.post(path, version);
-      return await _send(
+      final response = await _send(
               call,
               batch,
               context.copyWith(
@@ -228,6 +229,31 @@ class Client {
           .then((data) =>
               BatchResponseInternalExt.build(data, batch.operations, context))
           .rethrowContextualizedException(call);
+      // check results, some operations may require a replay
+      List<BatchOperation>? retryOps;
+      int? retryAfterMs;
+      for (var r in response.results) {
+        var retry = r.retryAfterMs ?? 0;
+        if (retry > 0) {
+          retryOps ??= <BatchOperation>[];
+          retryOps.add(r.operation);
+          if (retryAfterMs == null || retry > retryAfterMs) {
+            retryAfterMs = retry;
+          }
+        }
+      }
+      if (retryOps != null) {
+        // re-run operations
+        await Future.delayed(Duration(milliseconds: retryAfterMs!));
+        final replay = batch.clone();
+        for (var op in retryOps) {
+          op.clearResult();
+          replay.add(op);
+        }
+        final newResults = await this.batch(path, replay, pkRanges, context);
+        response.update(newResults);
+      }
+      return response;
     }
   }
 

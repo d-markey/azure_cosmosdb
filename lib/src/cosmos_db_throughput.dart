@@ -4,8 +4,10 @@ import '_internal/_http_header.dart';
 
 import 'cosmos_db_exceptions.dart';
 
-/// Class representing a CosmosDB throughput
+/// Class representing a CosmosDB throughput.
 class CosmosDbThroughput {
+  /// Creates a new manual [throughput] RUs. Must be a multiple of 100. Minimum allowed
+  /// is 400 RUs.
   CosmosDbThroughput(int throughput)
       : header = {
           HttpHeader.msOfferThroughput: throughput.toString(),
@@ -20,6 +22,8 @@ class CosmosDbThroughput {
     }
   }
 
+  /// Creates a new auto-scale throughput for [maxThroughput] RUs. Must be a multiple
+  /// of 1000. Minimum allowed is 1000 RUs.
   CosmosDbThroughput.autoScale(int maxThroughput)
       : header = {
           HttpHeader.msCosmosOfferAutopilotSettings:
@@ -35,8 +39,10 @@ class CosmosDbThroughput {
     }
   }
 
+  /// Minimum manual throughput (400 RU).
   static final minimum = CosmosDbThroughput(400);
 
+  /// The HTTP header representing the specified throughput.
   final Map<String, String> header;
 
   static final _min = 400;

@@ -1,10 +1,10 @@
 import '../_internal/_http_header.dart';
 import '../base_document.dart';
 import '../cosmos_db_exceptions.dart';
+import '../cosmos_db_server.dart';
 import '../partition/partition_key.dart';
 import '../permissions/cosmos_db_permission.dart';
 import '../queries/paging.dart';
-import '../cosmos_db_server.dart';
 
 const version = '2.0.0';
 

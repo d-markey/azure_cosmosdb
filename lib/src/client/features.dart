@@ -3,18 +3,20 @@ const previewApiVersion = '2020-07-15';
 
 /// Class representing the features supported by a Cosmos DB client.
 class Features {
-  const Features._(this.version, {required this.multiHash});
+  const Features._(this.version, {required this.hierarchicalPartitioning});
 
   final String version;
-  final bool multiHash;
+  final bool hierarchicalPartitioning;
 
-  static const _default = Features._('', multiHash: false);
+  static const _default = Features._('', hierarchicalPartitioning: false);
 
   /// Features for the current version (see [currentApiVersion]).
-  static const current = Features._(currentApiVersion, multiHash: false);
+  static const current =
+      Features._(currentApiVersion, hierarchicalPartitioning: false);
 
   /// Features for the preview version (see [previewApiVersion]).
-  static const preview = Features._(previewApiVersion, multiHash: true);
+  static const preview =
+      Features._(previewApiVersion, hierarchicalPartitioning: true);
 
   static const _features = [_default, current, preview];
 

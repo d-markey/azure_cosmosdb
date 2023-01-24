@@ -11,7 +11,7 @@ bool retryIf(http.Client client, Exception e) {
       e is http.ClientException;
   if (client is DebugHttpClient && client.trace) {
     final action = retry ? 'retrying' : 'ignoring';
-    print('!!! received exception ${e.runtimeType}: $action');
+    client.log('!!! received exception ${e.runtimeType}: $action');
   }
   return retry;
 }

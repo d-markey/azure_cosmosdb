@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '../client/_client.dart';
 import '../client/_context.dart';
 import '../cosmos_db_database.dart';
@@ -61,8 +63,8 @@ class CosmosDbUsers {
         ),
       );
 
-  /// Adds [user] to the [database] the user identified by [id]. By default, this method returns `null` if
-  /// the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a
+  /// Adds [user] to the [database] the user identified by [id]. By default, this method returns
+  /// `null` if the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a
   /// [NotFoundException] instead.
   Future<CosmosDbUser> add(CosmosDbUser user,
           {CosmosDbPermission? permission}) =>
@@ -79,6 +81,7 @@ class CosmosDbUsers {
 }
 
 // internal use
+@internal
 extension CosmosDbUsersInternalExt on CosmosDbUsers {
   Client get client => database.client;
 }

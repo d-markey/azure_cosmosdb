@@ -1,31 +1,65 @@
+import 'package:meta/meta.dart';
+
 import '../_internal/_http_header.dart';
 import '../_internal/_linq_extensions.dart';
 import '../client/http_status_codes.dart';
 import '../cosmos_db_container.dart';
 import '../cosmos_db_exceptions.dart';
+import '../partition/partition_key.dart';
 import '../partition/partition_key_range.dart';
+import '../partition/partition_key_spec.dart';
 import '../permissions/cosmos_db_permission.dart';
 import 'batch.dart';
 import 'batch_operation.dart';
 import 'batch_response.dart';
 
+/// Class representing a transactional batch. This implementation provides atomic and
+/// non-atomic transactions. Atomic transactions will always fail on error, and support
+/// a maximum of 100 operations per batch. For non-atomic transactions, the behavior in
+/// case of error can be controlled via the [continueOnError] flag.
+/// Non-atomic transactions send operations in chunks of 100, effectively working around
+/// the Cosmos DB limitation of 100 operations per batch.
 class TransactionalBatch extends Batch {
-  TransactionalBatch._(this.container,
-      {required this.isAtomic, required this.continueOnError});
+  TransactionalBatch._(CosmosDbContainer container,
+      {PartitionKey? partitionKey,
+      required this.isAtomic,
+      bool continueOnError = true})
+      : _continueOnError = continueOnError,
+        super(container, partitionKey);
 
-  TransactionalBatch.atomic(CosmosDbContainer container)
-      : this._(container, isAtomic: true, continueOnError: false);
+  /// Creates an atomic [Batch] instance operating on [container] and [partitionKey].
+  /// The partition key is optional, provided each operation in this batch instance
+  /// can provide a partition key. Operations working on a document should be able to
+  /// extract the document's partition key using the [container]'s [PartitionKeySpec].
+  /// For atomic batches, the [continueOnError] flag is always `false`.
+  TransactionalBatch.atomic(CosmosDbContainer container,
+      {PartitionKey? partitionKey})
+      : this._(container, partitionKey: partitionKey, isAtomic: true);
 
-  TransactionalBatch(CosmosDbContainer container, {bool continueOnError = true})
-      : this._(container, isAtomic: false, continueOnError: continueOnError);
-
-  @override
-  final CosmosDbContainer container;
+  /// Creates a non-atomic [Batch] instance operating on [container] and [partitionKey].
+  /// The partition key is optional, provided each operation in this batch instance
+  /// can provide a partition key. Operations working on a document should be able to
+  /// extract the document's partition key using the [container]'s [PartitionKeySpec].
+  /// By default, [continueOnError] is `true` and all operations will be executed and
+  /// report their status. If [continueOnError] is `false`, the batch process will
+  /// stop upon the first failing operation. In this case, that operation will report
+  /// a specific error status while all subsequent operations will fail with a
+  /// [HttpStatusCode.failedDependency] error status.
+  TransactionalBatch(CosmosDbContainer container,
+      {PartitionKey? partitionKey, bool continueOnError = true})
+      : this._(container,
+            partitionKey: partitionKey,
+            isAtomic: false,
+            continueOnError: continueOnError);
 
   /// Returns the HTTP headers for this batch request (retrieves the partition key
   /// range ID and maps properties [isAtomic] and [continueOnError]).
   Map<String, String> getHeaders(Iterable<PartitionKeyRange> pkRanges) {
-    final pk = _ops.map((op) => op.partitionKey).whereNotNull().distinct();
+    var pk = _ops
+        .map((op) => op.partitionKey)
+        .followedBy([partitionKey])
+        .whereNotNull()
+        .distinct();
     if (pk.isEmpty) {
       throw PartitionKeyException('Missing partition key.');
     } else if (pk.length > 1) {
@@ -42,8 +76,10 @@ class TransactionalBatch extends Batch {
     };
   }
 
+  final bool _continueOnError;
+
   @override
-  final bool continueOnError;
+  bool get continueOnError => _continueOnError && !isAtomic;
 
   @override
   final bool isAtomic;
@@ -77,7 +113,7 @@ class TransactionalBatch extends Batch {
       return await container.execute(this, permission: permission);
     } else {
       final resp = BatchResponse();
-      final batch = _clone();
+      final batch = clone();
       var index = 0;
       while (index < _ops.length) {
         batch._ops.clear();
@@ -97,9 +133,13 @@ class TransactionalBatch extends Batch {
     }
   }
 
-  TransactionalBatch _clone() => TransactionalBatch._(container,
-      isAtomic: isAtomic, continueOnError: continueOnError);
-
   @override
   List<dynamic> toJson() => _ops.map((o) => o.toJson()).toList();
+}
+
+// internal use
+@internal
+extension BatchInternalExt on TransactionalBatch {
+  TransactionalBatch clone() => TransactionalBatch._(container,
+      isAtomic: isAtomic, continueOnError: continueOnError);
 }

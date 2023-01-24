@@ -1,14 +1,15 @@
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 import 'package:retry/retry.dart';
 
 import 'client/_client.dart';
-import 'client/features.dart';
 import 'client/debug_http_client.dart';
+import 'client/features.dart';
 import 'cosmos_db_databases.dart';
 
 typedef FutureCallback<T> = Future<T> Function();
 
-/// Class representing a CosmosDB instance
+/// Class representing a CosmosDB instance.
 class CosmosDbServer {
   /// Builds a new Cosmos DB [CosmosDbServer] with the provided [urlOrAccount],
   /// [masterKey] and [httpClient]. [urlOrAccount] can be a full URL (eg.
@@ -89,6 +90,7 @@ extension CosmosDbServerDbgExt on CosmosDbServer {
 }
 
 // internal use
+@internal
 extension CosmosDbServerInternalExt on CosmosDbServer {
   /// The CosmosDB client used for this instance.
   Client get client => _client;

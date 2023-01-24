@@ -61,8 +61,7 @@ class PartitionKeyHashV2 implements Comparable<PartitionKeyHashV2> {
   static final PartitionKeyHashV2 _emptyString = _hash(
       [PartitionKeyComponentType._string, PartitionKeyComponentType._infinity]);
 
-  PartitionKeyHashV2._(BigInt value)
-      : hex = value.toRadixString(16).toUpperCase().padLeft(32, '0');
+  PartitionKeyHashV2._(this.hex);
 
   final String hex;
 
@@ -71,12 +70,12 @@ class PartitionKeyHashV2 implements Comparable<PartitionKeyHashV2> {
   factory PartitionKeyHashV2.bool(bool value) => value ? _true : _false;
 
   factory PartitionKeyHashV2.double(num value) =>
-      PartitionKeyHashV2.multi([value]);
+      PartitionKeyHashV2.hierarchical([value]);
 
   factory PartitionKeyHashV2.string(String value) => value.isEmpty
       ? _emptyString
       : (value.length <= maxStringLength)
-          ? PartitionKeyHashV2.multi([value])
+          ? PartitionKeyHashV2.hierarchical([value])
           : throw PartitionKeyException('Partition key value is too long.');
 
   factory PartitionKeyHashV2.nullKey() => PartitionKeyHashV2._null;
@@ -90,9 +89,19 @@ class PartitionKeyHashV2 implements Comparable<PartitionKeyHashV2> {
 
   factory PartitionKeyHashV2.undefinedKey() => PartitionKeyHashV2._undefined;
 
-  factory PartitionKeyHashV2.multi(List<dynamic> data) {
+  factory PartitionKeyHashV2(List<dynamic> data) {
     final bytes = getBytes(data).toList();
     return _hash(bytes);
+  }
+
+  factory PartitionKeyHashV2.hierarchical(List<dynamic> data) {
+    final parts = <String>[];
+    for (var i = 0; i < data.length; i++) {
+      final bytes = getBytes(data[i]).toList();
+      final hash = _hash(bytes);
+      parts.add(hash.hex);
+    }
+    return PartitionKeyHashV2._(parts.join(''));
   }
 
   static Iterable<int> getBytes(dynamic value) sync* {
@@ -111,6 +120,9 @@ class PartitionKeyHashV2 implements Comparable<PartitionKeyHashV2> {
       yield PartitionKeyComponentType._number;
       yield* bytes;
     } else if (value is String) {
+      if (value.length > maxStringLength) {
+        throw PartitionKeyException('Partition key value is too long.');
+      }
       yield PartitionKeyComponentType._string;
       yield* utf8.encode(value);
       yield PartitionKeyComponentType._infinity;
@@ -130,7 +142,8 @@ class PartitionKeyHashV2 implements Comparable<PartitionKeyHashV2> {
     final hi = hex.substring(0, 16);
     final lo = hex.substring(16, 32);
     hash = BigInt.parse(lo + hi, radix: 16) & _mask;
-    return PartitionKeyHashV2._(hash);
+    return PartitionKeyHashV2._(
+        hash.toRadixString(16).toUpperCase().padLeft(32, '0'));
   }
 
   @override

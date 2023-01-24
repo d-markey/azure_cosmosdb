@@ -4,6 +4,7 @@ import 'indexing_policy.dart';
 class GeospatialConfig {
   const GeospatialConfig._(this.name);
 
+  /// The [name] of this instance.
   final String name;
 
   /// Geometry type.
@@ -24,5 +25,6 @@ class GeospatialConfig {
     }
   }
 
+  /// Serializes this instance to a JSON object.
   Map<String, dynamic> toJson() => {'type': name};
 }

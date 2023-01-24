@@ -1,7 +1,10 @@
+import '../_internal/_linq_extensions.dart';
+
 /// Constants for data types.
 class DataType {
   const DataType._(this.name);
 
+  /// The [name] of this instance.
   final String name;
 
   /// String type.
@@ -24,4 +27,10 @@ class DataType {
 
   /// List of spatial data types.
   static const spatial = [point, polygon, multiPolygon, lineString];
+
+  static const _types = [string, number, ...spatial];
+
+  /// Returns the [DataType] constant corresponding to the specified [type].
+  static DataType? tryParse(dynamic type) =>
+      _types.firstOrDefault((m) => m.name == type);
 }

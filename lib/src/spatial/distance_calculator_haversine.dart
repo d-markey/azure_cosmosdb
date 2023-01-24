@@ -17,9 +17,9 @@ class DistanceCalculatorHaversine extends DistanceCalculator {
   /// The sphere's radius.
   final double radius;
 
-  static double _rad(double degrees) => degrees * math.pi / 180;
-  static double _sin(double degrees) => math.sin(_rad(degrees));
-  static double _cos(double degrees) => math.cos(_rad(degrees));
+  static double _rad(num degrees) => degrees * math.pi / 180;
+  static double _sin(num degrees) => math.sin(_rad(degrees));
+  static double _cos(num degrees) => math.cos(_rad(degrees));
 
   /// Computes the distance between [from] and [to] positions. Returns the
   /// great-circle distance using 'haversine' formula. [Point.altitude]

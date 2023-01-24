@@ -1,4 +1,5 @@
 import '../base_document.dart';
+import '_path_component.dart';
 import '_path_parser.dart';
 import 'partition_key.dart';
 
@@ -30,25 +31,25 @@ class PartitionKeySpec {
       PartitionKeySpec._v2('Range', List.unmodifiable([partitionKey]));
 
   /// Creates a partition for multiple keys.
-  factory PartitionKeySpec.multi(List<String> partitionKeys) =>
+  factory PartitionKeySpec.hierarchical(List<String> partitionKeys) =>
       PartitionKeySpec._v2('MultiHash', List.unmodifiable(partitionKeys));
 
   /// Default partition key.
   static final id = PartitionKeySpec._(['/id'], 'Hash', 2);
 
-  /// The partition key paths
+  /// The partition key paths.
   final List<String> paths;
 
-  /// The partition key kind
+  /// The partition key kind.
   final String kind;
 
-  /// The partition key version
+  /// The partition key version.
   final int version;
 
-  /// Converts this instance to JSON.
+  /// Serializes this instance to a JSON object.
   dynamic toJson() => {'paths': paths, 'kind': kind, 'version': version};
 
-  /// The partition key components
+  /// The partition key components.
   List<List<PathComponent>>? _partitionKeyPaths;
 
   @override
@@ -71,26 +72,26 @@ class PartitionKeySpec {
     }
   }
 
+  /// Deserializes data from JSON object [json] into a new [PartitionKeySpec] instance.
+  /// Handles fields `paths`, `kind`, `version`.
   static PartitionKeySpec fromJson(dynamic json) => PartitionKeySpec._cached(
         json['paths'].cast<String>(),
         kind: json['kind'],
         version: json['version'],
       );
 
-  static final _parser = PathParser();
-
   /// Extracts the [document]'s partition key according to this specification.
   PartitionKey? from(BaseDocument document) {
     try {
       final keys = _extractKeys(document);
-      return keys.isEmpty ? null : PartitionKey.multi(keys);
+      return keys.isEmpty ? null : PartitionKey.hierarchical(keys);
     } catch (ex) {
       return null;
     }
   }
 
   List<dynamic> _extractKeys(BaseDocument doc) =>
-      (_partitionKeyPaths ??= paths.map((pk) => _parser.parse(pk)).toList())
+      (_partitionKeyPaths ??= paths.map((pk) => PathParser.parse(pk)).toList())
           .map((p) => p.extract(doc.toJson()))
           .where((k) => k != null)
           .toList();

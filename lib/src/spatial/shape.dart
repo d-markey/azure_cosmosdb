@@ -10,7 +10,6 @@ typedef ShapeLoader = Shape Function(Iterable geoJson);
 
 /// Base class for shapes.
 abstract class Shape {
-  /// Shape --> DataType map
   static const _map = {
     Point: DataType.point,
     LineString: DataType.lineString,
@@ -40,26 +39,26 @@ abstract class Shape {
 
   const Shape();
 
-  /// The shape's coordinates that will be serialized to the 'coordinates'
+  /// The shape's coordinates that will be serialized as the `coordinates`
   /// GeoJSON field.
   List get coordinates;
 
   /// The shape's sets of points.
   Iterable<Iterable<Point>> get paths;
 
-  /// The shape's data type that will be serialized to the 'type' GeoJSON field.
+  /// The shape's data type that will be serialized as the `type` GeoJSON field.
   DataType get type;
 
-  /// Serialize to GeoJSON.
+  /// Serializes this instance to a JSON object (GeoJson).
   Map<String, dynamic> toJson() => toGeoJson();
 
-  /// Serialize to GeoJSON.
+  /// Serializes to GeoJSON.
   Map<String, dynamic> toGeoJson() => {
         'type': type.name,
         'coordinates': coordinates,
       };
 
-  /// Deserialize from GeoJSON.
+  /// Deserializes from GeoJSON.
   static T fromGeoJson<T>(Map json, GeospatialConfig config) {
     final spatialType = _map[T]!;
     final type = json['type']?.toString() ?? '';

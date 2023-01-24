@@ -1,8 +1,8 @@
-import '../base_document.dart';
-import '../partition/partition_key.dart';
-import '../partition/partition_key_spec.dart';
-import 'batch_operation.dart';
-import 'batch_operation_types.dart';
+import '../../base_document.dart';
+import '../../partition/partition_key.dart';
+import '../../partition/partition_key_spec.dart';
+import '../batch_operation.dart';
+import '../batch_operation_type.dart';
 
 /// Batch operation for adding a document in the target container.
 class BatchOperationCreate<T extends BaseDocument>

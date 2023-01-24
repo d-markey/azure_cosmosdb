@@ -2,25 +2,25 @@ import '../indexing/data_type.dart';
 import '../indexing/geospatial_config.dart';
 import 'shape.dart';
 
-/// Class represengin a position
+/// Class represengin a position.
 class Point extends Shape {
   @override
   final type = DataType.point;
 
   /// The position's X coordinate.
-  final double? x;
+  final num? x;
 
   /// The position's Y coordinate.
-  final double? y;
+  final num? y;
 
   /// The position's latitude.
-  final double? latitude;
+  final num? latitude;
 
   /// The position's longitude.
-  final double? longitude;
+  final num? longitude;
 
   /// The position's altitude.
-  final double? altitude;
+  final num? altitude;
 
   /// `(lat, long)` position.
   const Point.geography(this.latitude, this.longitude, [this.altitude])
@@ -30,15 +30,16 @@ class Point extends Shape {
         y = null;
 
   /// `(x, y)` position.
-  const Point.geometry(this.x, this.y, [this.altitude])
+  const Point.geometry(this.x, this.y, [num? z])
       : assert(x != null),
         assert(y != null),
         latitude = null,
-        longitude = null;
+        longitude = null,
+        altitude = z;
 
   /// Coordinates pair, either `(x, y)` or `(long, lat)`.
   @override
-  List<double> get coordinates => isGeometry
+  List<num> get coordinates => isGeometry
       ? [x!, y!, if (altitude != null) altitude!]
       : [longitude!, latitude!, if (altitude != null) altitude!];
 
@@ -55,8 +56,9 @@ class Point extends Shape {
 
   /// The position's Z coordinate. Returns the [altitude] (which may be `null`)
   /// if the position is geometrical, `null` otherwise.
-  double? get z => isGeometry ? altitude : null;
+  num? get z => isGeometry ? altitude : null;
 
+  /// Hydrates a new [Point] instance using the JSON data in [geoJson].
   static Point fromGeoJson(Map geoJson, GeospatialConfig config) =>
       Shape.fromGeoJson<Point>(geoJson, config);
 

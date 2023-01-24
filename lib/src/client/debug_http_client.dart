@@ -38,10 +38,10 @@ class DebugHttpClient extends http.BaseClient {
 
   late final http.Client _http;
 
-  /// Default log function.
+  /// Log function based on `dart:developer`'s [dev.log].
   static void defaultLog(Object? object) => dev.log(object.toString());
 
-  /// Log function (based on dart:developer's `log` function by default).
+  /// Log function ([defaultLog] by default).
   void Function(Object? object) log = defaultLog;
 
   @override

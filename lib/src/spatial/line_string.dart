@@ -15,8 +15,7 @@ class LineString extends Shape {
 
   /// Returns a list where each entry represents a point's coordinates.
   @override
-  List<List<double>> get coordinates =>
-      points.map((p) => p.coordinates).toList();
+  List<List<num>> get coordinates => points.map((p) => p.coordinates).toList();
 
   /// `true` iif the line string contains no points.
   bool get isEmpty => points.isEmpty;

@@ -1,14 +1,16 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import '../base_document.dart';
 import '../client/_context.dart';
 import '../partition/partition_key.dart';
 import '../partition/partition_key_spec.dart';
 import 'batch.dart';
-import 'batch_operation_create.dart';
-import 'batch_operation_read.dart';
 import 'batch_operation_result.dart';
-import 'batch_operation_types.dart';
+import 'batch_operation_type.dart';
+import 'operations/batch_operation_create.dart';
+import 'operations/batch_operation_read.dart';
 
 /// Base class for batch operations.
 abstract class BatchOperation {
@@ -23,7 +25,7 @@ abstract class BatchOperation {
   /// The operation's type.
   BatchOperationType get type;
 
-  /// The operation's JSON payload.
+  /// Serializes this instance to a JSON object.
   Map<String, dynamic> toJson() => {
         'operationType': type.name,
         'partitionKey': jsonEncode(partitionKey?.values),
@@ -37,7 +39,8 @@ abstract class BatchOperation {
 
   BatchOperationResult _setResult(Map res, Context? context) {
     final statusCode = res['statusCode'];
-    final result = BatchOperationResult.withoutItem(this, statusCode);
+    final retryAfterMs = res['retryAfterMilliseconds'];
+    final result = BatchOperationResult.noItem(this, statusCode, retryAfterMs);
     _result = result;
     return result;
   }
@@ -55,13 +58,14 @@ abstract class BatchOperationOnType<T extends BaseDocument>
   @override
   BatchOperationResult<T> _setResult(Map res, Context? context) {
     final statusCode = res['statusCode'];
+    final retryAfterMs = res['retryAfterMilliseconds'];
     final json = res['resourceBody'];
     T? doc;
     if (json != null) {
       final builder = context!.getBuilder<T>();
       doc = builder(json);
     }
-    final result = BatchOperationResult<T>(this, statusCode, doc);
+    final result = BatchOperationResult<T>(this, statusCode, retryAfterMs, doc);
     _result = result;
     return result;
   }
@@ -93,7 +97,10 @@ abstract class BatchOperationOnItem<T extends BaseDocument>
 }
 
 // internal use
+@internal
 extension BatchOperationInternalExt on BatchOperation {
   BatchOperationResult setResult(Map res, Context? context) =>
       _setResult(res, context);
+
+  void clearResult() => _result = null;
 }

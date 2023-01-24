@@ -8,11 +8,12 @@ class PartitionKey {
 
   final List<dynamic> values;
 
-  /// Partition key with a single property.
+  /// Partition key with a single property (`Hash`).
   PartitionKey(dynamic value) : this._(List.unmodifiable([value]));
 
-  /// Creates a partition key for multiple keys.
-  PartitionKey.multi(List<dynamic> values) : this._(List.unmodifiable(values));
+  /// Creates a partition key for multiple keys (`MultiHash`).
+  PartitionKey.hierarchical(List<dynamic> values)
+      : this._(List.unmodifiable(values));
 
   /// Used for cross-partition queries.
   static const all = PartitionKey._([]);

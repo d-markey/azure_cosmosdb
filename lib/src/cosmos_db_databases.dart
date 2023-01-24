@@ -1,10 +1,12 @@
+import 'package:meta/meta.dart';
+
 import 'client/_client.dart';
 import 'client/_context.dart';
 import 'cosmos_db_database.dart';
 import 'cosmos_db_exceptions.dart';
+import 'cosmos_db_server.dart';
 import 'cosmos_db_throughput.dart';
 import 'permissions/cosmos_db_permission.dart';
-import 'cosmos_db_server.dart';
 
 /// Class used to manage [CosmosDbDatabase]s in a [CosmosDbServer].
 class CosmosDbDatabases {
@@ -96,6 +98,7 @@ class CosmosDbDatabases {
 }
 
 // internal use
+@internal
 extension CosmosDbDatabasesInternalExt on CosmosDbDatabases {
   Client get client => server.client;
 }

@@ -1,21 +1,5 @@
 import '../base_document.dart';
-import '../cosmos_db_exceptions.dart';
-
-/// Permission modes
-class PermissionMode {
-  const PermissionMode._(this.name);
-
-  final String name;
-
-  static const read = PermissionMode._('Read');
-  static const all = PermissionMode._('All');
-
-  static PermissionMode parse(String name) {
-    if (name == read.name) return read;
-    if (name == all.name) return all;
-    throw BadResponseException('Unsupported permission mode.');
-  }
-}
+import 'permission_mode.dart';
 
 /// Class representing a CosmosDB permission.
 class CosmosDbPermission extends BaseDocument with EtagMixin {

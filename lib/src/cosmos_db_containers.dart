@@ -12,14 +12,18 @@ import 'permissions/cosmos_db_permission.dart';
 class CosmosDbContainers {
   CosmosDbContainers(this.database) : url = '${database.url}/colls';
 
-  /// The owner [CosmosDbDatabase].
+  /// The [CosmosDbDatabase] this container belongs to.
   final CosmosDbDatabase database;
 
+  /// The container's [url].
   final String url;
 
+  /// Deserialize data from JSON object [json] into a new [CosmosDbContainer] instance.
+  /// Handles fields `id`, `partitionKey`, `indexingPolicy`.
   CosmosDbContainer fromJson(Map json) {
     final coll = CosmosDbContainer(database, json['id'],
-        partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']));
+        partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']),
+        indexingPolicy: IndexingPolicy.fromJson(json['indexingPolicy']));
     coll.setExists(true);
     return coll;
   }

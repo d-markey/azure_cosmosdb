@@ -26,7 +26,7 @@ class MultiPolygon extends Shape {
   @override
   Iterable<Iterable<Point>> get paths => polygons.expand((p) => p.paths);
 
-  /// The list of polygons
+  /// The list of polygons.
   Iterable<Polygon> get polygons => _polygons.asIterable();
 
   /// Adds a polygon to the multi-polygon.

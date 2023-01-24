@@ -4,16 +4,20 @@ import '../cosmos_db_container.dart';
 import '../partition/partition_key.dart';
 import '../permissions/cosmos_db_permission.dart';
 import 'batch_operation.dart';
-import 'batch_operation_create.dart';
-import 'batch_operation_delete.dart';
-import 'batch_operation_read.dart';
-import 'batch_operation_upsert.dart';
 import 'batch_response.dart';
+import 'operations/batch_operation_create.dart';
+import 'operations/batch_operation_delete.dart';
+import 'operations/batch_operation_patch.dart';
+import 'operations/batch_operation_read.dart';
+import 'operations/batch_operation_replace.dart';
+import 'operations/batch_operation_upsert.dart';
 
 /// Base class for a transactional batch.
 abstract class Batch extends SpecialDocument {
+  Batch(this.container, this.partitionKey);
+
   /// The [container] this batch instance is attached to.
-  CosmosDbContainer get container;
+  final CosmosDbContainer container;
 
   /// If `true`, processing will continue after an error. Otherwise, processing is stopped
   /// and subsequent operations fail with a 424 [HttpStatusCode.failedDependency] status
@@ -29,6 +33,9 @@ abstract class Batch extends SpecialDocument {
   /// Operations will be grouped by partition keys when [execute] is called. Implies
   /// [continueOnError] = `true` and [isAtomic] = `false`.
   bool get isCrossPartition;
+
+  /// The default partition key for operations in this batch.
+  final PartitionKey? partitionKey;
 
   /// The number of operations in this batch instance.
   int get length;
@@ -48,20 +55,36 @@ abstract class Batch extends SpecialDocument {
           partitionKeySpec: container.partitionKeySpec,
           partitionKey: partitionKey));
 
+  /// Adds a [BatchOperationReplace] to this batch instance.
+  void replace<T extends BaseDocument>(T item, {PartitionKey? partitionKey}) =>
+      add(BatchOperationReplace<T>(item,
+          partitionKeySpec: container.partitionKeySpec,
+          partitionKey: partitionKey));
+
   /// Adds a [BatchOperationUpsert] to this batch instance.
   void upsert<T extends BaseDocument>(T item, {PartitionKey? partitionKey}) =>
       add(BatchOperationUpsert<T>(item,
           partitionKeySpec: container.partitionKeySpec,
           partitionKey: partitionKey));
 
+  /// Adds a [BatchOperationPatch] to this batch instance.
+  BatchOperationPatch patch<T extends BaseDocument>(String id,
+      {PartitionKey? partitionKey}) {
+    final patchOperation = BatchOperationPatch<T>(id,
+        partitionKey: partitionKey ?? this.partitionKey);
+    add(patchOperation);
+    return patchOperation;
+  }
+
   /// Adds a [BatchOperationRead] to this batch instance.
-  void read<T extends BaseDocument>(String id,
-          {required PartitionKey partitionKey}) =>
-      add(BatchOperationRead<T>(id, partitionKey: partitionKey));
+  void read<T extends BaseDocument>(String id, {PartitionKey? partitionKey}) =>
+      add(BatchOperationRead<T>(id,
+          partitionKey: partitionKey ?? this.partitionKey));
 
   /// Adds a [BatchOperationDelete] to this batch instance.
-  void delete(String id, {required PartitionKey partitionKey}) =>
-      add(BatchOperationDelete(id, partitionKey: partitionKey));
+  void delete(String id, {PartitionKey? partitionKey}) =>
+      add(BatchOperationDelete(id,
+          partitionKey: partitionKey ?? this.partitionKey));
 
   /// Executes the [BatchOperation]s registered in this batch instance.
   Future<BatchResponse> execute({CosmosDbPermission? permission});

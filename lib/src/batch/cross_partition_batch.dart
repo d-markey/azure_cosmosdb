@@ -9,21 +9,24 @@ import 'batch_response.dart';
 import 'transactional_batch.dart';
 
 /// A cross-partition transactional batch. This class can handle operations targetting
-/// multiple partition keys, and supports more than 100 operations.
+/// multiple partition keys, and supports more than 100 operations. Atomic behavior is
+/// not possible with this class, and [isAtomic] will always be `false`. Stopping on
+/// error is also not possible with this implementation and [continueOnError] will
+/// always be `true`.
 class CrossPartitionBatch extends Batch {
-  CrossPartitionBatch(this.container);
+  CrossPartitionBatch(CosmosDbContainer container, {PartitionKey? partitionKey})
+      : super(container, partitionKey);
 
-  @override
-  final CosmosDbContainer container;
-
+  /// Cross-partition batches always have [continueOnError] = `true`.
   @override
   final bool continueOnError = true;
 
+  /// Cross-partition batches cannot be atomic and always have [isAtomic] = `false`.
   @override
   final bool isAtomic = false;
 
   @override
-  final bool isCrossPartition = false;
+  final bool isCrossPartition = true;
 
   @override
   int get length => _ops.length;
@@ -43,14 +46,18 @@ class CrossPartitionBatch extends Batch {
 
   @override
   void add(BatchOperation op) {
-    final pk = op.partitionKey;
+    final pk = op.partitionKey ?? partitionKey;
     if (pk == null) {
       throw PartitionKeyException('Missing partition key.');
     }
     TransactionalBatch? batch;
     final key = _opsByPk.keys.singleOrDefault((k) => k == pk);
     if (key == null) {
-      batch = TransactionalBatch(container, continueOnError: true);
+      batch = TransactionalBatch(
+        container,
+        continueOnError: true,
+        partitionKey: partitionKey,
+      );
       _opsByPk[pk] = batch;
     } else {
       batch = _opsByPk[key]!;
@@ -59,26 +66,23 @@ class CrossPartitionBatch extends Batch {
     _ops.add(op);
   }
 
-  @override
-
   /// Executes the [BatchOperation]s registered in this batch instance. Operations are grouped
   /// by partition keys and sent to Cosmos DB in chunks of 100 operations per partition key.
+  @override
   Future<BatchResponse> execute({CosmosDbPermission? permission}) async {
-    final resp = BatchResponse();
-    final futures = <Future>[];
     var pending = 0;
+    final futures = <Future>[];
     for (var batch in _opsByPk.values) {
       pending++;
       futures.add(
           batch.execute(permission: permission).whenComplete(() => pending--));
       while (pending > 2) {
         // throttle
-        await Future.delayed(const Duration(milliseconds: 100));
+        await Future.delayed(const Duration(milliseconds: 10));
       }
     }
     await Future.wait(futures);
-    resp.addAll(_ops.map((o) => o.result!));
-    return resp;
+    return BatchResponse()..addAll(_ops.map((o) => o.result!));
   }
 
   @override

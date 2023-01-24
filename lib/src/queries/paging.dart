@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Class used for pagination.
 class Paging {
   Paging(int? maxCount) : maxCount = maxCount ?? -1;
@@ -11,6 +13,7 @@ class Paging {
 }
 
 // internal use
+@internal
 extension ContinuationInternalExt on Paging {
   void setContinuation(String value) => _continuation = value;
 }

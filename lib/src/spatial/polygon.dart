@@ -5,6 +5,7 @@ import 'line_string.dart';
 import 'point.dart';
 import 'shape.dart';
 
+/// Class represengin a polygon
 class Polygon extends Shape {
   @override
   final type = DataType.polygon;
@@ -55,19 +56,18 @@ class Polygon extends Shape {
 
   static Polygon loadGeographyCoords(Iterable coords) => Polygon()
     ..addAll(
-      coords.cast<Iterable>().map(_Ring.loadGeographyCoords),
+      coords.cast<Iterable>().map(_loadGeographyCoords),
     );
 
   static Polygon loadGeometryCoords(Iterable coords) => Polygon()
     ..addAll(
-      coords.cast<Iterable>().map(_Ring.loadGeometryCoords),
+      coords.cast<Iterable>().map(_loadGeometryCoords),
     );
 }
 
-class _Ring {
-  static LineString loadGeographyCoords(Iterable coords) =>
-      LineString.loadGeographyCoords(coords.skipLast());
+// internal use
+LineString _loadGeographyCoords(Iterable coords) =>
+    LineString.loadGeographyCoords(coords.skipLast());
 
-  static LineString loadGeometryCoords(Iterable coords) =>
-      LineString.loadGeometryCoords(coords.skipLast());
-}
+LineString _loadGeometryCoords(Iterable coords) =>
+    LineString.loadGeometryCoords(coords.skipLast());

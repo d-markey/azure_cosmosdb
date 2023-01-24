@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '_internal/_http_header.dart';
 import 'base_document.dart';
 import 'batch/batch.dart';
@@ -8,6 +10,7 @@ import 'client/_client.dart';
 import 'client/_context.dart';
 import 'cosmos_db_database.dart';
 import 'cosmos_db_exceptions.dart';
+import 'cosmos_db_server.dart';
 import 'indexing/geospatial_config.dart';
 import 'indexing/indexing_policy.dart';
 import 'partition/partition_key.dart';
@@ -16,7 +19,6 @@ import 'partition/partition_key_spec.dart';
 import 'patch/patch.dart';
 import 'permissions/cosmos_db_permission.dart';
 import 'queries/query.dart';
-import 'cosmos_db_server.dart';
 
 /// Class representing a CosmosDB container.
 class CosmosDbContainer extends BaseDocument {
@@ -170,24 +172,19 @@ class CosmosDbContainer extends BaseDocument {
   /// Finds the document with [id] in this container. If the document does not exist,
   /// this method returns `null` by default. If [throwOnNotFound] is set to `true`, it
   /// will throw a [NotFoundException] instead.
-  Future<T?> find<T extends BaseDocument>(dynamic id,
-      {bool throwOnNotFound = false,
-      PartitionKey? partitionKey,
-      CosmosDbPermission? permission}) {
-    final document = DocumentWithId(id);
-    return client.get<T>(
-      '$url/docs/${document.id}',
-      Context(
-        type: 'docs',
-        throwOnNotFound: throwOnNotFound,
-        partitionKey:
-            partitionKey ?? partitionKeySpec.from(document) ?? PartitionKey.all,
-        builders: _builders,
-        token: permission?.token ?? _token,
-        onForbidden: _refreshPermission,
-      ),
-    );
-  }
+  Future<T?> find<T extends BaseDocument>(dynamic id, PartitionKey partitionKey,
+          {bool throwOnNotFound = false, CosmosDbPermission? permission}) =>
+      client.get<T>(
+        '$url/docs/$id',
+        Context(
+          type: 'docs',
+          throwOnNotFound: throwOnNotFound,
+          partitionKey: partitionKey,
+          builders: _builders,
+          token: permission?.token ?? _token,
+          onForbidden: _refreshPermission,
+        ),
+      );
 
   /// Returns the latest version of the document.
   Future<T?> get<T extends BaseDocument>(T document,
@@ -337,9 +334,9 @@ class CosmosDbContainer extends BaseDocument {
   /// `true`, it will instead throw a [NotFoundException]. If the [document] is
   /// provided, its attributes take over the [id] value. If it has [EtagMixin],
   /// its [EtagMixin.etag] must be known.
-  Future<bool> delete(
+  Future<bool> delete<T extends BaseDocument>(
       {String? id,
-      BaseDocument? document,
+      T? document,
       bool throwOnNotFound = false,
       bool checkEtag = true,
       PartitionKey? partitionKey,
@@ -347,16 +344,22 @@ class CosmosDbContainer extends BaseDocument {
     if (document == null && id == null) {
       throw ApplicationException('Missing document and document id.');
     }
-    document ??= DocumentWithId(id);
+    id = document?.id ?? id;
+    if (id == null) {
+      throw ApplicationException('Missing document id');
+    }
     return client.delete(
-      '$url/docs/${document.id}',
+      '$url/docs/$id',
       Context(
         type: 'docs',
         throwOnNotFound: throwOnNotFound,
         headers: (document is EtagMixin && checkEtag)
             ? {HttpHeader.ifMatch: document.etag}
             : null,
-        partitionKey: partitionKey ?? partitionKeySpec.from(document),
+        partitionKey: partitionKey ??
+            (document == null
+                ? PartitionKey.all
+                : partitionKeySpec.from(document)),
         token: permission?.token ?? _token,
         onForbidden: _refreshPermission,
       ),
@@ -364,14 +367,18 @@ class CosmosDbContainer extends BaseDocument {
   }
 
   /// Prepare a batch for this container.
-  Batch prepareBatch({bool continueOnError = true}) =>
-      TransactionalBatch(this, continueOnError: continueOnError);
+  Batch prepareBatch(
+          {PartitionKey? partitionKey, bool continueOnError = true}) =>
+      TransactionalBatch(this,
+          continueOnError: continueOnError, partitionKey: partitionKey);
 
   /// Prepare a batch for this container (atomic).
-  Batch prepareAtomicBatch() => TransactionalBatch.atomic(this);
+  Batch prepareAtomicBatch({PartitionKey? partitionKey}) =>
+      TransactionalBatch.atomic(this, partitionKey: partitionKey);
 
   /// Prepare a batch for this container (cross-partition).
-  Batch prepareCrossPartitionBatch() => CrossPartitionBatch(this);
+  Batch prepareCrossPartitionBatch({PartitionKey? partitionKey}) =>
+      CrossPartitionBatch(this, partitionKey: partitionKey);
 
   /// Executes the batch in this container.
   Future<BatchResponse> execute(TransactionalBatch batch,
@@ -397,6 +404,7 @@ class CosmosDbContainer extends BaseDocument {
 }
 
 // internal use
+@internal
 extension CosmosDbContainerInternalExt on CosmosDbContainer {
   void setExists(bool exists) => _exists = exists;
 
