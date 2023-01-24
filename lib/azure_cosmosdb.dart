@@ -56,5 +56,4 @@ export 'src/spatial/line_string.dart';
 export 'src/spatial/multi_polygon.dart';
 export 'src/spatial/point.dart';
 export 'src/spatial/polygon.dart';
-export 'src/spatial/point.dart';
 export 'src/spatial/shape.dart';
