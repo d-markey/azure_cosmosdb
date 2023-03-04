@@ -1,3 +1,7 @@
+## 2.0.2
+
+- Upgrade version of `murmur3`.
+
 ## 2.0.1
 
 - Improved documentation & tests.

@@ -136,7 +136,7 @@ class PartitionKeyHashV2 implements Comparable<PartitionKeyHashV2> {
   }
 
   static PartitionKeyHashV2 _hash(dynamic data) {
-    var hash = murmur3f(data, seed: 0) as BigInt;
+    var hash = murmur3f(data, seed: BigInt.zero) as BigInt;
     // hi/lo parts are inverted in Cosmos DB
     final hex = hash.toRadixString(16).padLeft(32, '0');
     final hi = hex.substring(0, 16);
