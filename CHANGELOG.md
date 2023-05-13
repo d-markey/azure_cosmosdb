@@ -1,3 +1,7 @@
+## 2.1.0
+
+- Enable support for Dart 3.
+
 ## 2.0.2
 
 - Upgrade version of `murmur3`.
