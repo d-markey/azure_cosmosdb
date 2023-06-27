@@ -1,3 +1,7 @@
+## 2.1.1
+
+- Upgrade version of `http`.
+
 ## 2.1.0
 
 - Enable support for Dart 3.
