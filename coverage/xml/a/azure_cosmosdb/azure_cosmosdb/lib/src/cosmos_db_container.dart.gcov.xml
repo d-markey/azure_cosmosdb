@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-06-27" filename="cosmos_db_container.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.925" lines-covered="185" lines-valid="200" package="/a/azure_cosmosdb/azure_cosmosdb/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-12" filename="cosmos_db_container.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.925" lines-covered="185" lines-valid="200" package="/a/azure_cosmosdb/azure_cosmosdb/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'package:meta/meta.dart';</code>
@@ -128,9 +128,9 @@
 <line>
 <code>  /// `null` if no check has been made yet.</code>
 </line>
-<line hits="2">
+<line hits="3">
 <code>  bool? get exists =&gt; _exists;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  bool? _exists;</code>
@@ -249,9 +249,9 @@
 <code>  void usePermission(CosmosDbPermission permission) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>    _token = permission.token;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>  }</code>
@@ -310,9 +310,9 @@
 <code>    CosmosDbPermission? permission;</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    final callback = onForbidden;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>    if (_token != null &amp;&amp; callback != null) {</code>
@@ -325,9 +325,9 @@
 <line>
 <code>      if (permission != null) {</code>
 </line>
-<line hits="2">
+<line hits="3">
 <code>        _token = permission.token;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      }</code>
@@ -378,9 +378,9 @@
 <code>    final coll = await client.get&lt;CosmosDbContainer&gt;(</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        url,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>        Context(</code>
@@ -389,9 +389,9 @@
 <line>
 <code>          type: 'colls',</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          throwOnNotFound: true,</code>
@@ -443,9 +443,9 @@
 <code>      _pkRanges.addAll(await client.getMany&lt;PartitionKeyRange&gt;(</code>
 <hit count="5" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>          '$url/pkranges',</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          'PartitionKeyRanges',</code>
@@ -461,9 +461,9 @@
 <line>
 <code>              type: 'pkranges',</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>              token: permission?.token ?? _token,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>              throwOnNotFound: true,</code>
@@ -503,13 +503,13 @@
 <code>    final prevIndexingPolicy = _indexingPolicy;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    final prevGeospatialConfig = _geospatialConfig;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    _indexingPolicy = indexingPolicy;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>    if (geospatialConfig != null) {</code>
@@ -528,9 +528,9 @@
 <code>      await client.put&lt;CosmosDbContainer&gt;(</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>          url,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>          this,</code>
@@ -542,9 +542,9 @@
 <line>
 <code>            type: 'colls',</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>            token: permission?.token ?? _token,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>            builder: database.containers.fromJson,</code>
@@ -1346,16 +1346,16 @@
 <code>      return await client.batch(</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>        '$url/docs',</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>        batch,</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        _pkRanges,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>        Context(</code>
@@ -1368,13 +1368,13 @@
 <code>          resId: url,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>          token: permission?.token ?? _token,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>          builders: _builders,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>          onForbidden: _refreshPermission,</code>

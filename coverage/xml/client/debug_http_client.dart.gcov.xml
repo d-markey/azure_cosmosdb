@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-06-27" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8181818" lines-covered="63" lines-valid="77" package="/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-12" filename="debug_http_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8181818" lines-covered="63" lines-valid="77" package="/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -171,9 +171,9 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    if (traceHeaders) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>      for (var h in request.headers.entries) {</code>
@@ -192,9 +192,9 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    if (traceBody) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>      if (request is http.Request) {</code>
@@ -277,9 +277,9 @@
 <code>    log('[$ts] &lt;-- COSMOS DB Status = ${response.statusCode} ${response.reasonPhrase}');</code>
 <hit count="6" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    if (traceHeaders) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>      for (var h in response.headers.entries) {</code>
@@ -325,25 +325,25 @@
 <code>        resp.statusCode,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        contentLength: resp.contentLength,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        headers: resp.headers,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        reasonPhrase: resp.reasonPhrase,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        isRedirect: resp.isRedirect,</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        request: response.request,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      );</code>
@@ -417,16 +417,16 @@
 <code>    try {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>      final ex = forceException;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code>      if (ex != null) {</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        forceException = null;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        throw ex;</code>
@@ -443,9 +443,9 @@
 <code>        final delay = forceThrottleDelay!.inMilliseconds;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        forceThrottleDelay = null;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>        response = http.StreamedResponse(</code>
@@ -506,9 +506,9 @@
 <line>
 <code>    } catch (ex) {</code>
 </line>
-<line hits="1">
+<line hits="2">
 <code>      if (trace) {</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>        _logException(ts, ex);</code>

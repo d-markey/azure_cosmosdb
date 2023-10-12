@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-06-27" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.89506173" lines-covered="145" lines-valid="162" package="/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-12" filename="_client.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.89506173" lines-covered="145" lines-valid="162" package="/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:async';</code>
@@ -337,9 +337,9 @@
 <line>
 <code/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>    var auth = (context.token != null)</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
 <code>        ? Authorization.fromToken(context.token!)</code>
@@ -349,9 +349,9 @@
 <code>        : Authorization.fromKey(</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="5">
+<line hits="6">
 <code>            _key, call.method.name.toLowerCase(), context.type, resId);</code>
-<hit count="5" name="&lt;unnamed&gt;"/>
+<hit count="6" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -378,9 +378,9 @@
 <code>        final permission = await context.onForbidden?.call();</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        final token = permission?.token;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        if (token != null) {</code>
@@ -515,9 +515,9 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>    if (!HttpStatusCode.isSuccess(result.statusCode)) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
 <code>      final message = (data is Map &amp;&amp; data.containsKey('message'))</code>
@@ -527,17 +527,17 @@
 <code>          ? '${result.reasonPhrase}: ${data['message']}'</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>          : result.reasonPhrase;</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>      final ex = CosmosDbException(result.statusCode, message);</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>      if (ex is! NotFoundException || context.throwOnNotFound) {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        throw ex;</code>
@@ -558,9 +558,9 @@
 <line>
 <code/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>    context.paging?.setContinuation(</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
 <code>      result.headers[HttpHeader.msContinuation] ?? '',</code>
@@ -584,9 +584,9 @@
 <code>  Future&lt;dynamic&gt; rawGet(String path, Context context) {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>    final call = HttpCall.get(path, version);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="3">
 <code>    return _send(call, null, context).rethrowContextualizedException(call);</code>
@@ -772,9 +772,9 @@
 <line>
 <code>    } else {</code>
 </line>
-<line hits="2">
+<line hits="3">
 <code>      final call = HttpCall.post(path, version);</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>      final response = await _send(</code>
@@ -822,9 +822,9 @@
 <code>      for (var r in response.results) {</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>        var retry = r.retryAfterMs ?? 0;</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="1">
 <code>        if (retry &gt; 0) {</code>

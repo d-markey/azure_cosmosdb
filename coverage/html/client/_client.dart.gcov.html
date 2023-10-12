@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-06-27</dd>
+<dd>2023-10-12</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -360,7 +360,7 @@
 <td>100</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 101" id="line101">
-<td>101</td><td></td><td>1</td><td><code>    var auth = (context.token != null)</code></td>
+<td>101</td><td></td><td>2</td><td><code>    var auth = (context.token != null)</code></td>
 </tr>
 <tr class="lineCov" title="Line 102" id="line102">
 <td>102</td><td></td><td>3</td><td><code>        ? Authorization.fromToken(context.token!)</code></td>
@@ -369,7 +369,7 @@
 <td>103</td><td></td><td>1</td><td><code>        : Authorization.fromKey(</code></td>
 </tr>
 <tr class="lineCov" title="Line 104" id="line104">
-<td>104</td><td></td><td>5</td><td><code>            _key, call.method.name.toLowerCase(), context.type, resId);</code></td>
+<td>104</td><td></td><td>6</td><td><code>            _key, call.method.name.toLowerCase(), context.type, resId);</code></td>
 </tr>
 <tr class="noop" title="Line 105" id="line105">
 <td>105</td><td></td><td></td><td><code></code></td>
@@ -393,7 +393,7 @@
 <td>111</td><td></td><td>3</td><td><code>        final permission = await context.onForbidden?.call();</code></td>
 </tr>
 <tr class="lineCov" title="Line 112" id="line112">
-<td>112</td><td></td><td>1</td><td><code>        final token = permission?.token;</code></td>
+<td>112</td><td></td><td>2</td><td><code>        final token = permission?.token;</code></td>
 </tr>
 <tr class="lineCov" title="Line 113" id="line113">
 <td>113</td><td></td><td>1</td><td><code>        if (token != null) {</code></td>
@@ -510,7 +510,7 @@
 <td>150</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 151" id="line151">
-<td>151</td><td></td><td>2</td><td><code>    if (!HttpStatusCode.isSuccess(result.statusCode)) {</code></td>
+<td>151</td><td></td><td>3</td><td><code>    if (!HttpStatusCode.isSuccess(result.statusCode)) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 152" id="line152">
 <td>152</td><td></td><td>3</td><td><code>      final message = (data is Map &amp;&amp; data.containsKey('message'))</code></td>
@@ -519,13 +519,13 @@
 <td>153</td><td></td><td>3</td><td><code>          ? '${result.reasonPhrase}: ${data['message']}'</code></td>
 </tr>
 <tr class="lineCov" title="Line 154" id="line154">
-<td>154</td><td></td><td>2</td><td><code>          : result.reasonPhrase;</code></td>
+<td>154</td><td></td><td>3</td><td><code>          : result.reasonPhrase;</code></td>
 </tr>
 <tr class="lineCov" title="Line 155" id="line155">
 <td>155</td><td></td><td>2</td><td><code>      final ex = CosmosDbException(result.statusCode, message);</code></td>
 </tr>
 <tr class="lineCov" title="Line 156" id="line156">
-<td>156</td><td></td><td>2</td><td><code>      if (ex is! NotFoundException || context.throwOnNotFound) {</code></td>
+<td>156</td><td></td><td>3</td><td><code>      if (ex is! NotFoundException || context.throwOnNotFound) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 157" id="line157">
 <td>157</td><td></td><td>1</td><td><code>        throw ex;</code></td>
@@ -546,7 +546,7 @@
 <td>162</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 163" id="line163">
-<td>163</td><td></td><td>2</td><td><code>    context.paging?.setContinuation(</code></td>
+<td>163</td><td></td><td>3</td><td><code>    context.paging?.setContinuation(</code></td>
 </tr>
 <tr class="lineCov" title="Line 164" id="line164">
 <td>164</td><td></td><td>3</td><td><code>      result.headers[HttpHeader.msContinuation] ?? '',</code></td>
@@ -567,7 +567,7 @@
 <td>169</td><td></td><td>1</td><td><code>  Future&lt;dynamic&gt; rawGet(String path, Context context) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 170" id="line170">
-<td>170</td><td></td><td>2</td><td><code>    final call = HttpCall.get(path, version);</code></td>
+<td>170</td><td></td><td>3</td><td><code>    final call = HttpCall.get(path, version);</code></td>
 </tr>
 <tr class="lineCov" title="Line 171" id="line171">
 <td>171</td><td></td><td>3</td><td><code>    return _send(call, null, context).rethrowContextualizedException(call);</code></td>
@@ -723,7 +723,7 @@
 <td>221</td><td></td><td></td><td><code>    } else {</code></td>
 </tr>
 <tr class="lineCov" title="Line 222" id="line222">
-<td>222</td><td></td><td>2</td><td><code>      final call = HttpCall.post(path, version);</code></td>
+<td>222</td><td></td><td>3</td><td><code>      final call = HttpCall.post(path, version);</code></td>
 </tr>
 <tr class="lineCov" title="Line 223" id="line223">
 <td>223</td><td></td><td>2</td><td><code>      final response = await _send(</code></td>
@@ -765,7 +765,7 @@
 <td>235</td><td></td><td>3</td><td><code>      for (var r in response.results) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 236" id="line236">
-<td>236</td><td></td><td>1</td><td><code>        var retry = r.retryAfterMs ?? 0;</code></td>
+<td>236</td><td></td><td>2</td><td><code>        var retry = r.retryAfterMs ?? 0;</code></td>
 </tr>
 <tr class="lineCov" title="Line 237" id="line237">
 <td>237</td><td></td><td>1</td><td><code>        if (retry &gt; 0) {</code></td>

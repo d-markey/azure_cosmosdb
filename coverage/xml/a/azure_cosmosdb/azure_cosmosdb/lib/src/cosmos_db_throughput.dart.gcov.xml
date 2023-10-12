@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-06-27" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="19" lines-valid="19" package="/a/azure_cosmosdb/azure_cosmosdb/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-12" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="21" lines-valid="21" package="/a/azure_cosmosdb/azure_cosmosdb/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'dart:convert';</code>
@@ -31,20 +31,26 @@
 <line>
 <code>  /// is 400 RUs.</code>
 </line>
-<line hits="2">
-<code>  CosmosDbThroughput(int throughput)</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>      : header = {</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
-</line>
-<line hits="2">
-<code>          HttpHeader.msOfferThroughput: throughput.toString(),</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<line hits="3">
+<code>  CosmosDbThroughput(int throughput) : header = createHeader(throughput);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>        } {</code>
+<code/>
+</line>
+<line>
+<code>  /// Used for servles instances where throughput can't be set</code>
+</line>
+<line hits="3">
+<code>  CosmosDbThroughput.none() : header = {};</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code/>
+</line>
+<line hits="2">
+<code>  static Map&lt;String, String&gt; createHeader(int throughput) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>    if (throughput &lt; _min) {</code>
@@ -74,6 +80,17 @@
 </line>
 <line>
 <code>    }</code>
+</line>
+<line hits="2">
+<code>    return {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2">
+<code>      HttpHeader.msOfferThroughput: throughput.toString(),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line>
+<code>    };</code>
 </line>
 <line hits="1">
 <code>  }</code>

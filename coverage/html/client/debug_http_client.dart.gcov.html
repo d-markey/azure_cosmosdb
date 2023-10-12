@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-06-27</dd>
+<dd>2023-10-12</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -222,7 +222,7 @@
 <td>54</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 55" id="line55">
-<td>55</td><td></td><td>1</td><td><code>    if (traceHeaders) {</code></td>
+<td>55</td><td></td><td>2</td><td><code>    if (traceHeaders) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 56" id="line56">
 <td>56</td><td></td><td>4</td><td><code>      for (var h in request.headers.entries) {</code></td>
@@ -240,7 +240,7 @@
 <td>60</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="lineCov" title="Line 61" id="line61">
-<td>61</td><td></td><td>1</td><td><code>    if (traceBody) {</code></td>
+<td>61</td><td></td><td>2</td><td><code>    if (traceBody) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 62" id="line62">
 <td>62</td><td></td><td>1</td><td><code>      if (request is http.Request) {</code></td>
@@ -318,7 +318,7 @@
 <td>86</td><td></td><td>6</td><td><code>    log('[$ts] &lt;-- COSMOS DB Status = ${response.statusCode} ${response.reasonPhrase}');</code></td>
 </tr>
 <tr class="lineCov" title="Line 87" id="line87">
-<td>87</td><td></td><td>1</td><td><code>    if (traceHeaders) {</code></td>
+<td>87</td><td></td><td>2</td><td><code>    if (traceHeaders) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 88" id="line88">
 <td>88</td><td></td><td>4</td><td><code>      for (var h in response.headers.entries) {</code></td>
@@ -357,19 +357,19 @@
 <td>99</td><td></td><td>1</td><td><code>        resp.statusCode,</code></td>
 </tr>
 <tr class="lineCov" title="Line 100" id="line100">
-<td>100</td><td></td><td>1</td><td><code>        contentLength: resp.contentLength,</code></td>
+<td>100</td><td></td><td>2</td><td><code>        contentLength: resp.contentLength,</code></td>
 </tr>
 <tr class="lineCov" title="Line 101" id="line101">
 <td>101</td><td></td><td>1</td><td><code>        headers: resp.headers,</code></td>
 </tr>
 <tr class="lineCov" title="Line 102" id="line102">
-<td>102</td><td></td><td>1</td><td><code>        reasonPhrase: resp.reasonPhrase,</code></td>
+<td>102</td><td></td><td>2</td><td><code>        reasonPhrase: resp.reasonPhrase,</code></td>
 </tr>
 <tr class="lineCov" title="Line 103" id="line103">
 <td>103</td><td></td><td>1</td><td><code>        isRedirect: resp.isRedirect,</code></td>
 </tr>
 <tr class="lineCov" title="Line 104" id="line104">
-<td>104</td><td></td><td>1</td><td><code>        request: response.request,</code></td>
+<td>104</td><td></td><td>2</td><td><code>        request: response.request,</code></td>
 </tr>
 <tr class="noop" title="Line 105" id="line105">
 <td>105</td><td></td><td></td><td><code>      );</code></td>
@@ -432,13 +432,13 @@
 <td>124</td><td></td><td>1</td><td><code>    try {</code></td>
 </tr>
 <tr class="lineCov" title="Line 125" id="line125">
-<td>125</td><td></td><td>1</td><td><code>      final ex = forceException;</code></td>
+<td>125</td><td></td><td>2</td><td><code>      final ex = forceException;</code></td>
 </tr>
 <tr class="noop" title="Line 126" id="line126">
 <td>126</td><td></td><td></td><td><code>      if (ex != null) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 127" id="line127">
-<td>127</td><td></td><td>1</td><td><code>        forceException = null;</code></td>
+<td>127</td><td></td><td>2</td><td><code>        forceException = null;</code></td>
 </tr>
 <tr class="lineCov" title="Line 128" id="line128">
 <td>128</td><td></td><td>1</td><td><code>        throw ex;</code></td>
@@ -453,7 +453,7 @@
 <td>131</td><td></td><td>2</td><td><code>        final delay = forceThrottleDelay!.inMilliseconds;</code></td>
 </tr>
 <tr class="lineCov" title="Line 132" id="line132">
-<td>132</td><td></td><td>1</td><td><code>        forceThrottleDelay = null;</code></td>
+<td>132</td><td></td><td>2</td><td><code>        forceThrottleDelay = null;</code></td>
 </tr>
 <tr class="lineCov" title="Line 133" id="line133">
 <td>133</td><td></td><td>2</td><td><code>        response = http.StreamedResponse(</code></td>
@@ -507,7 +507,7 @@
 <td>149</td><td></td><td></td><td><code>    } catch (ex) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 150" id="line150">
-<td>150</td><td></td><td>1</td><td><code>      if (trace) {</code></td>
+<td>150</td><td></td><td>2</td><td><code>      if (trace) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 151" id="line151">
 <td>151</td><td></td><td>2</td><td><code>        _logException(ts, ex);</code></td>
