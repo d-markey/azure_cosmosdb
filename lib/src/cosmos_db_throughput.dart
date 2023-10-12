@@ -6,14 +6,12 @@ import 'cosmos_db_exceptions.dart';
 
 /// Class representing a CosmosDB throughput.
 class CosmosDbThroughput {
-  
   /// Creates a new manual [throughput] RUs. Must be a multiple of 100. Minimum allowed
   /// is 400 RUs.
-  CosmosDbThroughput(int throughput)
-      : header = createHeader(throughput);
+  CosmosDbThroughput(int throughput) : header = createHeader(throughput);
 
   /// Used for servles instances where throughput can't be set
-  CosmosDbThroughput.none(): header = {};
+  CosmosDbThroughput.none() : header = {};
 
   static Map<String, String> createHeader(int throughput) {
     if (throughput < _min) {
@@ -24,7 +22,9 @@ class CosmosDbThroughput {
       throw ApplicationException(
           'Invalid throughput: value must be a multiple of 100 RUs.');
     }
-    return {HttpHeader.msOfferThroughput: throughput.toString(),};
+    return {
+      HttpHeader.msOfferThroughput: throughput.toString(),
+    };
   }
 
   /// Creates a new auto-scale throughput for [maxThroughput] RUs. Must be a multiple
@@ -52,5 +52,4 @@ class CosmosDbThroughput {
 
   static final _min = 400;
   static final _minAutoScale = 1000;
-  
 }

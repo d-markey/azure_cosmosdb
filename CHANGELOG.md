@@ -1,3 +1,8 @@
+## 2.2.0
+
+- Add none constructor to throughput for serverless config - PR https://github.com/d-markey/azure_cosmosdb/pull/10 by https://github.com/djkingCanada - fixes https://github.com/d-markey/azure_cosmosdb/issues/7.
+- Improve error message if partition key is not provided for a new container - PR https://github.com/d-markey/azure_cosmosdb/pull/9 by https://github.com/djkingCanada.
+
 ## 2.1.1
 
 - Upgrade version of `http`.
