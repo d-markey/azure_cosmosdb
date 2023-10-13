@@ -104,7 +104,8 @@ class CosmosDbContainers {
       return await open(name);
     } on NotFoundException {
       if(partitionKey == null){
-        throw "container '$name' not found - can not create with a null partion key";
+        throw ApplicationException(
+          "container '$name' not found - can not create with a null partion key");
       }
       return await create(
         name,
