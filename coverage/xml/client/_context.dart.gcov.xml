@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-06-27" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95348835" lines-covered="41" lines-valid="43" package="/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-12" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95348835" lines-covered="41" lines-valid="43" package="/client" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../_internal/_http_header.dart';</code>
@@ -277,9 +277,9 @@
 <code>  Map&lt;String, String&gt; getHeaders() {</code>
 <hit count="1" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="3">
+<line hits="2">
 <code>    final headers = {HttpHeader.userAgent: 'AzureCosmosDb.Dart/$version'};</code>
-<hit count="3" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="2">
 <code>    if (_headers != null) {</code>

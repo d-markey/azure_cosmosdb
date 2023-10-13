@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-06-27</dd>
+<dd>2023-10-12</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -183,7 +183,7 @@
 <td>41</td><td></td><td></td><td><code>  /// `null` if no check has been made yet.</code></td>
 </tr>
 <tr class="lineCov" title="Line 42" id="line42">
-<td>42</td><td></td><td>2</td><td><code>  bool? get exists =&gt; _exists;</code></td>
+<td>42</td><td></td><td>3</td><td><code>  bool? get exists =&gt; _exists;</code></td>
 </tr>
 <tr class="noop" title="Line 43" id="line43">
 <td>43</td><td></td><td></td><td><code>  bool? _exists;</code></td>
@@ -291,7 +291,7 @@
 <td>77</td><td></td><td>1</td><td><code>  void usePermission(CosmosDbPermission permission) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 78" id="line78">
-<td>78</td><td></td><td>2</td><td><code>    _token = permission.token;</code></td>
+<td>78</td><td></td><td>3</td><td><code>    _token = permission.token;</code></td>
 </tr>
 <tr class="noop" title="Line 79" id="line79">
 <td>79</td><td></td><td></td><td><code>  }</code></td>
@@ -348,7 +348,7 @@
 <td>96</td><td></td><td>1</td><td><code>    CosmosDbPermission? permission;</code></td>
 </tr>
 <tr class="lineCov" title="Line 97" id="line97">
-<td>97</td><td></td><td>1</td><td><code>    final callback = onForbidden;</code></td>
+<td>97</td><td></td><td>2</td><td><code>    final callback = onForbidden;</code></td>
 </tr>
 <tr class="lineCov" title="Line 98" id="line98">
 <td>98</td><td></td><td>2</td><td><code>    if (_token != null &amp;&amp; callback != null) {</code></td>
@@ -360,7 +360,7 @@
 <td>100</td><td></td><td></td><td><code>      if (permission != null) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 101" id="line101">
-<td>101</td><td></td><td>2</td><td><code>        _token = permission.token;</code></td>
+<td>101</td><td></td><td>3</td><td><code>        _token = permission.token;</code></td>
 </tr>
 <tr class="noop" title="Line 102" id="line102">
 <td>102</td><td></td><td></td><td><code>      }</code></td>
@@ -405,7 +405,7 @@
 <td>115</td><td></td><td>3</td><td><code>    final coll = await client.get&lt;CosmosDbContainer&gt;(</code></td>
 </tr>
 <tr class="lineCov" title="Line 116" id="line116">
-<td>116</td><td></td><td>1</td><td><code>        url,</code></td>
+<td>116</td><td></td><td>2</td><td><code>        url,</code></td>
 </tr>
 <tr class="lineCov" title="Line 117" id="line117">
 <td>117</td><td></td><td>2</td><td><code>        Context(</code></td>
@@ -414,7 +414,7 @@
 <td>118</td><td></td><td></td><td><code>          type: 'colls',</code></td>
 </tr>
 <tr class="lineCov" title="Line 119" id="line119">
-<td>119</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<td>119</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 120" id="line120">
 <td>120</td><td></td><td></td><td><code>          throwOnNotFound: true,</code></td>
@@ -459,7 +459,7 @@
 <td>133</td><td></td><td>5</td><td><code>      _pkRanges.addAll(await client.getMany&lt;PartitionKeyRange&gt;(</code></td>
 </tr>
 <tr class="lineCov" title="Line 134" id="line134">
-<td>134</td><td></td><td>2</td><td><code>          '$url/pkranges',</code></td>
+<td>134</td><td></td><td>3</td><td><code>          '$url/pkranges',</code></td>
 </tr>
 <tr class="noop" title="Line 135" id="line135">
 <td>135</td><td></td><td></td><td><code>          'PartitionKeyRanges',</code></td>
@@ -474,7 +474,7 @@
 <td>138</td><td></td><td></td><td><code>              type: 'pkranges',</code></td>
 </tr>
 <tr class="lineCov" title="Line 139" id="line139">
-<td>139</td><td></td><td>1</td><td><code>              token: permission?.token ?? _token,</code></td>
+<td>139</td><td></td><td>2</td><td><code>              token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="noop" title="Line 140" id="line140">
 <td>140</td><td></td><td></td><td><code>              throwOnNotFound: true,</code></td>
@@ -510,10 +510,10 @@
 <td>150</td><td></td><td>2</td><td><code>    final prevIndexingPolicy = _indexingPolicy;</code></td>
 </tr>
 <tr class="lineCov" title="Line 151" id="line151">
-<td>151</td><td></td><td>1</td><td><code>    final prevGeospatialConfig = _geospatialConfig;</code></td>
+<td>151</td><td></td><td>2</td><td><code>    final prevGeospatialConfig = _geospatialConfig;</code></td>
 </tr>
 <tr class="lineCov" title="Line 152" id="line152">
-<td>152</td><td></td><td>1</td><td><code>    _indexingPolicy = indexingPolicy;</code></td>
+<td>152</td><td></td><td>2</td><td><code>    _indexingPolicy = indexingPolicy;</code></td>
 </tr>
 <tr class="lineCov" title="Line 153" id="line153">
 <td>153</td><td></td><td>1</td><td><code>    if (geospatialConfig != null) {</code></td>
@@ -531,7 +531,7 @@
 <td>157</td><td></td><td>3</td><td><code>      await client.put&lt;CosmosDbContainer&gt;(</code></td>
 </tr>
 <tr class="lineCov" title="Line 158" id="line158">
-<td>158</td><td></td><td>1</td><td><code>          url,</code></td>
+<td>158</td><td></td><td>2</td><td><code>          url,</code></td>
 </tr>
 <tr class="noop" title="Line 159" id="line159">
 <td>159</td><td></td><td></td><td><code>          this,</code></td>
@@ -543,7 +543,7 @@
 <td>161</td><td></td><td></td><td><code>            type: 'colls',</code></td>
 </tr>
 <tr class="lineCov" title="Line 162" id="line162">
-<td>162</td><td></td><td>1</td><td><code>            token: permission?.token ?? _token,</code></td>
+<td>162</td><td></td><td>2</td><td><code>            token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="lineCov" title="Line 163" id="line163">
 <td>163</td><td></td><td>4</td><td><code>            builder: database.containers.fromJson,</code></td>
@@ -1230,13 +1230,13 @@
 <td>390</td><td></td><td>3</td><td><code>      return await client.batch(</code></td>
 </tr>
 <tr class="lineCov" title="Line 391" id="line391">
-<td>391</td><td></td><td>2</td><td><code>        '$url/docs',</code></td>
+<td>391</td><td></td><td>3</td><td><code>        '$url/docs',</code></td>
 </tr>
 <tr class="noop" title="Line 392" id="line392">
 <td>392</td><td></td><td></td><td><code>        batch,</code></td>
 </tr>
 <tr class="lineCov" title="Line 393" id="line393">
-<td>393</td><td></td><td>1</td><td><code>        _pkRanges,</code></td>
+<td>393</td><td></td><td>2</td><td><code>        _pkRanges,</code></td>
 </tr>
 <tr class="lineCov" title="Line 394" id="line394">
 <td>394</td><td></td><td>2</td><td><code>        Context(</code></td>
@@ -1248,10 +1248,10 @@
 <td>396</td><td></td><td>1</td><td><code>          resId: url,</code></td>
 </tr>
 <tr class="lineCov" title="Line 397" id="line397">
-<td>397</td><td></td><td>1</td><td><code>          token: permission?.token ?? _token,</code></td>
+<td>397</td><td></td><td>2</td><td><code>          token: permission?.token ?? _token,</code></td>
 </tr>
 <tr class="lineCov" title="Line 398" id="line398">
-<td>398</td><td></td><td>1</td><td><code>          builders: _builders,</code></td>
+<td>398</td><td></td><td>2</td><td><code>          builders: _builders,</code></td>
 </tr>
 <tr class="lineCov" title="Line 399" id="line399">
 <td>399</td><td></td><td>2</td><td><code>          onForbidden: _refreshPermission,</code></td>

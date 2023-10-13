@@ -71,6 +71,16 @@ void run(CosmosDbServer cosmosDB) {
     await database.containers.delete(container);
   });
 
+  test('Create container with openOrCreate() - no provisioned throughput',
+      () async {
+    final container = await database.containers.openOrCreate(getTempName(),
+        partitionKey: PartitionKeySpec.id,
+        throughput: CosmosDbThroughput.none());
+    expect(container, isNotNull);
+    expect(container.exists, isTrue);
+    await database.containers.delete(container);
+  });
+
   test('Create container with openOrCreate() - multi-hash partition key',
       () async {
     final container = await database.containers.openOrCreate(getTempName(),
