@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../../../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-12" filename="cosmos_db_containers.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95555556" lines-covered="43" lines-valid="45" package="/a/azure_cosmosdb/azure_cosmosdb/lib/src" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../../../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-13" filename="cosmos_db_containers.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9130435" lines-covered="42" lines-valid="46" package="/a/azure_cosmosdb/azure_cosmosdb/lib/src" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'client/_context.dart';</code>
@@ -356,6 +356,18 @@
 <code>    } on NotFoundException {</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
+<line>
+<code>      if (partitionKey == null) {</code>
+</line>
+<line hits="0">
+<code>        throw ApplicationException(</code>
+</line>
+<line hits="0">
+<code>            'Container \'$name\' not found - can not create with a null partion key');</code>
+</line>
+<line>
+<code>      }</code>
+</line>
 <line hits="2">
 <code>      return await create(</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
@@ -363,9 +375,8 @@
 <line>
 <code>        name,</code>
 </line>
-<line hits="1">
-<code>        partitionKey: partitionKey!,</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<line>
+<code>        partitionKey: partitionKey,</code>
 </line>
 <line>
 <code>        indexingPolicy: indexingPolicy,</code>

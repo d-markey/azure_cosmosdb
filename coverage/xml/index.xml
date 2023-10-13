@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-12" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9197042" lines-covered="1741" lines-valid="1893" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-13" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.91657865" lines-covered="1736" lines-valid="1894" testname="lcov.info" version="1.5">
 <sources>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="184" lines-valid="185" pathname="/patch" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="20" lines-valid="22" pathname="/queries" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="101" lines-valid="111" pathname="/permissions" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="95" lines-valid="100" pathname="/indexing" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="168" lines-valid="178" pathname="/spatial" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="390" lines-valid="426" pathname="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="388" lines-valid="427" pathname="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="36" lines-valid="44" pathname="/batch/operations" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="187" lines-valid="203" pathname="/batch" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="67" lines-valid="67" pathname="/_internal" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="270" lines-valid="303" pathname="/client" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="267" lines-valid="303" pathname="/client" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 <source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="223" lines-valid="254" pathname="/partition" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
 </sources>
 <config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>

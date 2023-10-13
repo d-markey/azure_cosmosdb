@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-10-12</dd>
+<dd>2023-10-13</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>43</td><td>45</td><td class="high">95.6%</td>
+<th scope="row">Lines</th><td>42</td><td>46</td><td class="high">91.3%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -374,35 +374,47 @@
 <tr class="lineCov" title="Line 105" id="line105">
 <td>105</td><td></td><td>2</td><td><code>    } on NotFoundException {</code></td>
 </tr>
-<tr class="lineCov" title="Line 106" id="line106">
-<td>106</td><td></td><td>2</td><td><code>      return await create(</code></td>
+<tr class="noop" title="Line 106" id="line106">
+<td>106</td><td></td><td></td><td><code>      if (partitionKey == null) {</code></td>
 </tr>
-<tr class="noop" title="Line 107" id="line107">
-<td>107</td><td></td><td></td><td><code>        name,</code></td>
+<tr class="lineNoCov" title="Line 107" id="line107">
+<td>107</td><td></td><td>0</td><td><code>        throw ApplicationException(</code></td>
 </tr>
-<tr class="lineCov" title="Line 108" id="line108">
-<td>108</td><td></td><td>1</td><td><code>        partitionKey: partitionKey!,</code></td>
+<tr class="lineNoCov" title="Line 108" id="line108">
+<td>108</td><td></td><td>0</td><td><code>            'Container \'$name\' not found - can not create with a null partion key');</code></td>
 </tr>
 <tr class="noop" title="Line 109" id="line109">
-<td>109</td><td></td><td></td><td><code>        indexingPolicy: indexingPolicy,</code></td>
+<td>109</td><td></td><td></td><td><code>      }</code></td>
 </tr>
-<tr class="noop" title="Line 110" id="line110">
-<td>110</td><td></td><td></td><td><code>        geospatialConfig: geospatialConfig,</code></td>
+<tr class="lineCov" title="Line 110" id="line110">
+<td>110</td><td></td><td>2</td><td><code>      return await create(</code></td>
 </tr>
 <tr class="noop" title="Line 111" id="line111">
-<td>111</td><td></td><td></td><td><code>        throughput: throughput,</code></td>
+<td>111</td><td></td><td></td><td><code>        name,</code></td>
 </tr>
 <tr class="noop" title="Line 112" id="line112">
-<td>112</td><td></td><td></td><td><code>      );</code></td>
+<td>112</td><td></td><td></td><td><code>        partitionKey: partitionKey,</code></td>
 </tr>
 <tr class="noop" title="Line 113" id="line113">
-<td>113</td><td></td><td></td><td><code>    }</code></td>
+<td>113</td><td></td><td></td><td><code>        indexingPolicy: indexingPolicy,</code></td>
 </tr>
-<tr class="lineCov" title="Line 114" id="line114">
-<td>114</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="noop" title="Line 114" id="line114">
+<td>114</td><td></td><td></td><td><code>        geospatialConfig: geospatialConfig,</code></td>
 </tr>
 <tr class="noop" title="Line 115" id="line115">
-<td>115</td><td></td><td></td><td><code>}</code></td>
+<td>115</td><td></td><td></td><td><code>        throughput: throughput,</code></td>
+</tr>
+<tr class="noop" title="Line 116" id="line116">
+<td>116</td><td></td><td></td><td><code>      );</code></td>
+</tr>
+<tr class="noop" title="Line 117" id="line117">
+<td>117</td><td></td><td></td><td><code>    }</code></td>
+</tr>
+<tr class="lineCov" title="Line 118" id="line118">
+<td>118</td><td></td><td>1</td><td><code>  }</code></td>
+</tr>
+<tr class="noop" title="Line 119" id="line119">
+<td>119</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>
