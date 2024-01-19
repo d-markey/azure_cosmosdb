@@ -9,7 +9,7 @@ class PartitionKeySpec {
       : _partitionKeyPaths = null;
 
   factory PartitionKeySpec._cached(List<String> paths,
-      {required String kind, required int version}) {
+      {required String kind, int? version}) {
     final pk = PartitionKeySpec._(paths, kind, version);
     var cached = _cache.lookup(pk);
     if (cached == null) {
@@ -44,10 +44,14 @@ class PartitionKeySpec {
   final String kind;
 
   /// The partition key version.
-  final int version;
+  final int? version;
 
   /// Serializes this instance to a JSON object.
-  dynamic toJson() => {'paths': paths, 'kind': kind, 'version': version};
+  dynamic toJson() => {
+        'paths': paths,
+        'kind': kind,
+        if (version != null) 'version': version,
+      };
 
   /// The partition key components.
   List<List<PathComponent>>? _partitionKeyPaths;
@@ -91,7 +95,7 @@ class PartitionKeySpec {
   }
 
   List<dynamic> _extractKeys(BaseDocument doc) =>
-      (_partitionKeyPaths ??= paths.map((pk) => PathParser.parse(pk)).toList())
+      (_partitionKeyPaths ??= paths.map(PathParser.parse).toList())
           .map((p) => p.extract(doc.toJson()))
           .where((k) => k != null)
           .toList();
