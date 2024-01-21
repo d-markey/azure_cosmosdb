@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2023-10-13" filename="partition_key_spec.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.94" lines-covered="47" lines-valid="50" package="/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-01-21" filename="partition_key_spec.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9444444" lines-covered="51" lines-valid="54" package="/partition" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import '../base_document.dart';</code>
@@ -38,7 +38,7 @@
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line>
-<code>      {required String kind, required int version}) {</code>
+<code>      {required String kind, int? version}) {</code>
 </line>
 <line hits="1">
 <code>    final pk = PartitionKeySpec._(paths, kind, version);</code>
@@ -156,7 +156,7 @@
 <code>  /// The partition key version.</code>
 </line>
 <line>
-<code>  final int version;</code>
+<code>  final int? version;</code>
 </line>
 <line>
 <code/>
@@ -164,9 +164,25 @@
 <line>
 <code>  /// Serializes this instance to a JSON object.</code>
 </line>
-<line hits="6">
-<code>  dynamic toJson() =&gt; {'paths': paths, 'kind': kind, 'version': version};</code>
-<hit count="6" name="&lt;unnamed&gt;"/>
+<line hits="3">
+<code>  dynamic toJson() =&gt; {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        'paths': paths,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3">
+<code>        'kind': kind,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4">
+<code>        if (version != null) 'version': version,</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1">
+<code>      };</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
 </line>
 <line>
 <code/>
@@ -322,9 +338,9 @@
 <code>  List&lt;dynamic&gt; _extractKeys(BaseDocument doc) =&gt;</code>
 <hit count="2" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="7">
-<code>      (_partitionKeyPaths ??= paths.map((pk) =&gt; PathParser.parse(pk)).toList())</code>
-<hit count="7" name="&lt;unnamed&gt;"/>
+<line hits="5">
+<code>      (_partitionKeyPaths ??= paths.map(PathParser.parse).toList())</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="5">
 <code>          .map((p) =&gt; p.extract(doc.toJson()))</code>

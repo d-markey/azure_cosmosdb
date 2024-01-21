@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2023-10-13</dd>
+<dd>2024-01-21</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 <tr>
-<th scope="row">Lines</th><td>6</td><td>9</td><td class="low">66.7%</td>
+<th scope="row">Lines</th><td>9</td><td>9</td><td class="high">100.0%</td>
 </tr>
 <tr>
 <th scope="row">Functions</th><td>0</td><td>0</td><td class="high">-</td>
@@ -92,17 +92,17 @@
 <tr class="noop" title="Line 11" id="line11">
 <td>11</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="lineNoCov" title="Line 12" id="line12">
-<td>12</td><td></td><td>0</td><td><code>  bool handleBadCertificate(X509Certificate cert, String host, int port) {</code></td>
+<tr class="lineCov" title="Line 12" id="line12">
+<td>12</td><td></td><td>1</td><td><code>  bool handleBadCertificate(X509Certificate cert, String host, int port) {</code></td>
 </tr>
 <tr class="noop" title="Line 13" id="line13">
 <td>13</td><td></td><td></td><td><code>    final ok =</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 14" id="line14">
-<td>14</td><td></td><td>0</td><td><code>        host.toLowerCase().contains('localhost') || host.contains('127.0.0.1');</code></td>
+<tr class="lineCov" title="Line 14" id="line14">
+<td>14</td><td></td><td>2</td><td><code>        host.toLowerCase().contains('localhost') || host.contains('127.0.0.1');</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 15" id="line15">
-<td>15</td><td></td><td>0</td><td><code>    log('Bad certificate from $host: ${ok ? 'bypass security' : 'enforce security'}');</code></td>
+<tr class="lineCov" title="Line 15" id="line15">
+<td>15</td><td></td><td>2</td><td><code>    log('Bad certificate from $host: ${ok ? 'bypass security' : 'enforce security'}');</code></td>
 </tr>
 <tr class="noop" title="Line 16" id="line16">
 <td>16</td><td></td><td></td><td><code>    return ok;</code></td>
