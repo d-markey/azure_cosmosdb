@@ -1,3 +1,7 @@
+## 2.2.1
+
+- Add support for older containers where `PartitionKeySpec.version` is null -- fixes https://github.com/d-markey/azure_cosmosdb/issues/12.
+
 ## 2.2.0
 
 - Add none constructor to throughput for serverless config - PR https://github.com/d-markey/azure_cosmosdb/pull/10 by https://github.com/djkingCanada - fixes https://github.com/d-markey/azure_cosmosdb/issues/7.
