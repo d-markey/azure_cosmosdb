@@ -27,7 +27,7 @@ class TestTypedDocument extends TestDocument {
   int get hashCode => (id.hashCode << 2) ^ type.hashCode;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other is! TestTypedDocument ||
         id != other.id ||
         type != other.type ||

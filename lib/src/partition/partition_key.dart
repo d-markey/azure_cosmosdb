@@ -29,7 +29,7 @@ class PartitionKey {
       (values.isEmpty ? 0xFFFFFFFF : values.first.hashCode);
 
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       (other is PartitionKey) && _areListsEqual(values, other.values);
 
   static bool _areListsEqual(List a, List b) {

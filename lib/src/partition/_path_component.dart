@@ -14,7 +14,7 @@ class PathSegment extends PathComponent {
   int get hashCode => segment.hashCode;
 
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       (other is PathSegment) && segment == other.segment;
 }
 
@@ -30,7 +30,7 @@ class ArrayIndex extends PathComponent {
   int get hashCode => index;
 
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       (other is ArrayIndex) && index == other.index;
 }
 

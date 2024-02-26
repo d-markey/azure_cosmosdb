@@ -1,3 +1,7 @@
+## 2.2.2
+
+- Fix lints warnings reported by pub.dev.
+
 ## 2.2.1
 
 - Add support for older containers where `PartitionKeySpec.version` is null -- fixes https://github.com/d-markey/azure_cosmosdb/issues/12.

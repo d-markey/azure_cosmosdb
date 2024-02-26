@@ -60,20 +60,19 @@ class PartitionKeySpec {
   int get hashCode => paths.join('\u0000').hashCode;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other is! PartitionKeySpec ||
         other.paths.length != paths.length ||
         other.version != version ||
         other.kind != kind) {
       return false;
-    } else {
-      for (var i = 0; i < paths.length; i++) {
-        if (other.paths[i] != paths[i]) {
-          return false;
-        }
-      }
-      return true;
     }
+    for (var i = 0; i < paths.length; i++) {
+      if (other.paths[i] != paths[i]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /// Deserializes data from JSON object [json] into a new [PartitionKeySpec] instance.

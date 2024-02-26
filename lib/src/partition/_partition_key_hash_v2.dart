@@ -153,5 +153,6 @@ class PartitionKeyHashV2 implements Comparable<PartitionKeyHashV2> {
   int get hashCode => hex.hashCode;
 
   @override
-  bool operator ==(dynamic other) => compareTo(other) == 0;
+  bool operator ==(Object other) =>
+      (other is PartitionKeyHashV2) && compareTo(other) == 0;
 }
