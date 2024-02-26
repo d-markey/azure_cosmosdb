@@ -6,7 +6,7 @@ import '../partition/partition_key.dart';
 import '../permissions/cosmos_db_permission.dart';
 import '../queries/paging.dart';
 
-const version = '2.0.0';
+const version = '2.2.2';
 
 class Context {
   Context({

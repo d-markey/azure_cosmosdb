@@ -1,6 +1,7 @@
 ## 2.2.2
 
 - Fix lints warnings reported by pub.dev.
+- Update tests as https://github.com/Azure/azure-cosmos-dotnet-v3/issues/3659 has been fixed.
 
 ## 2.2.1
 

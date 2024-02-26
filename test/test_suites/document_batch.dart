@@ -429,12 +429,8 @@ void runTests(Batch Function([PartitionKey?]) buildTestBatch) {
     results = resp.results.toList();
     expect(resp.length, equals(batch.length));
 
-    // >>> COSMOS DB bug when using incr patch operations on array items
-    // >>> see https://github.com/Azure/azure-cosmos-dotnet-v3/issues/3659
     checkResult(results[0], HttpStatusCode.ok,
-        TestTypedDocument('1', 'XX', 'Patched #1', [2, 1, 1, 2, 3]));
-    // <<< once MS has fixed the bug, the array should contain [2, 2, 2]
-    // <<< COSMOS DB bug when using incr patch operations on array items
+        TestTypedDocument('1', 'XX', 'Patched #1', [2, 2, 2]));
 
     checkResult(results[1], HttpStatusCode.ok,
         TestTypedDocument('2', 'XX', 'Patched #2', [8, -1]));
