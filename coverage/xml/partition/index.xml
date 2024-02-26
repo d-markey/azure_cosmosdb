@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-01-21" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.87984496" lines-covered="227" lines-valid="258" package="/partition" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-02-26" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.88030887" lines-covered="228" lines-valid="259" package="/partition" testname="lcov.info" version="1.5">
 <sources>
-<source branches-hit="0" branches-valid="0" filename="_partition_key_hash_v2.dart" functions-hit="0" functions-valid="0" lines-hit="58" lines-valid="76" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
-<testCase branch-hit="0" function-hit="0" line-hit="58" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="_partition_key_hash_v2.dart" functions-hit="0" functions-valid="0" lines-hit="59" lines-valid="77" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
+<testCase branch-hit="0" function-hit="0" line-hit="59" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="partition_key.dart" functions-hit="0" functions-valid="0" lines-hit="33" lines-valid="33" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
 <testCase branch-hit="0" function-hit="0" line-hit="33" name="&lt;unnamed&gt;"/>

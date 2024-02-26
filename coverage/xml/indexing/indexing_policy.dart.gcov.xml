@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-01-21" filename="indexing_policy.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9" lines-covered="45" lines-valid="50" package="/indexing" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-02-26" filename="indexing_policy.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9" lines-covered="45" lines-valid="50" package="/indexing" testname="lcov.info" version="1.5">
 <lines>
 <line>
 <code>import 'index_path.dart';</code>
@@ -121,9 +121,9 @@
 <code>        if (excludedPaths.isNotEmpty)</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="1">
+<line hits="2">
 <code>          'excludedPaths':</code>
-<hit count="1" name="&lt;unnamed&gt;"/>
+<hit count="2" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="7">
 <code>              excludedPaths.map((p) =&gt; p.toJson()..remove('order')).toList(),</code>
@@ -133,9 +133,9 @@
 <code>        if (compositeIndexes.isNotEmpty)</code>
 <hit count="3" name="&lt;unnamed&gt;"/>
 </line>
-<line hits="2">
+<line hits="3">
 <code>          'compositeIndexes': compositeIndexes</code>
-<hit count="2" name="&lt;unnamed&gt;"/>
+<hit count="3" name="&lt;unnamed&gt;"/>
 </line>
 <line hits="4">
 <code>              .where((c) =&gt; c.isNotEmpty)</code>

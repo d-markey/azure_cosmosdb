@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-01-21" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8910891" lines-covered="270" lines-valid="303" package="/client" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-02-26" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8811881" lines-covered="267" lines-valid="303" package="/client" testname="lcov.info" version="1.5">
 <sources>
 <source branches-hit="0" branches-valid="0" filename="_retry_if_vm.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="6" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
 <testCase branch-hit="0" function-hit="0" line-hit="6" name="&lt;unnamed&gt;"/>
@@ -7,8 +7,8 @@
 <source branches-hit="0" branches-valid="0" filename="_context.dart" functions-hit="0" functions-valid="0" lines-hit="41" lines-valid="43" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
 <testCase branch-hit="0" function-hit="0" line-hit="41" name="&lt;unnamed&gt;"/>
 </source>
-<source branches-hit="0" branches-valid="0" filename="_debug_http_overrides_vm.dart" functions-hit="0" functions-valid="0" lines-hit="9" lines-valid="9" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
-<testCase branch-hit="0" function-hit="0" line-hit="9" name="&lt;unnamed&gt;"/>
+<source branches-hit="0" branches-valid="0" filename="_debug_http_overrides_vm.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="9" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
+<testCase branch-hit="0" function-hit="0" line-hit="6" name="&lt;unnamed&gt;"/>
 </source>
 <source branches-hit="0" branches-valid="0" filename="debug_http_client.dart" functions-hit="0" functions-valid="0" lines-hit="63" lines-valid="77" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src">
 <testCase branch-hit="0" function-hit="0" line-hit="63" name="&lt;unnamed&gt;"/>

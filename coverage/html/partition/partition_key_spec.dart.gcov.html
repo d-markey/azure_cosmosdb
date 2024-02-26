@@ -17,7 +17,7 @@
 <dt>Test</dt>
 <dd>lcov.info</dd>
 <dt>Date</dt>
-<dd>2024-01-21</dd>
+<dd>2024-02-26</dd>
 <dt class="legend">Legend</dt>
 <dd class="legend">
 <dl class="legend">
@@ -246,7 +246,7 @@
 <td>62</td><td></td><td>1</td><td><code>  @override</code></td>
 </tr>
 <tr class="lineCov" title="Line 63" id="line63">
-<td>63</td><td></td><td>1</td><td><code>  bool operator ==(dynamic other) {</code></td>
+<td>63</td><td></td><td>1</td><td><code>  bool operator ==(Object other) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 64" id="line64">
 <td>64</td><td></td><td>2</td><td><code>    if (other is! PartitionKeySpec ||</code></td>
@@ -264,112 +264,109 @@
 <td>68</td><td></td><td>1</td><td><code>      return false;</code></td>
 </tr>
 <tr class="noop" title="Line 69" id="line69">
-<td>69</td><td></td><td></td><td><code>    } else {</code></td>
+<td>69</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 70" id="line70">
-<td>70</td><td></td><td>5</td><td><code>      for (var i = 0; i &lt; paths.length; i++) {</code></td>
+<td>70</td><td></td><td>5</td><td><code>    for (var i = 0; i &lt; paths.length; i++) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 71" id="line71">
-<td>71</td><td></td><td>6</td><td><code>        if (other.paths[i] != paths[i]) {</code></td>
+<td>71</td><td></td><td>6</td><td><code>      if (other.paths[i] != paths[i]) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 72" id="line72">
-<td>72</td><td></td><td>1</td><td><code>          return false;</code></td>
+<td>72</td><td></td><td>1</td><td><code>        return false;</code></td>
 </tr>
 <tr class="noop" title="Line 73" id="line73">
-<td>73</td><td></td><td></td><td><code>        }</code></td>
+<td>73</td><td></td><td></td><td><code>      }</code></td>
 </tr>
 <tr class="noop" title="Line 74" id="line74">
-<td>74</td><td></td><td></td><td><code>      }</code></td>
+<td>74</td><td></td><td></td><td><code>    }</code></td>
 </tr>
 <tr class="lineCov" title="Line 75" id="line75">
-<td>75</td><td></td><td>1</td><td><code>      return true;</code></td>
+<td>75</td><td></td><td>1</td><td><code>    return true;</code></td>
 </tr>
-<tr class="noop" title="Line 76" id="line76">
-<td>76</td><td></td><td></td><td><code>    }</code></td>
+<tr class="lineCov" title="Line 76" id="line76">
+<td>76</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
-<tr class="lineCov" title="Line 77" id="line77">
-<td>77</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="noop" title="Line 77" id="line77">
+<td>77</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 78" id="line78">
-<td>78</td><td></td><td></td><td><code></code></td>
+<td>78</td><td></td><td></td><td><code>  /// Deserializes data from JSON object [json] into a new [PartitionKeySpec] instance.</code></td>
 </tr>
 <tr class="noop" title="Line 79" id="line79">
-<td>79</td><td></td><td></td><td><code>  /// Deserializes data from JSON object [json] into a new [PartitionKeySpec] instance.</code></td>
+<td>79</td><td></td><td></td><td><code>  /// Handles fields `paths`, `kind`, `version`.</code></td>
 </tr>
-<tr class="noop" title="Line 80" id="line80">
-<td>80</td><td></td><td></td><td><code>  /// Handles fields `paths`, `kind`, `version`.</code></td>
+<tr class="lineCov" title="Line 80" id="line80">
+<td>80</td><td></td><td>3</td><td><code>  static PartitionKeySpec fromJson(dynamic json) =&gt; PartitionKeySpec._cached(</code></td>
 </tr>
 <tr class="lineCov" title="Line 81" id="line81">
-<td>81</td><td></td><td>3</td><td><code>  static PartitionKeySpec fromJson(dynamic json) =&gt; PartitionKeySpec._cached(</code></td>
+<td>81</td><td></td><td>3</td><td><code>        json['paths'].cast&lt;String&gt;(),</code></td>
 </tr>
 <tr class="lineCov" title="Line 82" id="line82">
-<td>82</td><td></td><td>3</td><td><code>        json['paths'].cast&lt;String&gt;(),</code></td>
+<td>82</td><td></td><td>2</td><td><code>        kind: json['kind'],</code></td>
 </tr>
 <tr class="lineCov" title="Line 83" id="line83">
-<td>83</td><td></td><td>2</td><td><code>        kind: json['kind'],</code></td>
+<td>83</td><td></td><td>2</td><td><code>        version: json['version'],</code></td>
 </tr>
-<tr class="lineCov" title="Line 84" id="line84">
-<td>84</td><td></td><td>2</td><td><code>        version: json['version'],</code></td>
+<tr class="noop" title="Line 84" id="line84">
+<td>84</td><td></td><td></td><td><code>      );</code></td>
 </tr>
 <tr class="noop" title="Line 85" id="line85">
-<td>85</td><td></td><td></td><td><code>      );</code></td>
+<td>85</td><td></td><td></td><td><code></code></td>
 </tr>
 <tr class="noop" title="Line 86" id="line86">
-<td>86</td><td></td><td></td><td><code></code></td>
+<td>86</td><td></td><td></td><td><code>  /// Extracts the [document]'s partition key according to this specification.</code></td>
 </tr>
-<tr class="noop" title="Line 87" id="line87">
-<td>87</td><td></td><td></td><td><code>  /// Extracts the [document]'s partition key according to this specification.</code></td>
+<tr class="lineCov" title="Line 87" id="line87">
+<td>87</td><td></td><td>2</td><td><code>  PartitionKey? from(BaseDocument document) {</code></td>
 </tr>
 <tr class="lineCov" title="Line 88" id="line88">
-<td>88</td><td></td><td>2</td><td><code>  PartitionKey? from(BaseDocument document) {</code></td>
+<td>88</td><td></td><td>1</td><td><code>    try {</code></td>
 </tr>
 <tr class="lineCov" title="Line 89" id="line89">
-<td>89</td><td></td><td>1</td><td><code>    try {</code></td>
+<td>89</td><td></td><td>2</td><td><code>      final keys = _extractKeys(document);</code></td>
 </tr>
 <tr class="lineCov" title="Line 90" id="line90">
-<td>90</td><td></td><td>2</td><td><code>      final keys = _extractKeys(document);</code></td>
+<td>90</td><td></td><td>3</td><td><code>      return keys.isEmpty ? null : PartitionKey.hierarchical(keys);</code></td>
 </tr>
-<tr class="lineCov" title="Line 91" id="line91">
-<td>91</td><td></td><td>3</td><td><code>      return keys.isEmpty ? null : PartitionKey.hierarchical(keys);</code></td>
+<tr class="noop" title="Line 91" id="line91">
+<td>91</td><td></td><td></td><td><code>    } catch (ex) {</code></td>
 </tr>
-<tr class="noop" title="Line 92" id="line92">
-<td>92</td><td></td><td></td><td><code>    } catch (ex) {</code></td>
+<tr class="lineNoCov" title="Line 92" id="line92">
+<td>92</td><td></td><td>0</td><td><code>      return null;</code></td>
 </tr>
-<tr class="lineNoCov" title="Line 93" id="line93">
-<td>93</td><td></td><td>0</td><td><code>      return null;</code></td>
+<tr class="noop" title="Line 93" id="line93">
+<td>93</td><td></td><td></td><td><code>    }</code></td>
 </tr>
-<tr class="noop" title="Line 94" id="line94">
-<td>94</td><td></td><td></td><td><code>    }</code></td>
+<tr class="lineCov" title="Line 94" id="line94">
+<td>94</td><td></td><td>1</td><td><code>  }</code></td>
 </tr>
-<tr class="lineCov" title="Line 95" id="line95">
-<td>95</td><td></td><td>1</td><td><code>  }</code></td>
+<tr class="noop" title="Line 95" id="line95">
+<td>95</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="noop" title="Line 96" id="line96">
-<td>96</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 96" id="line96">
+<td>96</td><td></td><td>2</td><td><code>  List&lt;dynamic&gt; _extractKeys(BaseDocument doc) =&gt;</code></td>
 </tr>
 <tr class="lineCov" title="Line 97" id="line97">
-<td>97</td><td></td><td>2</td><td><code>  List&lt;dynamic&gt; _extractKeys(BaseDocument doc) =&gt;</code></td>
+<td>97</td><td></td><td>5</td><td><code>      (_partitionKeyPaths ??= paths.map(PathParser.parse).toList())</code></td>
 </tr>
 <tr class="lineCov" title="Line 98" id="line98">
-<td>98</td><td></td><td>5</td><td><code>      (_partitionKeyPaths ??= paths.map(PathParser.parse).toList())</code></td>
+<td>98</td><td></td><td>5</td><td><code>          .map((p) =&gt; p.extract(doc.toJson()))</code></td>
 </tr>
 <tr class="lineCov" title="Line 99" id="line99">
-<td>99</td><td></td><td>5</td><td><code>          .map((p) =&gt; p.extract(doc.toJson()))</code></td>
+<td>99</td><td></td><td>3</td><td><code>          .where((k) =&gt; k != null)</code></td>
 </tr>
 <tr class="lineCov" title="Line 100" id="line100">
-<td>100</td><td></td><td>3</td><td><code>          .where((k) =&gt; k != null)</code></td>
+<td>100</td><td></td><td>2</td><td><code>          .toList();</code></td>
 </tr>
-<tr class="lineCov" title="Line 101" id="line101">
-<td>101</td><td></td><td>2</td><td><code>          .toList();</code></td>
+<tr class="noop" title="Line 101" id="line101">
+<td>101</td><td></td><td></td><td><code></code></td>
 </tr>
-<tr class="noop" title="Line 102" id="line102">
-<td>102</td><td></td><td></td><td><code></code></td>
+<tr class="lineCov" title="Line 102" id="line102">
+<td>102</td><td></td><td>4</td><td><code>  static final _cache = &lt;PartitionKeySpec&gt;{id};</code></td>
 </tr>
-<tr class="lineCov" title="Line 103" id="line103">
-<td>103</td><td></td><td>4</td><td><code>  static final _cache = &lt;PartitionKeySpec&gt;{id};</code></td>
-</tr>
-<tr class="noop" title="Line 104" id="line104">
-<td>104</td><td></td><td></td><td><code>}</code></td>
+<tr class="noop" title="Line 103" id="line103">
+<td>103</td><td></td><td></td><td><code>}</code></td>
 </tr>
 </tbody>
 </table>
