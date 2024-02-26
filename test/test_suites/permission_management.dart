@@ -15,7 +15,7 @@ void main() async {
 void run(CosmosDbServer cosmosDB) {
   final CosmosDbUser user = CosmosDbUser('UserID');
 
-  final permName = '${user.id}-items-perm-$secondsSinceEpoch';
+  final permName = '${user.id}-items-perm-$millisecondsSinceEpoch';
   final collName = 'items';
 
   late CosmosDbDatabase database;

@@ -25,13 +25,13 @@ Future<CosmosDbServer?> getTestInstance({required bool preview}) async {
   }
 }
 
-int get secondsSinceEpoch => DateTime.now().millisecondsSinceEpoch ~/ 1000;
+int get millisecondsSinceEpoch => DateTime.now().millisecondsSinceEpoch;
 
 int _globalCounter = 0;
 
 String getTempName([String? prefix]) {
   _globalCounter++;
-  return '${prefix ?? 'temp'}_${_globalCounter}_$secondsSinceEpoch';
+  return '${prefix ?? 'temp'}_${_globalCounter}_$millisecondsSinceEpoch';
 }
 
 void checkDocument(BaseDocument doc, BaseDocument expected) => expect(

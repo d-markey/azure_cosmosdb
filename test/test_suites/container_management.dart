@@ -13,7 +13,7 @@ void main() async {
 
 void run(CosmosDbServer cosmosDB) {
   final unexistingContainer = 'not_found';
-  final newContainer = 'test';
+  final newContainer = getTempName('test');
 
   late CosmosDbDatabase database;
   late CosmosDbDatabase database_20000RU;

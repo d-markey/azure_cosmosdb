@@ -31,7 +31,7 @@ GOTO parse
 
 RMDIR .\test\coverage /S /Q
 MKDIR .\test\coverage
-CALL dart test --coverage=.\test\coverage %__ARGS__%
+CALL dart test -j 1 --coverage=.\test\coverage %__ARGS__%
 SET __ERRLVL__=%ERRORLEVEL%
 IF %__ERRLVL__% NEQ 0 (
     ECHO Tests failed with exit code = %__ERRLVL__%
