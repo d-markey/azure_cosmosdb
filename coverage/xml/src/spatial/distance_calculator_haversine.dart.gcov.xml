@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="distance_calculator_haversine.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="12" lines-valid="12" package="src/spatial" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:math' as math;</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import 'distance_calculator.dart';</code>
+</line>
+<line number="4">
+<code>import 'point.dart';</code>
+</line>
+<line number="5">
+<code/>
+</line>
+<line number="6">
+<code>/// The Earth's radius, in kilometers.</code>
+</line>
+<line number="7">
+<code>const double earthRadiusInKm = 6371;</code>
+</line>
+<line number="8">
+<code/>
+</line>
+<line number="9">
+<code>/// Distance calculator for points in latitude/longitude coordinates on Earth.</code>
+</line>
+<line number="10">
+<code>const earthDistanceCalculator = DistanceCalculatorHaversine(earthRadiusInKm);</code>
+</line>
+<line number="11">
+<code/>
+</line>
+<line number="12">
+<code>/// Distance calculator for points on a sphere (latitude/longitude coordinates),</code>
+</line>
+<line number="13">
+<code>/// based on the Haversine algorithm.</code>
+</line>
+<line number="14">
+<code>class DistanceCalculatorHaversine extends DistanceCalculator {</code>
+</line>
+<line hits="1" number="15">
+<code>  const DistanceCalculatorHaversine(this.radius);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="16">
+<code/>
+</line>
+<line number="17">
+<code>  /// The sphere's radius.</code>
+</line>
+<line number="18">
+<code>  final double radius;</code>
+</line>
+<line number="19">
+<code/>
+</line>
+<line hits="3" number="20">
+<code>  static double _rad(num degrees) =&gt; degrees * math.pi / 180;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="21">
+<code>  static double _sin(num degrees) =&gt; math.sin(_rad(degrees));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="22">
+<code>  static double _cos(num degrees) =&gt; math.cos(_rad(degrees));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code/>
+</line>
+<line number="24">
+<code>  /// Computes the distance between [from] and [to] positions. Returns the</code>
+</line>
+<line number="25">
+<code>  /// great-circle distance using 'haversine' formula. [Point.altitude]</code>
+</line>
+<line number="26">
+<code>  /// values are ignored. [from] and [to] positions must be geography-based, i.e.</code>
+</line>
+<line number="27">
+<code>  /// their latitude and longitude are both set; otherwise `null` is returned.</code>
+</line>
+<line hits="1" number="28">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="29">
+<code>  double? distance(Point from, Point to) {</code>
+</line>
+<line hits="2" number="30">
+<code>    if (!from.isGeographic || !to.isGeographic) return null;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="31">
+<code/>
+</line>
+<line hits="5" number="32">
+<code>    final dLatSin = _sin((to.latitude! - from.latitude!) / 2);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="33">
+<code>    final dLongSin = _sin((to.longitude! - from.longitude!) / 2);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="34">
+<code>    final cosSq = _cos(from.latitude!) * _cos(to.latitude!);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line number="35">
+<code/>
+</line>
+<line hits="4" number="36">
+<code>    final a = dLatSin * dLatSin + cosSq * dLongSin * dLongSin;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="37">
+<code>    final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="38">
+<code>    return c * radius;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="39">
+<code>  }</code>
+</line>
+<line number="40">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

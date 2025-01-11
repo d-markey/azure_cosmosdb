@@ -1,12 +1,13 @@
 import 'package:meta/meta.dart';
 
+import 'authorizations/cosmos_db_authorization.dart';
+import 'authorizations/cosmos_db_permission.dart';
 import 'client/_client.dart';
 import 'client/_context.dart';
 import 'cosmos_db_database.dart';
 import 'cosmos_db_exceptions.dart';
 import 'cosmos_db_server.dart';
 import 'cosmos_db_throughput.dart';
-import 'permissions/cosmos_db_permission.dart';
 
 /// Class used to manage [CosmosDbDatabase]s in a [CosmosDbServer].
 class CosmosDbDatabases {
@@ -24,7 +25,9 @@ class CosmosDbDatabases {
   }
 
   /// Lists all databases from this [server].
-  Future<Iterable<CosmosDbDatabase>> list({CosmosDbPermission? permission}) =>
+  Future<Iterable<CosmosDbDatabase>> list(
+          {CosmosDbPermission? permission,
+          CosmosDbAuthorization? authorization}) =>
       client.getMany<CosmosDbDatabase>(
         _url,
         'Databases',
@@ -32,7 +35,7 @@ class CosmosDbDatabases {
           type: 'dbs',
           resId: '',
           builder: _build,
-          token: permission?.token,
+          authorization: CosmosDbAuthorization.from(authorization, permission),
         ),
       );
 
@@ -42,14 +45,17 @@ class CosmosDbDatabases {
   /// [NotFoundException] instead. Upon success, the [CosmosDbDatabase.exists] flag will
   /// be set to `false`.
   Future<bool> delete(CosmosDbDatabase database,
-          {bool throwOnNotFound = false, CosmosDbPermission? permission}) =>
+          {bool throwOnNotFound = false,
+          CosmosDbPermission? permission,
+          CosmosDbAuthorization? authorization}) =>
       client
           .delete(
               '$_url/${database.id}',
               Context(
                 type: 'dbs',
                 throwOnNotFound: throwOnNotFound,
-                token: permission?.token,
+                authorization:
+                    CosmosDbAuthorization.from(authorization, permission),
               ))
           .then((value) {
         database.setExists(false);
@@ -60,6 +66,7 @@ class CosmosDbDatabases {
   Future<CosmosDbDatabase> create(
     String name, {
     CosmosDbPermission? permission,
+    CosmosDbAuthorization? authorization,
     CosmosDbThroughput? throughput,
   }) =>
       client.post<CosmosDbDatabase>(
@@ -70,15 +77,16 @@ class CosmosDbDatabases {
           resId: '',
           headers: throughput?.header,
           builder: _build,
-          token: permission?.token,
+          authorization: CosmosDbAuthorization.from(authorization, permission),
         ),
       );
 
   /// Opens an existing [CosmosDbDatabase] with the specified `name`.
   Future<CosmosDbDatabase> open(String name,
-      {CosmosDbPermission? permission}) async {
+      {CosmosDbPermission? permission,
+      CosmosDbAuthorization? authorization}) async {
     final db = CosmosDbDatabase(server, name);
-    await db.getInfo(permission: permission);
+    await db.getInfo(permission: permission, authorization: authorization);
     db.setExists(true);
     return db;
   }
@@ -87,12 +95,17 @@ class CosmosDbDatabases {
   Future<CosmosDbDatabase> openOrCreate(
     String name, {
     CosmosDbPermission? permission,
+    CosmosDbAuthorization? authorization,
     CosmosDbThroughput? throughput,
   }) async {
     try {
-      return await open(name, permission: permission);
+      return await open(name,
+          permission: permission, authorization: authorization);
     } on NotFoundException {
-      return await create(name, permission: permission, throughput: throughput);
+      return await create(name,
+          permission: permission,
+          authorization: authorization,
+          throughput: throughput);
     }
   }
 }

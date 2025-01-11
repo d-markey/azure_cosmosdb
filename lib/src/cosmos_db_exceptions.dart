@@ -19,8 +19,8 @@ class ApplicationException extends InternalException {
   ApplicationException(String message) : super._(message);
 }
 
-class InvalidTokenException extends ApplicationException {
-  InvalidTokenException(String message) : super(message);
+class ParsingException extends ApplicationException {
+  ParsingException(String message) : super(message);
 }
 
 class PartitionKeyException extends ApplicationException {
@@ -68,6 +68,8 @@ class CosmosDbException extends ContextualizedException {
         return ConflictException._(method, url, message);
       case HttpStatusCode.preconditionFailure:
         return PreconditionFailureException._(method, url, message);
+      case HttpStatusCode.invalidToken:
+        return InvalidTokenException._(method, url, message);
       default:
         return CosmosDbException._(method, url, statusCode, message);
     }
@@ -96,6 +98,11 @@ class UnauthorizedException extends CosmosDbException {
 class ForbiddenException extends CosmosDbException {
   ForbiddenException._(String method, String url, [String? message])
       : super._(method, url, HttpStatusCode.forbidden, message);
+}
+
+class InvalidTokenException extends CosmosDbException {
+  InvalidTokenException._(String method, String url, [String? message])
+      : super._(method, url, HttpStatusCode.invalidToken, message);
 }
 
 class ConflictException extends CosmosDbException {

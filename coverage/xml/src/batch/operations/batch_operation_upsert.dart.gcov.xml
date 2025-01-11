@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="batch_operation_upsert.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="2" lines-valid="2" package="src/batch/operations" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../../base_document.dart';</code>
+</line>
+<line number="2">
+<code>import '../../partition/partition_key.dart';</code>
+</line>
+<line number="3">
+<code>import '../../partition/partition_key_spec.dart';</code>
+</line>
+<line number="4">
+<code>import '../batch_operation.dart';</code>
+</line>
+<line number="5">
+<code>import '../batch_operation_type.dart';</code>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>/// Batch operation for upserting a document in the target container.</code>
+</line>
+<line number="8">
+<code>class BatchOperationUpsert&lt;T extends BaseDocument&gt;</code>
+</line>
+<line number="9">
+<code>    extends BatchOperationOnItem&lt;T&gt; {</code>
+</line>
+<line number="10">
+<code>  /// Creates a batch operation for upserting document [item].</code>
+</line>
+<line hits="1" number="11">
+<code>  BatchOperationUpsert(T item,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="12">
+<code>      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})</code>
+</line>
+<line hits="1" number="13">
+<code>      : super(item,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="14">
+<code>            partitionKeySpec: partitionKeySpec, partitionKey: partitionKey);</code>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  @override</code>
+</line>
+<line number="17">
+<code>  final BatchOperationType type = BatchOperationType.upsert;</code>
+</line>
+<line number="18">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../../"/>
+<base href="../../../"/>
+</coverage>

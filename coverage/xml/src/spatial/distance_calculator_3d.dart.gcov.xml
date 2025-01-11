@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="distance_calculator_3d.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="8" lines-valid="8" package="src/spatial" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:math';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import 'distance_calculator.dart';</code>
+</line>
+<line number="4">
+<code>import 'distance_calculator_2d.dart';</code>
+</line>
+<line number="5">
+<code>import 'point.dart';</code>
+</line>
+<line number="6">
+<code>import 'shape.dart';</code>
+</line>
+<line number="7">
+<code/>
+</line>
+<line number="8">
+<code>/// Euclidean distance calculator for points in a 3D space (X/Y/Z coordinates).</code>
+</line>
+<line number="9">
+<code>class DistanceCalculator3D extends DistanceCalculator {</code>
+</line>
+<line number="10">
+<code>  /// Computes the distance between [from] and [to] positions. Returns a 3D</code>
+</line>
+<line number="11">
+<code>  /// distance when [Point.altitude] are set in both positions, otherwise</code>
+</line>
+<line number="12">
+<code>  /// a 2D distance is returned. [from] and [to] must have geometry-based</code>
+</line>
+<line number="13">
+<code>  /// coordinates; if this is not the case, the function returns `null`. See</code>
+</line>
+<line number="14">
+<code>  /// also [DistanceCalculator2D].</code>
+</line>
+<line hits="1" number="15">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="16">
+<code>  double? distance(Point from, Point to) {</code>
+</line>
+<line hits="2" number="17">
+<code>    if (!from.isGeometry || !to.isGeometry) return null;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="18">
+<code>    var dx = to.x! - from.x!;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="19">
+<code>    var dy = to.y! - from.y!;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="20">
+<code>    var dz = (from.z != null &amp;&amp; to.z != null) ? (to.z! - from.z!) : 0;</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="21">
+<code>    return sqrt(dx * dx + dy * dy + dz * dz);</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line number="22">
+<code>  }</code>
+</line>
+<line number="23">
+<code/>
+</line>
+<line number="24">
+<code>  /// Computes the 3D length of a line or polygon. `null` is returned iif any</code>
+</line>
+<line number="25">
+<code>  /// [Point] in the line or polygon is not geometry-based. If all points have a</code>
+</line>
+<line number="26">
+<code>  /// `null` `altitude`, returns a 2D distance. If some points have their altitude</code>
+</line>
+<line number="27">
+<code>  /// set while some others do not, the resulting distance may be inconsistent as</code>
+</line>
+<line number="28">
+<code>  /// some segments will be measured in 2D and others in 3D.</code>
+</line>
+<line hits="1" number="29">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="30">
+<code>  double? measure(Shape shape) =&gt; super.measure(shape);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="31">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

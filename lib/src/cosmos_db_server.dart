@@ -2,12 +2,16 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:retry/retry.dart';
 
+import 'authorizations/cosmos_db_authorization.dart';
 import 'client/_client.dart';
 import 'client/debug_http_client.dart';
 import 'client/features.dart';
 import 'cosmos_db_databases.dart';
 
-typedef FutureCallback<T> = Future<T> Function();
+typedef AsyncCallback<T> = Future<T> Function([
+  int? httpStatusCode,
+  CosmosDbAuthorization? auth,
+]);
 
 /// Class representing a CosmosDB instance.
 class CosmosDbServer {

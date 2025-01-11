@@ -12,6 +12,7 @@ abstract class HttpStatusCode {
   static const preconditionFailure = 412;
   static const failedDependency = 424;
   static const tooManyRequests = 429;
+  static const invalidToken = 498;
   static const serverError = 500;
   static const serviceUnavailable = 503;
 

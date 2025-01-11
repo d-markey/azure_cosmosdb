@@ -1,8 +1,8 @@
+import '../authorizations/cosmos_db_permission.dart';
 import '../base_document.dart';
 import '../client/http_status_codes.dart';
 import '../cosmos_db_container.dart';
 import '../partition/partition_key.dart';
-import '../permissions/cosmos_db_permission.dart';
 import 'batch_operation.dart';
 import 'batch_response.dart';
 import 'operations/batch_operation_create.dart';

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2024-02-26" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9173249" lines-covered="1742" lines-valid="1899" testname="lcov.info" version="1.5">
+<?xml-stylesheet type="text/xsl" href="jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.92507935" lines-covered="1457" lines-valid="1575" testname="lcov.info" version="1.6">
 <sources>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="184" lines-valid="185" pathname="/patch" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="20" lines-valid="22" pathname="/queries" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="101" lines-valid="111" pathname="/permissions" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="95" lines-valid="100" pathname="/indexing" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="168" lines-valid="178" pathname="/spatial" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="389" lines-valid="427" pathname="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="36" lines-valid="44" pathname="/batch/operations" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="187" lines-valid="203" pathname="/batch" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="67" lines-valid="67" pathname="/_internal" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="267" lines-valid="303" pathname="/client" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
-<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="228" lines-valid="259" pathname="/partition" prefix="/a/azure_cosmosdb/azure_cosmosdb/lib/src"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="18" lines-valid="19" pathname="src/queries" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="177" lines-valid="205" pathname="src/partition" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="33" lines-valid="41" pathname="src/batch/operations" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="339" lines-valid="375" pathname="src" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="103" lines-valid="106" pathname="src/authorizations" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="226" lines-valid="247" pathname="src/client" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="150" lines-valid="151" pathname="src/patch" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="46" lines-valid="46" pathname="src/_internal" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="74" lines-valid="76" pathname="src/indexing" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="155" lines-valid="163" pathname="src/batch" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
+<source branches-hit="0" branches-valid="0" functions-hit="0" functions-valid="0" lines-hit="136" lines-valid="146" pathname="src/spatial" prefix="/_Projects/github/azure_cosmosdb/lib/"/>
 </sources>
-<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false"/>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
 </coverage>

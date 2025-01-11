@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="patch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9767442" lines-covered="42" lines-valid="43" package="src/patch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../base_document.dart';</code>
+</line>
+<line number="2">
+<code>import '_token.dart';</code>
+</line>
+<line number="3">
+<code>import '_tokenizer.dart';</code>
+</line>
+<line number="4">
+<code>import 'patch_operation.dart';</code>
+</line>
+<line number="5">
+<code/>
+</line>
+<line number="6">
+<code>/// Class representing a series of operations to modify a document.</code>
+</line>
+<line number="7">
+<code>class Patch extends SpecialDocument {</code>
+</line>
+<line number="8">
+<code>  String? _condition;</code>
+</line>
+<line number="9">
+<code>  final _ops = &lt;PatchOperation&gt;[];</code>
+</line>
+<line number="10">
+<code>  Map&lt;String, dynamic&gt;? _parameters;</code>
+</line>
+<line number="11">
+<code/>
+</line>
+<line number="12">
+<code>  /// Sets the [condition] to decide whether this patch should be applied to</code>
+</line>
+<line number="13">
+<code>  /// the target document.</code>
+</line>
+<line hits="2" number="14">
+<code>  void setCondition(String condition) =&gt; _condition = condition;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  /// Registers a parameter's value, used in the patch's condition.</code>
+</line>
+<line hits="1" number="17">
+<code>  void withParam(String name, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="18">
+<code>      (_parameters ??= {})[name] = value;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="19">
+<code/>
+</line>
+<line number="20">
+<code>  /// Rewrites the condition, replacing parameters with their values.</code>
+</line>
+<line hits="1" number="21">
+<code>  String _getCondition() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="22">
+<code>    var cond = _condition!;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="23">
+<code>    if (_parameters != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="24">
+<code>      final parser = Tokenizer(cond);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="25">
+<code>      final parts = &lt;String&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="26">
+<code>      var needSpace = false;</code>
+</line>
+<line hits="3" number="27">
+<code>      for (var token in parser.getTokens(_parameters)) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="28">
+<code>        switch (token.type) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="29">
+<code>          case Token.parameterValue:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="30">
+<code>          case Token.identifier:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="31">
+<code>            if (needSpace) {</code>
+</line>
+<line hits="1" number="32">
+<code>              parts.add(' ');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="33">
+<code>            }</code>
+</line>
+<line hits="2" number="34">
+<code>            parts.add(token.text);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="35">
+<code>            needSpace = true;</code>
+</line>
+<line number="36">
+<code>            break;</code>
+</line>
+<line hits="1" number="37">
+<code>          case Token.number:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="38">
+<code>          case Token.string:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="39">
+<code>            if (needSpace) {</code>
+</line>
+<line hits="1" number="40">
+<code>              parts.add(' ');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="41">
+<code>            }</code>
+</line>
+<line hits="2" number="42">
+<code>            parts.add(token.text);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="43">
+<code>            needSpace = true;</code>
+</line>
+<line number="44">
+<code>            break;</code>
+</line>
+<line hits="1" number="45">
+<code>          case Token.separator:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="46">
+<code>            if (token.text == ':') {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="47">
+<code>              parts.add(' ');</code>
+</line>
+<line number="48">
+<code>            }</code>
+</line>
+<line hits="2" number="49">
+<code>            parts.add(token.text);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="50">
+<code>            needSpace = (token.text == ',' || token.text == ':');</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="51">
+<code>            break;</code>
+</line>
+<line hits="1" number="52">
+<code>          case Token.operator:</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="53">
+<code>            needSpace = (token.text != '.');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="54">
+<code>            if (needSpace) {</code>
+</line>
+<line hits="1" number="55">
+<code>              parts.add(' ');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="56">
+<code>            }</code>
+</line>
+<line hits="2" number="57">
+<code>            parts.add(token.text);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="58">
+<code>            break;</code>
+</line>
+<line number="59">
+<code>        }</code>
+</line>
+<line number="60">
+<code>      }</code>
+</line>
+<line hits="1" number="61">
+<code>      cond = parts.join();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="62">
+<code>    }</code>
+</line>
+<line number="63">
+<code>    return cond;</code>
+</line>
+<line number="64">
+<code>  }</code>
+</line>
+<line number="65">
+<code/>
+</line>
+<line number="66">
+<code>  /// Adds a property identified by [path] with [value] to the target document.</code>
+</line>
+<line hits="1" number="67">
+<code>  void add(String path, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="68">
+<code>      _ops.add(PatchOperation.add(path, value));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="69">
+<code/>
+</line>
+<line number="70">
+<code>  /// Sets the property identified by [path] with [value] in the target document.</code>
+</line>
+<line hits="1" number="71">
+<code>  void set(String path, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="72">
+<code>      _ops.add(PatchOperation.set(path, value));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="73">
+<code/>
+</line>
+<line number="74">
+<code>  /// Replaces the property identified by [path] with [value] in the target document.</code>
+</line>
+<line hits="1" number="75">
+<code>  void replace(String path, dynamic value) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="76">
+<code>      _ops.add(PatchOperation.replace(path, value));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="77">
+<code/>
+</line>
+<line number="78">
+<code>  /// Increments the property identified by [path] by [value] in the target document.</code>
+</line>
+<line hits="1" number="79">
+<code>  void increment(String path, [num value = 1]) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="80">
+<code>      _ops.add(PatchOperation.incr(path, value));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="81">
+<code/>
+</line>
+<line number="82">
+<code>  /// Decrements the property identified by [path] by [value] in the target document.</code>
+</line>
+<line hits="1" number="83">
+<code>  void decrement(String path, [num value = 1]) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="84">
+<code>      _ops.add(PatchOperation.decr(path, value));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="85">
+<code/>
+</line>
+<line number="86">
+<code>  /// Removes the property identified by [path] from the target document.</code>
+</line>
+<line hits="4" number="87">
+<code>  void remove(String path) =&gt; _ops.add(PatchOperation.remove(path));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="88">
+<code/>
+</line>
+<line hits="1" number="89">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="90">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="91">
+<code>        if (_condition != null) 'condition': _getCondition(),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="92">
+<code>        'operations': _ops.map((o) =&gt; o.toJson()).toList(),</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line number="93">
+<code>      };</code>
+</line>
+<line number="94">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

@@ -7,7 +7,6 @@ import 'package:test/test.dart';
 
 import '../classes/socket_exception_mock.dart' if (dart.library.io) 'dart:io'
     show SocketException;
-
 import '../classes/test_helpers.dart';
 
 void main() async {
@@ -61,7 +60,7 @@ void run(CosmosDbServer cosmosDB) {
     expect(cosmosDB.dbgHttpClient?.forceException, isNull);
     final db = list.singleOrDefault((db) => db.id == dbName);
     expect(db, isNull);
-  }, testOn: '!js');
+  }, testOn: '!dart2js && !dart2wasm');
 
   test('Requests throwing other errors must fail', () async {
     final exception = 'No retry ${DateTime.now().millisecondsSinceEpoch}';

@@ -1,10 +1,6 @@
+import 'package:azure_cosmosdb/azure_cosmosdb.dart';
+
 import '../_internal/_http_header.dart';
-import '../base_document.dart';
-import '../cosmos_db_exceptions.dart';
-import '../cosmos_db_server.dart';
-import '../partition/partition_key.dart';
-import '../permissions/cosmos_db_permission.dart';
-import '../queries/paging.dart';
 
 const version = '2.2.2';
 
@@ -16,8 +12,8 @@ class Context {
     this.throwOnNotFound = true,
     this.paging,
     this.partitionKey,
-    this.token,
-    this.onForbidden,
+    this.authorization,
+    this.onRefreshAuth,
     this.builder,
     this.builders = const {},
   }) {
@@ -31,8 +27,8 @@ class Context {
   final bool throwOnNotFound;
   final Paging? paging;
   final PartitionKey? partitionKey;
-  final String? token;
-  final FutureCallback<CosmosDbPermission?>? onForbidden;
+  final CosmosDbAuthorization? authorization;
+  final AsyncCallback<CosmosDbAuthorization?>? onRefreshAuth;
   final DocumentBuilder? builder;
   final Map<Type, DocumentBuilder> builders;
 
@@ -52,20 +48,22 @@ class Context {
 
   void addHeader(String name, String value) => (_headers ??= {})[name] = value;
 
-  Context copyWith(
-      {Paging? paging,
-      PartitionKey? partitionKey,
-      Map<String, String>? headers,
-      List<String>? removeHeaders,
-      DocumentBuilder? builder}) {
+  Context copyWith({
+    Paging? paging,
+    PartitionKey? partitionKey,
+    Map<String, String>? headers,
+    List<String>? removeHeaders,
+    DocumentBuilder? builder,
+    CosmosDbAuthorization? authorization,
+  }) {
     final copy = Context(
       type: type,
       resId: resId,
       builder: builder ?? this.builder,
       paging: paging ?? this.paging,
       partitionKey: partitionKey ?? this.partitionKey,
-      token: token,
-      onForbidden: onForbidden,
+      authorization: authorization ?? this.authorization,
+      onRefreshAuth: onRefreshAuth,
     );
     if (_headers != null) {
       (copy._headers ??= {}).addAll(_headers!);

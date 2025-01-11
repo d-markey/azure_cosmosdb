@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9315069" lines-covered="136" lines-valid="146" package="src/spatial" testname="lcov.info" version="1.6">
+<sources>
+<source branches-hit="0" branches-valid="0" filename="distance_calculator_haversine.dart" functions-hit="0" functions-valid="0" lines-hit="12" lines-valid="12" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="12" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="polygon.dart" functions-hit="0" functions-valid="0" lines-hit="29" lines-valid="29" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="29" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="shape.dart" functions-hit="0" functions-valid="0" lines-hit="12" lines-valid="16" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="12" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="distance_calculator_2d.dart" functions-hit="0" functions-valid="0" lines-hit="7" lines-valid="7" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="7" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="distance_calculator.dart" functions-hit="0" functions-valid="0" lines-hit="7" lines-valid="7" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="7" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="point.dart" functions-hit="0" functions-valid="0" lines-hit="27" lines-valid="30" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="27" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="multi_polygon.dart" functions-hit="0" functions-valid="0" lines-hit="15" lines-valid="18" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="15" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="distance_calculator_3d.dart" functions-hit="0" functions-valid="0" lines-hit="8" lines-valid="8" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="8" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="line_string.dart" functions-hit="0" functions-valid="0" lines-hit="19" lines-valid="19" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="19" name="&lt;unnamed&gt;"/>
+</source>
+</sources>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

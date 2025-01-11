@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="batch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.95" lines-covered="19" lines-valid="20" package="src/batch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../authorizations/cosmos_db_permission.dart';</code>
+</line>
+<line number="2">
+<code>import '../base_document.dart';</code>
+</line>
+<line number="3">
+<code>import '../client/http_status_codes.dart';</code>
+</line>
+<line number="4">
+<code>import '../cosmos_db_container.dart';</code>
+</line>
+<line number="5">
+<code>import '../partition/partition_key.dart';</code>
+</line>
+<line number="6">
+<code>import 'batch_operation.dart';</code>
+</line>
+<line number="7">
+<code>import 'batch_response.dart';</code>
+</line>
+<line number="8">
+<code>import 'operations/batch_operation_create.dart';</code>
+</line>
+<line number="9">
+<code>import 'operations/batch_operation_delete.dart';</code>
+</line>
+<line number="10">
+<code>import 'operations/batch_operation_patch.dart';</code>
+</line>
+<line number="11">
+<code>import 'operations/batch_operation_read.dart';</code>
+</line>
+<line number="12">
+<code>import 'operations/batch_operation_replace.dart';</code>
+</line>
+<line number="13">
+<code>import 'operations/batch_operation_upsert.dart';</code>
+</line>
+<line number="14">
+<code/>
+</line>
+<line number="15">
+<code>/// Base class for a transactional batch.</code>
+</line>
+<line number="16">
+<code>abstract class Batch extends SpecialDocument {</code>
+</line>
+<line hits="1" number="17">
+<code>  Batch(this.container, this.partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="18">
+<code/>
+</line>
+<line number="19">
+<code>  /// The [container] this batch instance is attached to.</code>
+</line>
+<line number="20">
+<code>  final CosmosDbContainer container;</code>
+</line>
+<line number="21">
+<code/>
+</line>
+<line number="22">
+<code>  /// If `true`, processing will continue after an error. Otherwise, processing is stopped</code>
+</line>
+<line number="23">
+<code>  /// and subsequent operations fail with a 424 [HttpStatusCode.failedDependency] status</code>
+</line>
+<line number="24">
+<code>  /// code.</code>
+</line>
+<line number="25">
+<code>  bool get continueOnError;</code>
+</line>
+<line number="26">
+<code/>
+</line>
+<line number="27">
+<code>  /// If `true`, modifications are persisted to the [container] atomically. If an error</code>
+</line>
+<line number="28">
+<code>  /// occurs during processing, no modifications are persisted and all other operations</code>
+</line>
+<line number="29">
+<code>  /// fail with a 424 [HttpStatusCode.failedDependency] status code.</code>
+</line>
+<line number="30">
+<code>  bool get isAtomic;</code>
+</line>
+<line number="31">
+<code/>
+</line>
+<line number="32">
+<code>  /// If `true`, operations registered with this batch may target multiple partition keys.</code>
+</line>
+<line number="33">
+<code>  /// Operations will be grouped by partition keys when [execute] is called. Implies</code>
+</line>
+<line number="34">
+<code>  /// [continueOnError] = `true` and [isAtomic] = `false`.</code>
+</line>
+<line number="35">
+<code>  bool get isCrossPartition;</code>
+</line>
+<line number="36">
+<code/>
+</line>
+<line number="37">
+<code>  /// The default partition key for operations in this batch.</code>
+</line>
+<line number="38">
+<code>  final PartitionKey? partitionKey;</code>
+</line>
+<line number="39">
+<code/>
+</line>
+<line number="40">
+<code>  /// The number of operations in this batch instance.</code>
+</line>
+<line number="41">
+<code>  int get length;</code>
+</line>
+<line number="42">
+<code/>
+</line>
+<line number="43">
+<code>  /// The list of operations registered with this batch instance.</code>
+</line>
+<line number="44">
+<code>  Iterable&lt;BatchOperation&gt; get operations;</code>
+</line>
+<line number="45">
+<code/>
+</line>
+<line number="46">
+<code>  /// Recycles this batch instance for reuse. This method clears the list of operations.</code>
+</line>
+<line number="47">
+<code>  void recycle();</code>
+</line>
+<line number="48">
+<code/>
+</line>
+<line number="49">
+<code>  /// Adds the specified [BatchOperation] to this batch instance.</code>
+</line>
+<line number="50">
+<code>  void add(BatchOperation op);</code>
+</line>
+<line number="51">
+<code/>
+</line>
+<line number="52">
+<code>  /// Adds a [BatchOperationCreate] to this batch instance.</code>
+</line>
+<line hits="1" number="53">
+<code>  void create&lt;T extends BaseDocument&gt;(T item, {PartitionKey? partitionKey}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="54">
+<code>      add(BatchOperationCreate&lt;T&gt;(item,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="55">
+<code>          partitionKeySpec: container.partitionKeySpec,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="56">
+<code>          partitionKey: partitionKey));</code>
+</line>
+<line number="57">
+<code/>
+</line>
+<line number="58">
+<code>  /// Adds a [BatchOperationReplace] to this batch instance.</code>
+</line>
+<line hits="1" number="59">
+<code>  void replace&lt;T extends BaseDocument&gt;(T item, {PartitionKey? partitionKey}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="60">
+<code>      add(BatchOperationReplace&lt;T&gt;(item,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="61">
+<code>          partitionKeySpec: container.partitionKeySpec,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="62">
+<code>          partitionKey: partitionKey));</code>
+</line>
+<line number="63">
+<code/>
+</line>
+<line number="64">
+<code>  /// Adds a [BatchOperationUpsert] to this batch instance.</code>
+</line>
+<line hits="1" number="65">
+<code>  void upsert&lt;T extends BaseDocument&gt;(T item, {PartitionKey? partitionKey}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="66">
+<code>      add(BatchOperationUpsert&lt;T&gt;(item,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="67">
+<code>          partitionKeySpec: container.partitionKeySpec,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="68">
+<code>          partitionKey: partitionKey));</code>
+</line>
+<line number="69">
+<code/>
+</line>
+<line number="70">
+<code>  /// Adds a [BatchOperationPatch] to this batch instance.</code>
+</line>
+<line hits="1" number="71">
+<code>  BatchOperationPatch patch&lt;T extends BaseDocument&gt;(String id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="72">
+<code>      {PartitionKey? partitionKey}) {</code>
+</line>
+<line hits="1" number="73">
+<code>    final patchOperation = BatchOperationPatch&lt;T&gt;(id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="74">
+<code>        partitionKey: partitionKey ?? this.partitionKey);</code>
+</line>
+<line hits="1" number="75">
+<code>    add(patchOperation);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="76">
+<code>    return patchOperation;</code>
+</line>
+<line number="77">
+<code>  }</code>
+</line>
+<line number="78">
+<code/>
+</line>
+<line number="79">
+<code>  /// Adds a [BatchOperationRead] to this batch instance.</code>
+</line>
+<line hits="1" number="80">
+<code>  void read&lt;T extends BaseDocument&gt;(String id, {PartitionKey? partitionKey}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="81">
+<code>      add(BatchOperationRead&lt;T&gt;(id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="82">
+<code>          partitionKey: partitionKey ?? this.partitionKey));</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="83">
+<code/>
+</line>
+<line number="84">
+<code>  /// Adds a [BatchOperationDelete] to this batch instance.</code>
+</line>
+<line hits="1" number="85">
+<code>  void delete(String id, {PartitionKey? partitionKey}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="86">
+<code>      add(BatchOperationDelete(id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="87">
+<code>          partitionKey: partitionKey ?? this.partitionKey));</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="88">
+<code/>
+</line>
+<line number="89">
+<code>  /// Executes the [BatchOperation]s registered in this batch instance.</code>
+</line>
+<line number="90">
+<code>  Future&lt;BatchResponse&gt; execute({CosmosDbPermission? permission});</code>
+</line>
+<line number="91">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

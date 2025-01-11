@@ -1,24 +1,27 @@
+import 'dart:developer';
+
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
 import 'package:test/test.dart';
 
 import 'classes/test_helpers.dart';
-
-import 'test_suites/internal_helpers.dart' as internal_tests;
-import 'test_suites/expression_tokenizer.dart' as tokenizer_tests;
-import 'test_suites/geometry_shapes.dart' as geometry_tests;
-import 'test_suites/geography_shapes.dart' as geography_tests;
-import 'test_suites/path_parser.dart' as path_parser_tests;
-import 'test_suites/partition_keys.dart' as pk_tests;
-import 'test_suites/database_management.dart' as db_tests;
-import 'test_suites/user_management.dart' as user_tests;
-import 'test_suites/permission_management.dart' as permission_tests;
 import 'test_suites/container_management.dart' as container_tests;
+import 'test_suites/database_management.dart' as db_tests;
+import 'test_suites/document_batch.dart' as batch_tests;
 import 'test_suites/document_management.dart' as doc_tests;
 import 'test_suites/document_queries.dart' as query_tests;
 import 'test_suites/document_spatial.dart' as spatial_tests;
-import 'test_suites/document_batch.dart' as batch_tests;
+import 'test_suites/expression_tokenizer.dart' as tokenizer_tests;
+import 'test_suites/geography_shapes.dart' as geography_tests;
+import 'test_suites/geometry_shapes.dart' as geometry_tests;
+import 'test_suites/internal_helpers.dart' as internal_tests;
+import 'test_suites/partition_keys.dart' as pk_tests;
+import 'test_suites/path_parser.dart' as path_parser_tests;
+import 'test_suites/permission_management.dart' as permission_tests;
+import 'test_suites/user_management.dart' as user_tests;
 
 void main() async {
+  log('AZURE_COSMOSDB - Start Tests...');
+
   group('INTERNAL HELPERS -', () => internal_tests.run());
 
   group('EXPRESSION TOKENIZER -', () => tokenizer_tests.run());

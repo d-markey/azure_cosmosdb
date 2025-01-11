@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="transactional_batch.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9807692" lines-covered="51" lines-valid="52" package="src/batch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'package:meta/meta.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '../_internal/_http_header.dart';</code>
+</line>
+<line number="4">
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line number="5">
+<code>import '../authorizations/cosmos_db_permission.dart';</code>
+</line>
+<line number="6">
+<code>import '../client/http_status_codes.dart';</code>
+</line>
+<line number="7">
+<code>import '../cosmos_db_container.dart';</code>
+</line>
+<line number="8">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="9">
+<code>import '../partition/partition_key.dart';</code>
+</line>
+<line number="10">
+<code>import '../partition/partition_key_range.dart';</code>
+</line>
+<line number="11">
+<code>import '../partition/partition_key_spec.dart';</code>
+</line>
+<line number="12">
+<code>import 'batch.dart';</code>
+</line>
+<line number="13">
+<code>import 'batch_operation.dart';</code>
+</line>
+<line number="14">
+<code>import 'batch_response.dart';</code>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>/// Class representing a transactional batch. This implementation provides atomic and</code>
+</line>
+<line number="17">
+<code>/// non-atomic transactions. Atomic transactions will always fail on error, and support</code>
+</line>
+<line number="18">
+<code>/// a maximum of 100 operations per batch. For non-atomic transactions, the behavior in</code>
+</line>
+<line number="19">
+<code>/// case of error can be controlled via the [continueOnError] flag.</code>
+</line>
+<line number="20">
+<code>/// Non-atomic transactions send operations in chunks of 100, effectively working around</code>
+</line>
+<line number="21">
+<code>/// the Cosmos DB limitation of 100 operations per batch.</code>
+</line>
+<line number="22">
+<code>class TransactionalBatch extends Batch {</code>
+</line>
+<line hits="1" number="23">
+<code>  TransactionalBatch._(CosmosDbContainer container,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="24">
+<code>      {PartitionKey? partitionKey,</code>
+</line>
+<line number="25">
+<code>      required this.isAtomic,</code>
+</line>
+<line number="26">
+<code>      bool continueOnError = true})</code>
+</line>
+<line number="27">
+<code>      : _continueOnError = continueOnError,</code>
+</line>
+<line hits="1" number="28">
+<code>        super(container, partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="29">
+<code/>
+</line>
+<line number="30">
+<code>  /// Creates an atomic [Batch] instance operating on [container] and [partitionKey].</code>
+</line>
+<line number="31">
+<code>  /// The partition key is optional, provided each operation in this batch instance</code>
+</line>
+<line number="32">
+<code>  /// can provide a partition key. Operations working on a document should be able to</code>
+</line>
+<line number="33">
+<code>  /// extract the document's partition key using the [container]'s [PartitionKeySpec].</code>
+</line>
+<line number="34">
+<code>  /// For atomic batches, the [continueOnError] flag is always `false`.</code>
+</line>
+<line hits="1" number="35">
+<code>  TransactionalBatch.atomic(CosmosDbContainer container,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="36">
+<code>      {PartitionKey? partitionKey})</code>
+</line>
+<line hits="1" number="37">
+<code>      : this._(container, partitionKey: partitionKey, isAtomic: true);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="38">
+<code/>
+</line>
+<line number="39">
+<code>  /// Creates a non-atomic [Batch] instance operating on [container] and [partitionKey].</code>
+</line>
+<line number="40">
+<code>  /// The partition key is optional, provided each operation in this batch instance</code>
+</line>
+<line number="41">
+<code>  /// can provide a partition key. Operations working on a document should be able to</code>
+</line>
+<line number="42">
+<code>  /// extract the document's partition key using the [container]'s [PartitionKeySpec].</code>
+</line>
+<line number="43">
+<code>  /// By default, [continueOnError] is `true` and all operations will be executed and</code>
+</line>
+<line number="44">
+<code>  /// report their status. If [continueOnError] is `false`, the batch process will</code>
+</line>
+<line number="45">
+<code>  /// stop upon the first failing operation. In this case, that operation will report</code>
+</line>
+<line number="46">
+<code>  /// a specific error status while all subsequent operations will fail with a</code>
+</line>
+<line number="47">
+<code>  /// [HttpStatusCode.failedDependency] error status.</code>
+</line>
+<line hits="1" number="48">
+<code>  TransactionalBatch(CosmosDbContainer container,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="49">
+<code>      {PartitionKey? partitionKey, bool continueOnError = true})</code>
+</line>
+<line hits="1" number="50">
+<code>      : this._(container,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="51">
+<code>            partitionKey: partitionKey,</code>
+</line>
+<line number="52">
+<code>            isAtomic: false,</code>
+</line>
+<line number="53">
+<code>            continueOnError: continueOnError);</code>
+</line>
+<line number="54">
+<code/>
+</line>
+<line number="55">
+<code>  /// Returns the HTTP headers for this batch request (retrieves the partition key</code>
+</line>
+<line number="56">
+<code>  /// range ID and maps properties [isAtomic] and [continueOnError]).</code>
+</line>
+<line hits="1" number="57">
+<code>  Map&lt;String, String&gt; getHeaders(Iterable&lt;PartitionKeyRange&gt; pkRanges) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="58">
+<code>    var pk = _ops</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="59">
+<code>        .map((op) =&gt; op.partitionKey)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="60">
+<code>        .followedBy([partitionKey])</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="61">
+<code>        .whereNotNull()</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="62">
+<code>        .distinct();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="63">
+<code>    if (pk.isEmpty) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="64">
+<code>      throw PartitionKeyException('Missing partition key.');</code>
+</line>
+<line hits="2" number="65">
+<code>    } else if (pk.length &gt; 1) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="66">
+<code>      throw PartitionKeyException(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="67">
+<code>          'Partition keys map to several partition key ranges.');</code>
+</line>
+<line number="68">
+<code>    }</code>
+</line>
+<line hits="2" number="69">
+<code>    final pkr = pkRanges.findRangeFor(pk.single);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="70">
+<code>    return {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="71">
+<code>      HttpHeader.msCosmosIsBatchRequest: 'true',</code>
+</line>
+<line hits="1" number="72">
+<code>      HttpHeader.msCosmosBatchAtomic: isAtomic ? 'true' : 'false',</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="73">
+<code>      HttpHeader.msCosmosBatchContinueOnError:</code>
+</line>
+<line hits="1" number="74">
+<code>          continueOnError ? 'true' : 'false',</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="75">
+<code>      HttpHeader.msDocumentDbPartitionKeyRangeId: pkr!.id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="76">
+<code>    };</code>
+</line>
+<line number="77">
+<code>  }</code>
+</line>
+<line number="78">
+<code/>
+</line>
+<line number="79">
+<code>  final bool _continueOnError;</code>
+</line>
+<line number="80">
+<code/>
+</line>
+<line hits="1" number="81">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="82">
+<code>  bool get continueOnError =&gt; _continueOnError &amp;&amp; !isAtomic;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="83">
+<code/>
+</line>
+<line number="84">
+<code>  @override</code>
+</line>
+<line number="85">
+<code>  final bool isAtomic;</code>
+</line>
+<line number="86">
+<code/>
+</line>
+<line number="87">
+<code>  @override</code>
+</line>
+<line number="88">
+<code>  final bool isCrossPartition = false;</code>
+</line>
+<line number="89">
+<code/>
+</line>
+<line hits="1" number="90">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="91">
+<code>  int get length =&gt; _ops.length;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="92">
+<code/>
+</line>
+<line hits="1" number="93">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="94">
+<code>  Iterable&lt;BatchOperation&gt; get operations =&gt; _ops.asIterable();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="95">
+<code/>
+</line>
+<line number="96">
+<code>  final _ops = &lt;BatchOperation&gt;[];</code>
+</line>
+<line number="97">
+<code/>
+</line>
+<line hits="1" number="98">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="99">
+<code>  void recycle() =&gt; _ops.clear();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="100">
+<code/>
+</line>
+<line hits="1" number="101">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="102">
+<code>  void add(BatchOperation op) {</code>
+</line>
+<line hits="4" number="103">
+<code>    if (_ops.length &gt;= 100 &amp;&amp; isAtomic) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="104">
+<code>      throw ApplicationException(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="105">
+<code>          'Transactional batch is limited to 100 operations.');</code>
+</line>
+<line number="106">
+<code>    }</code>
+</line>
+<line hits="2" number="107">
+<code>    _ops.add(op);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="108">
+<code>  }</code>
+</line>
+<line number="109">
+<code/>
+</line>
+<line hits="1" number="110">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="111">
+<code>  Future&lt;BatchResponse&gt; execute({CosmosDbPermission? permission}) async {</code>
+</line>
+<line hits="3" number="112">
+<code>    if (_ops.length &lt;= 100) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="113">
+<code>      return await container.execute(this, permission: permission);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="114">
+<code>    } else {</code>
+</line>
+<line hits="1" number="115">
+<code>      final resp = BatchResponse();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="116">
+<code>      final batch = clone();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="117">
+<code>      var index = 0;</code>
+</line>
+<line hits="3" number="118">
+<code>      while (index &lt; _ops.length) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="119">
+<code>        batch._ops.clear();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="120">
+<code>        batch._ops.addAll(_ops.skip(index).take(100));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="121">
+<code>        index += 100;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="122">
+<code>        final r = await batch.execute(permission: permission);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="123">
+<code>        resp.addAll(r.results);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="124">
+<code>        if (!continueOnError &amp;&amp; !r.isSuccess) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="125">
+<code>          final err = {'statusCode': HttpStatusCode.failedDependency};</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="126">
+<code>          for (var i = index; i &lt; _ops.length; i++) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="127">
+<code>            resp.add(_ops[i].setResult(err, null));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="128">
+<code>          }</code>
+</line>
+<line number="129">
+<code>          break;</code>
+</line>
+<line number="130">
+<code>        }</code>
+</line>
+<line number="131">
+<code>      }</code>
+</line>
+<line number="132">
+<code>      return resp;</code>
+</line>
+<line number="133">
+<code>    }</code>
+</line>
+<line number="134">
+<code>  }</code>
+</line>
+<line number="135">
+<code/>
+</line>
+<line hits="1" number="136">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="137">
+<code>  List&lt;dynamic&gt; toJson() =&gt; _ops.map((o) =&gt; o.toJson()).toList();</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line number="138">
+<code>}</code>
+</line>
+<line number="139">
+<code/>
+</line>
+<line number="140">
+<code>// internal use</code>
+</line>
+<line number="141">
+<code>@internal</code>
+</line>
+<line number="142">
+<code>extension BatchInternalExt on TransactionalBatch {</code>
+</line>
+<line hits="3" number="143">
+<code>  TransactionalBatch clone() =&gt; TransactionalBatch._(container,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="144">
+<code>      isAtomic: isAtomic, continueOnError: continueOnError);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="145">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

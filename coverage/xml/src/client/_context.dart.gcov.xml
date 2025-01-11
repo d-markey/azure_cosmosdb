@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="_context.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9411765" lines-covered="32" lines-valid="34" package="src/client" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'package:azure_cosmosdb/azure_cosmosdb.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '../_internal/_http_header.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>const version = '2.2.2';</code>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>class Context {</code>
+</line>
+<line hits="1" number="8">
+<code>  Context({</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="9">
+<code>    required this.type,</code>
+</line>
+<line number="10">
+<code>    this.resId,</code>
+</line>
+<line number="11">
+<code>    Map&lt;String, String&gt;? headers,</code>
+</line>
+<line number="12">
+<code>    this.throwOnNotFound = true,</code>
+</line>
+<line number="13">
+<code>    this.paging,</code>
+</line>
+<line number="14">
+<code>    this.partitionKey,</code>
+</line>
+<line number="15">
+<code>    this.authorization,</code>
+</line>
+<line number="16">
+<code>    this.onRefreshAuth,</code>
+</line>
+<line number="17">
+<code>    this.builder,</code>
+</line>
+<line number="18">
+<code>    this.builders = const {},</code>
+</line>
+<line number="19">
+<code>  }) {</code>
+</line>
+<line number="20">
+<code>    if (headers != null) {</code>
+</line>
+<line hits="2" number="21">
+<code>      _headers = {...headers};</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="22">
+<code>    }</code>
+</line>
+<line number="23">
+<code>  }</code>
+</line>
+<line number="24">
+<code/>
+</line>
+<line number="25">
+<code>  final String type;</code>
+</line>
+<line number="26">
+<code>  final String? resId;</code>
+</line>
+<line number="27">
+<code>  final bool throwOnNotFound;</code>
+</line>
+<line number="28">
+<code>  final Paging? paging;</code>
+</line>
+<line number="29">
+<code>  final PartitionKey? partitionKey;</code>
+</line>
+<line number="30">
+<code>  final CosmosDbAuthorization? authorization;</code>
+</line>
+<line number="31">
+<code>  final AsyncCallback&lt;CosmosDbAuthorization?&gt;? onRefreshAuth;</code>
+</line>
+<line number="32">
+<code>  final DocumentBuilder? builder;</code>
+</line>
+<line number="33">
+<code>  final Map&lt;Type, DocumentBuilder&gt; builders;</code>
+</line>
+<line number="34">
+<code/>
+</line>
+<line number="35">
+<code>  Map&lt;String, String&gt;? _headers;</code>
+</line>
+<line number="36">
+<code/>
+</line>
+<line hits="1" number="37">
+<code>  DocumentBuilder&lt;T&gt; getBuilder&lt;T extends BaseDocument&gt;() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="38">
+<code>    final builder = this.builder ?? builders[T];</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="39">
+<code>    if (builder == null) throw UnknownDocumentTypeException(T);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="40">
+<code>    return (data) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="41">
+<code>      try {</code>
+</line>
+<line hits="1" number="42">
+<code>        return builder(data) as T;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="43">
+<code>      } catch (ex) {</code>
+</line>
+<line hits="0" number="44">
+<code>        throw BadResponseException(ex.toString());</code>
+</line>
+<line number="45">
+<code>      }</code>
+</line>
+<line number="46">
+<code>    };</code>
+</line>
+<line number="47">
+<code>  }</code>
+</line>
+<line number="48">
+<code/>
+</line>
+<line hits="4" number="49">
+<code>  void addHeader(String name, String value) =&gt; (_headers ??= {})[name] = value;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="50">
+<code/>
+</line>
+<line hits="1" number="51">
+<code>  Context copyWith({</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="52">
+<code>    Paging? paging,</code>
+</line>
+<line number="53">
+<code>    PartitionKey? partitionKey,</code>
+</line>
+<line number="54">
+<code>    Map&lt;String, String&gt;? headers,</code>
+</line>
+<line number="55">
+<code>    List&lt;String&gt;? removeHeaders,</code>
+</line>
+<line number="56">
+<code>    DocumentBuilder? builder,</code>
+</line>
+<line number="57">
+<code>    CosmosDbAuthorization? authorization,</code>
+</line>
+<line number="58">
+<code>  }) {</code>
+</line>
+<line hits="1" number="59">
+<code>    final copy = Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="60">
+<code>      type: type,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="61">
+<code>      resId: resId,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="62">
+<code>      builder: builder ?? this.builder,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="63">
+<code>      paging: paging ?? this.paging,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="64">
+<code>      partitionKey: partitionKey ?? this.partitionKey,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="65">
+<code>      authorization: authorization ?? this.authorization,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="66">
+<code>      onRefreshAuth: onRefreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="67">
+<code>    );</code>
+</line>
+<line hits="1" number="68">
+<code>    if (_headers != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="69">
+<code>      (copy._headers ??= {}).addAll(_headers!);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="70">
+<code>    }</code>
+</line>
+<line number="71">
+<code>    if (headers != null) {</code>
+</line>
+<line hits="3" number="72">
+<code>      (copy._headers ??= {}).addAll(headers);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="73">
+<code>    }</code>
+</line>
+<line number="74">
+<code>    if (removeHeaders != null) {</code>
+</line>
+<line hits="0" number="75">
+<code>      copy._headers?.removeWhere((key, value) =&gt; removeHeaders.contains(key));</code>
+</line>
+<line number="76">
+<code>    }</code>
+</line>
+<line number="77">
+<code>    return copy;</code>
+</line>
+<line number="78">
+<code>  }</code>
+</line>
+<line number="79">
+<code/>
+</line>
+<line hits="1" number="80">
+<code>  Map&lt;String, String&gt; getHeaders() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="81">
+<code>    final headers = {HttpHeader.userAgent: 'AzureCosmosDb.Dart/$version'};</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="82">
+<code>    if (_headers != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="83">
+<code>      headers.addAll(_headers!);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="84">
+<code>    }</code>
+</line>
+<line hits="1" number="85">
+<code>    if (partitionKey != null) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="86">
+<code>      headers.addAll(partitionKey!.header);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="87">
+<code>    }</code>
+</line>
+<line hits="3" number="88">
+<code>    final maxCount = (paging?.maxCount ?? -1);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="89">
+<code>    if (maxCount &gt; 0) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="90">
+<code>      headers[HttpHeader.msMaxItemCount] = maxCount.toString();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="91">
+<code>    }</code>
+</line>
+<line hits="2" number="92">
+<code>    final continuation = paging?.continuation ?? '';</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="93">
+<code>    if (continuation.isNotEmpty) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="94">
+<code>      headers[HttpHeader.msContinuation] = continuation;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="95">
+<code>    }</code>
+</line>
+<line number="96">
+<code>    return headers;</code>
+</line>
+<line number="97">
+<code>  }</code>
+</line>
+<line number="98">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

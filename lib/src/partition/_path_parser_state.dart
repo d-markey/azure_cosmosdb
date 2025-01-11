@@ -53,11 +53,11 @@ class ParserState {
       _pos++;
     }
     if (end < 0) {
-      throw InvalidTokenException('Missing token: "]".');
+      throw ParsingException('Missing token: "]".');
     }
     final idx = int.tryParse(_chars.sublist(start, end).join());
     if (idx == null) {
-      throw InvalidTokenException('Integer value expected in array accessor.');
+      throw ParsingException('Integer value expected in array accessor.');
     }
     return ArrayIndex(idx);
   }

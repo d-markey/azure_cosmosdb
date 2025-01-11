@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="batch_operation_result.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="3" lines-valid="3" package="src/batch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../base_document.dart';</code>
+</line>
+<line number="2">
+<code>import '../client/http_status_codes.dart';</code>
+</line>
+<line number="3">
+<code>import 'batch_operation.dart';</code>
+</line>
+<line number="4">
+<code>import 'operations/batch_operation_delete.dart';</code>
+</line>
+<line number="5">
+<code/>
+</line>
+<line number="6">
+<code>/// Class representing a [BatchOperation]'s result.</code>
+</line>
+<line number="7">
+<code>class BatchOperationResult&lt;T extends BaseDocument&gt; {</code>
+</line>
+<line hits="1" number="8">
+<code>  BatchOperationResult(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="9">
+<code>      this.operation, this.statusCode, this.retryAfterMs, this.item);</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line hits="1" number="11">
+<code>  BatchOperationResult.noItem(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="12">
+<code>      this.operation, this.statusCode, this.retryAfterMs)</code>
+</line>
+<line number="13">
+<code>      : item = null;</code>
+</line>
+<line number="14">
+<code/>
+</line>
+<line number="15">
+<code>  /// The [BatchOperation] associated to this result.</code>
+</line>
+<line number="16">
+<code>  final BatchOperation operation;</code>
+</line>
+<line number="17">
+<code/>
+</line>
+<line number="18">
+<code>  /// The [BatchOperation]'s status code; see constants in [HttpStatusCode].</code>
+</line>
+<line number="19">
+<code>  final int statusCode;</code>
+</line>
+<line number="20">
+<code/>
+</line>
+<line number="21">
+<code>  /// When [statusCode] is [HttpStatusCode.tooManyRequests], contains the value in the</code>
+</line>
+<line number="22">
+<code>  /// `retryAfterMilliseconds` field returned by Cosmos DB.</code>
+</line>
+<line number="23">
+<code>  final int? retryAfterMs;</code>
+</line>
+<line number="24">
+<code/>
+</line>
+<line number="25">
+<code>  /// The document resulting from the [BatchOperation], if applicable. For</code>
+</line>
+<line number="26">
+<code>  /// [BatchOperationDelete], it is always `null`.</code>
+</line>
+<line number="27">
+<code>  final T? item;</code>
+</line>
+<line number="28">
+<code/>
+</line>
+<line number="29">
+<code>  /// `true` if the operation succeeded, `false` otherwise.</code>
+</line>
+<line hits="3" number="30">
+<code>  bool get isSuccess =&gt; HttpStatusCode.isSuccess(statusCode);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="31">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

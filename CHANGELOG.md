@@ -1,3 +1,13 @@
+## 2.3.0
+
+- Rename `Authorization` to `CosmosDbAuthorization` and make it public.
+- Add optional `authorization` parameter to methods already supporting `CosmosDbPermission`.
+- Make `usePermission` obsolete: please use `useAuthorization` instead. A `CosmosDbAuthorization` can be built from a `CosmosDbPermission`.
+- Rename `InvalidTokenException` to `ParsingException`.
+- Add new `InvalidTokenException` as an HTTP exception for invalid or missing tokens.
+- Reworked tests & activate Wasm tests.
+- Update jGenHTML to version 1.6 (test coverage tooling).
+
 ## 2.2.2
 
 - Fix lints warnings reported by pub.dev.

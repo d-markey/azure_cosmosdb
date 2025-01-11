@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="index_order.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="3" lines-valid="3" package="src/indexing" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>/// Constants for index ordering.</code>
+</line>
+<line number="4">
+<code>class IndexOrder {</code>
+</line>
+<line hits="1" number="5">
+<code>  const IndexOrder._(this.name);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>  final String name;</code>
+</line>
+<line number="8">
+<code/>
+</line>
+<line number="9">
+<code>  /// Ascending order.</code>
+</line>
+<line number="10">
+<code>  static const ascending = IndexOrder._('ascending');</code>
+</line>
+<line number="11">
+<code/>
+</line>
+<line number="12">
+<code>  /// Descending order.</code>
+</line>
+<line number="13">
+<code>  static const descending = IndexOrder._('descending');</code>
+</line>
+<line number="14">
+<code/>
+</line>
+<line number="15">
+<code>  static const _orders = [ascending, descending];</code>
+</line>
+<line number="16">
+<code/>
+</line>
+<line number="17">
+<code>  /// Returns the [IndexOrder] constant corresponding to the specified [order].</code>
+</line>
+<line hits="1" number="18">
+<code>  static IndexOrder? tryParse(dynamic order) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="19">
+<code>      _orders.firstOrDefault((m) =&gt; m.name == order);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="20">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="indexing_policy.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.94285715" lines-covered="33" lines-valid="35" package="src/indexing" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'index_path.dart';</code>
+</line>
+<line number="2">
+<code>import 'indexing_mode.dart';</code>
+</line>
+<line number="3">
+<code>import 'spatial_index_path.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>/// Class representing a container's indexing policy.</code>
+</line>
+<line number="6">
+<code>class IndexingPolicy {</code>
+</line>
+<line hits="1" number="7">
+<code>  IndexingPolicy(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="8">
+<code>      {this.indexingMode = IndexingMode.consistent, this.automatic = true});</code>
+</line>
+<line number="9">
+<code/>
+</line>
+<line number="10">
+<code>  /// Indexing mode. See constants available in [IndexingMode].</code>
+</line>
+<line number="11">
+<code>  final IndexingMode indexingMode;</code>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  /// Automatic indexing.</code>
+</line>
+<line number="14">
+<code>  final bool automatic;</code>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  /// JSON paths to fields that must be indexed. Must end with `/?` for scalar</code>
+</line>
+<line number="17">
+<code>  /// fields, or `/*` to include all sub-nodes.</code>
+</line>
+<line number="18">
+<code>  final includedPaths = &lt;IndexPath&gt;[];</code>
+</line>
+<line number="19">
+<code/>
+</line>
+<line number="20">
+<code>  /// JSON paths to fields that must not be indexed. See also [includedPaths].</code>
+</line>
+<line number="21">
+<code>  final excludedPaths = &lt;IndexPath&gt;[];</code>
+</line>
+<line number="22">
+<code/>
+</line>
+<line number="23">
+<code>  /// List of JSON paths for composite indexes. Only scalar values are covered,</code>
+</line>
+<line number="24">
+<code>  /// so these paths should not include the `/?` nor the `/*`suffix.</code>
+</line>
+<line number="25">
+<code>  final compositeIndexes = &lt;List&lt;IndexPath&gt;&gt;[];</code>
+</line>
+<line number="26">
+<code/>
+</line>
+<line number="27">
+<code>  /// List of JSON paths for spatial indexing.</code>
+</line>
+<line number="28">
+<code>  final spatialIndexes = &lt;SpatialIndexPath&gt;[];</code>
+</line>
+<line number="29">
+<code/>
+</line>
+<line number="30">
+<code>  /// Serializes this instance to a JSON object.</code>
+</line>
+<line hits="2" number="31">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="32">
+<code>        'indexingMode': indexingMode.name,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="33">
+<code>        'automatic': automatic,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="34">
+<code>        if (includedPaths.isNotEmpty)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="35">
+<code>          'includedPaths': includedPaths.map((p) =&gt; p.toJson()).toList(),</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="36">
+<code>        if (excludedPaths.isNotEmpty)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="37">
+<code>          'excludedPaths':</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="38">
+<code>              excludedPaths.map((p) =&gt; p.toJson()..remove('order')).toList(),</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="39">
+<code>        if (compositeIndexes.isNotEmpty)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="40">
+<code>          'compositeIndexes': compositeIndexes</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="41">
+<code>              .where((c) =&gt; c.isNotEmpty)</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="42">
+<code>              .map((c) =&gt; c.map((p) =&gt; p.toJson()).toList())</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="43">
+<code>              .toList(),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="44">
+<code>        if (spatialIndexes.isNotEmpty)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="45">
+<code>          'spatialIndexes': spatialIndexes.map((p) =&gt; p.toJson()).toList(),</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line number="46">
+<code>      };</code>
+</line>
+<line number="47">
+<code/>
+</line>
+<line number="48">
+<code>  /// Deserializes data from JSON object [json] into a new [IndexingPolicy] instance.</code>
+</line>
+<line number="49">
+<code>  /// Handles fields `indexingMode`, `includedPaths`, `excludedPaths`, `spatialIndexes`,</code>
+</line>
+<line number="50">
+<code>  /// `compositeIndexes`.</code>
+</line>
+<line hits="1" number="51">
+<code>  static IndexingPolicy fromJson(Map json) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="52">
+<code>    final mode = IndexingMode.tryParse(json['indexingMode']);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="53">
+<code>    final automatic = json['automatic'] as bool;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="54">
+<code>    final policy = IndexingPolicy(indexingMode: mode!, automatic: automatic);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="55">
+<code>    var item = json['includedPaths'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="56">
+<code>    if (item != null) {</code>
+</line>
+<line hits="2" number="57">
+<code>      for (Map include in item) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="58">
+<code>        policy.includedPaths.add(IndexPath.fromJson(include));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="59">
+<code>      }</code>
+</line>
+<line number="60">
+<code>    }</code>
+</line>
+<line hits="1" number="61">
+<code>    item = json['excludedPaths'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="62">
+<code>    if (item != null) {</code>
+</line>
+<line hits="2" number="63">
+<code>      for (Map exclude in item) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="64">
+<code>        policy.excludedPaths.add(IndexPath.fromJson(exclude));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="65">
+<code>      }</code>
+</line>
+<line number="66">
+<code>    }</code>
+</line>
+<line hits="1" number="67">
+<code>    item = json['spatialIndexes'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="68">
+<code>    if (item != null) {</code>
+</line>
+<line hits="2" number="69">
+<code>      for (Map spatial in item) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="70">
+<code>        policy.spatialIndexes.add(SpatialIndexPath.fromJson(spatial));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="71">
+<code>      }</code>
+</line>
+<line number="72">
+<code>    }</code>
+</line>
+<line hits="1" number="73">
+<code>    item = json['compositeIndexes'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="74">
+<code>    if (item != null) {</code>
+</line>
+<line hits="2" number="75">
+<code>      for (List composite in item) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="76">
+<code>        try {</code>
+</line>
+<line hits="1" number="77">
+<code>          policy.compositeIndexes</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="78">
+<code>              .add(composite.map((i) =&gt; IndexPath.fromJson(i)).toList());</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line number="79">
+<code>        } catch (ex, st) {</code>
+</line>
+<line hits="0" number="80">
+<code>          print(ex);</code>
+</line>
+<line hits="0" number="81">
+<code>          print(st);</code>
+</line>
+<line number="82">
+<code>          rethrow;</code>
+</line>
+<line number="83">
+<code>        }</code>
+</line>
+<line number="84">
+<code>      }</code>
+</line>
+<line number="85">
+<code>    }</code>
+</line>
+<line number="86">
+<code>    return policy;</code>
+</line>
+<line number="87">
+<code>  }</code>
+</line>
+<line number="88">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

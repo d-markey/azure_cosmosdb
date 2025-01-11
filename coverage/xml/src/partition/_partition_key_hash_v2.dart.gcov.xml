@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="_partition_key_hash_v2.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.73846155" lines-covered="48" lines-valid="65" package="src/partition" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:convert';</code>
+</line>
+<line number="2">
+<code>import 'dart:typed_data';</code>
+</line>
+<line number="3">
+<code/>
+</line>
+<line number="4">
+<code>import 'package:murmur3/murmur3.dart';</code>
+</line>
+<line number="5">
+<code/>
+</line>
+<line number="6">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="7">
+<code/>
+</line>
+<line number="8">
+<code>class PartitionKeyComponentType {</code>
+</line>
+<line number="9">
+<code>  static const _undefined = 0x00;</code>
+</line>
+<line number="10">
+<code>  static const _null = 0x01;</code>
+</line>
+<line number="11">
+<code>  static const _false = 0x02;</code>
+</line>
+<line number="12">
+<code>  static const _true = 0x03;</code>
+</line>
+<line number="13">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="14">
+<code>  static const _minNumber = 0x04;</code>
+</line>
+<line number="15">
+<code>  static const _number = 0x05;</code>
+</line>
+<line number="16">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="17">
+<code>  static const _maxNumber = 0x06;</code>
+</line>
+<line number="18">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="19">
+<code>  static const _minString = 0x07;</code>
+</line>
+<line number="20">
+<code>  static const _string = 0x08;</code>
+</line>
+<line number="21">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="22">
+<code>  static const _maxString = 0x09;</code>
+</line>
+<line number="23">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="24">
+<code>  static const _int64 = 0x0A;</code>
+</line>
+<line number="25">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="26">
+<code>  static const _int32 = 0x0B;</code>
+</line>
+<line number="27">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="28">
+<code>  static const _int16 = 0x0C;</code>
+</line>
+<line number="29">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="30">
+<code>  static const _int8 = 0x0D;</code>
+</line>
+<line number="31">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="32">
+<code>  static const _uint64 = 0x0E;</code>
+</line>
+<line number="33">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="34">
+<code>  static const _uint32 = 0x0F;</code>
+</line>
+<line number="35">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="36">
+<code>  static const _uint16 = 0x10;</code>
+</line>
+<line number="37">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="38">
+<code>  static const _uint8 = 0x11;</code>
+</line>
+<line number="39">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="40">
+<code>  static const _binary = 0x12;</code>
+</line>
+<line number="41">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="42">
+<code>  static const _guid = 0x13;</code>
+</line>
+<line number="43">
+<code>  // ignore: unused_field</code>
+</line>
+<line number="44">
+<code>  static const _float = 0x14;</code>
+</line>
+<line number="45">
+<code>  static const _infinity = 0xFF;</code>
+</line>
+<line number="46">
+<code>}</code>
+</line>
+<line number="47">
+<code/>
+</line>
+<line number="48">
+<code>class PartitionKeyHashV2 implements Comparable&lt;PartitionKeyHashV2&gt; {</code>
+</line>
+<line hits="3" number="49">
+<code>  static final _mask = BigInt.parse('0x3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="50">
+<code/>
+</line>
+<line number="51">
+<code>  static const maxStringLength = 2 * 1024;</code>
+</line>
+<line number="52">
+<code/>
+</line>
+<line hits="2" number="53">
+<code>  static final PartitionKeyHashV2 _true =</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="54">
+<code>      _hash(PartitionKeyComponentType._true);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="55">
+<code>  static final PartitionKeyHashV2 _false =</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="56">
+<code>      _hash(PartitionKeyComponentType._false);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="57">
+<code>  static final PartitionKeyHashV2 _null =</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="58">
+<code>      _hash(PartitionKeyComponentType._null);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="59">
+<code>  static final PartitionKeyHashV2 _undefined =</code>
+</line>
+<line hits="0" number="60">
+<code>      _hash(PartitionKeyComponentType._undefined);</code>
+</line>
+<line hits="3" number="61">
+<code>  static final PartitionKeyHashV2 _emptyString = _hash(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="62">
+<code>      [PartitionKeyComponentType._string, PartitionKeyComponentType._infinity]);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="63">
+<code/>
+</line>
+<line hits="1" number="64">
+<code>  PartitionKeyHashV2._(this.hex);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="65">
+<code/>
+</line>
+<line number="66">
+<code>  final String hex;</code>
+</line>
+<line number="67">
+<code/>
+</line>
+<line hits="3" number="68">
+<code>  BigInt get value =&gt; BigInt.parse(hex, radix: 16);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="69">
+<code/>
+</line>
+<line hits="3" number="70">
+<code>  factory PartitionKeyHashV2.bool(bool value) =&gt; value ? _true : _false;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="71">
+<code/>
+</line>
+<line hits="0" number="72">
+<code>  factory PartitionKeyHashV2.double(num value) =&gt;</code>
+</line>
+<line hits="0" number="73">
+<code>      PartitionKeyHashV2.hierarchical([value]);</code>
+</line>
+<line number="74">
+<code/>
+</line>
+<line hits="2" number="75">
+<code>  factory PartitionKeyHashV2.string(String value) =&gt; value.isEmpty</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="76">
+<code>      ? _emptyString</code>
+</line>
+<line hits="2" number="77">
+<code>      : (value.length &lt;= maxStringLength)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="78">
+<code>          ? PartitionKeyHashV2.hierarchical([value])</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="79">
+<code>          : throw PartitionKeyException('Partition key value is too long.');</code>
+</line>
+<line number="80">
+<code/>
+</line>
+<line hits="2" number="81">
+<code>  factory PartitionKeyHashV2.nullKey() =&gt; PartitionKeyHashV2._null;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="82">
+<code/>
+</line>
+<line hits="2" number="83">
+<code>  factory PartitionKeyHashV2.trueKey() =&gt; PartitionKeyHashV2._true;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="84">
+<code/>
+</line>
+<line hits="2" number="85">
+<code>  factory PartitionKeyHashV2.falseKey() =&gt; PartitionKeyHashV2._false;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="86">
+<code/>
+</line>
+<line hits="1" number="87">
+<code>  factory PartitionKeyHashV2.emptyStringKey() =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="88">
+<code>      PartitionKeyHashV2._emptyString;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="89">
+<code/>
+</line>
+<line hits="0" number="90">
+<code>  factory PartitionKeyHashV2.undefinedKey() =&gt; PartitionKeyHashV2._undefined;</code>
+</line>
+<line number="91">
+<code/>
+</line>
+<line hits="0" number="92">
+<code>  factory PartitionKeyHashV2(List&lt;dynamic&gt; data) {</code>
+</line>
+<line hits="0" number="93">
+<code>    final bytes = getBytes(data).toList();</code>
+</line>
+<line hits="0" number="94">
+<code>    return _hash(bytes);</code>
+</line>
+<line number="95">
+<code>  }</code>
+</line>
+<line number="96">
+<code/>
+</line>
+<line hits="1" number="97">
+<code>  factory PartitionKeyHashV2.hierarchical(List&lt;dynamic&gt; data) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="98">
+<code>    final parts = &lt;String&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="99">
+<code>    for (var i = 0; i &lt; data.length; i++) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="100">
+<code>      final bytes = getBytes(data[i]).toList();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="101">
+<code>      final hash = _hash(bytes);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="102">
+<code>      parts.add(hash.hex);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="103">
+<code>    }</code>
+</line>
+<line hits="2" number="104">
+<code>    return PartitionKeyHashV2._(parts.join(''));</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="105">
+<code>  }</code>
+</line>
+<line number="106">
+<code/>
+</line>
+<line hits="1" number="107">
+<code>  static Iterable&lt;int&gt; getBytes(dynamic value) sync* {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="108">
+<code>    if (value == null) {</code>
+</line>
+<line number="109">
+<code>      yield PartitionKeyComponentType._null;</code>
+</line>
+<line hits="1" number="110">
+<code>    } else if (value is bool) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="111">
+<code>      yield value</code>
+</line>
+<line number="112">
+<code>          ? PartitionKeyComponentType._true</code>
+</line>
+<line number="113">
+<code>          : PartitionKeyComponentType._false;</code>
+</line>
+<line hits="1" number="114">
+<code>    } else if (value is num) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="115">
+<code>      final dl = Float64List.fromList([value.toDouble()]);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="116">
+<code>      var bytes = dl.buffer.asUint8List();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="117">
+<code>      if (Endian.host == Endian.big) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="118">
+<code>        bytes = Uint8List.fromList(bytes.reversed.toList());</code>
+</line>
+<line number="119">
+<code>      }</code>
+</line>
+<line number="120">
+<code>      yield PartitionKeyComponentType._number;</code>
+</line>
+<line number="121">
+<code>      yield* bytes;</code>
+</line>
+<line hits="1" number="122">
+<code>    } else if (value is String) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="123">
+<code>      if (value.length &gt; maxStringLength) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="124">
+<code>        throw PartitionKeyException('Partition key value is too long.');</code>
+</line>
+<line number="125">
+<code>      }</code>
+</line>
+<line number="126">
+<code>      yield PartitionKeyComponentType._string;</code>
+</line>
+<line hits="1" number="127">
+<code>      yield* utf8.encode(value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="128">
+<code>      yield PartitionKeyComponentType._infinity;</code>
+</line>
+<line hits="0" number="129">
+<code>    } else if (value is Iterable) {</code>
+</line>
+<line hits="0" number="130">
+<code>      for (var item in value) {</code>
+</line>
+<line hits="0" number="131">
+<code>        yield* getBytes(item);</code>
+</line>
+<line number="132">
+<code>      }</code>
+</line>
+<line number="133">
+<code>    } else {</code>
+</line>
+<line number="134">
+<code>      yield PartitionKeyComponentType._undefined;</code>
+</line>
+<line number="135">
+<code>    }</code>
+</line>
+<line number="136">
+<code>  }</code>
+</line>
+<line number="137">
+<code/>
+</line>
+<line hits="1" number="138">
+<code>  static PartitionKeyHashV2 _hash(dynamic data) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="139">
+<code>    var hash = murmur3f(data, seed: BigInt.zero) as BigInt;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="140">
+<code>    // hi/lo parts are inverted in Cosmos DB</code>
+</line>
+<line hits="2" number="141">
+<code>    final hex = hash.toRadixString(16).padLeft(32, '0');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="142">
+<code>    final hi = hex.substring(0, 16);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="143">
+<code>    final lo = hex.substring(16, 32);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="144">
+<code>    hash = BigInt.parse(lo + hi, radix: 16) &amp; _mask;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="145">
+<code>    return PartitionKeyHashV2._(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="146">
+<code>        hash.toRadixString(16).toUpperCase().padLeft(32, '0'));</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="147">
+<code>  }</code>
+</line>
+<line number="148">
+<code/>
+</line>
+<line hits="1" number="149">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="150">
+<code>  int compareTo(PartitionKeyHashV2 other) =&gt; value.compareTo(other.value);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="151">
+<code/>
+</line>
+<line hits="0" number="152">
+<code>  @override</code>
+</line>
+<line hits="0" number="153">
+<code>  int get hashCode =&gt; hex.hashCode;</code>
+</line>
+<line number="154">
+<code/>
+</line>
+<line hits="1" number="155">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="156">
+<code>  bool operator ==(Object other) =&gt;</code>
+</line>
+<line hits="3" number="157">
+<code>      (other is PartitionKeyHashV2) &amp;&amp; compareTo(other) == 0;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="158">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

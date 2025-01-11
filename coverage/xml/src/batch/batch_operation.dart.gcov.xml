@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="batch_operation.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="35" lines-valid="35" package="src/batch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:convert';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import 'package:meta/meta.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>import '../base_document.dart';</code>
+</line>
+<line number="6">
+<code>import '../client/_context.dart';</code>
+</line>
+<line number="7">
+<code>import '../partition/partition_key.dart';</code>
+</line>
+<line number="8">
+<code>import '../partition/partition_key_spec.dart';</code>
+</line>
+<line number="9">
+<code>import 'batch.dart';</code>
+</line>
+<line number="10">
+<code>import 'batch_operation_result.dart';</code>
+</line>
+<line number="11">
+<code>import 'batch_operation_type.dart';</code>
+</line>
+<line number="12">
+<code>import 'operations/batch_operation_create.dart';</code>
+</line>
+<line number="13">
+<code>import 'operations/batch_operation_read.dart';</code>
+</line>
+<line number="14">
+<code/>
+</line>
+<line number="15">
+<code>/// Base class for batch operations.</code>
+</line>
+<line number="16">
+<code>abstract class BatchOperation {</code>
+</line>
+<line number="17">
+<code>  /// Creates a new batch operation targeting [partitionKey].</code>
+</line>
+<line hits="1" number="18">
+<code>  BatchOperation({PartitionKey? partitionKey}) : _partitionKey = partitionKey;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="19">
+<code/>
+</line>
+<line number="20">
+<code>  final PartitionKey? _partitionKey;</code>
+</line>
+<line number="21">
+<code/>
+</line>
+<line number="22">
+<code>  /// The operation's target [partitionKey].</code>
+</line>
+<line hits="2" number="23">
+<code>  PartitionKey? get partitionKey =&gt; _partitionKey;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="24">
+<code/>
+</line>
+<line number="25">
+<code>  /// The operation's type.</code>
+</line>
+<line number="26">
+<code>  BatchOperationType get type;</code>
+</line>
+<line number="27">
+<code/>
+</line>
+<line number="28">
+<code>  /// Serializes this instance to a JSON object.</code>
+</line>
+<line hits="2" number="29">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="30">
+<code>        'operationType': type.name,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="31">
+<code>        'partitionKey': jsonEncode(partitionKey?.values),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="32">
+<code>      };</code>
+</line>
+<line number="33">
+<code/>
+</line>
+<line number="34">
+<code>  BatchOperationResult? _result;</code>
+</line>
+<line number="35">
+<code/>
+</line>
+<line number="36">
+<code>  /// The operation's result. This property will be set after calling [Batch.execute]; it</code>
+</line>
+<line number="37">
+<code>  /// returns `null` if the batch has not been executed yet.</code>
+</line>
+<line hits="2" number="38">
+<code>  BatchOperationResult? get result =&gt; _result;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="39">
+<code/>
+</line>
+<line hits="1" number="40">
+<code>  BatchOperationResult _setResult(Map res, Context? context) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="41">
+<code>    final statusCode = res['statusCode'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="42">
+<code>    final retryAfterMs = res['retryAfterMilliseconds'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="43">
+<code>    final result = BatchOperationResult.noItem(this, statusCode, retryAfterMs);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="44">
+<code>    _result = result;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="45">
+<code>    return result;</code>
+</line>
+<line number="46">
+<code>  }</code>
+</line>
+<line number="47">
+<code>}</code>
+</line>
+<line number="48">
+<code/>
+</line>
+<line number="49">
+<code>/// Base class for batch operations on specific document types, e.g. [BatchOperationRead].</code>
+</line>
+<line number="50">
+<code>abstract class BatchOperationOnType&lt;T extends BaseDocument&gt;</code>
+</line>
+<line number="51">
+<code>    extends BatchOperation {</code>
+</line>
+<line hits="1" number="52">
+<code>  BatchOperationOnType({PartitionKey? partitionKey})</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="53">
+<code>      : super(partitionKey: partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="54">
+<code/>
+</line>
+<line hits="1" number="55">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="56">
+<code>  BatchOperationResult&lt;T&gt;? get result =&gt; _result as BatchOperationResult&lt;T&gt;?;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="57">
+<code/>
+</line>
+<line hits="1" number="58">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="59">
+<code>  BatchOperationResult&lt;T&gt; _setResult(Map res, Context? context) {</code>
+</line>
+<line hits="1" number="60">
+<code>    final statusCode = res['statusCode'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="61">
+<code>    final retryAfterMs = res['retryAfterMilliseconds'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="62">
+<code>    final json = res['resourceBody'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="63">
+<code>    T? doc;</code>
+</line>
+<line number="64">
+<code>    if (json != null) {</code>
+</line>
+<line hits="1" number="65">
+<code>      final builder = context!.getBuilder&lt;T&gt;();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="66">
+<code>      doc = builder(json);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="67">
+<code>    }</code>
+</line>
+<line hits="1" number="68">
+<code>    final result = BatchOperationResult&lt;T&gt;(this, statusCode, retryAfterMs, doc);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="69">
+<code>    _result = result;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="70">
+<code>    return result;</code>
+</line>
+<line number="71">
+<code>  }</code>
+</line>
+<line number="72">
+<code>}</code>
+</line>
+<line number="73">
+<code/>
+</line>
+<line number="74">
+<code>/// Base class for batch operations on specific items, e.g. [BatchOperationCreate].</code>
+</line>
+<line number="75">
+<code>abstract class BatchOperationOnItem&lt;T extends BaseDocument&gt;</code>
+</line>
+<line number="76">
+<code>    extends BatchOperationOnType&lt;T&gt; {</code>
+</line>
+<line hits="1" number="77">
+<code>  BatchOperationOnItem(this.item,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="78">
+<code>      {PartitionKeySpec? partitionKeySpec, PartitionKey? partitionKey})</code>
+</line>
+<line number="79">
+<code>      : _partitionKeySpec = partitionKeySpec,</code>
+</line>
+<line hits="1" number="80">
+<code>        super(partitionKey: partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="81">
+<code/>
+</line>
+<line number="82">
+<code>  /// The operation's target [item].</code>
+</line>
+<line number="83">
+<code>  final T item;</code>
+</line>
+<line number="84">
+<code/>
+</line>
+<line number="85">
+<code>  final PartitionKeySpec? _partitionKeySpec;</code>
+</line>
+<line number="86">
+<code/>
+</line>
+<line hits="1" number="87">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="88">
+<code>  PartitionKey? get partitionKey =&gt;</code>
+</line>
+<line hits="4" number="89">
+<code>      super.partitionKey ?? _partitionKeySpec?.from(item);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="90">
+<code/>
+</line>
+<line hits="1" number="91">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="92">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; super.toJson()</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="93">
+<code>    ..addAll({</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="94">
+<code>      'id': item.id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="95">
+<code>      'resourceBody': item.toJson(),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="96">
+<code>    });</code>
+</line>
+<line number="97">
+<code>}</code>
+</line>
+<line number="98">
+<code/>
+</line>
+<line number="99">
+<code>// internal use</code>
+</line>
+<line number="100">
+<code>@internal</code>
+</line>
+<line number="101">
+<code>extension BatchOperationInternalExt on BatchOperation {</code>
+</line>
+<line hits="1" number="102">
+<code>  BatchOperationResult setResult(Map res, Context? context) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="103">
+<code>      _setResult(res, context);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="104">
+<code/>
+</line>
+<line hits="2" number="105">
+<code>  void clearResult() =&gt; _result = null;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="106">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

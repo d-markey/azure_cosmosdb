@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="partition_key.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="24" lines-valid="24" package="src/partition" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:convert';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '../_internal/_http_header.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>/// Class representing a partition key.</code>
+</line>
+<line number="6">
+<code>class PartitionKey {</code>
+</line>
+<line hits="2" number="7">
+<code>  const PartitionKey._(this.values);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="8">
+<code/>
+</line>
+<line number="9">
+<code>  final List&lt;dynamic&gt; values;</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>  /// Partition key with a single property (`Hash`).</code>
+</line>
+<line hits="4" number="12">
+<code>  PartitionKey(dynamic value) : this._(List.unmodifiable([value]));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="13">
+<code/>
+</line>
+<line number="14">
+<code>  /// Creates a partition key for multiple keys (`MultiHash`).</code>
+</line>
+<line hits="1" number="15">
+<code>  PartitionKey.hierarchical(List&lt;dynamic&gt; values)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="16">
+<code>      : this._(List.unmodifiable(values));</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="17">
+<code/>
+</line>
+<line number="18">
+<code>  /// Used for cross-partition queries.</code>
+</line>
+<line number="19">
+<code>  static const all = PartitionKey._([]);</code>
+</line>
+<line number="20">
+<code/>
+</line>
+<line number="21">
+<code>  /// The HTTP header representing the target partition.</code>
+</line>
+<line hits="2" number="22">
+<code>  Map&lt;String, String&gt; get header =&gt; (this == all)</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code>      ? HttpHeader.enableCrossPartition</code>
+</line>
+<line hits="3" number="24">
+<code>      : {HttpHeader.msDocumentDbPartitionKey: jsonEncode(values)};</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="25">
+<code/>
+</line>
+<line hits="1" number="26">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="27">
+<code>  int get hashCode =&gt;</code>
+</line>
+<line hits="4" number="28">
+<code>      (values.length * 31) ^</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="29">
+<code>      (values.isEmpty ? 0xFFFFFFFF : values.first.hashCode);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line number="30">
+<code/>
+</line>
+<line hits="1" number="31">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="32">
+<code>  bool operator ==(Object other) =&gt;</code>
+</line>
+<line hits="4" number="33">
+<code>      (other is PartitionKey) &amp;&amp; _areListsEqual(values, other.values);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="34">
+<code/>
+</line>
+<line hits="1" number="35">
+<code>  static bool _areListsEqual(List a, List b) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="36">
+<code>    if (a.length != b.length) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="37">
+<code>      return false;</code>
+</line>
+<line number="38">
+<code>    }</code>
+</line>
+<line hits="3" number="39">
+<code>    for (var i = 0; i &lt; a.length; i++) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="40">
+<code>      if (!_areEqual(a[i], b[i])) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="41">
+<code>        return false;</code>
+</line>
+<line number="42">
+<code>      }</code>
+</line>
+<line number="43">
+<code>    }</code>
+</line>
+<line number="44">
+<code>    return true;</code>
+</line>
+<line number="45">
+<code>  }</code>
+</line>
+<line number="46">
+<code/>
+</line>
+<line hits="1" number="47">
+<code>  static bool _areEqual(dynamic a, dynamic b) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="48">
+<code>    if (a is num &amp;&amp; b is num) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="49">
+<code>      return a.compareTo(b) == 0;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="50">
+<code>    } else if (a is String &amp;&amp; b is String) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="51">
+<code>      return a.compareTo(b) == 0;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="52">
+<code>    } else if (a is bool &amp;&amp; b is bool) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="53">
+<code>      return a == b;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="54">
+<code>    } else if (a is List &amp;&amp; b is List) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="55">
+<code>      return _areListsEqual(a, b);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="56">
+<code>    } else {</code>
+</line>
+<line number="57">
+<code>      return false;</code>
+</line>
+<line number="58">
+<code>    }</code>
+</line>
+<line number="59">
+<code>  }</code>
+</line>
+<line number="60">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

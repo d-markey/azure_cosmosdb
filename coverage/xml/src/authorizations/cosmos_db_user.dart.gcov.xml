@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="cosmos_db_user.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="6" lines-valid="6" package="src/authorizations" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../base_document.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>/// Class representing a CosmosDB user.</code>
+</line>
+<line number="4">
+<code>class CosmosDbUser extends BaseDocument with EtagMixin {</code>
+</line>
+<line hits="1" number="5">
+<code>  CosmosDbUser(this.id);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>  @override</code>
+</line>
+<line number="8">
+<code>  final String id;</code>
+</line>
+<line number="9">
+<code/>
+</line>
+<line hits="1" number="10">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="11">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {'id': id};</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  /// Builds a [CosmosDbUser] from a CosmosDB JSON object.</code>
+</line>
+<line hits="1" number="14">
+<code>  static CosmosDbUser build(Map json) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="15">
+<code>    final user = CosmosDbUser(json['id']);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="16">
+<code>    user.setEtag(json);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="17">
+<code>    return user;</code>
+</line>
+<line number="18">
+<code>  }</code>
+</line>
+<line number="19">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

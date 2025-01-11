@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="_path_component.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.7647059" lines-covered="13" lines-valid="17" package="src/partition" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>abstract class PathComponent {</code>
+</line>
+<line number="2">
+<code>  dynamic extract(dynamic json);</code>
+</line>
+<line number="3">
+<code>}</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>class PathSegment extends PathComponent {</code>
+</line>
+<line hits="1" number="6">
+<code>  PathSegment(this.segment);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="7">
+<code/>
+</line>
+<line number="8">
+<code>  final String segment;</code>
+</line>
+<line number="9">
+<code/>
+</line>
+<line hits="1" number="10">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="11">
+<code>  dynamic extract(dynamic json) =&gt; (json as Map)[segment];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="12">
+<code/>
+</line>
+<line hits="0" number="13">
+<code>  @override</code>
+</line>
+<line hits="0" number="14">
+<code>  int get hashCode =&gt; segment.hashCode;</code>
+</line>
+<line number="15">
+<code/>
+</line>
+<line hits="1" number="16">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="17">
+<code>  bool operator ==(Object other) =&gt;</code>
+</line>
+<line hits="4" number="18">
+<code>      (other is PathSegment) &amp;&amp; segment == other.segment;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="19">
+<code>}</code>
+</line>
+<line number="20">
+<code/>
+</line>
+<line number="21">
+<code>class ArrayIndex extends PathComponent {</code>
+</line>
+<line hits="1" number="22">
+<code>  ArrayIndex(this.index);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code/>
+</line>
+<line number="24">
+<code>  final int index;</code>
+</line>
+<line number="25">
+<code/>
+</line>
+<line hits="1" number="26">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="27">
+<code>  dynamic extract(dynamic json) =&gt; (json as List)[index];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="28">
+<code/>
+</line>
+<line hits="0" number="29">
+<code>  @override</code>
+</line>
+<line hits="0" number="30">
+<code>  int get hashCode =&gt; index;</code>
+</line>
+<line number="31">
+<code/>
+</line>
+<line hits="1" number="32">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="33">
+<code>  bool operator ==(Object other) =&gt;</code>
+</line>
+<line hits="4" number="34">
+<code>      (other is ArrayIndex) &amp;&amp; index == other.index;</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="35">
+<code>}</code>
+</line>
+<line number="36">
+<code/>
+</line>
+<line number="37">
+<code>extension JsonExtractExt on List&lt;PathComponent&gt; {</code>
+</line>
+<line hits="1" number="38">
+<code>  dynamic extract(dynamic json) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="39">
+<code>    var cur = json;</code>
+</line>
+<line hits="3" number="40">
+<code>    for (var i = 0; i &lt; length; i++) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="41">
+<code>      cur = this[i].extract(cur);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="42">
+<code>    }</code>
+</line>
+<line number="43">
+<code>    return cur;</code>
+</line>
+<line number="44">
+<code>  }</code>
+</line>
+<line number="45">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

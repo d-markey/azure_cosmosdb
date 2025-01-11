@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="cosmos_db_authorization.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.875" lines-covered="14" lines-valid="16" package="src/authorizations" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:convert';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import 'package:crypto/crypto.dart' as crypto;</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>import '../_internal/_imf_fixdate.dart';</code>
+</line>
+<line number="6">
+<code>import '../client/http_status_codes.dart';</code>
+</line>
+<line number="7">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="8">
+<code>import 'cosmos_db_access_control.dart';</code>
+</line>
+<line number="9">
+<code>import 'cosmos_db_permission.dart';</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>/// Class representing a CosmosDB authorization. This class holds both the</code>
+</line>
+<line number="12">
+<code>/// [token] and the [date] which are used to populate the HTTP headers when</code>
+</line>
+<line number="13">
+<code>/// sending a request to Azure CosmosDB:</code>
+</line>
+<line number="14">
+<code>/// * [token] is sent via the `authorization` header,</code>
+</line>
+<line number="15">
+<code>/// * [date] is sent via the `x-ms-date` header.</code>
+</line>
+<line number="16">
+<code>class CosmosDbAuthorization implements CosmosDbAccessControl {</code>
+</line>
+<line number="17">
+<code>  /// Directly build a CosmosDB authorization using the supplied [token] and</code>
+</line>
+<line number="18">
+<code>  /// [msDate]. The provided [token] will be stored after URI-encoding.</code>
+</line>
+<line hits="1" number="19">
+<code>  CosmosDbAuthorization(String token, [DateTime? msDate])</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="20">
+<code>      : token = Uri.encodeComponent(token),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="21">
+<code>        date = (msDate ?? DateTime.now()).toImfFixedString();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="22">
+<code/>
+</line>
+<line number="23">
+<code>  /// Build a CosmosDB authorization using the supplied [key] and the target</code>
+</line>
+<line number="24">
+<code>  /// resource details.</code>
+</line>
+<line number="25">
+<code>  ///</code>
+</line>
+<line number="26">
+<code>  /// For more information, refer to:</code>
+</line>
+<line number="27">
+<code>  /// https://learn.microsoft.com/en-us/rest/api/cosmos-db/access-control-on-cosmosdb-resources#authorization-header.</code>
+</line>
+<line hits="1" number="28">
+<code>  factory CosmosDbAuthorization.fromKey(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="29">
+<code>      crypto.Hmac? key, String method, String type, String resId) {</code>
+</line>
+<line number="30">
+<code>    if (key == null) {</code>
+</line>
+<line hits="1" number="31">
+<code>      throw CosmosDbException(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="32">
+<code>        HttpStatusCode.unauthorized,</code>
+</line>
+<line number="33">
+<code>        'Missing master key.',</code>
+</line>
+<line number="34">
+<code>      );</code>
+</line>
+<line number="35">
+<code>    }</code>
+</line>
+<line hits="1" number="36">
+<code>    final date = DateTime.now();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="37">
+<code>    final payload =</code>
+</line>
+<line hits="3" number="38">
+<code>        '$method\n$type\n$resId\n${date.toImfFixedString().toLowerCase()}\n\n';</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="39">
+<code>    final signature = base64Encode(key.convert(utf8.encode(payload)).bytes);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="40">
+<code>    return CosmosDbAuthorization('type=master&amp;ver=1.0&amp;sig=$signature', date);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="41">
+<code>  }</code>
+</line>
+<line number="42">
+<code/>
+</line>
+<line number="43">
+<code>  /// Build a CosmosDB authorization using the supplied [permission]. The</code>
+</line>
+<line number="44">
+<code>  /// permission must be obtained from CosmosDB first. If the permission token</code>
+</line>
+<line number="45">
+<code>  /// is empty or null, thi method will throw a</code>
+</line>
+<line number="46">
+<code>  ///</code>
+</line>
+<line number="47">
+<code>  /// For more information, refer to:</code>
+</line>
+<line number="48">
+<code>  /// https://learn.microsoft.com/en-us/rest/api/cosmos-db/access-control-on-cosmosdb-resources#authorization-header.</code>
+</line>
+<line hits="1" number="49">
+<code>  factory CosmosDbAuthorization.fromPermission(CosmosDbPermission permission) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="50">
+<code>    final token = permission.token;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="51">
+<code>    if (token == null || token.isEmpty) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="52">
+<code>      throw CosmosDbException(</code>
+</line>
+<line number="53">
+<code>        HttpStatusCode.invalidToken,</code>
+</line>
+<line number="54">
+<code>        'Permission has no token',</code>
+</line>
+<line number="55">
+<code>      );</code>
+</line>
+<line number="56">
+<code>    }</code>
+</line>
+<line hits="1" number="57">
+<code>    return CosmosDbAuthorization(token);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="58">
+<code>  }</code>
+</line>
+<line number="59">
+<code/>
+</line>
+<line number="60">
+<code>  /// Build a CosmosDB authorization using the supplied [authorization] or</code>
+</line>
+<line number="61">
+<code>  /// [permission], if any. If no</code>
+</line>
+<line number="62">
+<code>  /// permission must be obtained from CosmosDB first.</code>
+</line>
+<line number="63">
+<code>  ///</code>
+</line>
+<line number="64">
+<code>  /// For more information, refer to:</code>
+</line>
+<line number="65">
+<code>  /// https://learn.microsoft.com/en-us/rest/api/cosmos-db/access-control-on-cosmosdb-resources#authorization-header.</code>
+</line>
+<line hits="1" number="66">
+<code>  static CosmosDbAuthorization? from(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="67">
+<code>    CosmosDbAuthorization? authorization,</code>
+</line>
+<line number="68">
+<code>    CosmosDbPermission? permission,</code>
+</line>
+<line number="69">
+<code>  ) =&gt;</code>
+</line>
+<line number="70">
+<code>      (authorization != null)</code>
+</line>
+<line number="71">
+<code>          ? authorization</code>
+</line>
+<line number="72">
+<code>          : ((permission != null)</code>
+</line>
+<line hits="0" number="73">
+<code>              ? CosmosDbAuthorization.fromPermission(permission)</code>
+</line>
+<line number="74">
+<code>              : null);</code>
+</line>
+<line number="75">
+<code/>
+</line>
+<line number="76">
+<code>  late final String date;</code>
+</line>
+<line number="77">
+<code>  late final String token;</code>
+</line>
+<line number="78">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

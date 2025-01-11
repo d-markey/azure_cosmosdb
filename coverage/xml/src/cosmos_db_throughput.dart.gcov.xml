@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="cosmos_db_throughput.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8947368" lines-covered="17" lines-valid="19" package="src" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:convert';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '_internal/_http_header.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>import 'cosmos_db_exceptions.dart';</code>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>/// Class representing a CosmosDB throughput.</code>
+</line>
+<line number="8">
+<code>class CosmosDbThroughput {</code>
+</line>
+<line number="9">
+<code>  /// Creates a new manual [throughput] RUs. Must be a multiple of 100. Minimum allowed</code>
+</line>
+<line number="10">
+<code>  /// is 400 RUs.</code>
+</line>
+<line hits="2" number="11">
+<code>  CosmosDbThroughput(int throughput) : header = createHeader(throughput);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  /// Used for servles instances where throughput can't be set</code>
+</line>
+<line hits="2" number="14">
+<code>  CosmosDbThroughput.none() : header = {};</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code/>
+</line>
+<line hits="1" number="16">
+<code>  static Map&lt;String, String&gt; createHeader(int throughput) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="17">
+<code>    if (throughput &lt; _min) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="18">
+<code>      throw ApplicationException(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="19">
+<code>          'Invalid throughput: minimum value is $_min RUs.');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="20">
+<code>    }</code>
+</line>
+<line hits="2" number="21">
+<code>    if (throughput % 100 != 0) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="22">
+<code>      throw ApplicationException(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code>          'Invalid throughput: value must be a multiple of 100 RUs.');</code>
+</line>
+<line number="24">
+<code>    }</code>
+</line>
+<line hits="1" number="25">
+<code>    return {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="26">
+<code>      HttpHeader.msOfferThroughput: throughput.toString(),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="27">
+<code>    };</code>
+</line>
+<line number="28">
+<code>  }</code>
+</line>
+<line number="29">
+<code/>
+</line>
+<line number="30">
+<code>  /// Creates a new auto-scale throughput for [maxThroughput] RUs. Must be a multiple</code>
+</line>
+<line number="31">
+<code>  /// of 1000. Minimum allowed is 1000 RUs.</code>
+</line>
+<line hits="1" number="32">
+<code>  CosmosDbThroughput.autoScale(int maxThroughput)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="33">
+<code>      : header = {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="34">
+<code>          HttpHeader.msCosmosOfferAutopilotSettings:</code>
+</line>
+<line hits="2" number="35">
+<code>              jsonEncode({'maxThroughput': maxThroughput}),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="36">
+<code>        } {</code>
+</line>
+<line hits="1" number="37">
+<code>    if (maxThroughput &lt; _minAutoScale) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="38">
+<code>      throw ApplicationException(</code>
+</line>
+<line hits="0" number="39">
+<code>          'Invalid max throughput: minimum value is $_minAutoScale RUs.');</code>
+</line>
+<line number="40">
+<code>    }</code>
+</line>
+<line hits="2" number="41">
+<code>    if (maxThroughput % 1000 != 0) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="42">
+<code>      throw ApplicationException(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="43">
+<code>          'Invalid max throughput: value must be a multiple of 1000 RUs.');</code>
+</line>
+<line number="44">
+<code>    }</code>
+</line>
+<line number="45">
+<code>  }</code>
+</line>
+<line number="46">
+<code/>
+</line>
+<line number="47">
+<code>  /// Minimum manual throughput (400 RU).</code>
+</line>
+<line hits="3" number="48">
+<code>  static final minimum = CosmosDbThroughput(400);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="49">
+<code/>
+</line>
+<line number="50">
+<code>  /// The HTTP header representing the specified throughput.</code>
+</line>
+<line number="51">
+<code>  final Map&lt;String, String&gt; header;</code>
+</line>
+<line number="52">
+<code/>
+</line>
+<line number="53">
+<code>  static final _min = 400;</code>
+</line>
+<line number="54">
+<code>  static final _minAutoScale = 1000;</code>
+</line>
+<line number="55">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

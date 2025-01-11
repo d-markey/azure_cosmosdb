@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="_token.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="1" lines-valid="1" package="src/patch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>class Token {</code>
+</line>
+<line hits="1" number="2">
+<code>  Token(this.text, this.type);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="3">
+<code/>
+</line>
+<line number="4">
+<code>  final String text;</code>
+</line>
+<line number="5">
+<code>  final int type;</code>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>  static const number = 1;</code>
+</line>
+<line number="8">
+<code>  static const string = 2;</code>
+</line>
+<line number="9">
+<code>  static const operator = 3;</code>
+</line>
+<line number="10">
+<code>  static const separator = 4;</code>
+</line>
+<line number="11">
+<code>  static const identifier = 5;</code>
+</line>
+<line number="12">
+<code>  static const parameterValue = 6;</code>
+</line>
+<line number="13">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

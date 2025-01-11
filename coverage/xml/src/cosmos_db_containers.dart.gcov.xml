@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="cosmos_db_containers.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.94871795" lines-covered="37" lines-valid="39" package="src" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'authorizations/cosmos_db_authorization.dart';</code>
+</line>
+<line number="2">
+<code>import 'authorizations/cosmos_db_permission.dart';</code>
+</line>
+<line number="3">
+<code>import 'client/_context.dart';</code>
+</line>
+<line number="4">
+<code>import 'cosmos_db_container.dart';</code>
+</line>
+<line number="5">
+<code>import 'cosmos_db_database.dart';</code>
+</line>
+<line number="6">
+<code>import 'cosmos_db_exceptions.dart';</code>
+</line>
+<line number="7">
+<code>import 'cosmos_db_throughput.dart';</code>
+</line>
+<line number="8">
+<code>import 'indexing/geospatial_config.dart';</code>
+</line>
+<line number="9">
+<code>import 'indexing/indexing_policy.dart';</code>
+</line>
+<line number="10">
+<code>import 'partition/partition_key_spec.dart';</code>
+</line>
+<line number="11">
+<code/>
+</line>
+<line number="12">
+<code>/// Class used to manage [CosmosDbContainer]s in a [CosmosDbDatabase].</code>
+</line>
+<line number="13">
+<code>class CosmosDbContainers {</code>
+</line>
+<line hits="3" number="14">
+<code>  CosmosDbContainers(this.database) : url = '${database.url}/colls';</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  /// The [CosmosDbDatabase] this container belongs to.</code>
+</line>
+<line number="17">
+<code>  final CosmosDbDatabase database;</code>
+</line>
+<line number="18">
+<code/>
+</line>
+<line number="19">
+<code>  /// The container's [url].</code>
+</line>
+<line number="20">
+<code>  final String url;</code>
+</line>
+<line number="21">
+<code/>
+</line>
+<line number="22">
+<code>  /// Deserialize data from JSON object [json] into a new [CosmosDbContainer] instance.</code>
+</line>
+<line number="23">
+<code>  /// Handles fields `id`, `partitionKey`, `indexingPolicy`.</code>
+</line>
+<line hits="1" number="24">
+<code>  CosmosDbContainer fromJson(Map json) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="25">
+<code>    final coll = CosmosDbContainer(database, json['id'],</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="26">
+<code>        partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="27">
+<code>        indexingPolicy: IndexingPolicy.fromJson(json['indexingPolicy']));</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="28">
+<code>    coll.setExists(true);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="29">
+<code>    return coll;</code>
+</line>
+<line number="30">
+<code>  }</code>
+</line>
+<line number="31">
+<code/>
+</line>
+<line number="32">
+<code>  /// Lists all containers from this [database].</code>
+</line>
+<line hits="1" number="33">
+<code>  Future&lt;Iterable&lt;CosmosDbContainer&gt;&gt; list(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="34">
+<code>          {CosmosDbPermission? permission,</code>
+</line>
+<line number="35">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="3" number="36">
+<code>      database.client.getMany&lt;CosmosDbContainer&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="37">
+<code>        url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="38">
+<code>        'DocumentCollections',</code>
+</line>
+<line hits="1" number="39">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="40">
+<code>          type: 'colls',</code>
+</line>
+<line hits="2" number="41">
+<code>          resId: database.url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="42">
+<code>          builder: fromJson,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="43">
+<code>          authorization: CosmosDbAuthorization.from(authorization, permission),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="44">
+<code>        ),</code>
+</line>
+<line number="45">
+<code>      );</code>
+</line>
+<line number="46">
+<code/>
+</line>
+<line number="47">
+<code>  /// Deletes the specified [container] from this [database]. All documents in this</code>
+</line>
+<line number="48">
+<code>  /// [container] will be lost. If the [container] does not exists, this method</code>
+</line>
+<line number="49">
+<code>  /// returns `true` by default. if [throwOnNotFound] is set to `true`, it will throw</code>
+</line>
+<line number="50">
+<code>  /// a [NotFoundException] instead. Upon success, the [CosmosDbContainer.exists] flag will</code>
+</line>
+<line number="51">
+<code>  /// be set to `false`.</code>
+</line>
+<line hits="1" number="52">
+<code>  Future&lt;bool&gt; delete(CosmosDbContainer container,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="53">
+<code>          {bool throwOnNotFound = false,</code>
+</line>
+<line number="54">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="55">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="56">
+<code>      database.client</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="57">
+<code>          .delete(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="58">
+<code>        '$url/${container.id}',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="59">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="60">
+<code>          type: 'colls',</code>
+</line>
+<line number="61">
+<code>          throwOnNotFound: throwOnNotFound,</code>
+</line>
+<line hits="1" number="62">
+<code>          authorization: CosmosDbAuthorization.from(authorization, permission),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="63">
+<code>        ),</code>
+</line>
+<line number="64">
+<code>      )</code>
+</line>
+<line hits="2" number="65">
+<code>          .then((value) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="66">
+<code>        container.setExists(false);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="67">
+<code>        return true;</code>
+</line>
+<line number="68">
+<code>      });</code>
+</line>
+<line number="69">
+<code/>
+</line>
+<line number="70">
+<code>  /// Creates a new [CosmosDbContainer] with the specified `name` and `partitionKeys`.</code>
+</line>
+<line hits="1" number="71">
+<code>  Future&lt;CosmosDbContainer&gt; create(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="72">
+<code>    String name, {</code>
+</line>
+<line number="73">
+<code>    required PartitionKeySpec partitionKey,</code>
+</line>
+<line number="74">
+<code>    IndexingPolicy? indexingPolicy,</code>
+</line>
+<line number="75">
+<code>    GeospatialConfig? geospatialConfig,</code>
+</line>
+<line number="76">
+<code>    CosmosDbPermission? permission,</code>
+</line>
+<line number="77">
+<code>    CosmosDbAuthorization? authorization,</code>
+</line>
+<line number="78">
+<code>    CosmosDbThroughput? throughput,</code>
+</line>
+<line number="79">
+<code>  }) =&gt;</code>
+</line>
+<line hits="3" number="80">
+<code>      database.client.post&lt;CosmosDbContainer&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="81">
+<code>        url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="82">
+<code>        CosmosDbContainer(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="83">
+<code>          database,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="84">
+<code>          name,</code>
+</line>
+<line number="85">
+<code>          partitionKeySpec: partitionKey,</code>
+</line>
+<line number="86">
+<code>          indexingPolicy: indexingPolicy,</code>
+</line>
+<line number="87">
+<code>          geospatialConfig: geospatialConfig,</code>
+</line>
+<line number="88">
+<code>        ),</code>
+</line>
+<line hits="1" number="89">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="90">
+<code>          type: 'colls',</code>
+</line>
+<line hits="2" number="91">
+<code>          resId: database.url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="92">
+<code>          headers: (throughput ?? CosmosDbThroughput.minimum).header,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="93">
+<code>          authorization: CosmosDbAuthorization.from(authorization, permission),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="94">
+<code>          builder: fromJson,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="95">
+<code>        ),</code>
+</line>
+<line number="96">
+<code>      );</code>
+</line>
+<line number="97">
+<code/>
+</line>
+<line number="98">
+<code>  /// Opens an existing [CosmosDbContainer] with id [name].</code>
+</line>
+<line hits="1" number="99">
+<code>  Future&lt;CosmosDbContainer&gt; open(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="100">
+<code>    String name, {</code>
+</line>
+<line number="101">
+<code>    CosmosDbPermission? permission,</code>
+</line>
+<line number="102">
+<code>    CosmosDbAuthorization? authorization,</code>
+</line>
+<line number="103">
+<code>  }) =&gt;</code>
+</line>
+<line hits="3" number="104">
+<code>      CosmosDbContainer(database, name).getInfo(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="105">
+<code>        permission: permission,</code>
+</line>
+<line number="106">
+<code>        authorization: authorization,</code>
+</line>
+<line number="107">
+<code>      );</code>
+</line>
+<line number="108">
+<code/>
+</line>
+<line number="109">
+<code>  /// Opens or creates a [CosmosDbContainer] with id [name].</code>
+</line>
+<line hits="1" number="110">
+<code>  Future&lt;CosmosDbContainer&gt; openOrCreate(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="111">
+<code>    String name, {</code>
+</line>
+<line number="112">
+<code>    PartitionKeySpec? partitionKey,</code>
+</line>
+<line number="113">
+<code>    IndexingPolicy? indexingPolicy,</code>
+</line>
+<line number="114">
+<code>    GeospatialConfig? geospatialConfig,</code>
+</line>
+<line number="115">
+<code>    CosmosDbThroughput? throughput,</code>
+</line>
+<line number="116">
+<code>    CosmosDbPermission? permission,</code>
+</line>
+<line number="117">
+<code>    CosmosDbAuthorization? authorization,</code>
+</line>
+<line number="118">
+<code>  }) async {</code>
+</line>
+<line number="119">
+<code>    try {</code>
+</line>
+<line hits="1" number="120">
+<code>      return await open(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="121">
+<code>        name,</code>
+</line>
+<line number="122">
+<code>        permission: permission,</code>
+</line>
+<line number="123">
+<code>        authorization: authorization,</code>
+</line>
+<line number="124">
+<code>      );</code>
+</line>
+<line hits="1" number="125">
+<code>    } on NotFoundException {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="126">
+<code>      if (partitionKey == null) {</code>
+</line>
+<line hits="0" number="127">
+<code>        throw ApplicationException(</code>
+</line>
+<line hits="0" number="128">
+<code>            'Container \'$name\' not found - can not create with a null partion key');</code>
+</line>
+<line number="129">
+<code>      }</code>
+</line>
+<line hits="1" number="130">
+<code>      return await create(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="131">
+<code>        name,</code>
+</line>
+<line number="132">
+<code>        partitionKey: partitionKey,</code>
+</line>
+<line number="133">
+<code>        indexingPolicy: indexingPolicy,</code>
+</line>
+<line number="134">
+<code>        geospatialConfig: geospatialConfig,</code>
+</line>
+<line number="135">
+<code>        throughput: throughput,</code>
+</line>
+<line number="136">
+<code>        permission: permission,</code>
+</line>
+<line number="137">
+<code>        authorization: authorization,</code>
+</line>
+<line number="138">
+<code>      );</code>
+</line>
+<line number="139">
+<code>    }</code>
+</line>
+<line number="140">
+<code>  }</code>
+</line>
+<line number="141">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

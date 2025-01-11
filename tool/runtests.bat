@@ -1,27 +1,19 @@
 @ECHO OFF
 SET __ARGS__=
-SET __COV__=1
-SET __COMMIT__=1
+SET __COV__=0
+SET __COMMIT__=0
 
 :parse
 IF "%~1"=="" (
     GOTO endparse
-) ELSE IF "%~1"=="/nocov" (
-    SET __COV__=0
-) ELSE IF "%~1"=="--nocov" (
-    SET __COV__=0
-) ELSE IF "%~1"=="-nc" (
-    SET __COV__=0
-) ELSE IF "%~1"=="/nc" (
-    SET __COV__=0
-) ELSE IF "%~1"=="/nocommit" (
-    SET __COMMIT__=0
-) ELSE IF "%~1"=="--nocommit" (
-    SET __COMMIT__=0
-) ELSE IF "%~1"=="-ng" (
-    SET __COMMIT__=0
-) ELSE IF "%~1"=="/ng" (
-    SET __COMMIT__=0
+) ELSE IF "%~1"=="/cov" (
+    SET __COV__=1
+) ELSE IF "%~1"=="--cov" (
+    SET __COV__=1
+) ELSE IF "%~1"=="/commit" (
+    SET __COMMIT__=1
+) ELSE IF "%~1"=="--commit" (
+    SET __COMMIT__=1
 ) ELSE (
     SET __ARGS__=%__ARGS__% "%~1"
 )
@@ -40,7 +32,7 @@ IF %__ERRLVL__% NEQ 0 (
 IF "%__COV__%" == "1" (
     CALL dart run coverage:format_coverage --packages=.dart_tool\package_config.json --report-on=lib --lcov -o .\test\coverage\lcov.info -i .\test\coverage
     RMDIR .\coverage /s /q
-    java -jar .\tool\jgenhtml\jgenhtml-1.5.jar .\test\coverage\lcov.info --output-directory .\coverage  
+    java -jar .\tool\jgenhtml\jgenhtml-1.6.jar .\test\coverage\lcov.info --output-directory .\coverage  
     CALL dart run .\tool\xtractcov\main.dart
 
     IF "%__COMMIT__%" == "1" (

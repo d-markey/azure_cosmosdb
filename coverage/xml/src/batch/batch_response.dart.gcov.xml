@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="batch_response.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.85" lines-covered="17" lines-valid="20" package="src/batch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'package:meta/meta.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line number="4">
+<code>import '../base_document.dart';</code>
+</line>
+<line number="5">
+<code>import '../client/_context.dart';</code>
+</line>
+<line number="6">
+<code>import 'batch_operation.dart';</code>
+</line>
+<line number="7">
+<code>import 'batch_operation_result.dart';</code>
+</line>
+<line number="8">
+<code/>
+</line>
+<line number="9">
+<code>/// Class containing the results of a batch transaction.</code>
+</line>
+<line number="10">
+<code>class BatchResponse {</code>
+</line>
+<line number="11">
+<code>  final _results = &lt;BatchOperationResult&gt;[];</code>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  /// The number of results in this batch response.</code>
+</line>
+<line hits="3" number="14">
+<code>  int get length =&gt; _results.length;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  /// Provides access to items returned by Cosmos DB in this batch response.</code>
+</line>
+<line hits="0" number="17">
+<code>  T? get&lt;T extends BaseDocument&gt;(int index) =&gt; _results[index].item as T?;</code>
+</line>
+<line number="18">
+<code/>
+</line>
+<line number="19">
+<code>  /// Returns `true` if all batch operations succeeded, or if the result list is empty.</code>
+</line>
+<line hits="7" number="20">
+<code>  bool get isSuccess =&gt; _results.isEmpty || _results.every((r) =&gt; r.isSuccess);</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line number="21">
+<code/>
+</line>
+<line number="22">
+<code>  /// Returns all results contained in this batch response.</code>
+</line>
+<line hits="3" number="23">
+<code>  Iterable&lt;BatchOperationResult&gt; get results =&gt; _results.asIterable();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="24">
+<code/>
+</line>
+<line number="25">
+<code>  /// Returns only the results that have failed.</code>
+</line>
+<line hits="0" number="26">
+<code>  Iterable&lt;BatchOperationResult&gt; get errors =&gt;</code>
+</line>
+<line hits="0" number="27">
+<code>      _results.where((r) =&gt; !r.isSuccess);</code>
+</line>
+<line number="28">
+<code>}</code>
+</line>
+<line number="29">
+<code/>
+</line>
+<line number="30">
+<code>// internal use</code>
+</line>
+<line number="31">
+<code>@internal</code>
+</line>
+<line number="32">
+<code>extension BatchResponseInternalExt on BatchResponse {</code>
+</line>
+<line hits="1" number="33">
+<code>  void addAll(Iterable&lt;BatchOperationResult&gt; results) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="34">
+<code>      _results.addAll(results);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="35">
+<code/>
+</line>
+<line hits="3" number="36">
+<code>  void add(BatchOperationResult result) =&gt; _results.add(result);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="37">
+<code/>
+</line>
+<line hits="1" number="38">
+<code>  void update(BatchResponse newResults) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="39">
+<code>    final updated = Map&lt;BatchOperation, BatchOperationResult&gt;.fromEntries(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="40">
+<code>        newResults._results.map((r) =&gt; MapEntry(r.operation, r)));</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="41">
+<code>    for (var i = 0; i &lt; _results.length; i++) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="42">
+<code>      final r = updated[_results[i].operation];</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="43">
+<code>      if (r != null) {</code>
+</line>
+<line hits="2" number="44">
+<code>        _results[i] = r;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="45">
+<code>      }</code>
+</line>
+<line number="46">
+<code>    }</code>
+</line>
+<line number="47">
+<code>  }</code>
+</line>
+<line number="48">
+<code/>
+</line>
+<line hits="1" number="49">
+<code>  static BatchResponse build(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="50">
+<code>      List json, Iterable&lt;BatchOperation&gt; operations, Context context) {</code>
+</line>
+<line hits="1" number="51">
+<code>    final resp = BatchResponse();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="52">
+<code>    var index = 0;</code>
+</line>
+<line hits="2" number="53">
+<code>    for (var op in operations) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="54">
+<code>      resp._results.add(op.setResult(json[index], context));</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="55">
+<code>      index += 1;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="56">
+<code>    }</code>
+</line>
+<line number="57">
+<code>    return resp;</code>
+</line>
+<line number="58">
+<code>  }</code>
+</line>
+<line number="59">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

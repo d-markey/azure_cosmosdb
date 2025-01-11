@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="polygon.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="29" lines-valid="29" package="src/spatial" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line number="2">
+<code>import '../indexing/data_type.dart';</code>
+</line>
+<line number="3">
+<code>import '../indexing/geospatial_config.dart';</code>
+</line>
+<line number="4">
+<code>import 'line_string.dart';</code>
+</line>
+<line number="5">
+<code>import 'point.dart';</code>
+</line>
+<line number="6">
+<code>import 'shape.dart';</code>
+</line>
+<line number="7">
+<code/>
+</line>
+<line number="8">
+<code>/// Class represengin a polygon</code>
+</line>
+<line number="9">
+<code>class Polygon extends Shape {</code>
+</line>
+<line number="10">
+<code>  @override</code>
+</line>
+<line number="11">
+<code>  final type = DataType.polygon;</code>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  final _rings = &lt;LineString&gt;[];</code>
+</line>
+<line number="14">
+<code/>
+</line>
+<line hits="1" number="15">
+<code>  Polygon();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="16">
+<code/>
+</line>
+<line hits="1" number="17">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="18">
+<code>  List get coordinates =&gt; rings.map((r) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="19">
+<code>        final coords = r.coordinates;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="20">
+<code>        coords.add(coords[0]);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="21">
+<code>        return coords;</code>
+</line>
+<line hits="1" number="22">
+<code>      }).toList();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code/>
+</line>
+<line number="24">
+<code>  /// `true` iif the polygon contains no ring.</code>
+</line>
+<line hits="3" number="25">
+<code>  bool get isEmpty =&gt; rings.isEmpty;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="26">
+<code/>
+</line>
+<line number="27">
+<code>  /// `true` iif the polygon contains one or more rings.</code>
+</line>
+<line hits="3" number="28">
+<code>  bool get isNotEmpty =&gt; rings.isNotEmpty;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="29">
+<code/>
+</line>
+<line hits="1" number="30">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="31">
+<code>  Iterable&lt;Iterable&lt;Point&gt;&gt; get paths =&gt;</code>
+</line>
+<line hits="7" number="32">
+<code>      rings.map((r) =&gt; r.points.followedBy(r.points.take(1)));</code>
+<hit count="7" name="&lt;unnamed&gt;"/>
+</line>
+<line number="33">
+<code/>
+</line>
+<line number="34">
+<code>  /// List of rings. Rings are represented by line-strings and should not repeat</code>
+</line>
+<line number="35">
+<code>  /// first/last points. During serialization, the first point of each ring is</code>
+</line>
+<line number="36">
+<code>  /// repeated automatically to meet GeoJSON requirements.</code>
+</line>
+<line hits="3" number="37">
+<code>  Iterable&lt;LineString&gt; get rings =&gt; _rings.asIterable();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="38">
+<code/>
+</line>
+<line number="39">
+<code>  /// Adds a ring to the polygon.</code>
+</line>
+<line hits="3" number="40">
+<code>  void add(LineString ring) =&gt; _rings.add(ring);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="41">
+<code/>
+</line>
+<line number="42">
+<code>  /// Adds a set of rings to the polygon.</code>
+</line>
+<line hits="3" number="43">
+<code>  void addAll(Iterable&lt;LineString&gt; rings) =&gt; _rings.addAll(rings);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="44">
+<code/>
+</line>
+<line number="45">
+<code>  /// Inverts the polygon by copying the rings of the current instance, only</code>
+</line>
+<line number="46">
+<code>  /// walking the ring points in reversed order.</code>
+</line>
+<line hits="2" number="47">
+<code>  Polygon invert() =&gt; Polygon()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="48">
+<code>    ..addAll(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="49">
+<code>      rings.map(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="50">
+<code>        (r) =&gt; LineString()..addAll(r.reversed),</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="51">
+<code>      ),</code>
+</line>
+<line number="52">
+<code>    );</code>
+</line>
+<line number="53">
+<code/>
+</line>
+<line hits="1" number="54">
+<code>  static Polygon fromGeoJson(Map geoJson, GeospatialConfig config) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="55">
+<code>      Shape.fromGeoJson&lt;Polygon&gt;(geoJson, config);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="56">
+<code/>
+</line>
+<line hits="2" number="57">
+<code>  static Polygon loadGeographyCoords(Iterable coords) =&gt; Polygon()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="58">
+<code>    ..addAll(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="59">
+<code>      coords.cast&lt;Iterable&gt;().map(_loadGeographyCoords),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="60">
+<code>    );</code>
+</line>
+<line number="61">
+<code/>
+</line>
+<line hits="2" number="62">
+<code>  static Polygon loadGeometryCoords(Iterable coords) =&gt; Polygon()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="63">
+<code>    ..addAll(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="64">
+<code>      coords.cast&lt;Iterable&gt;().map(_loadGeometryCoords),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="65">
+<code>    );</code>
+</line>
+<line number="66">
+<code>}</code>
+</line>
+<line number="67">
+<code/>
+</line>
+<line number="68">
+<code>// internal use</code>
+</line>
+<line hits="1" number="69">
+<code>LineString _loadGeographyCoords(Iterable coords) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="70">
+<code>    LineString.loadGeographyCoords(coords.skipLast());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="71">
+<code/>
+</line>
+<line hits="1" number="72">
+<code>LineString _loadGeometryCoords(Iterable coords) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="73">
+<code>    LineString.loadGeometryCoords(coords.skipLast());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

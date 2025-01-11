@@ -15,7 +15,7 @@ class PathParser {
           components.add(state.getArrayIndex());
           break;
         default:
-          throw InvalidTokenException(
+          throw ParsingException(
               'Unexpected token ${state.current}; expecting "/" or "[".');
       }
     }

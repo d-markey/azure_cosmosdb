@@ -27,7 +27,8 @@ const _months = [
 @internal
 extension DateTimeFormatExt on DateTime {
   // ignore: non_constant_identifier_names
-  static String _00(int n) => (n < 10) ? '0$n' : n.toString();
+  static String _00(int n) =>
+      (n < 10) ? n.toString().padLeft(2, '0') : n.toString();
 
   String toTimeString() => '${_00(hour)}:${_00(minute)}:${_00(second)}';
 

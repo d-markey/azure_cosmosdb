@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="_tokenizer.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="89" lines-valid="89" package="src/patch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'dart:convert';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="4">
+<code>import '_token.dart';</code>
+</line>
+<line number="5">
+<code/>
+</line>
+<line number="6">
+<code>class Tokenizer {</code>
+</line>
+<line hits="1" number="7">
+<code>  Tokenizer(this.condition)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="8">
+<code>      : _chars = condition.runes.map((r) =&gt; String.fromCharCode(r)).toList();</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line number="9">
+<code/>
+</line>
+<line number="10">
+<code>  final String condition;</code>
+</line>
+<line number="11">
+<code>  final List&lt;String&gt; _chars;</code>
+</line>
+<line number="12">
+<code/>
+</line>
+<line hits="1" number="13">
+<code>  String operator [](int idx) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="14">
+<code>      (0 &lt;= idx &amp;&amp; idx &lt; _chars.length) ? _chars[idx] : '\u0000';</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code/>
+</line>
+<line hits="2" number="16">
+<code>  static final _whitespaces =</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="17">
+<code>      ' \t\n\v\f\r\u0085\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u2029\u202F\u205F\u3000'</code>
+</line>
+<line hits="1" number="18">
+<code>          .split('')</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="19">
+<code>          .toSet();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="20">
+<code>  static final _quotes = '\'"'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="21">
+<code>  static final _operators = '+-*/%&amp;|^.?!=&lt;&gt;'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="22">
+<code>  static final _separators = '()[]{},:'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code/>
+</line>
+<line hits="4" number="24">
+<code>  static final _signs = '+-'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="25">
+<code>  static final _digits = '0123456789'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="26">
+<code>  static final _expMarks = 'Ee'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="27">
+<code>  static final _hexMarks = 'Xx'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="28">
+<code>  static final _hexDigits = '0123456789ABCDEFabcdef'.split('').toSet();</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="29">
+<code/>
+</line>
+<line hits="3" number="30">
+<code>  static final _delimitors = {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="31">
+<code>    ..._whitespaces,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="32">
+<code>    ..._quotes,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="33">
+<code>    ..._operators,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="34">
+<code>    ..._separators,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="35">
+<code>  };</code>
+</line>
+<line number="36">
+<code/>
+</line>
+<line hits="1" number="37">
+<code>  int _skipHexDigits(int pos) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="38">
+<code>    while (pos &lt; _chars.length &amp;&amp; _hexDigits.contains(this[pos])) {</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="39">
+<code>      pos++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="40">
+<code>    }</code>
+</line>
+<line number="41">
+<code>    return pos;</code>
+</line>
+<line number="42">
+<code>  }</code>
+</line>
+<line number="43">
+<code/>
+</line>
+<line hits="1" number="44">
+<code>  int _skipDigits(int pos) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="45">
+<code>    while (pos &lt; _chars.length &amp;&amp; _digits.contains(this[pos])) {</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="46">
+<code>      pos++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="47">
+<code>    }</code>
+</line>
+<line number="48">
+<code>    return pos;</code>
+</line>
+<line number="49">
+<code>  }</code>
+</line>
+<line number="50">
+<code/>
+</line>
+<line hits="1" number="51">
+<code>  int _skipNumber(int pos) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="52">
+<code>    var p = pos;</code>
+</line>
+<line hits="6" number="53">
+<code>    if (this[p] == '0' &amp;&amp; _hexMarks.contains(this[p + 1])) {</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="54">
+<code>      if (!_hexDigits.contains(this[p + 2])) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="55">
+<code>        throw ParsingException('Malformed hexadecimal number (pos=$pos).');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="56">
+<code>      }</code>
+</line>
+<line hits="2" number="57">
+<code>      p = _skipHexDigits(p + 3);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="58">
+<code>    } else {</code>
+</line>
+<line hits="1" number="59">
+<code>      p = _skipDigits(p);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="60">
+<code>      if (this[p] == '.') {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="61">
+<code>        var idx = _skipDigits(p + 1);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="62">
+<code>        if (idx == p + 1) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="63">
+<code>          // end of number</code>
+</line>
+<line number="64">
+<code>          return p;</code>
+</line>
+<line number="65">
+<code>        }</code>
+</line>
+<line number="66">
+<code>        p = idx;</code>
+</line>
+<line number="67">
+<code>      }</code>
+</line>
+<line hits="3" number="68">
+<code>      if (_expMarks.contains(this[p])) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="69">
+<code>        var start = p + (_signs.contains(this[p + 1]) ? 2 : 1);</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="70">
+<code>        var idx = _skipDigits(start);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="71">
+<code>        if (idx == start) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="72">
+<code>          throw ParsingException('Malformed exponent (pos=$pos).');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="73">
+<code>        }</code>
+</line>
+<line number="74">
+<code>        p = idx;</code>
+</line>
+<line number="75">
+<code>      }</code>
+</line>
+<line number="76">
+<code>    }</code>
+</line>
+<line number="77">
+<code>    return p;</code>
+</line>
+<line number="78">
+<code>  }</code>
+</line>
+<line number="79">
+<code/>
+</line>
+<line hits="1" number="80">
+<code>  int _skipString(int pos) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="81">
+<code>    var quote = this[pos];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="82">
+<code>    var p = pos + 1;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="83">
+<code>    while (p &lt; _chars.length) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="84">
+<code>      var ch = this[p];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="85">
+<code>      if (ch == '\\') {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="86">
+<code>        p += 2;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="87">
+<code>      } else if (ch == quote) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="88">
+<code>        p++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="89">
+<code>        // end of string</code>
+</line>
+<line number="90">
+<code>        return p;</code>
+</line>
+<line number="91">
+<code>      } else {</code>
+</line>
+<line hits="1" number="92">
+<code>        p++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="93">
+<code>      }</code>
+</line>
+<line number="94">
+<code>    }</code>
+</line>
+<line hits="2" number="95">
+<code>    throw ParsingException('Malformed string (pos=$pos).');</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="96">
+<code>  }</code>
+</line>
+<line number="97">
+<code/>
+</line>
+<line hits="1" number="98">
+<code>  int _skipOperator(int pos) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="99">
+<code>    if (this[pos] == '&lt;' &amp;&amp; this[pos + 1] == '=') return pos + 2;</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="100">
+<code>    if (this[pos] == '&gt;' &amp;&amp; this[pos + 1] == '=') return pos + 2;</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="101">
+<code>    if (this[pos] == '!' &amp;&amp; this[pos + 1] == '=') return pos + 2;</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="102">
+<code>    if (this[pos] == '?' &amp;&amp; this[pos + 1] == '?') return pos + 2;</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="103">
+<code>    if (this[pos] == '&lt;' &amp;&amp; this[pos + 1] == '&lt;') return pos + 2;</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="104">
+<code>    if (this[pos] == '&gt;' &amp;&amp; this[pos + 1] == '&gt;') {</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="105">
+<code>      return pos + (this[pos + 2] == '&gt;' ? 3 : 2);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="106">
+<code>    }</code>
+</line>
+<line hits="1" number="107">
+<code>    return pos + 1;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="108">
+<code>  }</code>
+</line>
+<line number="109">
+<code/>
+</line>
+<line hits="1" number="110">
+<code>  int _skipIdentifier(int pos) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="111">
+<code>    var p = pos;</code>
+</line>
+<line hits="3" number="112">
+<code>    while (p &lt; _chars.length) {</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="113">
+<code>      var ch = this[p];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="114">
+<code>      if (_delimitors.contains(ch)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="115">
+<code>        // end of identifier</code>
+</line>
+<line number="116">
+<code>        return p;</code>
+</line>
+<line number="117">
+<code>      }</code>
+</line>
+<line hits="1" number="118">
+<code>      p++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="119">
+<code>    }</code>
+</line>
+<line number="120">
+<code>    return p;</code>
+</line>
+<line number="121">
+<code>  }</code>
+</line>
+<line number="122">
+<code/>
+</line>
+<line hits="1" number="123">
+<code>  Iterable&lt;Token&gt; getTokens([Map&lt;String, dynamic&gt;? parameters]) sync* {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="124">
+<code>    var pos = 0;</code>
+</line>
+<line hits="2" number="125">
+<code>    var len = _chars.length;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="126">
+<code>    while (pos &lt; len) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="127">
+<code>      final ch = this[pos];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="128">
+<code>      if (_whitespaces.contains(ch)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="129">
+<code>        // skip whitespaces</code>
+</line>
+<line hits="1" number="130">
+<code>        pos++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="131">
+<code>      } else if (_digits.contains(ch)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="132">
+<code>        // number literal</code>
+</line>
+<line hits="1" number="133">
+<code>        var idx = _skipNumber(pos);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="134">
+<code>        yield Token(_chars.sublist(pos, idx).join(), Token.number);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="135">
+<code>        pos = idx;</code>
+</line>
+<line hits="2" number="136">
+<code>      } else if (_quotes.contains(ch)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="137">
+<code>        // string literal</code>
+</line>
+<line hits="1" number="138">
+<code>        var idx = _skipString(pos);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="139">
+<code>        yield Token(_chars.sublist(pos, idx).join(), Token.string);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="140">
+<code>        pos = idx;</code>
+</line>
+<line hits="2" number="141">
+<code>      } else if (_operators.contains(ch)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="142">
+<code>        // operator</code>
+</line>
+<line hits="1" number="143">
+<code>        var idx = _skipOperator(pos);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="144">
+<code>        yield Token(_chars.sublist(pos, idx).join(), Token.operator);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="145">
+<code>        pos = idx;</code>
+</line>
+<line hits="2" number="146">
+<code>      } else if (_separators.contains(ch)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="147">
+<code>        // separator</code>
+</line>
+<line hits="3" number="148">
+<code>        yield Token(_chars[pos], Token.separator);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="149">
+<code>        pos++;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="150">
+<code>      } else {</code>
+</line>
+<line number="151">
+<code>        // identifier</code>
+</line>
+<line hits="1" number="152">
+<code>        var idx = _skipIdentifier(pos);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="153">
+<code>        final identifier = _chars.sublist(pos, idx).join();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="154">
+<code>        if (parameters != null &amp;&amp;</code>
+</line>
+<line hits="1" number="155">
+<code>            identifier.startsWith('@') &amp;&amp;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="156">
+<code>            parameters.containsKey(identifier)) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="157">
+<code>          yield Token(jsonEncode(parameters[identifier]), Token.parameterValue);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="158">
+<code>        } else {</code>
+</line>
+<line hits="1" number="159">
+<code>          yield Token(identifier, Token.identifier);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="160">
+<code>        }</code>
+</line>
+<line number="161">
+<code>        pos = idx;</code>
+</line>
+<line number="162">
+<code>      }</code>
+</line>
+<line number="163">
+<code>    }</code>
+</line>
+<line number="164">
+<code>  }</code>
+</line>
+<line number="165">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

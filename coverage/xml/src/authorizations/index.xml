@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="index" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.9716981" lines-covered="103" lines-valid="106" package="src/authorizations" testname="lcov.info" version="1.6">
+<sources>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_user.dart" functions-hit="0" functions-valid="0" lines-hit="6" lines-valid="6" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="6" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_users.dart" functions-hit="0" functions-valid="0" lines-hit="26" lines-valid="26" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="26" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="permission_mode.dart" functions-hit="0" functions-valid="0" lines-hit="4" lines-valid="5" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="4" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_permission.dart" functions-hit="0" functions-valid="0" lines-hit="13" lines-valid="13" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="13" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_authorization.dart" functions-hit="0" functions-valid="0" lines-hit="14" lines-valid="16" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="14" name="&lt;unnamed&gt;"/>
+</source>
+<source branches-hit="0" branches-valid="0" filename="cosmos_db_permissions.dart" functions-hit="0" functions-valid="0" lines-hit="40" lines-valid="40" prefix="/_Projects/github/azure_cosmosdb/lib/">
+<testCase branches-hit="0" functions-hit="0" lines-hit="40" name="&lt;unnamed&gt;"/>
+</source>
+</sources>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

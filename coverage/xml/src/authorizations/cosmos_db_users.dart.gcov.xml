@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="cosmos_db_users.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="26" lines-valid="26" package="src/authorizations" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'package:meta/meta.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '../client/_client.dart';</code>
+</line>
+<line number="4">
+<code>import '../client/_context.dart';</code>
+</line>
+<line number="5">
+<code>import '../cosmos_db_database.dart';</code>
+</line>
+<line number="6">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="7">
+<code>import 'cosmos_db_authorization.dart';</code>
+</line>
+<line number="8">
+<code>import 'cosmos_db_permission.dart';</code>
+</line>
+<line number="9">
+<code>import 'cosmos_db_permissions.dart';</code>
+</line>
+<line number="10">
+<code>import 'cosmos_db_user.dart';</code>
+</line>
+<line number="11">
+<code/>
+</line>
+<line number="12">
+<code>/// Class used to manage [CosmosDbUser]s in a CosmosDB [CosmosDbDatabase].</code>
+</line>
+<line number="13">
+<code>class CosmosDbUsers {</code>
+</line>
+<line hits="1" number="14">
+<code>  CosmosDbUsers(CosmosDbDatabase db)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code>      : database = db,</code>
+</line>
+<line hits="2" number="16">
+<code>        url = '${db.url}/users';</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="17">
+<code/>
+</line>
+<line number="18">
+<code>  final CosmosDbDatabase database;</code>
+</line>
+<line number="19">
+<code>  final String url;</code>
+</line>
+<line number="20">
+<code/>
+</line>
+<line number="21">
+<code>  /// Provides access to permissions associated with [CosmosDbUser]s.</code>
+</line>
+<line hits="2" number="22">
+<code>  late final CosmosDbPermissions permissions = CosmosDbPermissions(this);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code/>
+</line>
+<line number="24">
+<code>  /// Lists all containers from this [database].</code>
+</line>
+<line hits="1" number="25">
+<code>  Future&lt;Iterable&lt;CosmosDbUser&gt;&gt; list(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="26">
+<code>          {CosmosDbPermission? permission,</code>
+</line>
+<line number="27">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="3" number="28">
+<code>      database.client.getMany&lt;CosmosDbUser&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="29">
+<code>        url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="30">
+<code>        'Users',</code>
+</line>
+<line hits="1" number="31">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="32">
+<code>          type: 'users',</code>
+</line>
+<line hits="2" number="33">
+<code>          resId: database.url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="34">
+<code>          builder: CosmosDbUser.build,</code>
+</line>
+<line hits="1" number="35">
+<code>          authorization: CosmosDbAuthorization.from(authorization, permission),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="36">
+<code>        ),</code>
+</line>
+<line number="37">
+<code>      );</code>
+</line>
+<line number="38">
+<code/>
+</line>
+<line number="39">
+<code>  /// Deletes the user identified by [id]. By default, this method returns `true` if</code>
+</line>
+<line number="40">
+<code>  /// the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a</code>
+</line>
+<line number="41">
+<code>  /// [NotFoundException] instead.</code>
+</line>
+<line hits="1" number="42">
+<code>  Future&lt;bool&gt; delete(String id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="43">
+<code>          {bool throwOnNotFound = false,</code>
+</line>
+<line number="44">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="45">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="3" number="46">
+<code>      database.client.delete(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="47">
+<code>        '$url/$id',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="48">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="49">
+<code>          type: 'users',</code>
+</line>
+<line number="50">
+<code>          throwOnNotFound: throwOnNotFound,</code>
+</line>
+<line number="51">
+<code>          builder: CosmosDbUser.build,</code>
+</line>
+<line hits="1" number="52">
+<code>          authorization: CosmosDbAuthorization.from(authorization, permission),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="53">
+<code>        ),</code>
+</line>
+<line number="54">
+<code>      );</code>
+</line>
+<line number="55">
+<code/>
+</line>
+<line number="56">
+<code>  /// Finds the user identified by [id]. By default, this method returns `null` if</code>
+</line>
+<line number="57">
+<code>  /// the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a</code>
+</line>
+<line number="58">
+<code>  /// [NotFoundException] instead.</code>
+</line>
+<line hits="1" number="59">
+<code>  Future&lt;CosmosDbUser?&gt; find(String id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="60">
+<code>          {bool throwOnNotFound = false,</code>
+</line>
+<line number="61">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="62">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="3" number="63">
+<code>      database.client.get&lt;CosmosDbUser&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="64">
+<code>        '$url/$id',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="65">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="66">
+<code>          type: 'users',</code>
+</line>
+<line number="67">
+<code>          throwOnNotFound: throwOnNotFound,</code>
+</line>
+<line number="68">
+<code>          builder: CosmosDbUser.build,</code>
+</line>
+<line hits="1" number="69">
+<code>          authorization: CosmosDbAuthorization.from(authorization, permission),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="70">
+<code>        ),</code>
+</line>
+<line number="71">
+<code>      );</code>
+</line>
+<line number="72">
+<code/>
+</line>
+<line number="73">
+<code>  /// Adds [user] to the [database] the user identified by [id]. By default, this method returns</code>
+</line>
+<line number="74">
+<code>  /// `null` if the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a</code>
+</line>
+<line number="75">
+<code>  /// [NotFoundException] instead.</code>
+</line>
+<line hits="1" number="76">
+<code>  Future&lt;CosmosDbUser&gt; add(CosmosDbUser user,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="77">
+<code>          {CosmosDbPermission? permission,</code>
+</line>
+<line number="78">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="3" number="79">
+<code>      database.client.post&lt;CosmosDbUser&gt;(</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="80">
+<code>        url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="81">
+<code>        user,</code>
+</line>
+<line hits="1" number="82">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="83">
+<code>          resId: database.url,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="84">
+<code>          type: 'users',</code>
+</line>
+<line number="85">
+<code>          builder: CosmosDbUser.build,</code>
+</line>
+<line hits="1" number="86">
+<code>          authorization: CosmosDbAuthorization.from(authorization, permission),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="87">
+<code>        ),</code>
+</line>
+<line number="88">
+<code>      );</code>
+</line>
+<line number="89">
+<code>}</code>
+</line>
+<line number="90">
+<code/>
+</line>
+<line number="91">
+<code>// internal use</code>
+</line>
+<line number="92">
+<code>@internal</code>
+</line>
+<line number="93">
+<code>extension CosmosDbUsersInternalExt on CosmosDbUsers {</code>
+</line>
+<line hits="3" number="94">
+<code>  Client get client =&gt; database.client;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="95">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

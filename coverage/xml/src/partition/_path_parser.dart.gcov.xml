@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="_path_parser.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8181818" lines-covered="9" lines-valid="11" package="src/partition" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="2">
+<code>import '_path_component.dart';</code>
+</line>
+<line number="3">
+<code>import '_path_parser_state.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>class PathParser {</code>
+</line>
+<line hits="1" number="6">
+<code>  static List&lt;PathComponent&gt; parse(String path) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="7">
+<code>    final state = ParserState(path);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="8">
+<code>    final components = &lt;PathComponent&gt;[];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="9">
+<code>    while (state.current.isNotEmpty) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="10">
+<code>      switch (state.current) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="11">
+<code>        case '/':</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="12">
+<code>          components.add(state.getPathSegment());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="13">
+<code>          break;</code>
+</line>
+<line hits="1" number="14">
+<code>        case '[':</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="15">
+<code>          components.add(state.getArrayIndex());</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="16">
+<code>          break;</code>
+</line>
+<line number="17">
+<code>        default:</code>
+</line>
+<line hits="0" number="18">
+<code>          throw ParsingException(</code>
+</line>
+<line hits="0" number="19">
+<code>              'Unexpected token ${state.current}; expecting "/" or "[".');</code>
+</line>
+<line number="20">
+<code>      }</code>
+</line>
+<line number="21">
+<code>    }</code>
+</line>
+<line number="22">
+<code>    return components;</code>
+</line>
+<line number="23">
+<code>  }</code>
+</line>
+<line number="24">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

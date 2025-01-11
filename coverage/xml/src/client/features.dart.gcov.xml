@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="features.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="3" lines-valid="3" package="src/client" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>const currentApiVersion = '2018-12-31';</code>
+</line>
+<line number="2">
+<code>const previewApiVersion = '2020-07-15';</code>
+</line>
+<line number="3">
+<code/>
+</line>
+<line number="4">
+<code>/// Class representing the features supported by a Cosmos DB client.</code>
+</line>
+<line number="5">
+<code>class Features {</code>
+</line>
+<line hits="1" number="6">
+<code>  const Features._(this.version, {required this.hierarchicalPartitioning});</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="7">
+<code/>
+</line>
+<line number="8">
+<code>  final String version;</code>
+</line>
+<line number="9">
+<code>  final bool hierarchicalPartitioning;</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>  static const _default = Features._('', hierarchicalPartitioning: false);</code>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  /// Features for the current version (see [currentApiVersion]).</code>
+</line>
+<line number="14">
+<code>  static const current =</code>
+</line>
+<line number="15">
+<code>      Features._(currentApiVersion, hierarchicalPartitioning: false);</code>
+</line>
+<line number="16">
+<code/>
+</line>
+<line number="17">
+<code>  /// Features for the preview version (see [previewApiVersion]).</code>
+</line>
+<line number="18">
+<code>  static const preview =</code>
+</line>
+<line number="19">
+<code>      Features._(previewApiVersion, hierarchicalPartitioning: true);</code>
+</line>
+<line number="20">
+<code/>
+</line>
+<line number="21">
+<code>  static const _features = [_default, current, preview];</code>
+</line>
+<line number="22">
+<code/>
+</line>
+<line number="23">
+<code>  /// Returns the features for the specified [version].</code>
+</line>
+<line hits="1" number="24">
+<code>  static Features getFeatures(String version) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="25">
+<code>      _features.firstWhere((f) =&gt; f.version == version, orElse: () =&gt; _default);</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="26">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

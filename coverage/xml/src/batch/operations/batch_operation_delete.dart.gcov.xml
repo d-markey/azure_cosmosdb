@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="batch_operation_delete.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="6" lines-valid="6" package="src/batch/operations" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../../partition/partition_key.dart';</code>
+</line>
+<line number="2">
+<code>import '../batch_operation.dart';</code>
+</line>
+<line number="3">
+<code>import '../batch_operation_type.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>/// Batch operation for deleting a document from the target container.</code>
+</line>
+<line number="6">
+<code>class BatchOperationDelete extends BatchOperation {</code>
+</line>
+<line number="7">
+<code>  /// Creates a batch operation for deleting document with [id] and [partitionKey].</code>
+</line>
+<line hits="1" number="8">
+<code>  BatchOperationDelete(this.id, {PartitionKey? partitionKey})</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="9">
+<code>      : super(partitionKey: partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>  @override</code>
+</line>
+<line number="12">
+<code>  final BatchOperationType type = BatchOperationType.delete;</code>
+</line>
+<line number="13">
+<code/>
+</line>
+<line number="14">
+<code>  /// The target document [id].</code>
+</line>
+<line number="15">
+<code>  final String id;</code>
+</line>
+<line number="16">
+<code/>
+</line>
+<line hits="1" number="17">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="18">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; super.toJson()</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="19">
+<code>    ..addAll({</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="20">
+<code>      'id': id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="21">
+<code>    });</code>
+</line>
+<line number="22">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../../"/>
+<base href="../../../"/>
+</coverage>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="permission_mode.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.8" lines-covered="4" lines-valid="5" package="src/authorizations" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>/// Constants for permission modes.</code>
+</line>
+<line number="4">
+<code>class PermissionMode {</code>
+</line>
+<line hits="1" number="5">
+<code>  const PermissionMode._(this.name);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>  /// The [name] of this instance.</code>
+</line>
+<line number="8">
+<code>  final String name;</code>
+</line>
+<line number="9">
+<code/>
+</line>
+<line number="10">
+<code>  /// `Read` permission.</code>
+</line>
+<line number="11">
+<code>  static const read = PermissionMode._('Read');</code>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  /// `All` permission.</code>
+</line>
+<line number="14">
+<code>  static const all = PermissionMode._('All');</code>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  /// Returns the [PermissionMode] corresponding to [name].</code>
+</line>
+<line hits="1" number="17">
+<code>  static PermissionMode parse(String name) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="18">
+<code>    if (name == read.name) return read;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="19">
+<code>    if (name == all.name) return all;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="20">
+<code>    throw BadResponseException('Unsupported permission mode.');</code>
+</line>
+<line number="21">
+<code>  }</code>
+</line>
+<line number="22">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

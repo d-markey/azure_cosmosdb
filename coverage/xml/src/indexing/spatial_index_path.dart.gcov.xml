@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="spatial_index_path.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="13" lines-valid="13" package="src/indexing" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'bounding_box.dart';</code>
+</line>
+<line number="2">
+<code>import 'data_type.dart';</code>
+</line>
+<line number="3">
+<code/>
+</line>
+<line number="4">
+<code>/// Class representing a spatial index.</code>
+</line>
+<line number="5">
+<code>class SpatialIndexPath {</code>
+</line>
+<line hits="1" number="6">
+<code>  SpatialIndexPath(this.path, {Iterable&lt;DataType&gt;? types, this.boundingBox})</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="7">
+<code>      : types = (types == null) ? null : List&lt;DataType&gt;.unmodifiable(types);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="8">
+<code/>
+</line>
+<line number="9">
+<code>  /// JSON path to the field.</code>
+</line>
+<line number="10">
+<code>  final String path;</code>
+</line>
+<line number="11">
+<code/>
+</line>
+<line number="12">
+<code>  /// Data types covered by the index.</code>
+</line>
+<line number="13">
+<code>  final List&lt;DataType&gt;? types;</code>
+</line>
+<line number="14">
+<code/>
+</line>
+<line number="15">
+<code>  /// Bounding box (geometry only).</code>
+</line>
+<line number="16">
+<code>  final BoundingBox? boundingBox;</code>
+</line>
+<line number="17">
+<code/>
+</line>
+<line number="18">
+<code>  /// Serializes this instance to a JSON object.</code>
+</line>
+<line hits="2" number="19">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="20">
+<code>        'path': path,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="6" number="21">
+<code>        'types': (types ?? DataType.spatial).map((t) =&gt; t.name).toList(),</code>
+<hit count="6" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="22">
+<code>        if (boundingBox != null) 'boundingBox': boundingBox!.toJson(),</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code>      };</code>
+</line>
+<line number="24">
+<code/>
+</line>
+<line number="25">
+<code>  /// Deserializes data from JSON object [json] into a new [SpatialIndexPath] instance.</code>
+</line>
+<line number="26">
+<code>  /// Handles fields `path`, `types`, `boundingBox`.</code>
+</line>
+<line hits="1" number="27">
+<code>  static SpatialIndexPath fromJson(Map json) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="28">
+<code>    final path = json['path'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="29">
+<code>    final types = json['types'] as List?;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="30">
+<code>    final bbox = json['boundingBox'];</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="31">
+<code>    return SpatialIndexPath(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="32">
+<code>      path,</code>
+</line>
+<line hits="3" number="33">
+<code>      types: (types == null) ? null : types.map((t) =&gt; DataType.tryParse(t)!),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="34">
+<code>      boundingBox: (bbox == null) ? null : BoundingBox.fromJson(bbox),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="35">
+<code>    );</code>
+</line>
+<line number="36">
+<code>  }</code>
+</line>
+<line number="37">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="line_string.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="19" lines-valid="19" package="src/spatial" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../_internal/_linq_extensions.dart';</code>
+</line>
+<line number="2">
+<code>import '../indexing/data_type.dart';</code>
+</line>
+<line number="3">
+<code>import '../indexing/geospatial_config.dart';</code>
+</line>
+<line number="4">
+<code>import 'point.dart';</code>
+</line>
+<line number="5">
+<code>import 'shape.dart';</code>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>/// Class representing a line.</code>
+</line>
+<line number="8">
+<code>class LineString extends Shape {</code>
+</line>
+<line number="9">
+<code>  final _points = &lt;Point&gt;[];</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>  @override</code>
+</line>
+<line number="12">
+<code>  final type = DataType.lineString;</code>
+</line>
+<line number="13">
+<code/>
+</line>
+<line hits="1" number="14">
+<code>  LineString();</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  /// Returns a list where each entry represents a point's coordinates.</code>
+</line>
+<line hits="1" number="17">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="5" number="18">
+<code>  List&lt;List&lt;num&gt;&gt; get coordinates =&gt; points.map((p) =&gt; p.coordinates).toList();</code>
+<hit count="5" name="&lt;unnamed&gt;"/>
+</line>
+<line number="19">
+<code/>
+</line>
+<line number="20">
+<code>  /// `true` iif the line string contains no points.</code>
+</line>
+<line hits="3" number="21">
+<code>  bool get isEmpty =&gt; points.isEmpty;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="22">
+<code/>
+</line>
+<line number="23">
+<code>  /// `true` iif the line string contains one or more points.</code>
+</line>
+<line hits="3" number="24">
+<code>  bool get isNotEmpty =&gt; points.isNotEmpty;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="25">
+<code/>
+</line>
+<line number="26">
+<code>  /// Collection of paths. A `LineString` has only one path which contains all</code>
+</line>
+<line number="27">
+<code>  /// of its points.</code>
+</line>
+<line hits="1" number="28">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="29">
+<code>  Iterable&lt;Iterable&lt;Point&gt;&gt; get paths =&gt; [points];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="30">
+<code/>
+</line>
+<line number="31">
+<code>  /// Collection of points making up the line string.</code>
+</line>
+<line hits="3" number="32">
+<code>  Iterable&lt;Point&gt; get points =&gt; _points.asIterable();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="33">
+<code/>
+</line>
+<line number="34">
+<code>  /// Collection of points making up the line string, in reverse order.</code>
+</line>
+<line hits="3" number="35">
+<code>  Iterable&lt;Point&gt; get reversed =&gt; _points.reversed;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="36">
+<code/>
+</line>
+<line number="37">
+<code>  /// Adds a point to the line string.</code>
+</line>
+<line hits="3" number="38">
+<code>  void add(Point point) =&gt; _points.add(point);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="39">
+<code/>
+</line>
+<line number="40">
+<code>  /// Adds a set of points to the line string.</code>
+</line>
+<line hits="3" number="41">
+<code>  void addAll(Iterable&lt;Point&gt; points) =&gt; _points.addAll(points);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="42">
+<code/>
+</line>
+<line hits="1" number="43">
+<code>  static LineString fromGeoJson(Map geoJson, GeospatialConfig config) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="44">
+<code>      Shape.fromGeoJson&lt;LineString&gt;(geoJson, config);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="45">
+<code/>
+</line>
+<line hits="2" number="46">
+<code>  static LineString loadGeographyCoords(Iterable coords) =&gt; LineString()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="47">
+<code>    ..addAll(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="48">
+<code>      coords.cast&lt;List&gt;().map(Point.loadGeographyCoords),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="49">
+<code>    );</code>
+</line>
+<line number="50">
+<code/>
+</line>
+<line hits="2" number="51">
+<code>  static LineString loadGeometryCoords(Iterable coords) =&gt; LineString()</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="52">
+<code>    ..addAll(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="53">
+<code>      coords.cast&lt;List&gt;().map(Point.loadGeometryCoords),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="54">
+<code>    );</code>
+</line>
+<line number="55">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

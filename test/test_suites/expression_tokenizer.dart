@@ -189,17 +189,17 @@ void run() {
 
   test('Invalid tokens', () {
     var tokenizer = Tokenizer('0xz');
-    expect(() => tokenizer.getTokens().toList(),
-        throwsA(isA<InvalidTokenException>()));
+    expect(
+        () => tokenizer.getTokens().toList(), throwsA(isA<ParsingException>()));
     tokenizer = Tokenizer('123e*3');
-    expect(() => tokenizer.getTokens().toList(),
-        throwsA(isA<InvalidTokenException>()));
+    expect(
+        () => tokenizer.getTokens().toList(), throwsA(isA<ParsingException>()));
     tokenizer = Tokenizer('x = \'test');
-    expect(() => tokenizer.getTokens().toList(),
-        throwsA(isA<InvalidTokenException>()));
+    expect(
+        () => tokenizer.getTokens().toList(), throwsA(isA<ParsingException>()));
     tokenizer = Tokenizer('x = test"');
-    expect(() => tokenizer.getTokens().toList(),
-        throwsA(isA<InvalidTokenException>()));
+    expect(
+        () => tokenizer.getTokens().toList(), throwsA(isA<ParsingException>()));
   });
 
   test('Invalid syntax but valid tokens', () {

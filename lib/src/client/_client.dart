@@ -5,10 +5,10 @@ import 'package:crypto/crypto.dart' as crypto;
 import 'package:http/http.dart' as http;
 import 'package:retry/retry.dart';
 
-import '../_internal/_authorization.dart';
 import '../_internal/_http_call.dart';
 import '../_internal/_http_header.dart';
 import '../_internal/_mime_type.dart';
+import '../authorizations/cosmos_db_authorization.dart';
 import '../base_document.dart';
 import '../batch/batch_operation.dart';
 import '../batch/batch_response.dart';
@@ -70,7 +70,7 @@ class Client {
     HttpCall call,
     BaseDocument? document,
     Context context,
-    Authorization authorization,
+    CosmosDbAuthorization authorization,
   ) {
     return _retry.retry(
       () {
@@ -98,22 +98,26 @@ class Client {
   ) async {
     String resId = context.resId ?? call.uri;
 
-    var auth = (context.token != null)
-        ? Authorization.fromToken(context.token!)
-        : Authorization.fromKey(
-            _key, call.method.name.toLowerCase(), context.type, resId);
+    CosmosDbAuthorization? auth = context.authorization ??
+        CosmosDbAuthorization.fromKey(
+          _key,
+          call.method.name.toLowerCase(),
+          context.type,
+          resId,
+        );
 
     var result = await _sendWithAuth(call, document, context, auth);
 
     switch (result.statusCode) {
+      case HttpStatusCode.unauthorized:
+      case HttpStatusCode.invalidToken:
       case HttpStatusCode.forbidden:
-        // try to get a new permission from the onForbidden callback
-        final permission = await context.onForbidden?.call();
-        final token = permission?.token;
-        if (token != null) {
-          // try again with this permission
-          auth = Authorization.fromToken(token);
-          result = await _sendWithAuth(call, document, context, auth);
+        // try to get a new authorization from the onRefreshAuth callback
+        final newAuth =
+            await context.onRefreshAuth?.call(result.statusCode, auth);
+        if (newAuth != null) {
+          // try again with this authorization
+          result = await _sendWithAuth(call, document, context, newAuth);
         }
         break;
       case HttpStatusCode.tooManyRequests:

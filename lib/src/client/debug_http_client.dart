@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 
+import 'package:azure_cosmosdb/src/_internal/_mime_type.dart';
 import 'package:http/http.dart' as http;
 
 import '../_internal/_http_header.dart';
-import 'http_status_codes.dart';
 import '_debug_http_overrides_web.dart'
     if (dart.library.io) '_debug_http_overrides_vm.dart';
+import 'http_status_codes.dart';
 
 /// Debug HTTP client that can be used to trace request/responses. This client also
 /// installs a global HTTP override object to accept self-signed certificates.
@@ -141,6 +142,7 @@ class DebugHttpClient extends http.BaseClient {
           Stream<List<int>>.fromIterable([]),
           HttpStatusCode.forbidden,
           reasonPhrase: 'Forced Forbidden',
+          headers: {HttpHeader.contentType: MimeType.json},
         );
       } else {
         response = await _http.send(request);

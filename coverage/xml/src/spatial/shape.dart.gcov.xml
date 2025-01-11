@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="shape.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.75" lines-covered="12" lines-valid="16" package="src/spatial" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import '../cosmos_db_exceptions.dart';</code>
+</line>
+<line number="2">
+<code>import '../indexing/data_type.dart';</code>
+</line>
+<line number="3">
+<code>import '../indexing/geospatial_config.dart';</code>
+</line>
+<line number="4">
+<code>import 'line_string.dart';</code>
+</line>
+<line number="5">
+<code>import 'multi_polygon.dart';</code>
+</line>
+<line number="6">
+<code>import 'point.dart';</code>
+</line>
+<line number="7">
+<code>import 'polygon.dart';</code>
+</line>
+<line number="8">
+<code/>
+</line>
+<line number="9">
+<code>typedef ShapeLoader = Shape Function(Iterable geoJson);</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>/// Base class for shapes.</code>
+</line>
+<line number="12">
+<code>abstract class Shape {</code>
+</line>
+<line number="13">
+<code>  static const _map = {</code>
+</line>
+<line number="14">
+<code>    Point: DataType.point,</code>
+</line>
+<line number="15">
+<code>    LineString: DataType.lineString,</code>
+</line>
+<line number="16">
+<code>    Polygon: DataType.polygon,</code>
+</line>
+<line number="17">
+<code>    MultiPolygon: DataType.multiPolygon,</code>
+</line>
+<line number="18">
+<code>  };</code>
+</line>
+<line number="19">
+<code/>
+</line>
+<line number="20">
+<code>  /// Loaders for DataType and GeospatialConfig</code>
+</line>
+<line number="21">
+<code>  static const _loaders = &lt;DataType, Map&lt;GeospatialConfig, ShapeLoader&gt;&gt;{</code>
+</line>
+<line number="22">
+<code>    DataType.point: {</code>
+</line>
+<line number="23">
+<code>      GeospatialConfig.geography: Point.loadGeographyCoords,</code>
+</line>
+<line number="24">
+<code>      GeospatialConfig.geometry: Point.loadGeometryCoords,</code>
+</line>
+<line number="25">
+<code>    },</code>
+</line>
+<line number="26">
+<code>    DataType.lineString: {</code>
+</line>
+<line number="27">
+<code>      GeospatialConfig.geography: LineString.loadGeographyCoords,</code>
+</line>
+<line number="28">
+<code>      GeospatialConfig.geometry: LineString.loadGeometryCoords,</code>
+</line>
+<line number="29">
+<code>    },</code>
+</line>
+<line number="30">
+<code>    DataType.polygon: {</code>
+</line>
+<line number="31">
+<code>      GeospatialConfig.geography: Polygon.loadGeographyCoords,</code>
+</line>
+<line number="32">
+<code>      GeospatialConfig.geometry: Polygon.loadGeometryCoords,</code>
+</line>
+<line number="33">
+<code>    },</code>
+</line>
+<line number="34">
+<code>    DataType.multiPolygon: {</code>
+</line>
+<line number="35">
+<code>      GeospatialConfig.geography: MultiPolygon.loadGeographyCoords,</code>
+</line>
+<line number="36">
+<code>      GeospatialConfig.geometry: MultiPolygon.loadGeometryCoords,</code>
+</line>
+<line number="37">
+<code>    },</code>
+</line>
+<line number="38">
+<code>  };</code>
+</line>
+<line number="39">
+<code/>
+</line>
+<line hits="2" number="40">
+<code>  const Shape();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="41">
+<code/>
+</line>
+<line number="42">
+<code>  /// The shape's coordinates that will be serialized as the `coordinates`</code>
+</line>
+<line number="43">
+<code>  /// GeoJSON field.</code>
+</line>
+<line number="44">
+<code>  List get coordinates;</code>
+</line>
+<line number="45">
+<code/>
+</line>
+<line number="46">
+<code>  /// The shape's sets of points.</code>
+</line>
+<line number="47">
+<code>  Iterable&lt;Iterable&lt;Point&gt;&gt; get paths;</code>
+</line>
+<line number="48">
+<code/>
+</line>
+<line number="49">
+<code>  /// The shape's data type that will be serialized as the `type` GeoJSON field.</code>
+</line>
+<line number="50">
+<code>  DataType get type;</code>
+</line>
+<line number="51">
+<code/>
+</line>
+<line number="52">
+<code>  /// Serializes this instance to a JSON object (GeoJson).</code>
+</line>
+<line hits="2" number="53">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; toGeoJson();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="54">
+<code/>
+</line>
+<line number="55">
+<code>  /// Serializes to GeoJSON.</code>
+</line>
+<line hits="2" number="56">
+<code>  Map&lt;String, dynamic&gt; toGeoJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="57">
+<code>        'type': type.name,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="58">
+<code>        'coordinates': coordinates,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="59">
+<code>      };</code>
+</line>
+<line number="60">
+<code/>
+</line>
+<line number="61">
+<code>  /// Deserializes from GeoJSON.</code>
+</line>
+<line hits="1" number="62">
+<code>  static T fromGeoJson&lt;T&gt;(Map json, GeospatialConfig config) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="63">
+<code>    final spatialType = _map[T]!;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="64">
+<code>    final type = json['type']?.toString() ?? '';</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="65">
+<code>    if (type.toLowerCase() != spatialType.name.toLowerCase()) {</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="66">
+<code>      throw BadResponseException(</code>
+</line>
+<line hits="0" number="67">
+<code>          'Invalid type "$type". Expected ${spatialType.name}.');</code>
+</line>
+<line number="68">
+<code>    }</code>
+</line>
+<line hits="1" number="69">
+<code>    final coords = json['coordinates'] as List?;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="70">
+<code>    if (coords == null) {</code>
+</line>
+<line hits="0" number="71">
+<code>      throw BadResponseException(</code>
+</line>
+<line number="72">
+<code>          'Invalid GeoJSON: missing entry "coordinates".');</code>
+</line>
+<line number="73">
+<code>    }</code>
+</line>
+<line hits="2" number="74">
+<code>    final loader = _loaders[spatialType]?[config];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="75">
+<code>    if (loader == null) {</code>
+</line>
+<line hits="0" number="76">
+<code>      throw BadResponseException('No loader for type "${spatialType.name}".');</code>
+</line>
+<line number="77">
+<code>    }</code>
+</line>
+<line hits="1" number="78">
+<code>    return loader(coords) as T;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="79">
+<code>  }</code>
+</line>
+<line number="80">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

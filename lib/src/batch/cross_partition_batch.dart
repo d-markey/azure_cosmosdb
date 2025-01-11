@@ -1,8 +1,8 @@
 import '../_internal/_linq_extensions.dart';
+import '../authorizations/cosmos_db_permission.dart';
 import '../cosmos_db_container.dart';
 import '../cosmos_db_exceptions.dart';
 import '../partition/partition_key.dart';
-import '../permissions/cosmos_db_permission.dart';
 import 'batch.dart';
 import 'batch_operation.dart';
 import 'batch_response.dart';

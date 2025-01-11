@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="cosmos_db_server.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.96" lines-covered="24" lines-valid="25" package="src" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'package:http/http.dart' as http;</code>
+</line>
+<line number="2">
+<code>import 'package:meta/meta.dart';</code>
+</line>
+<line number="3">
+<code>import 'package:retry/retry.dart';</code>
+</line>
+<line number="4">
+<code/>
+</line>
+<line number="5">
+<code>import 'authorizations/cosmos_db_authorization.dart';</code>
+</line>
+<line number="6">
+<code>import 'client/_client.dart';</code>
+</line>
+<line number="7">
+<code>import 'client/debug_http_client.dart';</code>
+</line>
+<line number="8">
+<code>import 'client/features.dart';</code>
+</line>
+<line number="9">
+<code>import 'cosmos_db_databases.dart';</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>typedef AsyncCallback&lt;T&gt; = Future&lt;T&gt; Function([</code>
+</line>
+<line number="12">
+<code>  int? httpStatusCode,</code>
+</line>
+<line number="13">
+<code>  CosmosDbAuthorization? auth,</code>
+</line>
+<line number="14">
+<code>]);</code>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>/// Class representing a CosmosDB instance.</code>
+</line>
+<line number="17">
+<code>class CosmosDbServer {</code>
+</line>
+<line number="18">
+<code>  /// Builds a new Cosmos DB [CosmosDbServer] with the provided [urlOrAccount],</code>
+</line>
+<line number="19">
+<code>  /// [masterKey] and [httpClient]. [urlOrAccount] can be a full URL (eg.</code>
+</line>
+<line number="20">
+<code>  /// `https://localhost:8081/`) or the Azure CosmosDB account name, in which case</code>
+</line>
+<line number="21">
+<code>  /// the url will be constructed as `https://${urlOrAccount}.documents.azure.com/`.</code>
+</line>
+<line number="22">
+<code>  /// Passing the [masterKey] is discouraged in client apps to prevent from theft;</code>
+</line>
+<line number="23">
+<code>  /// instead, a proxy should be implemented in order to protect the master key.</code>
+</line>
+<line hits="1" number="24">
+<code>  CosmosDbServer(String urlOrAccount,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="25">
+<code>      {String? masterKey,</code>
+</line>
+<line number="26">
+<code>      http.Client? httpClient,</code>
+</line>
+<line number="27">
+<code>      RetryOptions? retryOptions,</code>
+</line>
+<line number="28">
+<code>      bool multipleWriteLocations = false,</code>
+</line>
+<line number="29">
+<code>      bool preview = false})</code>
+</line>
+<line hits="1" number="30">
+<code>      : _client = Client(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="31">
+<code>          _buildUrl(urlOrAccount),</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="32">
+<code>          masterKey: masterKey,</code>
+</line>
+<line number="33">
+<code>          httpClient: httpClient,</code>
+</line>
+<line number="34">
+<code>          retryOptions: retryOptions,</code>
+</line>
+<line number="35">
+<code>          multipleWriteLocations: multipleWriteLocations,</code>
+</line>
+<line number="36">
+<code>          version: preview ? previewApiVersion : currentApiVersion,</code>
+</line>
+<line number="37">
+<code>        );</code>
+</line>
+<line number="38">
+<code/>
+</line>
+<line number="39">
+<code>  final Client _client;</code>
+</line>
+<line number="40">
+<code/>
+</line>
+<line number="41">
+<code>  /// Provides access to databases in this [CosmosDbServer].</code>
+</line>
+<line hits="2" number="42">
+<code>  late final CosmosDbDatabases databases = CosmosDbDatabases(this);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="43">
+<code/>
+</line>
+<line hits="0" number="44">
+<code>  String get version =&gt; _client.version;</code>
+</line>
+<line number="45">
+<code/>
+</line>
+<line hits="3" number="46">
+<code>  Features get features =&gt; _client.features;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="47">
+<code/>
+</line>
+<line hits="2" number="48">
+<code>  static String _buildUrl(String urlOrAccount) =&gt; !urlOrAccount.contains('://')</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="49">
+<code>      ? 'https://$urlOrAccount.documents.azure.com/'</code>
+</line>
+<line hits="1" number="50">
+<code>      : !urlOrAccount.endsWith('/')</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="51">
+<code>          ? '$urlOrAccount/'</code>
+</line>
+<line hits="1" number="52">
+<code>          : urlOrAccount;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="53">
+<code>}</code>
+</line>
+<line number="54">
+<code/>
+</line>
+<line number="55">
+<code>// debug use</code>
+</line>
+<line number="56">
+<code>extension CosmosDbServerDbgExt on CosmosDbServer {</code>
+</line>
+<line number="57">
+<code>  /// The underlying HTTP client used to communicate with the Cosmos DB server.</code>
+</line>
+<line hits="1" number="58">
+<code>  DebugHttpClient? get dbgHttpClient {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="59">
+<code>    final client = _client.httpClient;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="60">
+<code>    return (client is DebugHttpClient) ? client : null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="61">
+<code>  }</code>
+</line>
+<line number="62">
+<code/>
+</line>
+<line number="63">
+<code>  /// Activate a logger. Typically used with a `try`/`finally` block, e.g.:</code>
+</line>
+<line number="64">
+<code>  /// ```dart</code>
+</line>
+<line number="65">
+<code>  /// server.useLogger(print);</code>
+</line>
+<line number="66">
+<code>  /// try {</code>
+</line>
+<line number="67">
+<code>  ///   // do something eg. create a container, add a document, execute a query...</code>
+</line>
+<line number="68">
+<code>  ///   // the request to CosmosDB will be logged</code>
+</line>
+<line number="69">
+<code>  /// } finally {</code>
+</line>
+<line number="70">
+<code>  ///   server.resetLogger();</code>
+</line>
+<line number="71">
+<code>  /// }</code>
+</line>
+<line number="72">
+<code>  /// ```</code>
+</line>
+<line hits="1" number="73">
+<code>  void useLogger(void Function(Object?) logger,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="74">
+<code>      {bool withBody = false, bool withHeader = false}) {</code>
+</line>
+<line hits="1" number="75">
+<code>    final dbgClient = dbgHttpClient;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="76">
+<code>    if (dbgClient != null) {</code>
+</line>
+<line hits="1" number="77">
+<code>      dbgClient.log = logger;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="78">
+<code>      dbgClient.trace = true;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="79">
+<code>      dbgClient.traceBody = withBody;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="80">
+<code>      dbgClient.traceHeaders = withHeader;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="81">
+<code>    }</code>
+</line>
+<line number="82">
+<code>  }</code>
+</line>
+<line number="83">
+<code/>
+</line>
+<line number="84">
+<code>  /// Reset the logger.</code>
+</line>
+<line hits="1" number="85">
+<code>  void resetLogger() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="86">
+<code>    final dbgClient = dbgHttpClient;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="87">
+<code>    if (dbgClient != null) {</code>
+</line>
+<line hits="1" number="88">
+<code>      dbgClient.log = DebugHttpClient.defaultLog;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="89">
+<code>      dbgClient.trace = false;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="90">
+<code>      dbgClient.traceBody = false;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="91">
+<code>      dbgClient.traceHeaders = false;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="92">
+<code>    }</code>
+</line>
+<line number="93">
+<code>  }</code>
+</line>
+<line number="94">
+<code>}</code>
+</line>
+<line number="95">
+<code/>
+</line>
+<line number="96">
+<code>// internal use</code>
+</line>
+<line number="97">
+<code>@internal</code>
+</line>
+<line number="98">
+<code>extension CosmosDbServerInternalExt on CosmosDbServer {</code>
+</line>
+<line number="99">
+<code>  /// The CosmosDB client used for this instance.</code>
+</line>
+<line hits="2" number="100">
+<code>  Client get client =&gt; _client;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="101">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

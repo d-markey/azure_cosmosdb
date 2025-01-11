@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="patch_operation.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="17" lines-valid="17" package="src/patch" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'patch_operation_type.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>/// Class representing a patch operation.</code>
+</line>
+<line number="4">
+<code>class PatchOperation {</code>
+</line>
+<line hits="1" number="5">
+<code>  PatchOperation._(this.type, this.path, this.value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="6">
+<code/>
+</line>
+<line number="7">
+<code>  /// The operation's [type].</code>
+</line>
+<line number="8">
+<code>  final PatchOperationType type;</code>
+</line>
+<line number="9">
+<code/>
+</line>
+<line number="10">
+<code>  /// The target property [path].</code>
+</line>
+<line number="11">
+<code>  final String path;</code>
+</line>
+<line number="12">
+<code/>
+</line>
+<line number="13">
+<code>  /// The [value] used to apply the operation..</code>
+</line>
+<line number="14">
+<code>  final dynamic value;</code>
+</line>
+<line number="15">
+<code/>
+</line>
+<line number="16">
+<code>  /// Creates a new "[PatchOperationType.add]" patch operation.</code>
+</line>
+<line hits="1" number="17">
+<code>  PatchOperation.add(String path, dynamic value)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="18">
+<code>      : this._(PatchOperationType.add, path, value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="19">
+<code/>
+</line>
+<line number="20">
+<code>  /// Creates a new "[PatchOperationType.set]" patch operation.</code>
+</line>
+<line hits="1" number="21">
+<code>  PatchOperation.set(String path, dynamic value)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="22">
+<code>      : this._(PatchOperationType.set, path, value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="23">
+<code/>
+</line>
+<line number="24">
+<code>  /// Creates a new "[PatchOperationType.replace]" patch operation.</code>
+</line>
+<line hits="1" number="25">
+<code>  PatchOperation.replace(String path, dynamic value)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="26">
+<code>      : this._(PatchOperationType.replace, path, value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="27">
+<code/>
+</line>
+<line number="28">
+<code>  /// Creates a new "[PatchOperationType.incr]" patch operation.</code>
+</line>
+<line hits="1" number="29">
+<code>  PatchOperation.incr(String path, num value)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="30">
+<code>      : this._(PatchOperationType.incr, path, value);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="31">
+<code/>
+</line>
+<line number="32">
+<code>  /// Creates a new "`PatchOperationType.decr`" patch operation. This is implemented</code>
+</line>
+<line number="33">
+<code>  /// as a "[PatchOperationType.incr]" operation with the opposite [value].</code>
+</line>
+<line hits="1" number="34">
+<code>  PatchOperation.decr(String path, num value)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="35">
+<code>      : this._(PatchOperationType.incr, path, -value);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="36">
+<code/>
+</line>
+<line number="37">
+<code>  /// Creates a new "[PatchOperationType.remove]" patch operation.</code>
+</line>
+<line hits="1" number="38">
+<code>  PatchOperation.remove(String path)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="39">
+<code>      : this._(PatchOperationType.remove, path, null);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="40">
+<code/>
+</line>
+<line number="41">
+<code>  /// Serializes this instance to a JSON object.</code>
+</line>
+<line hits="2" number="42">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="43">
+<code>        'op': type.name,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="44">
+<code>        'path': path,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="45">
+<code>        if (type != PatchOperationType.remove) 'value': value,</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line number="46">
+<code>      };</code>
+</line>
+<line number="47">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

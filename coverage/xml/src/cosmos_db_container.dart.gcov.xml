@@ -1,0 +1,1640 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="cosmos_db_container.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="0.91907513" lines-covered="159" lines-valid="173" package="src" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'package:meta/meta.dart';</code>
+</line>
+<line number="2">
+<code/>
+</line>
+<line number="3">
+<code>import '_internal/_http_header.dart';</code>
+</line>
+<line number="4">
+<code>import 'authorizations/cosmos_db_access_control.dart';</code>
+</line>
+<line number="5">
+<code>import 'authorizations/cosmos_db_authorization.dart';</code>
+</line>
+<line number="6">
+<code>import 'authorizations/cosmos_db_permission.dart';</code>
+</line>
+<line number="7">
+<code>import 'base_document.dart';</code>
+</line>
+<line number="8">
+<code>import 'batch/batch.dart';</code>
+</line>
+<line number="9">
+<code>import 'batch/batch_response.dart';</code>
+</line>
+<line number="10">
+<code>import 'batch/cross_partition_batch.dart';</code>
+</line>
+<line number="11">
+<code>import 'batch/transactional_batch.dart';</code>
+</line>
+<line number="12">
+<code>import 'client/_client.dart';</code>
+</line>
+<line number="13">
+<code>import 'client/_context.dart';</code>
+</line>
+<line number="14">
+<code>import 'cosmos_db_database.dart';</code>
+</line>
+<line number="15">
+<code>import 'cosmos_db_exceptions.dart';</code>
+</line>
+<line number="16">
+<code>import 'cosmos_db_server.dart';</code>
+</line>
+<line number="17">
+<code>import 'indexing/geospatial_config.dart';</code>
+</line>
+<line number="18">
+<code>import 'indexing/indexing_policy.dart';</code>
+</line>
+<line number="19">
+<code>import 'partition/partition_key.dart';</code>
+</line>
+<line number="20">
+<code>import 'partition/partition_key_range.dart';</code>
+</line>
+<line number="21">
+<code>import 'partition/partition_key_spec.dart';</code>
+</line>
+<line number="22">
+<code>import 'patch/patch.dart';</code>
+</line>
+<line number="23">
+<code>import 'queries/query.dart';</code>
+</line>
+<line number="24">
+<code/>
+</line>
+<line number="25">
+<code>/// Class representing a CosmosDB container.</code>
+</line>
+<line number="26">
+<code>class CosmosDbContainer extends BaseDocument {</code>
+</line>
+<line hits="1" number="27">
+<code>  CosmosDbContainer(this.database, this.id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="28">
+<code>      {PartitionKeySpec? partitionKeySpec,</code>
+</line>
+<line number="29">
+<code>      IndexingPolicy? indexingPolicy,</code>
+</line>
+<line number="30">
+<code>      GeospatialConfig? geospatialConfig})</code>
+</line>
+<line hits="2" number="31">
+<code>      : url = '${database.url}/colls/$id',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="32">
+<code>        partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="33">
+<code>        _indexingPolicy = indexingPolicy,</code>
+</line>
+<line number="34">
+<code>        _geospatialConfig = geospatialConfig;</code>
+</line>
+<line number="35">
+<code/>
+</line>
+<line number="36">
+<code>  /// The container's parent [CosmosDbDatabase].</code>
+</line>
+<line number="37">
+<code>  final CosmosDbDatabase database;</code>
+</line>
+<line number="38">
+<code/>
+</line>
+<line number="39">
+<code>  /// The container's base [url].</code>
+</line>
+<line number="40">
+<code>  final String url;</code>
+</line>
+<line number="41">
+<code/>
+</line>
+<line number="42">
+<code>  /// Flag indicating whether the container exists in CosmosDB.</code>
+</line>
+<line number="43">
+<code>  /// `null` if no check has been made yet.</code>
+</line>
+<line hits="2" number="44">
+<code>  bool? get exists =&gt; _exists;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="45">
+<code>  bool? _exists;</code>
+</line>
+<line number="46">
+<code/>
+</line>
+<line number="47">
+<code>  @override</code>
+</line>
+<line number="48">
+<code>  final String id;</code>
+</line>
+<line number="49">
+<code/>
+</line>
+<line number="50">
+<code>  /// The container's partition key specification.</code>
+</line>
+<line number="51">
+<code>  final PartitionKeySpec partitionKeySpec;</code>
+</line>
+<line number="52">
+<code/>
+</line>
+<line number="53">
+<code>  /// The container's indexing policy.</code>
+</line>
+<line hits="0" number="54">
+<code>  IndexingPolicy? get indexingPolicy =&gt; _indexingPolicy;</code>
+</line>
+<line number="55">
+<code>  IndexingPolicy? _indexingPolicy;</code>
+</line>
+<line number="56">
+<code/>
+</line>
+<line number="57">
+<code>  /// The container's geospatial configuration.</code>
+</line>
+<line hits="1" number="58">
+<code>  GeospatialConfig? get geospatialConfig =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="59">
+<code>      _geospatialConfig ?? GeospatialConfig.forPolicy(_indexingPolicy);</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="60">
+<code>  GeospatialConfig? _geospatialConfig;</code>
+</line>
+<line number="61">
+<code/>
+</line>
+<line hits="1" number="62">
+<code>  @override</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="63">
+<code>  Map&lt;String, dynamic&gt; toJson() =&gt; {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="64">
+<code>        'id': id,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="65">
+<code>        'partitionKey': partitionKeySpec.toJson(),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="66">
+<code>        if (_indexingPolicy != null)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="67">
+<code>          'indexingPolicy': _indexingPolicy!.toJson(),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="68">
+<code>        if (geospatialConfig != null)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="69">
+<code>          'geospatialConfig': geospatialConfig!.toJson(),</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="70">
+<code>      };</code>
+</line>
+<line number="71">
+<code/>
+</line>
+<line number="72">
+<code>  /// Use this [CosmosDbPermission] when invoking the CosmosDB API. Using</code>
+</line>
+<line number="73">
+<code>  /// [CosmosDbPermission] is a way to avoid disclosing the master key in</code>
+</line>
+<line number="74">
+<code>  /// client applications; to retrieve or create a permission, you should</code>
+</line>
+<line number="75">
+<code>  /// implement some additional API to be used by your client app. This API</code>
+</line>
+<line number="76">
+<code>  /// will protect your master keys. Most methods from [CosmosDbContainer]</code>
+</line>
+<line number="77">
+<code>  /// support an optional [permission] argument, to allow for overriding</code>
+</line>
+<line number="78">
+<code>  /// this container-wide authorization.</code>
+</line>
+<line number="79">
+<code>  ///</code>
+</line>
+<line number="80">
+<code>  /// Note: calling this method overrides any previous authorization set via</code>
+</line>
+<line number="81">
+<code>  /// [useAuthorization] or [usePermission].</code>
+</line>
+<line hits="0" number="82">
+<code>  @Deprecated('Use [useAuthorization] instead.')</code>
+</line>
+<line number="83">
+<code>  void usePermission(CosmosDbPermission permission) {</code>
+</line>
+<line number="84">
+<code>    // _token = permission.token;</code>
+</line>
+<line hits="0" number="85">
+<code>    _auth = CosmosDbAuthorization.fromPermission(permission);</code>
+</line>
+<line number="86">
+<code>  }</code>
+</line>
+<line number="87">
+<code/>
+</line>
+<line number="88">
+<code>  /// Clear the container-wide permission.</code>
+</line>
+<line number="89">
+<code>  ///</code>
+</line>
+<line number="90">
+<code>  /// Note: calling this method clears the underlying authorization, whether it</code>
+</line>
+<line number="91">
+<code>  /// was set from a permission via [usePermission] or from an authorization</code>
+</line>
+<line number="92">
+<code>  /// via [useAuthorization].</code>
+</line>
+<line hits="0" number="93">
+<code>  @Deprecated('Use [clearAuthorization] instead.')</code>
+</line>
+<line number="94">
+<code>  void clearPermission() {</code>
+</line>
+<line hits="0" number="95">
+<code>    _auth = null;</code>
+</line>
+<line number="96">
+<code>  }</code>
+</line>
+<line number="97">
+<code/>
+</line>
+<line number="98">
+<code>  /// Callback to refresh a permission or an authorization. This callback is</code>
+</line>
+<line number="99">
+<code>  /// called when a CosmosDB API call results in an access-control exception,</code>
+</line>
+<line number="100">
+<code>  /// typically:</code>
+</line>
+<line number="101">
+<code>  /// * an [UnauthorizedException] (HTTP error 401),</code>
+</line>
+<line number="102">
+<code>  /// * a [ForbiddenException] (HTTP error 403),</code>
+</line>
+<line number="103">
+<code>  /// * or an [InvalidTokenException] (HTTP error 498).</code>
+</line>
+<line number="104">
+<code>  /// and can be used to get a new authorization (eg. get a new permission</code>
+</line>
+<line number="105">
+<code>  /// after it expired).</code>
+</line>
+<line number="106">
+<code>  AsyncCallback&lt;CosmosDbAccessControl?&gt;? onRefreshAuth;</code>
+</line>
+<line number="107">
+<code/>
+</line>
+<line hits="1" number="108">
+<code>  Future&lt;CosmosDbAuthorization?&gt; _refreshAuth([</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="109">
+<code>    int? httpStatusCode,</code>
+</line>
+<line number="110">
+<code>    CosmosDbAuthorization? auth,</code>
+</line>
+<line number="111">
+<code>  ]) async {</code>
+</line>
+<line number="112">
+<code>    CosmosDbAuthorization? newAuth;</code>
+</line>
+<line hits="1" number="113">
+<code>    final callback = onRefreshAuth;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="114">
+<code>    if (callback != null) {</code>
+</line>
+<line hits="1" number="115">
+<code>      final accessControl = await callback.call(httpStatusCode, auth);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="116">
+<code>      if (accessControl is CosmosDbPermission) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="117">
+<code>        newAuth = CosmosDbAuthorization.fromPermission(accessControl);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="118">
+<code>      } else if (accessControl is CosmosDbAuthorization) {</code>
+</line>
+<line number="119">
+<code>        newAuth = accessControl;</code>
+</line>
+<line number="120">
+<code>      }</code>
+</line>
+<line number="121">
+<code>    }</code>
+</line>
+<line number="122">
+<code>    if (newAuth != null) {</code>
+</line>
+<line hits="1" number="123">
+<code>      _auth = newAuth;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="124">
+<code>    }</code>
+</line>
+<line number="125">
+<code>    return newAuth;</code>
+</line>
+<line number="126">
+<code>  }</code>
+</line>
+<line number="127">
+<code/>
+</line>
+<line number="128">
+<code>  /// Use this [CosmosDbAuthorization] when invoking the CosmosDB API. Using</code>
+</line>
+<line number="129">
+<code>  /// [CosmosDbAuthorization] is a way to avoid disclosing the master key in</code>
+</line>
+<line number="130">
+<code>  /// client applications; to retrieve or create an authorization, you should</code>
+</line>
+<line number="131">
+<code>  /// implement some additional API to be used by your client app. This API</code>
+</line>
+<line number="132">
+<code>  /// will protect your master keys. Most methods from [CosmosDbContainer]</code>
+</line>
+<line number="133">
+<code>  /// support an optional [authorization] argument, to allow for overriding</code>
+</line>
+<line number="134">
+<code>  /// this container-wide [authorization].</code>
+</line>
+<line hits="1" number="135">
+<code>  void useAuthorization(CosmosDbAuthorization authorization) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="136">
+<code>    _auth = authorization;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="137">
+<code>  }</code>
+</line>
+<line number="138">
+<code/>
+</line>
+<line number="139">
+<code>  /// Clear the container-wide authorization.</code>
+</line>
+<line hits="0" number="140">
+<code>  void clearAuthorization() {</code>
+</line>
+<line hits="0" number="141">
+<code>    _auth = null;</code>
+</line>
+<line number="142">
+<code>  }</code>
+</line>
+<line number="143">
+<code/>
+</line>
+<line number="144">
+<code>  CosmosDbAuthorization? _auth;</code>
+</line>
+<line number="145">
+<code/>
+</line>
+<line number="146">
+<code>  final _builders = &lt;Type, DocumentBuilder&gt;{};</code>
+</line>
+<line number="147">
+<code/>
+</line>
+<line number="148">
+<code>  /// Register a [DocumentBuilder] for specified type `T`.</code>
+</line>
+<line hits="1" number="149">
+<code>  void registerBuilder&lt;T extends BaseDocument&gt;(DocumentBuilder&lt;T&gt; builder) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="150">
+<code>      _builders[T] = builder;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="151">
+<code/>
+</line>
+<line number="152">
+<code>  /// Gets information for this [CosmosDbContainer].</code>
+</line>
+<line hits="1" number="153">
+<code>  Future&lt;CosmosDbContainer&gt; getInfo(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="154">
+<code>      {CosmosDbPermission? permission,</code>
+</line>
+<line number="155">
+<code>      CosmosDbAuthorization? authorization}) async {</code>
+</line>
+<line hits="2" number="156">
+<code>    final coll = await client.get&lt;CosmosDbContainer&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="157">
+<code>        url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="158">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="159">
+<code>          type: 'colls',</code>
+</line>
+<line hits="1" number="160">
+<code>          authorization: authorization ?? _auth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="161">
+<code>          throwOnNotFound: true,</code>
+</line>
+<line hits="3" number="162">
+<code>          builder: database.containers.fromJson,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="163">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="164">
+<code>        ));</code>
+</line>
+<line number="165">
+<code>    return coll!;</code>
+</line>
+<line number="166">
+<code>  }</code>
+</line>
+<line number="167">
+<code/>
+</line>
+<line number="168">
+<code>  final _pkRanges = &lt;PartitionKeyRange&gt;[];</code>
+</line>
+<line number="169">
+<code/>
+</line>
+<line number="170">
+<code>  /// Gets the partition key ranges for this [CosmosDbContainer].</code>
+</line>
+<line hits="1" number="171">
+<code>  Future&lt;Iterable&lt;PartitionKeyRange&gt;&gt; getPkRanges(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="172">
+<code>      {CosmosDbPermission? permission,</code>
+</line>
+<line number="173">
+<code>      CosmosDbAuthorization? authorization,</code>
+</line>
+<line number="174">
+<code>      bool force = false}) async {</code>
+</line>
+<line hits="2" number="175">
+<code>    if (_pkRanges.isEmpty || force) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="176">
+<code>      _pkRanges.clear();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="4" number="177">
+<code>      _pkRanges.addAll(await client.getMany&lt;PartitionKeyRange&gt;(</code>
+<hit count="4" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="178">
+<code>          '$url/pkranges',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="179">
+<code>          'PartitionKeyRanges',</code>
+</line>
+<line hits="1" number="180">
+<code>          Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="181">
+<code>            resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="182">
+<code>            type: 'pkranges',</code>
+</line>
+<line number="183">
+<code>            authorization:</code>
+</line>
+<line hits="2" number="184">
+<code>                CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="185">
+<code>            throwOnNotFound: true,</code>
+</line>
+<line number="186">
+<code>            builder: PartitionKeyRange.fromJson,</code>
+</line>
+<line hits="1" number="187">
+<code>            onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="188">
+<code>          )));</code>
+</line>
+<line number="189">
+<code>    }</code>
+</line>
+<line hits="1" number="190">
+<code>    return _pkRanges;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="191">
+<code>  }</code>
+</line>
+<line number="192">
+<code/>
+</line>
+<line number="193">
+<code>  /// Gets information for this [CosmosDbContainer].</code>
+</line>
+<line hits="1" number="194">
+<code>  Future&lt;void&gt; setIndexingPolicy(IndexingPolicy indexingPolicy,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="195">
+<code>      {GeospatialConfig? geospatialConfig,</code>
+</line>
+<line number="196">
+<code>      CosmosDbPermission? permission,</code>
+</line>
+<line number="197">
+<code>      CosmosDbAuthorization? authorization}) async {</code>
+</line>
+<line hits="1" number="198">
+<code>    final prevIndexingPolicy = _indexingPolicy;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="199">
+<code>    final prevGeospatialConfig = _geospatialConfig;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="200">
+<code>    _indexingPolicy = indexingPolicy;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="201">
+<code>    if (geospatialConfig != null) {</code>
+</line>
+<line hits="0" number="202">
+<code>      _geospatialConfig = geospatialConfig;</code>
+</line>
+<line number="203">
+<code>    }</code>
+</line>
+<line number="204">
+<code>    try {</code>
+</line>
+<line hits="2" number="205">
+<code>      await client.put&lt;CosmosDbContainer&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="206">
+<code>          url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="207">
+<code>          this,</code>
+</line>
+<line hits="1" number="208">
+<code>          Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="209">
+<code>            type: 'colls',</code>
+</line>
+<line number="210">
+<code>            authorization:</code>
+</line>
+<line hits="2" number="211">
+<code>                CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="212">
+<code>            builder: database.containers.fromJson,</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="213">
+<code>            onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="214">
+<code>          ));</code>
+</line>
+<line number="215">
+<code>    } catch (ex) {</code>
+</line>
+<line hits="0" number="216">
+<code>      _indexingPolicy = prevIndexingPolicy;</code>
+</line>
+<line hits="0" number="217">
+<code>      _geospatialConfig = prevGeospatialConfig;</code>
+</line>
+<line number="218">
+<code>      rethrow;</code>
+</line>
+<line number="219">
+<code>    }</code>
+</line>
+<line number="220">
+<code>  }</code>
+</line>
+<line number="221">
+<code/>
+</line>
+<line number="222">
+<code>  /// Finds the document with [id] in this container. If the document does not exist,</code>
+</line>
+<line number="223">
+<code>  /// this method returns `null` by default. If [throwOnNotFound] is set to `true`, it</code>
+</line>
+<line number="224">
+<code>  /// will throw a [NotFoundException] instead.</code>
+</line>
+<line hits="1" number="225">
+<code>  Future&lt;T?&gt; find&lt;T extends BaseDocument&gt;(dynamic id, PartitionKey partitionKey,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="226">
+<code>          {bool throwOnNotFound = false,</code>
+</line>
+<line number="227">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="228">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="229">
+<code>      client.get&lt;T&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="230">
+<code>        '$url/docs/$id',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="231">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="232">
+<code>          type: 'docs',</code>
+</line>
+<line number="233">
+<code>          throwOnNotFound: throwOnNotFound,</code>
+</line>
+<line number="234">
+<code>          partitionKey: partitionKey,</code>
+</line>
+<line hits="1" number="235">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="236">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="237">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="238">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="239">
+<code>        ),</code>
+</line>
+<line number="240">
+<code>      );</code>
+</line>
+<line number="241">
+<code/>
+</line>
+<line number="242">
+<code>  /// Returns the latest version of the document.</code>
+</line>
+<line hits="1" number="243">
+<code>  Future&lt;T?&gt; get&lt;T extends BaseDocument&gt;(T document,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="244">
+<code>          {bool throwOnNotFound = false,</code>
+</line>
+<line number="245">
+<code>          PartitionKey? partitionKey,</code>
+</line>
+<line number="246">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="247">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="1" number="248">
+<code>      client</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="249">
+<code>          .get&lt;T&gt;(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="250">
+<code>            '$url/docs/${document.id}',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="251">
+<code>            Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="252">
+<code>              type: 'docs',</code>
+</line>
+<line number="253">
+<code>              throwOnNotFound: throwOnNotFound,</code>
+</line>
+<line hits="1" number="254">
+<code>              headers: (document is EtagMixin)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="255">
+<code>                  ? {HttpHeader.ifNoneMatch: document.etag}</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="256">
+<code>                  : null,</code>
+</line>
+<line number="257">
+<code>              partitionKey: partitionKey ??</code>
+</line>
+<line hits="2" number="258">
+<code>                  partitionKeySpec.from(document) ??</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="259">
+<code>                  PartitionKey.all,</code>
+</line>
+<line hits="1" number="260">
+<code>              builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="261">
+<code>              authorization:</code>
+</line>
+<line hits="1" number="262">
+<code>                  CosmosDbAuthorization.from(authorization, permission) ??</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="263">
+<code>                      _auth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="264">
+<code>              onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="265">
+<code>            ),</code>
+</line>
+<line number="266">
+<code>          )</code>
+</line>
+<line hits="2" number="267">
+<code>          .onError&lt;NotModifiedException&gt;((error, stackTrace) =&gt; document);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="268">
+<code/>
+</line>
+<line number="269">
+<code>  /// Lists all documents from this container.</code>
+</line>
+<line hits="1" number="270">
+<code>  Future&lt;Iterable&lt;T&gt;&gt; list&lt;T extends BaseDocument&gt;(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="271">
+<code>          {PartitionKey? partitionKey,</code>
+</line>
+<line number="272">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="273">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="274">
+<code>      client.getMany&lt;T&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="275">
+<code>        '$url/docs',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="276">
+<code>        'Documents',</code>
+</line>
+<line hits="1" number="277">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="278">
+<code>          type: 'docs',</code>
+</line>
+<line hits="1" number="279">
+<code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="280">
+<code>          partitionKey: partitionKey ?? PartitionKey.all,</code>
+</line>
+<line hits="1" number="281">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="282">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="283">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="284">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="285">
+<code>        ),</code>
+</line>
+<line number="286">
+<code>      );</code>
+</line>
+<line number="287">
+<code/>
+</line>
+<line number="288">
+<code>  /// Loads documents from this container matching the provided [query].</code>
+</line>
+<line hits="1" number="289">
+<code>  Future&lt;Iterable&lt;T&gt;&gt; query&lt;T extends BaseDocument&gt;(Query query,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="290">
+<code>          {CosmosDbPermission? permission,</code>
+</line>
+<line number="291">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="292">
+<code>      client.query&lt;T&gt;(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="293">
+<code>        '$url/docs',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="294">
+<code>        query,</code>
+</line>
+<line number="295">
+<code>        'Documents',</code>
+</line>
+<line hits="1" number="296">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="297">
+<code>          type: 'docs',</code>
+</line>
+<line hits="1" number="298">
+<code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="299">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="300">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="301">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="302">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="303">
+<code>        ),</code>
+</line>
+<line number="304">
+<code>      );</code>
+</line>
+<line number="305">
+<code/>
+</line>
+<line number="306">
+<code>  /// Loads documents from this container matching the provided [query].</code>
+</line>
+<line hits="1" number="307">
+<code>  Future&lt;dynamic&gt; rawQuery(Query query,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="308">
+<code>          {CosmosDbPermission? permission,</code>
+</line>
+<line number="309">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="310">
+<code>      client.rawQuery(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="311">
+<code>        '$url/docs',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="312">
+<code>        query,</code>
+</line>
+<line number="313">
+<code>        'Documents',</code>
+</line>
+<line hits="1" number="314">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="315">
+<code>          type: 'docs',</code>
+</line>
+<line hits="1" number="316">
+<code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="317">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="318">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="319">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="320">
+<code>        ),</code>
+</line>
+<line number="321">
+<code>      );</code>
+</line>
+<line number="322">
+<code/>
+</line>
+<line number="323">
+<code>  /// Adds a new [document] to this container.</code>
+</line>
+<line hits="1" number="324">
+<code>  Future&lt;T&gt; add&lt;T extends BaseDocument&gt;(T document,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="325">
+<code>          {PartitionKey? partitionKey,</code>
+</line>
+<line number="326">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="327">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="328">
+<code>      client.post(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="329">
+<code>        '$url/docs',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="330">
+<code>        document,</code>
+</line>
+<line hits="1" number="331">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="332">
+<code>          type: 'docs',</code>
+</line>
+<line hits="1" number="333">
+<code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="334">
+<code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="335">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="336">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="337">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="338">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="339">
+<code>        ),</code>
+</line>
+<line number="340">
+<code>      );</code>
+</line>
+<line number="341">
+<code/>
+</line>
+<line number="342">
+<code>  /// Adds or updates (replaces) a [document] in this container.</code>
+</line>
+<line hits="1" number="343">
+<code>  Future&lt;T&gt; upsert&lt;T extends BaseDocument&gt;(T document,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="344">
+<code>          {PartitionKey? partitionKey,</code>
+</line>
+<line number="345">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="346">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="347">
+<code>      client.post(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="348">
+<code>        '$url/docs',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="349">
+<code>        document,</code>
+</line>
+<line hits="1" number="350">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="351">
+<code>          type: 'docs',</code>
+</line>
+<line hits="1" number="352">
+<code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="353">
+<code>          headers: HttpHeader.isUpsert,</code>
+</line>
+<line hits="2" number="354">
+<code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="355">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="356">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="357">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="358">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="359">
+<code>        ),</code>
+</line>
+<line number="360">
+<code>      );</code>
+</line>
+<line number="361">
+<code/>
+</line>
+<line number="362">
+<code>  /// Updates (replaces) a [document] in this container. If the [document] has</code>
+</line>
+<line number="363">
+<code>  /// [EtagMixin], its [EtagMixin.etag] must be known.</code>
+</line>
+<line hits="1" number="364">
+<code>  Future&lt;T&gt; replace&lt;T extends BaseDocument&gt;(T document,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="365">
+<code>          {bool checkEtag = true,</code>
+</line>
+<line number="366">
+<code>          PartitionKey? partitionKey,</code>
+</line>
+<line number="367">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="368">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="369">
+<code>      client.put(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="370">
+<code>        '$url/docs/${document.id}',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="371">
+<code>        document,</code>
+</line>
+<line hits="1" number="372">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="373">
+<code>          type: 'docs',</code>
+</line>
+<line hits="1" number="374">
+<code>          headers: (document is EtagMixin &amp;&amp; checkEtag)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="375">
+<code>              ? {HttpHeader.ifMatch: document.etag}</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="376">
+<code>              : null,</code>
+</line>
+<line hits="2" number="377">
+<code>          partitionKey: partitionKey ?? partitionKeySpec.from(document),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="378">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="379">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="380">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="381">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="382">
+<code>        ),</code>
+</line>
+<line number="383">
+<code>      );</code>
+</line>
+<line number="384">
+<code/>
+</line>
+<line number="385">
+<code>  /// Updates (patches) a [document] in this container by applying the [patch]</code>
+</line>
+<line number="386">
+<code>  /// operations.</code>
+</line>
+<line hits="1" number="387">
+<code>  Future&lt;T&gt; patch&lt;T extends BaseDocument&gt;(T document, Patch patch,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="388">
+<code>          {PartitionKey? partitionKey,</code>
+</line>
+<line number="389">
+<code>          CosmosDbPermission? permission,</code>
+</line>
+<line number="390">
+<code>          CosmosDbAuthorization? authorization}) =&gt;</code>
+</line>
+<line hits="2" number="391">
+<code>      client.patch(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="3" number="392">
+<code>        '$url/docs/${document.id}',</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="393">
+<code>        patch,</code>
+</line>
+<line hits="1" number="394">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="395">
+<code>          type: 'docs',</code>
+</line>
+<line number="396">
+<code>          headers: HttpHeader.patchPayload,</code>
+</line>
+<line number="397">
+<code>          partitionKey: partitionKey ??</code>
+</line>
+<line hits="2" number="398">
+<code>              partitionKeySpec.from(document) ??</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="399">
+<code>              PartitionKey.all,</code>
+</line>
+<line hits="1" number="400">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="401">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="402">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="403">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="404">
+<code>        ),</code>
+</line>
+<line number="405">
+<code>      );</code>
+</line>
+<line number="406">
+<code/>
+</line>
+<line number="407">
+<code>  /// Deletes the document from this container. If the document does not exist,</code>
+</line>
+<line number="408">
+<code>  /// this method returns `true` by default. If [throwOnNotFound] is set to</code>
+</line>
+<line number="409">
+<code>  /// `true`, it will instead throw a [NotFoundException]. If the [document] is</code>
+</line>
+<line number="410">
+<code>  /// provided, its attributes take over the [id] value. If it has [EtagMixin],</code>
+</line>
+<line number="411">
+<code>  /// its [EtagMixin.etag] must be known.</code>
+</line>
+<line hits="1" number="412">
+<code>  Future&lt;bool&gt; delete&lt;T extends BaseDocument&gt;(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="413">
+<code>      {String? id,</code>
+</line>
+<line number="414">
+<code>      T? document,</code>
+</line>
+<line number="415">
+<code>      bool throwOnNotFound = false,</code>
+</line>
+<line number="416">
+<code>      bool checkEtag = true,</code>
+</line>
+<line number="417">
+<code>      PartitionKey? partitionKey,</code>
+</line>
+<line number="418">
+<code>      CosmosDbPermission? permission,</code>
+</line>
+<line number="419">
+<code>      CosmosDbAuthorization? authorization}) {</code>
+</line>
+<line number="420">
+<code>    if (document == null &amp;&amp; id == null) {</code>
+</line>
+<line hits="0" number="421">
+<code>      throw ApplicationException('Missing document and document id.');</code>
+</line>
+<line number="422">
+<code>    }</code>
+</line>
+<line hits="1" number="423">
+<code>    id = document?.id ?? id;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="424">
+<code>    if (id == null) {</code>
+</line>
+<line hits="0" number="425">
+<code>      throw ApplicationException('Missing document id');</code>
+</line>
+<line number="426">
+<code>    }</code>
+</line>
+<line hits="2" number="427">
+<code>    return client.delete(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="428">
+<code>      '$url/docs/$id',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="429">
+<code>      Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="430">
+<code>        type: 'docs',</code>
+</line>
+<line number="431">
+<code>        throwOnNotFound: throwOnNotFound,</code>
+</line>
+<line hits="1" number="432">
+<code>        headers: (document is EtagMixin &amp;&amp; checkEtag)</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="433">
+<code>            ? {HttpHeader.ifMatch: document.etag}</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="434">
+<code>            : null,</code>
+</line>
+<line number="435">
+<code>        partitionKey: partitionKey ??</code>
+</line>
+<line number="436">
+<code>            (document == null</code>
+</line>
+<line number="437">
+<code>                ? PartitionKey.all</code>
+</line>
+<line hits="2" number="438">
+<code>                : partitionKeySpec.from(document)),</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="439">
+<code>        authorization:</code>
+</line>
+<line hits="2" number="440">
+<code>            CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="441">
+<code>        onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="442">
+<code>      ),</code>
+</line>
+<line number="443">
+<code>    );</code>
+</line>
+<line number="444">
+<code>  }</code>
+</line>
+<line number="445">
+<code/>
+</line>
+<line number="446">
+<code>  /// Prepare a batch for this container.</code>
+</line>
+<line hits="1" number="447">
+<code>  Batch prepareBatch(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="448">
+<code>          {PartitionKey? partitionKey, bool continueOnError = true}) =&gt;</code>
+</line>
+<line hits="1" number="449">
+<code>      TransactionalBatch(this,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="450">
+<code>          continueOnError: continueOnError, partitionKey: partitionKey);</code>
+</line>
+<line number="451">
+<code/>
+</line>
+<line number="452">
+<code>  /// Prepare a batch for this container (atomic).</code>
+</line>
+<line hits="1" number="453">
+<code>  Batch prepareAtomicBatch({PartitionKey? partitionKey}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="454">
+<code>      TransactionalBatch.atomic(this, partitionKey: partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="455">
+<code/>
+</line>
+<line number="456">
+<code>  /// Prepare a batch for this container (cross-partition).</code>
+</line>
+<line hits="1" number="457">
+<code>  Batch prepareCrossPartitionBatch({PartitionKey? partitionKey}) =&gt;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="458">
+<code>      CrossPartitionBatch(this, partitionKey: partitionKey);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="459">
+<code/>
+</line>
+<line number="460">
+<code>  /// Executes the batch in this container.</code>
+</line>
+<line hits="1" number="461">
+<code>  Future&lt;BatchResponse&gt; execute(TransactionalBatch batch,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="462">
+<code>      {CosmosDbPermission? permission,</code>
+</line>
+<line number="463">
+<code>      CosmosDbAuthorization? authorization}) async {</code>
+</line>
+<line hits="2" number="464">
+<code>    if (batch.operations.isEmpty) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="0" number="465">
+<code>      return BatchResponse();</code>
+</line>
+<line number="466">
+<code>    } else {</code>
+</line>
+<line hits="1" number="467">
+<code>      await getPkRanges(permission: permission, authorization: authorization);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="468">
+<code>      return await client.batch(</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="469">
+<code>        '$url/docs',</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="470">
+<code>        batch,</code>
+</line>
+<line hits="1" number="471">
+<code>        _pkRanges,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="472">
+<code>        Context(</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="473">
+<code>          type: 'docs',</code>
+</line>
+<line hits="1" number="474">
+<code>          resId: url,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="475">
+<code>          authorization:</code>
+</line>
+<line hits="2" number="476">
+<code>              CosmosDbAuthorization.from(authorization, permission) ?? _auth,</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="477">
+<code>          builders: _builders,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="478">
+<code>          onRefreshAuth: _refreshAuth,</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="479">
+<code>        ),</code>
+</line>
+<line number="480">
+<code>      );</code>
+</line>
+<line number="481">
+<code>    }</code>
+</line>
+<line number="482">
+<code>  }</code>
+</line>
+<line number="483">
+<code>}</code>
+</line>
+<line number="484">
+<code/>
+</line>
+<line number="485">
+<code>// internal use</code>
+</line>
+<line number="486">
+<code>@internal</code>
+</line>
+<line number="487">
+<code>extension CosmosDbContainerInternalExt on CosmosDbContainer {</code>
+</line>
+<line hits="2" number="488">
+<code>  void setExists(bool exists) =&gt; _exists = exists;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="489">
+<code/>
+</line>
+<line hits="3" number="490">
+<code>  Client get client =&gt; database.client;</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="491">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../"/>
+<base href="../"/>
+</coverage>

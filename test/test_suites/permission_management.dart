@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
+import 'package:test/test.dart';
 
 import '../classes/test_document.dart';
 import '../classes/test_helpers.dart';
@@ -91,8 +90,9 @@ void run(CosmosDbServer cosmosDB) {
     expect(readOnly, isNotNull);
     expect(readOnly!.token, isNotNull);
 
+    final roAuth = CosmosDbAuthorization.fromPermission(readOnly);
     final roColl = await openContainer()
-      ..usePermission(readOnly);
+      ..useAuthorization(roAuth);
 
     final doc = await roColl.find<TestDocument>('1', PartitionKey('1'));
     expect(doc, isNotNull);
@@ -104,8 +104,9 @@ void run(CosmosDbServer cosmosDB) {
     expect(readOnly, isNotNull);
     expect(readOnly!.token, isNotNull);
 
+    final roAUth = CosmosDbAuthorization.fromPermission(readOnly);
     final roColl = await openContainer()
-      ..usePermission(readOnly);
+      ..useAuthorization(roAUth);
 
     await expectLater(
       roColl.add(TestDocument('4', 'TEST #3', [11, 13, 17])),
@@ -132,8 +133,9 @@ void run(CosmosDbServer cosmosDB) {
     expect(readWrite, isNotNull);
     expect(readWrite!.token, isNotNull);
 
+    final rwAUth = CosmosDbAuthorization.fromPermission(readWrite);
     final rwColl = await openContainer()
-      ..usePermission(readWrite);
+      ..useAuthorization(rwAUth);
 
     final doc = await rwColl.find<TestDocument>('1', PartitionKey('1'));
     expect(doc, isNotNull);
@@ -145,8 +147,9 @@ void run(CosmosDbServer cosmosDB) {
     expect(readWrite, isNotNull);
     expect(readWrite!.token, isNotNull);
 
+    final rwAUth = CosmosDbAuthorization.fromPermission(readWrite);
     final rwColl = await openContainer()
-      ..usePermission(readWrite);
+      ..useAuthorization(rwAUth);
 
     final doc = await rwColl.add(TestDocument('4', 'TEST #4', [11, 13, 17]));
     expect(doc, isNotNull);
@@ -160,8 +163,9 @@ void run(CosmosDbServer cosmosDB) {
     expect(permission, isNotNull);
     expect(permission!.token, isNotNull);
 
+    final auth = CosmosDbAuthorization.fromPermission(permission);
     final coll = await openContainer()
-      ..usePermission(permission);
+      ..useAuthorization(auth);
 
     // permissions have a resolution of 1 second with undocumented minimal
     // delay... to avoid waiting that amount of time in tests, the debug HTTP
@@ -169,7 +173,9 @@ void run(CosmosDbServer cosmosDB) {
     cosmosDB.dbgHttpClient?.forceForbidden = true;
 
     bool handled = false;
-    coll.onForbidden = () {
+    coll.onRefreshAuth = ([int? s, CosmosDbAuthorization? a]) {
+      expect(s, HttpStatusCode.forbidden);
+      expect(a, auth);
       handled = true;
       // disable forced "403 Forbidden" responses
       cosmosDB.dbgHttpClient?.forceForbidden = false;

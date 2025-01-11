@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="_linq_extensions.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="20" lines-valid="20" package="src/_internal" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>class LinqException implements Exception {</code>
+</line>
+<line hits="1" number="2">
+<code>  LinqException(this.message);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="3">
+<code/>
+</line>
+<line number="4">
+<code>  final String message;</code>
+</line>
+<line number="5">
+<code>}</code>
+</line>
+<line number="6">
+<code/>
+</line>
+<line hits="1" number="7">
+<code>T _identity&lt;T&gt;(T item) =&gt; item;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="8">
+<code>bool _notNull(dynamic item) =&gt; item != null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="9">
+<code/>
+</line>
+<line number="10">
+<code>extension LinqExt&lt;T&gt; on Iterable&lt;T&gt; {</code>
+</line>
+<line hits="2" number="11">
+<code>  Iterable&lt;T&gt; asIterable() =&gt; map(_identity);</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="12">
+<code/>
+</line>
+<line hits="1" number="13">
+<code>  Iterable&lt;T&gt; skipLast() {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="14">
+<code>    final keep = length - 1;</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="15">
+<code>    return (keep &gt; 0) ? take(keep) : const [];</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="16">
+<code>  }</code>
+</line>
+<line number="17">
+<code/>
+</line>
+<line hits="1" number="18">
+<code>  T? firstOrDefault(bool Function(T) predicate) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="19">
+<code>    if (isEmpty) return null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="20">
+<code>    for (var item in this) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="21">
+<code>      if (predicate(item)) return item;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="22">
+<code>    }</code>
+</line>
+<line number="23">
+<code>    return null;</code>
+</line>
+<line number="24">
+<code>  }</code>
+</line>
+<line number="25">
+<code/>
+</line>
+<line hits="1" number="26">
+<code>  T? singleOrDefault(bool Function(T) predicate) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="27">
+<code>    if (isEmpty) return null;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="28">
+<code>    T? found;</code>
+</line>
+<line hits="2" number="29">
+<code>    for (var item in this) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="30">
+<code>      if (predicate(item)) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="31">
+<code>        if (found != null) {</code>
+</line>
+<line hits="1" number="32">
+<code>          throw LinqException('Several items match the predicate.');</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="33">
+<code>        }</code>
+</line>
+<line number="34">
+<code>        found = item;</code>
+</line>
+<line number="35">
+<code>      }</code>
+</line>
+<line number="36">
+<code>    }</code>
+</line>
+<line number="37">
+<code>    return found;</code>
+</line>
+<line number="38">
+<code>  }</code>
+</line>
+<line number="39">
+<code/>
+</line>
+<line hits="1" number="40">
+<code>  Iterable&lt;T&gt; distinct() sync* {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="41">
+<code>    final seen = &lt;T&gt;{};</code>
+</line>
+<line hits="2" number="42">
+<code>    for (var item in this) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="43">
+<code>      if (seen.add(item)) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="44">
+<code>        yield item;</code>
+</line>
+<line number="45">
+<code>      }</code>
+</line>
+<line number="46">
+<code>    }</code>
+</line>
+<line number="47">
+<code>  }</code>
+</line>
+<line number="48">
+<code>}</code>
+</line>
+<line number="49">
+<code/>
+</line>
+<line number="50">
+<code>extension NullableLinqExt&lt;T&gt; on Iterable&lt;T?&gt; {</code>
+</line>
+<line hits="3" number="51">
+<code>  Iterable&lt;T&gt; whereNotNull() =&gt; where(_notNull).cast&lt;T&gt;();</code>
+<hit count="3" name="&lt;unnamed&gt;"/>
+</line>
+<line number="52">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>

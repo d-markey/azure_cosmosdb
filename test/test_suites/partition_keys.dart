@@ -208,7 +208,7 @@ void run() {
         final hash = PartitionKeyHashV2.hierarchical(pk.values);
         expect(hash.hex, equals(test.value));
       }
-    }, testOn: '!browser');
+    });
   });
 
   group('RANGE', () {

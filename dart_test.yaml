@@ -1,6 +1,10 @@
-platforms: 
+platforms:
   - vm
   - chrome
+
+compilers:
+  - dart2js
+  - dart2wasm
 
 override_platforms:
   chrome:
@@ -8,3 +12,4 @@ override_platforms:
       arguments: --allow-insecure-localhost
 
 chain_stack_traces: true
+concurrency: 1

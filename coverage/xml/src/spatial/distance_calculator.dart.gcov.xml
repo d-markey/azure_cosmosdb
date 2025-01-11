@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="../../jgenhtml.xsl"?><coverage branch-rate="NaN" branches-covered="0" branches-valid="0" complexity="0" date="2025-01-06" filename="distance_calculator.dart" function-rate="NaN" functions-covered="0" functions-valid="0" line-rate="1.0" lines-covered="7" lines-valid="7" package="src/spatial" testname="lcov.info" version="1.6">
+<lines>
+<line number="1">
+<code>import 'point.dart';</code>
+</line>
+<line number="2">
+<code>import 'shape.dart';</code>
+</line>
+<line number="3">
+<code/>
+</line>
+<line number="4">
+<code>/// Base class for distance calculation algorithms.</code>
+</line>
+<line number="5">
+<code>abstract class DistanceCalculator {</code>
+</line>
+<line hits="2" number="6">
+<code>  const DistanceCalculator();</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line number="7">
+<code/>
+</line>
+<line number="8">
+<code>  /// Computes the distance between points [from] and [to].</code>
+</line>
+<line number="9">
+<code>  double? distance(Point from, Point to);</code>
+</line>
+<line number="10">
+<code/>
+</line>
+<line number="11">
+<code>  /// Computes the length of a line or polygon by adding up distances between</code>
+</line>
+<line number="12">
+<code>  /// consecutive [Point]s making it up. Returns `null` if [distance] return</code>
+</line>
+<line number="13">
+<code>  /// `null` for any two consecutive [Point]s.</code>
+</line>
+<line hits="1" number="14">
+<code>  double? measure(Shape shape) {</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="15">
+<code>    double dist = 0;</code>
+</line>
+<line hits="2" number="16">
+<code>    for (var path in shape.paths) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="17">
+<code>      var current = path.first;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="2" number="18">
+<code>      for (var next in path.skip(1)) {</code>
+<hit count="2" name="&lt;unnamed&gt;"/>
+</line>
+<line hits="1" number="19">
+<code>        var d = distance(current, next);</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="20">
+<code>        if (d == null) return null;</code>
+</line>
+<line hits="1" number="21">
+<code>        dist += d;</code>
+<hit count="1" name="&lt;unnamed&gt;"/>
+</line>
+<line number="22">
+<code>        current = next;</code>
+</line>
+<line number="23">
+<code>      }</code>
+</line>
+<line number="24">
+<code>    }</code>
+</line>
+<line number="25">
+<code>    return dist;</code>
+</line>
+<line number="26">
+<code>  }</code>
+</line>
+<line number="27">
+<code>}</code>
+</line>
+</lines>
+<config branch-coverage="true" description-file="false" function-coverage="true" genhtml_hi_limit="90" genhtml_med_limit="75" legend="false" no-sort="false" no-source="false" show-details="false"/>
+<base href="../../"/>
+<base href="../../"/>
+</coverage>
