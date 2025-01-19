@@ -1,3 +1,8 @@
+## 2.3.1
+
+- BREAKING CHANGE: reworked the access-control classes and methods. `useAuthorization()`/`usePermission()` are deprecated in favor of `grantAccess()`, and `clearAuthorization()`/`clearPermission()` in favor of `revokeAccess()`. Optional arguments `authorization` and `permission` are replaced by `accessControl`.
+- Make document ids non-nullable (`Object` instead of `dynamic`).
+
 ## 2.3.0
 
 - Rename `Authorization` to `CosmosDbAuthorization` and make it public.

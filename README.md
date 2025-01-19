@@ -30,12 +30,15 @@ Connector for Azure Cosmos DB on Dart and Flutter platforms. Supports Cosmos DB 
 ## <a name="features"></a>Features
 
 * `CosmosDbServer`: the main class used to communicate with your Azure Cosmos DB instance.
-* `CosmosDbDatabase`: class representing an Azure Cosmos DB database hosted in `CosmosDbServer`.
+* `CosmosDbDatabase`: class representing an Azure Cosmos DB database hosted in a `CosmosDbServer`.
 * `CosmosDbContainer`: class representing an Azure Cosmos DB container from a `CosmosDbDatabase`.
 * `BaseDocument`: class representing an Azure Cosmos DB document stored in a `CosmosDbContainer`.
 * `Query`: class representing an Azure Cosmos DB SQL query to search documents in a `CosmosDbContainer`.
-* `TransactionalBatch`: class containing a set of operations against documents in a `CosmosDbContainer`.
-* `CosmosDbUsers` and `CosmosDbPermissions`: to manage users and rights in the Azure Cosmos DB database.
+* `TransactionalBatch` and `CrossPartitionBatch`: classes containing a set of operations against documents in a `CosmosDbContainer`.
+* `CosmosDbUsers`: to manage users in your Azure Cosmos DB database.
+* `CosmosDbAuthorization`and `CosmosDbPermissions`: to control access to resources and documents in your Azure Cosmos DB database.
+
+`azure_cosmosdb` supports CosmosDB API versions `2018-12-31` and `2020-07-15`.
 
 ## <a name="started"></a>Getting Started
 
@@ -227,20 +230,17 @@ Please note that Cosmos DB has a limit of 100 operations per batch. `Transaction
 
 ## <a name="permissions"></a>Users and Permissions
 
-Most APIs implemented in `azure_cosmosdb` support an optional `CosmosDbPermission` parameter
-when calling Azure Cosmos DB.
+Most APIs implemented in `azure_cosmosdb` support an optional `CosmosDbAccessControl` parameter when calling Azure Cosmos DB. `CosmosDbPermission` and `CosmosDbAuthorization` both implement `CosmosDbAccessControl` and support access control.
 
-This makes it possible to open a connection to Azure Cosmos DB without providing the master
-key. The master key should be kept secret and should not be provided in Web apps or even
-mobile apps.
+Access control tokens maks it possible to open a connection to Azure Cosmos DB without providing the master key. The master key should be kept secret and should not be provided in Web apps or even mobile apps.
 
-Azure Cosmos DB manages a list of users and permissions at the database level. If you need
-to implement direct access from a Web or mobile app to Azure Cosmos DB, you should create
-a user for your app and grant permissions as necessary.
+Azure Cosmos DB manages a list of users and permissions at the database level. If you need to implement direct access from a Web or mobile app to Azure Cosmos DB, you should create a user for your app and grant permissions as necessary.
 
-To retrieve the permission in your app, you should implement a REST API, e.g. an Azure
-Function, that your app will call to get the required set of permissions. Only the REST
-API will need to know the master key to retrieve the permissions.
+To retrieve the permission in your app, you should implement a REST API, e.g. an Azure Function, that your app will call to get the required set of permissions. Only the REST API will need to know the master key to create or retrieve permissions.
+
+A `CosmosDbPermission` can be instantiated directly from a token using constructor `CosmosDbPermission.fromToken(String token)`.
+
+Alternatively, it is also possible to use the `CosmosDbAuthorization` class to provide an authorization token. Authorization tokens can be [derived from the master key](https://learn.microsoft.com/en-us/rest/api/cosmos-db/access-control-on-cosmosdb-resources#constructkeytoken) or retrieved using [Azure Cosmos DB RBAC] (`aad` tokens).
 
 ## <a name="disclaimer"></a>Disclaimer
 

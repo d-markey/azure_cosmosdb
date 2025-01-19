@@ -37,6 +37,7 @@ extension DateTimeFormatExt on DateTime {
     final dayStr = _days[date.weekday - 1];
     final monthStr = _months[date.month - 1];
     final timeStr = date.toTimeString();
-    return '$dayStr, ${_00(date.day)} $monthStr ${date.year} $timeStr GMT';
+    return '$dayStr, ${_00(date.day)} $monthStr ${date.year} $timeStr GMT'
+        .toLowerCase();
   }
 }

@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
+import 'package:azure_cosmosdb/src/_internal/_extensions.dart';
 import 'package:azure_cosmosdb/src/_internal/_http_header.dart';
-import 'package:azure_cosmosdb/src/_internal/_linq_extensions.dart';
 import 'package:test/test.dart';
 
 import '../classes/test_document.dart';
-import '../classes/test_document_synthetic_pk.dart';
 import '../classes/test_document_hierarchical_pk.dart';
+import '../classes/test_document_synthetic_pk.dart';
 import '../classes/test_document_without_builder.dart';
 import '../classes/test_helpers.dart';
 

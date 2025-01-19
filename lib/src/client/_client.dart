@@ -8,7 +8,8 @@ import 'package:retry/retry.dart';
 import '../_internal/_http_call.dart';
 import '../_internal/_http_header.dart';
 import '../_internal/_mime_type.dart';
-import '../authorizations/cosmos_db_authorization.dart';
+import '../access_control/cosmos_db_access_control.dart';
+import '../access_control/cosmos_db_authorization.dart';
 import '../base_document.dart';
 import '../batch/batch_operation.dart';
 import '../batch/batch_response.dart';
@@ -70,11 +71,11 @@ class Client {
     HttpCall call,
     BaseDocument? document,
     Context context,
-    CosmosDbAuthorization authorization,
+    CosmosDbAccessControl accessControl,
   ) {
     return _retry.retry(
       () {
-        final request = call.getRequest(_url, authorization);
+        final request = call.getRequest(_url, accessControl);
 
         if (document != null) {
           request.headers.addAll(HttpHeader.jsonPayload);
@@ -98,7 +99,7 @@ class Client {
   ) async {
     String resId = context.resId ?? call.uri;
 
-    CosmosDbAuthorization? auth = context.authorization ??
+    final accessControl = context.accessControl ??
         CosmosDbAuthorization.fromKey(
           _key,
           call.method.name.toLowerCase(),
@@ -106,15 +107,15 @@ class Client {
           resId,
         );
 
-    var result = await _sendWithAuth(call, document, context, auth);
+    var result = await _sendWithAuth(call, document, context, accessControl);
 
     switch (result.statusCode) {
       case HttpStatusCode.unauthorized:
       case HttpStatusCode.invalidToken:
       case HttpStatusCode.forbidden:
-        // try to get a new authorization from the onRefreshAuth callback
-        final newAuth =
-            await context.onRefreshAuth?.call(result.statusCode, auth);
+        // try to get a new authorization from the refreshAccessControl callback
+        final newAuth = await context.refreshAccessControl
+            ?.call(result.statusCode, accessControl);
         if (newAuth != null) {
           // try again with this authorization
           result = await _sendWithAuth(call, document, context, newAuth);
@@ -126,13 +127,13 @@ class Client {
             int.tryParse(result.headers[HttpHeader.msRetryAfterMs] ?? '');
         if (delay != null) {
           await Future.delayed(Duration(milliseconds: delay));
-          result = await _sendWithAuth(call, document, context, auth);
+          result = await _sendWithAuth(call, document, context, accessControl);
         }
         break;
       case HttpStatusCode.serviceUnavailable:
         // retry once
         await Future.delayed(Duration(milliseconds: 250));
-        result = await _sendWithAuth(call, document, context, auth);
+        result = await _sendWithAuth(call, document, context, accessControl);
         break;
       case HttpStatusCode.noContent:
         // no content: return null (https://github.com/d-markey/azure_cosmosdb/issues/1)

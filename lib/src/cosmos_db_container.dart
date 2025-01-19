@@ -1,9 +1,10 @@
 import 'package:meta/meta.dart';
 
+import '_internal/_extensions.dart';
 import '_internal/_http_header.dart';
-import 'authorizations/cosmos_db_access_control.dart';
-import 'authorizations/cosmos_db_authorization.dart';
-import 'authorizations/cosmos_db_permission.dart';
+import 'access_control/cosmos_db_access_control.dart';
+import 'access_control/cosmos_db_authorization.dart';
+import 'access_control/cosmos_db_permission.dart';
 import 'base_document.dart';
 import 'batch/batch.dart';
 import 'batch/batch_response.dart';
@@ -28,7 +29,7 @@ class CosmosDbContainer extends BaseDocument {
       {PartitionKeySpec? partitionKeySpec,
       IndexingPolicy? indexingPolicy,
       GeospatialConfig? geospatialConfig})
-      : url = '${database.url}/colls/$id',
+      : url = buildUrl(database.url, 'colls', id),
         partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id,
         _indexingPolicy = indexingPolicy,
         _geospatialConfig = geospatialConfig;
@@ -78,51 +79,40 @@ class CosmosDbContainer extends BaseDocument {
   /// this container-wide authorization.
   ///
   /// Note: calling this method overrides any previous authorization set via
-  /// [useAuthorization] or [usePermission].
-  @Deprecated('Use [useAuthorization] instead.')
+  /// [useAuthorization] or [usePermission] or [grantAccess].
+  @Deprecated('Use [grantAccess] instead.')
   void usePermission(CosmosDbPermission permission) {
-    // _token = permission.token;
-    _auth = CosmosDbAuthorization.fromPermission(permission);
+    grantAccess(permission);
   }
 
   /// Clear the container-wide permission.
   ///
   /// Note: calling this method clears the underlying authorization, whether it
   /// was set from a permission via [usePermission] or from an authorization
-  /// via [useAuthorization].
-  @Deprecated('Use [clearAuthorization] instead.')
+  /// via [useAuthorization] or via [grantAccess].
+  @Deprecated('Use [revokeAccess] instead.')
   void clearPermission() {
-    _auth = null;
+    revokeAccess();
   }
 
-  /// Callback to refresh a permission or an authorization. This callback is
-  /// called when a CosmosDB API call results in an access-control exception,
-  /// typically:
+  /// Callback to refresh access control. This callback is called when a CosmosDB
+  /// API call results in an access-control exception, typically:
   /// * an [UnauthorizedException] (HTTP error 401),
   /// * a [ForbiddenException] (HTTP error 403),
   /// * or an [InvalidTokenException] (HTTP error 498).
-  /// and can be used to get a new authorization (eg. get a new permission
-  /// after it expired).
-  AsyncCallback<CosmosDbAccessControl?>? onRefreshAuth;
+  /// and can be used to obtain a new access-control token such as a permission or
+  /// an authorization.
+  AccessControlAsyncCallback? refreshAccessControl;
 
-  Future<CosmosDbAuthorization?> _refreshAuth([
+  Future<CosmosDbAccessControl?> _refreshAccessControl([
     int? httpStatusCode,
-    CosmosDbAuthorization? auth,
+    CosmosDbAccessControl? accessControl,
   ]) async {
-    CosmosDbAuthorization? newAuth;
-    final callback = onRefreshAuth;
-    if (callback != null) {
-      final accessControl = await callback.call(httpStatusCode, auth);
-      if (accessControl is CosmosDbPermission) {
-        newAuth = CosmosDbAuthorization.fromPermission(accessControl);
-      } else if (accessControl is CosmosDbAuthorization) {
-        newAuth = accessControl;
-      }
+    final ac = await refreshAccessControl?.call(httpStatusCode, accessControl);
+    if (ac != null) {
+      grantAccess(ac);
     }
-    if (newAuth != null) {
-      _auth = newAuth;
-    }
-    return newAuth;
+    return ac;
   }
 
   /// Use this [CosmosDbAuthorization] when invoking the CosmosDB API. Using
@@ -132,16 +122,36 @@ class CosmosDbContainer extends BaseDocument {
   /// will protect your master keys. Most methods from [CosmosDbContainer]
   /// support an optional [authorization] argument, to allow for overriding
   /// this container-wide [authorization].
+  ///
+  /// Note: calling this method overrides any previous authorization set via
+  /// [useAuthorization] or [usePermission] or [grantAccess].
+  @Deprecated('Use [grantAccess] instead.')
   void useAuthorization(CosmosDbAuthorization authorization) {
-    _auth = authorization;
+    grantAccess(authorization);
   }
 
   /// Clear the container-wide authorization.
+  ///
+  /// Note: calling this method clears the underlying authorization, whether it
+  /// was set from a permission via [usePermission] or from an authorization
+  /// via [useAuthorization] or via [grantAccess].
+  @Deprecated('Use [revokeAccess] instead.')
   void clearAuthorization() {
-    _auth = null;
+    revokeAccess();
   }
 
-  CosmosDbAuthorization? _auth;
+  /// Grant access to the resource using the associated access control token,
+  /// eg. a [CosmosDbAuthorization] or a [CosmosDbPermission].
+  void grantAccess(CosmosDbAccessControl accessControl) {
+    _accessControl = accessControl;
+  }
+
+  /// Clear the container-wide access control.
+  void revokeAccess() {
+    _accessControl = null;
+  }
+
+  CosmosDbAccessControl? _accessControl;
 
   final _builders = <Type, DocumentBuilder>{};
 
@@ -151,16 +161,15 @@ class CosmosDbContainer extends BaseDocument {
 
   /// Gets information for this [CosmosDbContainer].
   Future<CosmosDbContainer> getInfo(
-      {CosmosDbPermission? permission,
-      CosmosDbAuthorization? authorization}) async {
+      {CosmosDbAccessControl? accessControl}) async {
     final coll = await client.get<CosmosDbContainer>(
         url,
         Context(
           type: 'colls',
-          authorization: authorization ?? _auth,
+          accessControl: accessControl ?? _accessControl,
           throwOnNotFound: true,
           builder: database.containers.fromJson,
-          onRefreshAuth: _refreshAuth,
+          refreshAccessControl: _refreshAccessControl,
         ));
     return coll!;
   }
@@ -169,22 +178,19 @@ class CosmosDbContainer extends BaseDocument {
 
   /// Gets the partition key ranges for this [CosmosDbContainer].
   Future<Iterable<PartitionKeyRange>> getPkRanges(
-      {CosmosDbPermission? permission,
-      CosmosDbAuthorization? authorization,
-      bool force = false}) async {
+      {CosmosDbAccessControl? accessControl, bool force = false}) async {
     if (_pkRanges.isEmpty || force) {
       _pkRanges.clear();
       _pkRanges.addAll(await client.getMany<PartitionKeyRange>(
-          '$url/pkranges',
+          buildUrl(url, 'pkranges'),
           'PartitionKeyRanges',
           Context(
             resId: url,
             type: 'pkranges',
-            authorization:
-                CosmosDbAuthorization.from(authorization, permission) ?? _auth,
+            accessControl: accessControl,
             throwOnNotFound: true,
             builder: PartitionKeyRange.fromJson,
-            onRefreshAuth: _refreshAuth,
+            refreshAccessControl: _refreshAccessControl,
           )));
     }
     return _pkRanges;
@@ -193,8 +199,7 @@ class CosmosDbContainer extends BaseDocument {
   /// Gets information for this [CosmosDbContainer].
   Future<void> setIndexingPolicy(IndexingPolicy indexingPolicy,
       {GeospatialConfig? geospatialConfig,
-      CosmosDbPermission? permission,
-      CosmosDbAuthorization? authorization}) async {
+      CosmosDbAccessControl? accessControl}) async {
     final prevIndexingPolicy = _indexingPolicy;
     final prevGeospatialConfig = _geospatialConfig;
     _indexingPolicy = indexingPolicy;
@@ -207,10 +212,9 @@ class CosmosDbContainer extends BaseDocument {
           this,
           Context(
             type: 'colls',
-            authorization:
-                CosmosDbAuthorization.from(authorization, permission) ?? _auth,
+            accessControl: accessControl ?? _accessControl,
             builder: database.containers.fromJson,
-            onRefreshAuth: _refreshAuth,
+            refreshAccessControl: _refreshAccessControl,
           ));
     } catch (ex) {
       _indexingPolicy = prevIndexingPolicy;
@@ -222,20 +226,18 @@ class CosmosDbContainer extends BaseDocument {
   /// Finds the document with [id] in this container. If the document does not exist,
   /// this method returns `null` by default. If [throwOnNotFound] is set to `true`, it
   /// will throw a [NotFoundException] instead.
-  Future<T?> find<T extends BaseDocument>(dynamic id, PartitionKey partitionKey,
+  Future<T?> find<T extends BaseDocument>(Object id, PartitionKey partitionKey,
           {bool throwOnNotFound = false,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          CosmosDbAccessControl? accessControl}) =>
       client.get<T>(
-        '$url/docs/$id',
+        buildUrl(url, 'docs', id.toString()),
         Context(
           type: 'docs',
           throwOnNotFound: throwOnNotFound,
           partitionKey: partitionKey,
           builders: _builders,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-          onRefreshAuth: _refreshAuth,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
@@ -243,11 +245,10 @@ class CosmosDbContainer extends BaseDocument {
   Future<T?> get<T extends BaseDocument>(T document,
           {bool throwOnNotFound = false,
           PartitionKey? partitionKey,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          CosmosDbAccessControl? accessControl}) =>
       client
           .get<T>(
-            '$url/docs/${document.id}',
+            buildUrl(url, 'docs', document.id.toString()),
             Context(
               type: 'docs',
               throwOnNotFound: throwOnNotFound,
@@ -258,94 +259,80 @@ class CosmosDbContainer extends BaseDocument {
                   partitionKeySpec.from(document) ??
                   PartitionKey.all,
               builders: _builders,
-              authorization:
-                  CosmosDbAuthorization.from(authorization, permission) ??
-                      _auth,
-              onRefreshAuth: _refreshAuth,
+              accessControl: accessControl ?? _accessControl,
+              refreshAccessControl: _refreshAccessControl,
             ),
           )
           .onError<NotModifiedException>((error, stackTrace) => document);
 
   /// Lists all documents from this container.
   Future<Iterable<T>> list<T extends BaseDocument>(
-          {PartitionKey? partitionKey,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {PartitionKey? partitionKey, CosmosDbAccessControl? accessControl}) =>
       client.getMany<T>(
-        '$url/docs',
+        buildUrl(url, 'docs'),
         'Documents',
         Context(
           type: 'docs',
           resId: url,
           partitionKey: partitionKey ?? PartitionKey.all,
           builders: _builders,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-          onRefreshAuth: _refreshAuth,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
   /// Loads documents from this container matching the provided [query].
   Future<Iterable<T>> query<T extends BaseDocument>(Query query,
-          {CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {CosmosDbAccessControl? accessControl}) =>
       client.query<T>(
-        '$url/docs',
+        buildUrl(url, 'docs'),
         query,
         'Documents',
         Context(
           type: 'docs',
           resId: url,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
+          accessControl: accessControl ?? _accessControl,
           builders: _builders,
-          onRefreshAuth: _refreshAuth,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
   /// Loads documents from this container matching the provided [query].
   Future<dynamic> rawQuery(Query query,
-          {CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {CosmosDbAccessControl? accessControl}) =>
       client.rawQuery(
-        '$url/docs',
+        buildUrl(url, 'docs'),
         query,
         'Documents',
         Context(
           type: 'docs',
           resId: url,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-          onRefreshAuth: _refreshAuth,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
   /// Adds a new [document] to this container.
   Future<T> add<T extends BaseDocument>(T document,
-          {PartitionKey? partitionKey,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {PartitionKey? partitionKey, CosmosDbAccessControl? accessControl}) =>
       client.post(
-        '$url/docs',
+        buildUrl(url, 'docs'),
         document,
         Context(
           type: 'docs',
           resId: url,
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
           builders: _builders,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-          onRefreshAuth: _refreshAuth,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
   /// Adds or updates (replaces) a [document] in this container.
   Future<T> upsert<T extends BaseDocument>(T document,
-          {PartitionKey? partitionKey,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {PartitionKey? partitionKey, CosmosDbAccessControl? accessControl}) =>
       client.post(
-        '$url/docs',
+        buildUrl(url, 'docs'),
         document,
         Context(
           type: 'docs',
@@ -353,9 +340,8 @@ class CosmosDbContainer extends BaseDocument {
           headers: HttpHeader.isUpsert,
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
           builders: _builders,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-          onRefreshAuth: _refreshAuth,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
@@ -364,10 +350,9 @@ class CosmosDbContainer extends BaseDocument {
   Future<T> replace<T extends BaseDocument>(T document,
           {bool checkEtag = true,
           PartitionKey? partitionKey,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          CosmosDbAccessControl? accessControl}) =>
       client.put(
-        '$url/docs/${document.id}',
+        buildUrl(url, 'docs', document.id.toString()),
         document,
         Context(
           type: 'docs',
@@ -376,20 +361,17 @@ class CosmosDbContainer extends BaseDocument {
               : null,
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
           builders: _builders,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-          onRefreshAuth: _refreshAuth,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
   /// Updates (patches) a [document] in this container by applying the [patch]
   /// operations.
   Future<T> patch<T extends BaseDocument>(T document, Patch patch,
-          {PartitionKey? partitionKey,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {PartitionKey? partitionKey, CosmosDbAccessControl? accessControl}) =>
       client.patch(
-        '$url/docs/${document.id}',
+        buildUrl(url, 'docs', document.id.toString()),
         patch,
         Context(
           type: 'docs',
@@ -398,9 +380,8 @@ class CosmosDbContainer extends BaseDocument {
               partitionKeySpec.from(document) ??
               PartitionKey.all,
           builders: _builders,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-          onRefreshAuth: _refreshAuth,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
 
@@ -410,13 +391,12 @@ class CosmosDbContainer extends BaseDocument {
   /// provided, its attributes take over the [id] value. If it has [EtagMixin],
   /// its [EtagMixin.etag] must be known.
   Future<bool> delete<T extends BaseDocument>(
-      {String? id,
+      {Object? id,
       T? document,
       bool throwOnNotFound = false,
       bool checkEtag = true,
       PartitionKey? partitionKey,
-      CosmosDbPermission? permission,
-      CosmosDbAuthorization? authorization}) {
+      CosmosDbAccessControl? accessControl}) {
     if (document == null && id == null) {
       throw ApplicationException('Missing document and document id.');
     }
@@ -425,7 +405,7 @@ class CosmosDbContainer extends BaseDocument {
       throw ApplicationException('Missing document id');
     }
     return client.delete(
-      '$url/docs/$id',
+      buildUrl(url, 'docs', id.toString()),
       Context(
         type: 'docs',
         throwOnNotFound: throwOnNotFound,
@@ -436,9 +416,8 @@ class CosmosDbContainer extends BaseDocument {
             (document == null
                 ? PartitionKey.all
                 : partitionKeySpec.from(document)),
-        authorization:
-            CosmosDbAuthorization.from(authorization, permission) ?? _auth,
-        onRefreshAuth: _refreshAuth,
+        accessControl: accessControl ?? _accessControl,
+        refreshAccessControl: _refreshAccessControl,
       ),
     );
   }
@@ -459,23 +438,21 @@ class CosmosDbContainer extends BaseDocument {
 
   /// Executes the batch in this container.
   Future<BatchResponse> execute(TransactionalBatch batch,
-      {CosmosDbPermission? permission,
-      CosmosDbAuthorization? authorization}) async {
+      {CosmosDbAccessControl? accessControl}) async {
     if (batch.operations.isEmpty) {
       return BatchResponse();
     } else {
-      await getPkRanges(permission: permission, authorization: authorization);
+      await getPkRanges(accessControl: accessControl);
       return await client.batch(
-        '$url/docs',
+        buildUrl(url, 'docs'),
         batch,
         _pkRanges,
         Context(
           type: 'docs',
           resId: url,
-          authorization:
-              CosmosDbAuthorization.from(authorization, permission) ?? _auth,
+          accessControl: accessControl ?? _accessControl,
           builders: _builders,
-          onRefreshAuth: _refreshAuth,
+          refreshAccessControl: _refreshAccessControl,
         ),
       );
     }

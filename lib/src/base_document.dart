@@ -4,7 +4,7 @@ typedef DocumentBuilder<T extends BaseDocument> = T Function(Map json);
 /// Base class for CosmosDB documents.
 abstract class BaseDocument {
   /// The document's [id].
-  dynamic get id;
+  Object get id;
 
   /// Serializes this instance to a JSON object.
   dynamic toJson();

@@ -1,11 +1,10 @@
 import 'package:meta/meta.dart';
 
+import '../_internal/_extensions.dart';
 import '../client/_client.dart';
 import '../client/_context.dart';
 import '../cosmos_db_database.dart';
-import '../cosmos_db_exceptions.dart';
-import 'cosmos_db_authorization.dart';
-import 'cosmos_db_permission.dart';
+import 'cosmos_db_access_control.dart';
 import 'cosmos_db_permissions.dart';
 import 'cosmos_db_user.dart';
 
@@ -13,7 +12,7 @@ import 'cosmos_db_user.dart';
 class CosmosDbUsers {
   CosmosDbUsers(CosmosDbDatabase db)
       : database = db,
-        url = '${db.url}/users';
+        url = buildUrl(db.url, 'users');
 
   final CosmosDbDatabase database;
   final String url;
@@ -22,9 +21,7 @@ class CosmosDbUsers {
   late final CosmosDbPermissions permissions = CosmosDbPermissions(this);
 
   /// Lists all containers from this [database].
-  Future<Iterable<CosmosDbUser>> list(
-          {CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+  Future<Iterable<CosmosDbUser>> list({CosmosDbAccessControl? accessControl}) =>
       database.client.getMany<CosmosDbUser>(
         url,
         'Users',
@@ -32,7 +29,7 @@ class CosmosDbUsers {
           type: 'users',
           resId: database.url,
           builder: CosmosDbUser.build,
-          authorization: CosmosDbAuthorization.from(authorization, permission),
+          accessControl: accessControl,
         ),
       );
 
@@ -41,15 +38,14 @@ class CosmosDbUsers {
   /// [NotFoundException] instead.
   Future<bool> delete(String id,
           {bool throwOnNotFound = false,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          CosmosDbAccessControl? accessControl}) =>
       database.client.delete(
-        '$url/$id',
+        buildUrl(url, id),
         Context(
           type: 'users',
           throwOnNotFound: throwOnNotFound,
           builder: CosmosDbUser.build,
-          authorization: CosmosDbAuthorization.from(authorization, permission),
+          accessControl: accessControl,
         ),
       );
 
@@ -58,15 +54,14 @@ class CosmosDbUsers {
   /// [NotFoundException] instead.
   Future<CosmosDbUser?> find(String id,
           {bool throwOnNotFound = false,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          CosmosDbAccessControl? accessControl}) =>
       database.client.get<CosmosDbUser>(
-        '$url/$id',
+        buildUrl(url, id),
         Context(
           type: 'users',
           throwOnNotFound: throwOnNotFound,
           builder: CosmosDbUser.build,
-          authorization: CosmosDbAuthorization.from(authorization, permission),
+          accessControl: accessControl,
         ),
       );
 
@@ -74,8 +69,7 @@ class CosmosDbUsers {
   /// `null` if the user does not exists. If [throwOnNotFound] is set to `true`, it will throw a
   /// [NotFoundException] instead.
   Future<CosmosDbUser> add(CosmosDbUser user,
-          {CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {CosmosDbAccessControl? accessControl}) =>
       database.client.post<CosmosDbUser>(
         url,
         user,
@@ -83,7 +77,7 @@ class CosmosDbUsers {
           resId: database.url,
           type: 'users',
           builder: CosmosDbUser.build,
-          authorization: CosmosDbAuthorization.from(authorization, permission),
+          accessControl: accessControl,
         ),
       );
 }

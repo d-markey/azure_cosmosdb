@@ -1,14 +1,13 @@
 import 'package:meta/meta.dart';
 
+import '../_internal/_extensions.dart';
 import '../_internal/_http_header.dart';
-import '../_internal/_linq_extensions.dart';
-import '../authorizations/cosmos_db_permission.dart';
+import '../access_control/cosmos_db_access_control.dart';
 import '../client/http_status_codes.dart';
 import '../cosmos_db_container.dart';
 import '../cosmos_db_exceptions.dart';
 import '../partition/partition_key.dart';
 import '../partition/partition_key_range.dart';
-import '../partition/partition_key_spec.dart';
 import 'batch.dart';
 import 'batch_operation.dart';
 import 'batch_response.dart';
@@ -108,9 +107,9 @@ class TransactionalBatch extends Batch {
   }
 
   @override
-  Future<BatchResponse> execute({CosmosDbPermission? permission}) async {
+  Future<BatchResponse> execute({CosmosDbAccessControl? accessControl}) async {
     if (_ops.length <= 100) {
-      return await container.execute(this, permission: permission);
+      return await container.execute(this, accessControl: accessControl);
     } else {
       final resp = BatchResponse();
       final batch = clone();
@@ -119,7 +118,7 @@ class TransactionalBatch extends Batch {
         batch._ops.clear();
         batch._ops.addAll(_ops.skip(index).take(100));
         index += 100;
-        final r = await batch.execute(permission: permission);
+        final r = await batch.execute(accessControl: accessControl);
         resp.addAll(r.results);
         if (!continueOnError && !r.isSuccess) {
           final err = {'statusCode': HttpStatusCode.failedDependency};

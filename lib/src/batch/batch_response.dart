@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import '../_internal/_linq_extensions.dart';
+import '../_internal/_extensions.dart';
 import '../base_document.dart';
 import '../client/_context.dart';
 import 'batch_operation.dart';

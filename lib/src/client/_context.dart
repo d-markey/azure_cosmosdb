@@ -1,8 +1,11 @@
-import 'package:azure_cosmosdb/azure_cosmosdb.dart';
-
+import '../../version.dart';
 import '../_internal/_http_header.dart';
-
-const version = '2.2.2';
+import '../access_control/cosmos_db_access_control.dart';
+import '../base_document.dart';
+import '../cosmos_db_exceptions.dart';
+import '../cosmos_db_server.dart';
+import '../partition/partition_key.dart';
+import '../queries/paging.dart';
 
 class Context {
   Context({
@@ -12,8 +15,8 @@ class Context {
     this.throwOnNotFound = true,
     this.paging,
     this.partitionKey,
-    this.authorization,
-    this.onRefreshAuth,
+    this.accessControl,
+    this.refreshAccessControl,
     this.builder,
     this.builders = const {},
   }) {
@@ -27,8 +30,8 @@ class Context {
   final bool throwOnNotFound;
   final Paging? paging;
   final PartitionKey? partitionKey;
-  final CosmosDbAuthorization? authorization;
-  final AsyncCallback<CosmosDbAuthorization?>? onRefreshAuth;
+  final CosmosDbAccessControl? accessControl;
+  final AccessControlAsyncCallback? refreshAccessControl;
   final DocumentBuilder? builder;
   final Map<Type, DocumentBuilder> builders;
 
@@ -54,7 +57,7 @@ class Context {
     Map<String, String>? headers,
     List<String>? removeHeaders,
     DocumentBuilder? builder,
-    CosmosDbAuthorization? authorization,
+    CosmosDbAccessControl? accessControl,
   }) {
     final copy = Context(
       type: type,
@@ -62,8 +65,8 @@ class Context {
       builder: builder ?? this.builder,
       paging: paging ?? this.paging,
       partitionKey: partitionKey ?? this.partitionKey,
-      authorization: authorization ?? this.authorization,
-      onRefreshAuth: onRefreshAuth,
+      accessControl: accessControl ?? this.accessControl,
+      refreshAccessControl: refreshAccessControl,
     );
     if (_headers != null) {
       (copy._headers ??= {}).addAll(_headers!);

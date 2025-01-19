@@ -1,4 +1,4 @@
-import '../_internal/_linq_extensions.dart';
+import '../_internal/_extensions.dart';
 import '../indexing/data_type.dart';
 import '../indexing/geospatial_config.dart';
 import 'point.dart';

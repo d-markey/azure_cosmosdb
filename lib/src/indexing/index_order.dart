@@ -1,4 +1,4 @@
-import '../_internal/_linq_extensions.dart';
+import '../_internal/_extensions.dart';
 
 /// Constants for index ordering.
 class IndexOrder {

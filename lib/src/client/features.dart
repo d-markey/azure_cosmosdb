@@ -1,5 +1,4 @@
-const currentApiVersion = '2018-12-31';
-const previewApiVersion = '2020-07-15';
+import '_cosmosdb_api_versions.dart';
 
 /// Class representing the features supported by a Cosmos DB client.
 class Features {
@@ -10,13 +9,13 @@ class Features {
 
   static const _default = Features._('', hierarchicalPartitioning: false);
 
-  /// Features for the current version (see [currentApiVersion]).
+  /// Features for the current version (see [cosmosdb_2018_12_31]).
   static const current =
-      Features._(currentApiVersion, hierarchicalPartitioning: false);
+      Features._(cosmosdb_2018_12_31, hierarchicalPartitioning: false);
 
-  /// Features for the preview version (see [previewApiVersion]).
+  /// Features for the preview version (see [cosmosdb_2020_07_15]).
   static const preview =
-      Features._(previewApiVersion, hierarchicalPartitioning: true);
+      Features._(cosmosdb_2020_07_15, hierarchicalPartitioning: true);
 
   static const _features = [_default, current, preview];
 

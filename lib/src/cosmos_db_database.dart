@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 
-import 'authorizations/cosmos_db_authorization.dart';
-import 'authorizations/cosmos_db_permission.dart';
-import 'authorizations/cosmos_db_users.dart';
+import '_internal/_extensions.dart';
+import 'access_control/cosmos_db_access_control.dart';
+import 'access_control/cosmos_db_users.dart';
 import 'base_document.dart';
 import 'client/_client.dart';
 import 'client/_context.dart';
@@ -11,7 +11,7 @@ import 'cosmos_db_server.dart';
 
 /// Class representing a CosmosDB database.
 class CosmosDbDatabase extends BaseDocument {
-  CosmosDbDatabase(this.server, this.id) : url = 'dbs/$id';
+  CosmosDbDatabase(this.server, this.id) : url = buildUrl('', 'dbs', id);
 
   /// The [server] hosting this database.
   final CosmosDbServer server;
@@ -31,15 +31,12 @@ class CosmosDbDatabase extends BaseDocument {
   Map<String, dynamic> toJson() => {'id': id};
 
   /// Gets information for this [CosmosDbDatabase].
-  Future<dynamic> getInfo(
-          {CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+  Future<dynamic> getInfo({CosmosDbAccessControl? accessControl}) =>
       client.rawGet(
           url,
           Context(
             type: 'dbs',
-            authorization:
-                CosmosDbAuthorization.from(authorization, permission),
+            accessControl: accessControl,
           ));
 
   /// Provides access to containers in this [CosmosDbDatabase].

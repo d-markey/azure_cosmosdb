@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-import '../authorizations/cosmos_db_authorization.dart';
+import '../access_control/cosmos_db_access_control.dart';
 import '_http_header.dart';
 import '_http_methods.dart';
 
@@ -23,11 +23,10 @@ class HttpCall {
 
   final String version;
 
-  http.Request getRequest(String root, CosmosDbAuthorization authorization) {
+  http.Request getRequest(String root, CosmosDbAccessControl accessControl) {
     final request = http.Request(method.name, Uri.parse(root + uri));
-    request.headers[HttpHeader.authorization] = authorization.token;
-    request.headers[HttpHeader.msDate] = authorization.date;
     request.headers[HttpHeader.msVersion] = version;
+    accessControl.authorize(request);
     return request;
   }
 }

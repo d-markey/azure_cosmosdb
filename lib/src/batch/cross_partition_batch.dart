@@ -1,5 +1,5 @@
-import '../_internal/_linq_extensions.dart';
-import '../authorizations/cosmos_db_permission.dart';
+import '../_internal/_extensions.dart';
+import '../access_control/cosmos_db_access_control.dart';
 import '../cosmos_db_container.dart';
 import '../cosmos_db_exceptions.dart';
 import '../partition/partition_key.dart';
@@ -69,13 +69,14 @@ class CrossPartitionBatch extends Batch {
   /// Executes the [BatchOperation]s registered in this batch instance. Operations are grouped
   /// by partition keys and sent to Cosmos DB in chunks of 100 operations per partition key.
   @override
-  Future<BatchResponse> execute({CosmosDbPermission? permission}) async {
+  Future<BatchResponse> execute({CosmosDbAccessControl? accessControl}) async {
     var pending = 0;
     final futures = <Future>[];
     for (var batch in _opsByPk.values) {
       pending++;
-      futures.add(
-          batch.execute(permission: permission).whenComplete(() => pending--));
+      futures.add(batch
+          .execute(accessControl: accessControl)
+          .whenComplete(() => pending--));
       while (pending > 2) {
         // throttle
         await Future.delayed(const Duration(milliseconds: 10));

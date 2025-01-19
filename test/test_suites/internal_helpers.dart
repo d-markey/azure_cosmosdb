@@ -1,4 +1,4 @@
-import 'package:azure_cosmosdb/src/_internal/_linq_extensions.dart';
+import 'package:azure_cosmosdb/src/_internal/_extensions.dart';
 import 'package:test/test.dart';
 
 void main() async {

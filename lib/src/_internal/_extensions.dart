@@ -1,3 +1,16 @@
+String buildUrl(String baseUrl, String segment1,
+    [String? segment2, String? segment3, String? segment4, String? segment5]) {
+  baseUrl = baseUrl.trim();
+  if (baseUrl.isNotEmpty && !baseUrl.endsWith('/')) {
+    baseUrl += '/';
+  }
+  final path = [segment1, segment2, segment3, segment4, segment5]
+      .whereNotNull()
+      .map(Uri.encodeComponent)
+      .join('/');
+  return baseUrl.isEmpty ? path : '$baseUrl$path';
+}
+
 class LinqException implements Exception {
   LinqException(this.message);
 

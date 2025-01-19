@@ -1,5 +1,5 @@
-import 'authorizations/cosmos_db_authorization.dart';
-import 'authorizations/cosmos_db_permission.dart';
+import '_internal/_extensions.dart';
+import 'access_control/cosmos_db_access_control.dart';
 import 'client/_context.dart';
 import 'cosmos_db_container.dart';
 import 'cosmos_db_database.dart';
@@ -31,8 +31,7 @@ class CosmosDbContainers {
 
   /// Lists all containers from this [database].
   Future<Iterable<CosmosDbContainer>> list(
-          {CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          {CosmosDbAccessControl? accessControl}) =>
       database.client.getMany<CosmosDbContainer>(
         url,
         'DocumentCollections',
@@ -40,7 +39,7 @@ class CosmosDbContainers {
           type: 'colls',
           resId: database.url,
           builder: fromJson,
-          authorization: CosmosDbAuthorization.from(authorization, permission),
+          accessControl: accessControl,
         ),
       );
 
@@ -51,15 +50,14 @@ class CosmosDbContainers {
   /// be set to `false`.
   Future<bool> delete(CosmosDbContainer container,
           {bool throwOnNotFound = false,
-          CosmosDbPermission? permission,
-          CosmosDbAuthorization? authorization}) =>
+          CosmosDbAccessControl? accessControl}) =>
       database.client
           .delete(
-        '$url/${container.id}',
+        buildUrl(url, container.id),
         Context(
           type: 'colls',
           throwOnNotFound: throwOnNotFound,
-          authorization: CosmosDbAuthorization.from(authorization, permission),
+          accessControl: accessControl,
         ),
       )
           .then((value) {
@@ -73,8 +71,7 @@ class CosmosDbContainers {
     required PartitionKeySpec partitionKey,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
-    CosmosDbPermission? permission,
-    CosmosDbAuthorization? authorization,
+    CosmosDbAccessControl? accessControl,
     CosmosDbThroughput? throughput,
   }) =>
       database.client.post<CosmosDbContainer>(
@@ -90,7 +87,7 @@ class CosmosDbContainers {
           type: 'colls',
           resId: database.url,
           headers: (throughput ?? CosmosDbThroughput.minimum).header,
-          authorization: CosmosDbAuthorization.from(authorization, permission),
+          accessControl: accessControl,
           builder: fromJson,
         ),
       );
@@ -98,13 +95,9 @@ class CosmosDbContainers {
   /// Opens an existing [CosmosDbContainer] with id [name].
   Future<CosmosDbContainer> open(
     String name, {
-    CosmosDbPermission? permission,
-    CosmosDbAuthorization? authorization,
+    CosmosDbAccessControl? accessControl,
   }) =>
-      CosmosDbContainer(database, name).getInfo(
-        permission: permission,
-        authorization: authorization,
-      );
+      CosmosDbContainer(database, name).getInfo(accessControl: accessControl);
 
   /// Opens or creates a [CosmosDbContainer] with id [name].
   Future<CosmosDbContainer> openOrCreate(
@@ -113,14 +106,12 @@ class CosmosDbContainers {
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
     CosmosDbThroughput? throughput,
-    CosmosDbPermission? permission,
-    CosmosDbAuthorization? authorization,
+    CosmosDbAccessControl? accessControl,
   }) async {
     try {
       return await open(
         name,
-        permission: permission,
-        authorization: authorization,
+        accessControl: accessControl,
       );
     } on NotFoundException {
       if (partitionKey == null) {
@@ -133,8 +124,7 @@ class CosmosDbContainers {
         indexingPolicy: indexingPolicy,
         geospatialConfig: geospatialConfig,
         throughput: throughput,
-        permission: permission,
-        authorization: authorization,
+        accessControl: accessControl,
       );
     }
   }

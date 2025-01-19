@@ -1,5 +1,5 @@
 import 'package:azure_cosmosdb/azure_cosmosdb_debug.dart';
-import 'package:azure_cosmosdb/src/_internal/_linq_extensions.dart';
+import 'package:azure_cosmosdb/src/_internal/_extensions.dart';
 import 'package:test/test.dart';
 
 import '../classes/test_helpers.dart';

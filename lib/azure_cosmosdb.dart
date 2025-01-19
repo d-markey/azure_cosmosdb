@@ -1,15 +1,16 @@
 /// Azure CosmosDB SQL Rest API for Dart/Flutter.
+// ignore: unnecessary_library_name
 library azure_cosmosdb;
 
 export 'package:retry/retry.dart' show RetryOptions;
 
-export 'src/authorizations/cosmos_db_access_control.dart';
-export 'src/authorizations/cosmos_db_authorization.dart';
-export 'src/authorizations/cosmos_db_permission.dart';
-export 'src/authorizations/cosmos_db_permissions.dart';
-export 'src/authorizations/cosmos_db_user.dart';
-export 'src/authorizations/cosmos_db_users.dart' hide CosmosDbUsersInternalExt;
-export 'src/authorizations/permission_mode.dart';
+export 'src/access_control/cosmos_db_access_control.dart';
+export 'src/access_control/cosmos_db_authorization.dart';
+export 'src/access_control/cosmos_db_permission.dart';
+export 'src/access_control/cosmos_db_permissions.dart';
+export 'src/access_control/cosmos_db_user.dart';
+export 'src/access_control/cosmos_db_users.dart' hide CosmosDbUsersInternalExt;
+export 'src/access_control/permission_mode.dart';
 export 'src/base_document.dart' hide SpecialDocument;
 export 'src/batch/batch.dart';
 export 'src/batch/batch_operation.dart' hide BatchOperationInternalExt;

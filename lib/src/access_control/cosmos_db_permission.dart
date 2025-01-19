@@ -1,12 +1,16 @@
-import '../base_document.dart';
-import 'cosmos_db_access_control.dart';
-import 'permission_mode.dart';
+import 'package:http/http.dart' as http;
+
+import '../../azure_cosmosdb.dart';
+import '../_internal/_http_header.dart';
 
 /// Class representing a CosmosDB permission.
 class CosmosDbPermission extends BaseDocument
     with EtagMixin
     implements CosmosDbAccessControl {
   CosmosDbPermission(this.id, this.mode, this.resource, [this.token]);
+
+  CosmosDbPermission.fromToken(String token)
+      : this('', PermissionMode.opaque, '', token);
 
   @override
   final String id;
@@ -36,5 +40,16 @@ class CosmosDbPermission extends BaseDocument
         json['_token']);
     permission.setEtag(json);
     return permission;
+  }
+
+  @override
+  void authorize(http.Request request) {
+    if (token == null) {
+      throw CosmosDbException(
+        HttpStatusCode.invalidToken,
+        'Permission has no token',
+      );
+    }
+    request.headers[HttpHeader.authorization] = Uri.encodeComponent(token!);
   }
 }

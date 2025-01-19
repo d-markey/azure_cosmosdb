@@ -1,4 +1,4 @@
-import '../authorizations/cosmos_db_permission.dart';
+import '../access_control/cosmos_db_permission.dart';
 import '../base_document.dart';
 import '../client/http_status_codes.dart';
 import '../cosmos_db_container.dart';
@@ -87,5 +87,5 @@ abstract class Batch extends SpecialDocument {
           partitionKey: partitionKey ?? this.partitionKey));
 
   /// Executes the [BatchOperation]s registered in this batch instance.
-  Future<BatchResponse> execute({CosmosDbPermission? permission});
+  Future<BatchResponse> execute({CosmosDbPermission? accessControl});
 }

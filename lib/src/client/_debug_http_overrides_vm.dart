@@ -9,9 +9,12 @@ class LocalhostHttpOverrides extends HttpOverrides {
     return client;
   }
 
-  bool handleBadCertificate(X509Certificate cert, String host, int port) {
-    final ok =
-        host.toLowerCase().contains('localhost') || host.contains('127.0.0.1');
+  static bool handleBadCertificate(
+      X509Certificate cert, String host, int port) {
+    final ok = host.toLowerCase().contains('localhost') ||
+        host.contains('127.0.0.1') ||
+        host.contains('::1') ||
+        host.contains('0:0:0:0:0:0:0:1');
     log('Bad certificate from $host: ${ok ? 'bypass security' : 'enforce security'}');
     return ok;
   }

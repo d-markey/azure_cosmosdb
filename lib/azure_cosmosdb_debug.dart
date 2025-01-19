@@ -1,4 +1,5 @@
 /// Azure CosmosDB SQL Rest API for Dart/Flutter.
+// ignore: unnecessary_library_name
 library azure_cosmosdb_debug;
 
 export 'azure_cosmosdb.dart';

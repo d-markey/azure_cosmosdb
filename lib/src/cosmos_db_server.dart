@@ -2,15 +2,16 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:retry/retry.dart';
 
-import 'authorizations/cosmos_db_authorization.dart';
+import 'access_control/cosmos_db_access_control.dart';
 import 'client/_client.dart';
+import 'client/_cosmosdb_api_versions.dart';
 import 'client/debug_http_client.dart';
 import 'client/features.dart';
 import 'cosmos_db_databases.dart';
 
-typedef AsyncCallback<T> = Future<T> Function([
+typedef AccessControlAsyncCallback = Future<CosmosDbAccessControl?> Function([
   int? httpStatusCode,
-  CosmosDbAuthorization? auth,
+  CosmosDbAccessControl? accessControl,
 ]);
 
 /// Class representing a CosmosDB instance.
@@ -33,7 +34,7 @@ class CosmosDbServer {
           httpClient: httpClient,
           retryOptions: retryOptions,
           multipleWriteLocations: multipleWriteLocations,
-          version: preview ? previewApiVersion : currentApiVersion,
+          version: preview ? cosmosdb_2020_07_15 : cosmosdb_2018_12_31,
         );
 
   final Client _client;
@@ -45,11 +46,9 @@ class CosmosDbServer {
 
   Features get features => _client.features;
 
-  static String _buildUrl(String urlOrAccount) => !urlOrAccount.contains('://')
-      ? 'https://$urlOrAccount.documents.azure.com/'
-      : !urlOrAccount.endsWith('/')
-          ? '$urlOrAccount/'
-          : urlOrAccount;
+  static String _buildUrl(String urlOrAccount) => urlOrAccount.contains('://')
+      ? (urlOrAccount.endsWith('/') ? urlOrAccount : '$urlOrAccount/')
+      : 'https://$urlOrAccount.documents.azure.com/';
 }
 
 // debug use
