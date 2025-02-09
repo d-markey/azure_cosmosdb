@@ -1,3 +1,5 @@
+import '../base_document.dart';
+
 /// Class representing a bounding box for spatial indexing.
 class BoundingBox {
   BoundingBox(this.xmin, this.ymin, this.xmax, this.ymax);
@@ -15,7 +17,7 @@ class BoundingBox {
   final num ymax;
 
   /// Serializes this instance to a JSON object.
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'xmin': xmin,
         'ymin': ymin,
         'xmax': xmax,

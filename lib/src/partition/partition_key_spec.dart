@@ -24,15 +24,15 @@ class PartitionKeySpec {
 
   /// Partition key with a single property.
   factory PartitionKeySpec(String partitionKey) =>
-      PartitionKeySpec._v2('Hash', List.unmodifiable([partitionKey]));
+      PartitionKeySpec._v2(Hash, List.unmodifiable([partitionKey]));
 
   /// Partition key range with a single property.
   factory PartitionKeySpec.range(String partitionKey) =>
-      PartitionKeySpec._v2('Range', List.unmodifiable([partitionKey]));
+      PartitionKeySpec._v2(Range, List.unmodifiable([partitionKey]));
 
   /// Creates a partition for multiple keys.
   factory PartitionKeySpec.hierarchical(List<String> partitionKeys) =>
-      PartitionKeySpec._v2('MultiHash', List.unmodifiable(partitionKeys));
+      PartitionKeySpec._v2(MultiHash, List.unmodifiable(partitionKeys));
 
   /// Default partition key.
   static final id = PartitionKeySpec._(['/id'], 'Hash', 2);
@@ -47,7 +47,7 @@ class PartitionKeySpec {
   final int? version;
 
   /// Serializes this instance to a JSON object.
-  dynamic toJson() => {
+  JSonMessage toJson() => {
         'paths': paths,
         'kind': kind,
         if (version != null) 'version': version,
@@ -77,11 +77,13 @@ class PartitionKeySpec {
 
   /// Deserializes data from JSON object [json] into a new [PartitionKeySpec] instance.
   /// Handles fields `paths`, `kind`, `version`.
-  static PartitionKeySpec fromJson(dynamic json) => PartitionKeySpec._cached(
-        json['paths'].cast<String>(),
-        kind: json['kind'],
-        version: json['version'],
-      );
+  static PartitionKeySpec? fromJson(Map? json) => (json == null)
+      ? null
+      : PartitionKeySpec._cached(
+          (json['paths'] as List<dynamic>).cast<String>(),
+          kind: json['kind'],
+          version: json['version'],
+        );
 
   /// Extracts the [document]'s partition key according to this specification.
   PartitionKey? from(BaseDocument document) {
@@ -100,4 +102,11 @@ class PartitionKeySpec {
           .toList();
 
   static final _cache = <PartitionKeySpec>{id};
+
+  // ignore: constant_identifier_names
+  static const Hash = 'Hash';
+  // ignore: constant_identifier_names
+  static const Range = 'Range';
+  // ignore: constant_identifier_names
+  static const MultiHash = 'MultiHash';
 }

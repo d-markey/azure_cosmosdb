@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
 import '_internal/_http_call.dart';
+import 'base_document.dart';
 import 'client/http_status_codes.dart';
 
 abstract class InternalException implements Exception {
@@ -129,6 +131,80 @@ class BadRequestException extends CosmosDbException {
   @override
   BadRequestException _withContext(String method, String url) =>
       BadRequestException._(method, url, message);
+
+  static final _errorsPattern = RegExp(r'\s*\{\s*"Errors"\s*:\s*\[\s*"');
+  static final _errorPattern = RegExp(
+    r'Exception\s*=\s*([^\r\n]*)[\r\n]+Stack trace:\s*(.*)',
+    dotAll: true,
+  );
+  static final _traceDelimitor = RegExp(r'\s+at\s+');
+
+  static String _extractJson(String str) {
+    final len = str.length;
+    // str starts with '{'
+    var pos = 0, count = 0;
+    while (pos < len) {
+      var ch = str[pos++];
+      switch (ch) {
+        case '{':
+          count++;
+          break;
+        case '}':
+          count--;
+          if (count == 0) return str.substring(0, pos);
+          break;
+        case '"': // JSON only allows double-quotes
+          while (pos < len) {
+            ch = str[pos++];
+            if (ch == '"') break; // end of string --> done
+            if (ch == '\\') pos++; // escaped char --> skip
+          }
+          break;
+      }
+    }
+    return str;
+  }
+
+  SprocException? asSprocException() {
+    final match = _errorsPattern.firstMatch(message);
+    if (match == null) return null;
+    try {
+      final json = _extractJson(message.substring(match.start).trim());
+      final jsonErrors = (jsonDecode(json) as JSonMessage)['Errors'] as List;
+      final errors = <JsError>[];
+      for (var err in jsonErrors) {
+        final match = _errorPattern.firstMatch(err);
+        if (match != null) {
+          final msg = (match.group(1) ?? '').trim();
+          final st = (match.group(2) ?? '').split(_traceDelimitor);
+          if (st.first == msg) st.removeAt(0);
+          errors.add(JsError(msg, st));
+        }
+      }
+      return SprocException.from(this, errors);
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
+class JsError {
+  JsError(this.message, this.stackTrace);
+
+  final String message;
+  final List<String> stackTrace;
+}
+
+class SprocException extends BadRequestException {
+  SprocException._(String method, String url, String message, this.errors)
+      : super._(method, url, message);
+
+  SprocException(List<JsError> errors) : this._('', '', '', errors);
+
+  SprocException.from(BadRequestException ex, List<JsError> errors)
+      : this._(ex.method, ex.url, ex.message, errors);
+
+  final List<JsError> errors;
 }
 
 class UnknownDocumentTypeException extends ContextualizedException {

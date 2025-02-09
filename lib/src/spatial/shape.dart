@@ -1,3 +1,4 @@
+import '../base_document.dart';
 import '../cosmos_db_exceptions.dart';
 import '../indexing/data_type.dart';
 import '../indexing/geospatial_config.dart';
@@ -50,10 +51,10 @@ abstract class Shape {
   DataType get type;
 
   /// Serializes this instance to a JSON object (GeoJson).
-  Map<String, dynamic> toJson() => toGeoJson();
+  JSonMessage toJson() => toGeoJson();
 
   /// Serializes to GeoJSON.
-  Map<String, dynamic> toGeoJson() => {
+  JSonMessage toGeoJson() => {
         'type': type.name,
         'coordinates': coordinates,
       };

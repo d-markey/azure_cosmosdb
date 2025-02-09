@@ -1,6 +1,7 @@
 import '_internal/_extensions.dart';
 import 'access_control/cosmos_db_access_control.dart';
 import 'client/_context.dart';
+import 'conflicts/conflict_resolution_policy.dart';
 import 'cosmos_db_container.dart';
 import 'cosmos_db_database.dart';
 import 'cosmos_db_exceptions.dart';
@@ -21,13 +22,16 @@ class CosmosDbContainers {
 
   /// Deserialize data from JSON object [json] into a new [CosmosDbContainer] instance.
   /// Handles fields `id`, `partitionKey`, `indexingPolicy`.
-  CosmosDbContainer fromJson(Map json) {
-    final coll = CosmosDbContainer(database, json['id'],
+  CosmosDbContainer fromJson(Map json) => CosmosDbContainer(
+        database,
+        json['id'],
         partitionKeySpec: PartitionKeySpec.fromJson(json['partitionKey']),
-        indexingPolicy: IndexingPolicy.fromJson(json['indexingPolicy']));
-    coll.setExists(true);
-    return coll;
-  }
+        indexingPolicy: IndexingPolicy.fromJson(json['indexingPolicy']),
+        conflictResolutionPolicy:
+            ConflictResolutionPolicy.fromJson(json['conflictResolutionPolicy']),
+        defaultTtl: json['defaultTtl'],
+        analyticalStorageTtl: json['analyticalStorageTtl'],
+      )..setExists(true);
 
   /// Lists all containers from this [database].
   Future<Iterable<CosmosDbContainer>> list(
@@ -71,6 +75,8 @@ class CosmosDbContainers {
     required PartitionKeySpec partitionKey,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
+    int? defaultTtl,
+    int? analyticalStorageTtl,
     CosmosDbAccessControl? accessControl,
     CosmosDbThroughput? throughput,
   }) =>
@@ -82,6 +88,8 @@ class CosmosDbContainers {
           partitionKeySpec: partitionKey,
           indexingPolicy: indexingPolicy,
           geospatialConfig: geospatialConfig,
+          defaultTtl: defaultTtl,
+          analyticalStorageTtl: analyticalStorageTtl,
         ),
         Context(
           type: 'colls',
@@ -105,6 +113,8 @@ class CosmosDbContainers {
     PartitionKeySpec? partitionKey,
     IndexingPolicy? indexingPolicy,
     GeospatialConfig? geospatialConfig,
+    int? defaultTtl,
+    int? analyticalStorageTtl,
     CosmosDbThroughput? throughput,
     CosmosDbAccessControl? accessControl,
   }) async {
@@ -123,6 +133,8 @@ class CosmosDbContainers {
         partitionKey: partitionKey,
         indexingPolicy: indexingPolicy,
         geospatialConfig: geospatialConfig,
+        defaultTtl: defaultTtl,
+        analyticalStorageTtl: analyticalStorageTtl,
         throughput: throughput,
         accessControl: accessControl,
       );

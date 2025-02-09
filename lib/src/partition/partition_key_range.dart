@@ -13,7 +13,7 @@ class PartitionKeyRange extends BaseDocumentWithEtag {
   final String maxExclusive;
 
   @override
-  dynamic toJson() => null;
+  JSonMessage toJson() => const {};
 
   /// Returns `true` is this partition key range contains the specified [hash].
   bool contains(PartitionKeyHashV2 hash) =>

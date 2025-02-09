@@ -47,7 +47,10 @@ extension BatchResponseInternalExt on BatchResponse {
   }
 
   static BatchResponse build(
-      List json, Iterable<BatchOperation> operations, Context context) {
+    List<dynamic> json,
+    Iterable<BatchOperation> operations,
+    Context context,
+  ) {
     final resp = BatchResponse();
     var index = 0;
     for (var op in operations) {

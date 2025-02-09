@@ -19,6 +19,14 @@ abstract class HttpHeader {
   static const msAllowTentativeWrites = 'x-ms-cosmos-allow-tentative-writes';
   static const msDocumentDbExpirySeconds = 'x-ms-documentdb-expiry-seconds';
   static const msDocumentDbIsUpsert = 'x-ms-documentdb-is-upsert';
+  static const msDocumentPreTriggerInclude =
+      'x-ms-documentdb-pre-trigger-include';
+  static const msDocumentPreTriggerExclude =
+      'x-ms-documentdb-pre-trigger-exclude';
+  static const msDocumentPostTriggerInclude =
+      'x-ms-documentdb-post-trigger-include';
+  static const msDocumentPostTriggerExclude =
+      'x-ms-documentdb-post-trigger-exclude';
   static const msDocumentDbIsQuery = 'x-ms-documentdb-isquery';
   static const msDocumentDbPartitionKey = 'x-ms-documentdb-partitionkey';
   static const msDocumentDbPartitionKeyRangeId =

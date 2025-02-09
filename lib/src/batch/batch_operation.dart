@@ -26,7 +26,7 @@ abstract class BatchOperation {
   BatchOperationType get type;
 
   /// Serializes this instance to a JSON object.
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'operationType': type.name,
         'partitionKey': jsonEncode(partitionKey?.values),
       };
@@ -89,7 +89,7 @@ abstract class BatchOperationOnItem<T extends BaseDocument>
       super.partitionKey ?? _partitionKeySpec?.from(item);
 
   @override
-  Map<String, dynamic> toJson() => super.toJson()
+  JSonMessage toJson() => super.toJson()
     ..addAll({
       'id': item.id,
       'resourceBody': item.toJson(),

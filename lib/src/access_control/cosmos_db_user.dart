@@ -8,7 +8,7 @@ class CosmosDbUser extends BaseDocument with EtagMixin {
   final String id;
 
   @override
-  Map<String, dynamic> toJson() => {'id': id};
+  JSonMessage toJson() => {'id': id};
 
   /// Builds a [CosmosDbUser] from a CosmosDB JSON object.
   static CosmosDbUser build(Map json) {

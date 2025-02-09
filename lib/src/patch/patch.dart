@@ -7,7 +7,7 @@ import 'patch_operation.dart';
 class Patch extends SpecialDocument {
   String? _condition;
   final _ops = <PatchOperation>[];
-  Map<String, dynamic>? _parameters;
+  JSonMessage? _parameters;
 
   /// Sets the [condition] to decide whether this patch should be applied to
   /// the target document.
@@ -87,7 +87,7 @@ class Patch extends SpecialDocument {
   void remove(String path) => _ops.add(PatchOperation.remove(path));
 
   @override
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         if (_condition != null) 'condition': _getCondition(),
         'operations': _ops.map((o) => o.toJson()).toList(),
       };

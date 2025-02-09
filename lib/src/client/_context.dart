@@ -1,4 +1,3 @@
-import '../../version.dart';
 import '../_internal/_http_header.dart';
 import '../access_control/cosmos_db_access_control.dart';
 import '../base_document.dart';
@@ -11,6 +10,7 @@ class Context {
   Context({
     required this.type,
     this.resId,
+    this.version,
     Map<String, String>? headers,
     this.throwOnNotFound = true,
     this.paging,
@@ -27,6 +27,7 @@ class Context {
 
   final String type;
   final String? resId;
+  final String? version;
   final bool throwOnNotFound;
   final Paging? paging;
   final PartitionKey? partitionKey;
@@ -39,19 +40,30 @@ class Context {
 
   DocumentBuilder<T> getBuilder<T extends BaseDocument>() {
     final builder = this.builder ?? builders[T];
-    if (builder == null) throw UnknownDocumentTypeException(T);
-    return (data) {
-      try {
-        return builder(data) as T;
-      } catch (ex) {
-        throw BadResponseException(ex.toString());
-      }
-    };
+    if (builder == null) {
+      if (T == Document) return Document.fromJson as DocumentBuilder<T>;
+      throw UnknownDocumentTypeException(T);
+    }
+    return _wrap<T>(builder);
   }
+
+  static DocumentBuilder<T> _wrap<T extends BaseDocument>(
+    DocumentBuilder builder,
+  ) =>
+      (builder is DocumentBuilder<T>)
+          ? builder
+          : ((data) {
+              try {
+                return builder(data) as T;
+              } catch (ex) {
+                throw BadResponseException(ex.toString());
+              }
+            });
 
   void addHeader(String name, String value) => (_headers ??= {})[name] = value;
 
   Context copyWith({
+    String? version,
     Paging? paging,
     PartitionKey? partitionKey,
     Map<String, String>? headers,
@@ -62,6 +74,7 @@ class Context {
     final copy = Context(
       type: type,
       resId: resId,
+      version: version ?? this.version,
       builder: builder ?? this.builder,
       paging: paging ?? this.paging,
       partitionKey: partitionKey ?? this.partitionKey,

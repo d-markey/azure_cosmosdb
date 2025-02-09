@@ -17,7 +17,7 @@ class BatchOperationRead<T extends BaseDocument>
   final String id;
 
   @override
-  Map<String, dynamic> toJson() => super.toJson()
+  JSonMessage toJson() => super.toJson()
     ..addAll({
       'id': id,
     });

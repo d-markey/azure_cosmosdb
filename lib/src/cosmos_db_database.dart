@@ -28,7 +28,7 @@ class CosmosDbDatabase extends BaseDocument {
   final String id;
 
   @override
-  Map<String, dynamic> toJson() => {'id': id};
+  JSonMessage toJson() => {'id': id};
 
   /// Gets information for this [CosmosDbDatabase].
   Future<dynamic> getInfo({CosmosDbAccessControl? accessControl}) =>

@@ -1,6 +1,6 @@
 name: azure_cosmosdb
 description: Connector for Azure Cosmos DB on Dart and Flutter platforms. Supports Cosmos DB SQL API, indexing policies, users, permissions, and spatial types.
-version: 2.3.1
+version: 3.0.0
 homepage: https://pub.dev/packages/azure_cosmosdb
 repository: https://www.github.com/d-markey/azure_cosmosdb
 
@@ -16,4 +16,4 @@ dependencies:
 
 dev_dependencies:
   lints:
-  test: ^1.22.2
+  test: ^1.25.14

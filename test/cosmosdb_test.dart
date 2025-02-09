@@ -17,6 +17,9 @@ import 'test_suites/internal_helpers.dart' as internal_tests;
 import 'test_suites/partition_keys.dart' as pk_tests;
 import 'test_suites/path_parser.dart' as path_parser_tests;
 import 'test_suites/permission_management.dart' as permission_tests;
+import 'test_suites/stored_procedures.dart' as sprocs_tests;
+import 'test_suites/triggers.dart' as triggers_tests;
+import 'test_suites/user_defined_functions.dart' as udfs_tests;
 import 'test_suites/user_management.dart' as user_tests;
 
 void main() async {
@@ -63,6 +66,12 @@ void runCosmosDbTests(CosmosDbServer? cosmosDb) {
     group('DOCUMENT QUERIES -', () => query_tests.run(cosmosDb));
 
     group('DOCUMENT BATCHES -', () => batch_tests.run(cosmosDb));
+
+    group('STORED PROCEDURES -', () => sprocs_tests.run(cosmosDb));
+
+    group('USER DEFINED FUNCTIONS -', () => udfs_tests.run(cosmosDb));
+
+    group('TRIGGERS -', () => triggers_tests.run(cosmosDb));
 
     test('LOGGER - Reset logger', () {
       expect(cosmosDb.dbgHttpClient, isNotNull);

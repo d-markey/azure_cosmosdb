@@ -1,3 +1,4 @@
+import '../base_document.dart';
 import 'bounding_box.dart';
 import 'data_type.dart';
 
@@ -16,7 +17,7 @@ class SpatialIndexPath {
   final BoundingBox? boundingBox;
 
   /// Serializes this instance to a JSON object.
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'path': path,
         'types': (types ?? DataType.spatial).map((t) => t.name).toList(),
         if (boundingBox != null) 'boundingBox': boundingBox!.toJson(),
@@ -26,7 +27,7 @@ class SpatialIndexPath {
   /// Handles fields `path`, `types`, `boundingBox`.
   static SpatialIndexPath fromJson(Map json) {
     final path = json['path'];
-    final types = json['types'] as List?;
+    final types = json['types'] as List<dynamic>?;
     final bbox = json['boundingBox'];
     return SpatialIndexPath(
       path,

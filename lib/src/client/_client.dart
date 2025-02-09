@@ -33,13 +33,10 @@ class Client {
     required this.version,
   })  : httpClient = httpClient ?? http.Client(),
         _retry = retryOptions ?? RetryOptions(),
-        features = Features.getFeatures(version) {
-    if (masterKey != null) {
-      _key = crypto.Hmac(crypto.sha256, base64Decode(masterKey));
-    } else {
-      _key = null;
-    }
-  }
+        features = Features.getFeatures(version),
+        _key = (masterKey == null)
+            ? null
+            : crypto.Hmac(crypto.sha256, base64Decode(masterKey));
 
   final String version;
   final Features features;
@@ -48,35 +45,30 @@ class Client {
   final bool multipleWriteLocations;
   final RetryOptions _retry;
 
-  late final crypto.Hmac? _key;
-  late final http.Client httpClient;
+  final crypto.Hmac? _key;
+  final http.Client httpClient;
 
-  T? _build<T extends BaseDocument>(Context context, Map? item) {
-    if (item == null) {
-      return null;
-    }
-    final builder = context.getBuilder<T>();
-    return builder(item);
-  }
+  T? _build<T extends BaseDocument>(Context context, JSonMessage? item) =>
+      (item == null) ? null : context.getBuilder<T>()(item);
 
-  Iterable<T> _buildMany<T extends BaseDocument>(Context context, List? items) {
-    if (items == null) {
-      return const [];
-    }
+  Iterable<T> _buildMany<T extends BaseDocument>(
+    Context context,
+    List<dynamic>? items,
+  ) {
+    if (items == null) return [];
     final builder = context.getBuilder<T>();
     return items.map((item) => builder(item));
   }
 
   Future<http.StreamedResponse> _sendWithAuth(
     HttpCall call,
-    BaseDocument? document,
+    CosmosDbDocument? document,
     Context context,
     CosmosDbAccessControl accessControl,
   ) {
     return _retry.retry(
       () {
         final request = call.getRequest(_url, accessControl);
-
         if (document != null) {
           request.headers.addAll(HttpHeader.jsonPayload);
           request.body = jsonEncode(document);
@@ -84,7 +76,6 @@ class Client {
         if (multipleWriteLocations && !call.method.isReadOnly) {
           request.headers.addAll(HttpHeader.allowTentativeWrites);
         }
-
         request.headers.addAll(context.getHeaders());
         return httpClient.send(request).timeout(Duration(seconds: 5));
       },
@@ -94,11 +85,10 @@ class Client {
 
   Future<dynamic> _send(
     HttpCall call,
-    BaseDocument? document,
+    CosmosDbDocument? document,
     Context context,
   ) async {
     String resId = context.resId ?? call.uri;
-
     final accessControl = context.accessControl ??
         CosmosDbAuthorization.fromKey(
           _key,
@@ -106,9 +96,7 @@ class Client {
           context.type,
           resId,
         );
-
     var result = await _sendWithAuth(call, document, context, accessControl);
-
     switch (result.statusCode) {
       case HttpStatusCode.unauthorized:
       case HttpStatusCode.invalidToken:
@@ -158,9 +146,7 @@ class Client {
           ? '${result.reasonPhrase}: ${data['message']}'
           : result.reasonPhrase;
       final ex = CosmosDbException(result.statusCode, message);
-      if (ex is! NotFoundException || context.throwOnNotFound) {
-        throw ex;
-      }
+      if (ex is! NotFoundException || context.throwOnNotFound) throw ex;
       // set data to null when ignoring the error
       data = null;
     }
@@ -171,29 +157,42 @@ class Client {
     return data;
   }
 
-  Future<dynamic> rawGet(String path, Context context) {
-    final call = HttpCall.get(path, version);
+  Future<dynamic> rawGet(
+    String path,
+    Context context,
+  ) {
+    final call = HttpCall.get(path, context.version ?? version);
     return _send(call, null, context).rethrowContextualizedException(call);
   }
 
-  Future<T?> get<T extends BaseDocument>(String path, Context context) {
-    final call = HttpCall.get(path, version);
+  Future<T?> get<T extends BaseDocument>(
+    String path,
+    Context context,
+  ) {
+    final call = HttpCall.get(path, context.version ?? version);
     return _send(call, null, context)
         .then((data) => _build<T>(context, data))
         .rethrowContextualizedException(call);
   }
 
   Future<Iterable<T>> getMany<T extends BaseDocument>(
-      String path, String resultSet, Context context) {
-    final call = HttpCall.get(path, version);
+    String path,
+    String resultSet,
+    Context context,
+  ) {
+    final call = HttpCall.get(path, context.version ?? version);
     return _send(call, null, context)
         .then((result) => _buildMany<T>(context, result![resultSet]))
         .rethrowContextualizedException(call);
   }
 
   Future<Iterable<T>> query<T extends BaseDocument>(
-      String path, Query query, String resultSet, Context context) {
-    final call = HttpCall.post(path, version);
+    String path,
+    Query query,
+    String resultSet,
+    Context context,
+  ) {
+    final call = HttpCall.post(path, context.version ?? version);
     return _send(
             call,
             query,
@@ -207,8 +206,12 @@ class Client {
   }
 
   Future<dynamic> rawQuery(
-      String path, Query query, String resultSet, Context context) {
-    final call = HttpCall.post(path, version);
+    String path,
+    Query query,
+    String resultSet,
+    Context context,
+  ) {
+    final call = HttpCall.post(path, context.version ?? version);
     return _send(
         call,
         query,
@@ -219,75 +222,109 @@ class Client {
         )).rethrowContextualizedException(call);
   }
 
-  Future<BatchResponse> batch(String path, TransactionalBatch batch,
-      List<PartitionKeyRange> pkRanges, Context context) async {
-    if (batch.operations.isEmpty) {
-      return BatchResponse();
-    } else {
-      final call = HttpCall.post(path, version);
-      final response = await _send(
-              call,
-              batch,
-              context.copyWith(
-                headers: batch.getHeaders(pkRanges),
-              ))
-          .then((data) =>
-              BatchResponseInternalExt.build(data, batch.operations, context))
-          .rethrowContextualizedException(call);
-      // check results, some operations may require a replay
-      List<BatchOperation>? retryOps;
-      int? retryAfterMs;
-      for (var r in response.results) {
-        var retry = r.retryAfterMs ?? 0;
-        if (retry > 0) {
-          retryOps ??= <BatchOperation>[];
-          retryOps.add(r.operation);
-          if (retryAfterMs == null || retry > retryAfterMs) {
-            retryAfterMs = retry;
-          }
+  Future<BatchResponse> batch(
+    String path,
+    TransactionalBatch batch,
+    List<PartitionKeyRange> pkRanges,
+    Context context,
+  ) async {
+    if (batch.operations.isEmpty) return BatchResponse();
+
+    final call = HttpCall.post(path, context.version ?? version);
+    final response = await _send(
+            call,
+            batch,
+            context.copyWith(
+              headers: batch.getHeaders(pkRanges),
+            ))
+        .then((data) =>
+            BatchResponseInternalExt.build(data, batch.operations, context))
+        .rethrowContextualizedException(call);
+    // check results, some operations may require a replay
+    List<BatchOperation>? retryOps;
+    int? retryAfterMs;
+    for (var r in response.results) {
+      var retry = r.retryAfterMs ?? 0;
+      if (retry > 0) {
+        retryOps ??= <BatchOperation>[];
+        retryOps.add(r.operation);
+        if (retryAfterMs == null || retry > retryAfterMs) {
+          retryAfterMs = retry;
         }
       }
-      if (retryOps != null) {
-        // re-run operations
-        await Future.delayed(Duration(milliseconds: retryAfterMs!));
-        final replay = batch.clone();
-        for (var op in retryOps) {
-          op.clearResult();
-          replay.add(op);
-        }
-        final newResults = await this.batch(path, replay, pkRanges, context);
-        response.update(newResults);
-      }
-      return response;
     }
+    if (retryOps != null) {
+      // re-run operations
+      await Future.delayed(Duration(milliseconds: retryAfterMs!));
+      final replay = batch.clone();
+      for (var op in retryOps) {
+        op.clearResult();
+        replay.add(op);
+      }
+      final newResults = await this.batch(path, replay, pkRanges, context);
+      response.update(newResults);
+    }
+    return response;
   }
 
   Future<T> post<T extends BaseDocument>(
-      String path, BaseDocument doc, Context context) {
-    final call = HttpCall.post(path, version);
+    String path,
+    CosmosDbDocument doc,
+    Context context,
+  ) {
+    final call = HttpCall.post(path, context.version ?? version);
     return _send(call, doc, context)
         .then((data) => _build<T>(context, data)!)
         .rethrowContextualizedException(call);
   }
 
+  Future<Iterable<T>> postMany<T extends BaseDocument>(
+    String path,
+    CosmosDbDocument doc,
+    Context context,
+  ) {
+    final call = HttpCall.post(path, context.version ?? version);
+    return _send(call, doc, context)
+        .then((data) => _buildMany<T>(context, data))
+        .rethrowContextualizedException(call);
+  }
+
+  Future<dynamic> rawPost(
+    String path,
+    CosmosDbDocument doc,
+    Context context,
+  ) {
+    final call = HttpCall.post(path, context.version ?? version);
+    return _send(call, doc, context).rethrowContextualizedException(call);
+  }
+
   Future<T> patch<T extends BaseDocument>(
-      String path, BaseDocument doc, Context context) {
-    final call = HttpCall.patch(path, version);
+    String path,
+    CosmosDbDocument doc,
+    Context context,
+  ) {
+    final call = HttpCall.patch(path, context.version ?? version);
     return _send(call, doc, context.copyWith(headers: HttpHeader.patchPayload))
         .then((data) => _build<T>(context, data)!)
         .rethrowContextualizedException(call);
   }
 
   Future<T> put<T extends BaseDocument>(
-      String path, BaseDocument doc, Context context) {
-    final call = HttpCall.put(path, version);
+    String path,
+    CosmosDbDocument doc,
+    Context context,
+  ) {
+    final call = HttpCall.put(path, context.version ?? version);
     return _send(call, doc, context)
         .then((data) => _build<T>(context, data)!)
         .rethrowContextualizedException(call);
   }
 
-  Future<bool> delete(String path, Context context) {
-    final call = HttpCall.delete(path, version);
+  Future<bool> delete(
+    String path,
+    Context context,
+  ) {
+    final call = HttpCall.delete(path, context.version ?? version);
     return _send(call, null, context)
         .then((result) => true)
         .rethrowContextualizedException(call);

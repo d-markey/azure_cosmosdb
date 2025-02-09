@@ -1,3 +1,4 @@
+import '../base_document.dart';
 import 'index_path.dart';
 import 'indexing_mode.dart';
 import 'spatial_index_path.dart';
@@ -28,7 +29,7 @@ class IndexingPolicy {
   final spatialIndexes = <SpatialIndexPath>[];
 
   /// Serializes this instance to a JSON object.
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'indexingMode': indexingMode.name,
         'automatic': automatic,
         if (includedPaths.isNotEmpty)
@@ -48,7 +49,8 @@ class IndexingPolicy {
   /// Deserializes data from JSON object [json] into a new [IndexingPolicy] instance.
   /// Handles fields `indexingMode`, `includedPaths`, `excludedPaths`, `spatialIndexes`,
   /// `compositeIndexes`.
-  static IndexingPolicy fromJson(Map json) {
+  static IndexingPolicy? fromJson(Map? json) {
+    if (json == null) return null;
     final mode = IndexingMode.tryParse(json['indexingMode']);
     final automatic = json['automatic'] as bool;
     final policy = IndexingPolicy(indexingMode: mode!, automatic: automatic);
@@ -72,13 +74,11 @@ class IndexingPolicy {
     }
     item = json['compositeIndexes'];
     if (item != null) {
-      for (List composite in item) {
+      for (List<dynamic> composite in item) {
         try {
           policy.compositeIndexes
               .add(composite.map((i) => IndexPath.fromJson(i)).toList());
-        } catch (ex, st) {
-          print(ex);
-          print(st);
+        } catch (ex) {
           rethrow;
         }
       }

@@ -13,7 +13,6 @@ void main() async {
 
 void run(CosmosDbServer cosmosDB) {
   final unexistingContainer = 'not_found';
-  final newContainer = getTempName('test');
 
   late CosmosDbDatabase database;
   late CosmosDbDatabase database_20000RU;
@@ -185,11 +184,16 @@ void run(CosmosDbServer cosmosDB) {
 
   test('Create container with openOrCreate(), then update indexing policy',
       () async {
-    final container = await database.containers
-        .openOrCreate(getTempName(), partitionKey: PartitionKeySpec.id);
+    final container = await database.containers.openOrCreate(
+      getTempName(),
+      partitionKey: PartitionKeySpec.id,
+    );
 
     expect(container, isNotNull);
     expect(container.exists, isTrue);
+    expect(container.defaultTtl, isNull);
+    expect(container.conflictResolutionPolicy?.mode,
+        equals(ConflictResolutionPolicyMode.lastWriterWins));
 
     final indexingPolicy = IndexingPolicy();
     indexingPolicy.excludedPaths.add(IndexPath('/*'));
@@ -199,52 +203,88 @@ void run(CosmosDbServer cosmosDB) {
   });
 
   test('Open container with openOrCreate()', () async {
-    final container = await database.containers
-        .openOrCreate(newContainer, partitionKey: PartitionKeySpec.id);
+    final container = await database.containers.openOrCreate(
+      getTempName(),
+      partitionKey: PartitionKeySpec.id,
+      defaultTtl: 500,
+    );
     expect(container, isNotNull);
     expect(container.exists, isTrue);
     expect(container.partitionKeySpec, equals(PartitionKeySpec.id));
+    expect(container.defaultTtl, equals(500));
+    expect(container.conflictResolutionPolicy?.mode,
+        equals(ConflictResolutionPolicyMode.lastWriterWins));
   });
 
   test('Create existing container with create() fails', () async {
-    await expectLater(
-      database.containers
-          .create(newContainer, partitionKey: PartitionKeySpec.id),
-      throwsA(isA<ConflictException>()),
-    );
+    final name = getTempName();
+    CosmosDbContainer? container;
+    try {
+      container = await database.containers.openOrCreate(
+        name,
+        partitionKey: PartitionKeySpec.id,
+      );
+
+      await expectLater(
+        database.containers.create(name, partitionKey: PartitionKeySpec.id),
+        throwsA(isA<ConflictException>()),
+      );
+    } finally {
+      if (container != null) {
+        await database.containers.delete(container);
+      }
+    }
   });
 
   test('List containers after creation', () async {
+    final name = getTempName();
+    await database.containers.openOrCreate(
+      name,
+      partitionKey: PartitionKeySpec.id,
+    );
+
     final list = await database.containers.list();
-    final container = list.singleOrDefault((coll) => coll.id == newContainer);
+    final container = list.singleOrDefault((coll) => coll.id == name);
     expect(container, isNotNull);
     expect(container?.exists, isTrue);
     expect(container?.partitionKeySpec, equals(PartitionKeySpec.id));
   });
 
   test('Get containers partition key ranges', () async {
-    final coll = await database.containers.openOrCreate(newContainer);
+    final name = getTempName();
+    await database.containers.openOrCreate(
+      name,
+      partitionKey: PartitionKeySpec.id,
+    );
+
+    final coll = await database.containers.openOrCreate(name);
     final pkranges = await coll.getPkRanges();
     expect(pkranges, isNotEmpty);
   });
 
   test('Delete container', () async {
-    final container = await database.containers.openOrCreate(newContainer);
+    final name = getTempName();
+    await database.containers.create(
+      name,
+      partitionKey: PartitionKeySpec.id,
+    );
+
+    final container = await database.containers.openOrCreate(name);
     expect(container.exists, isTrue);
     await database.containers.delete(container);
     expect(container.exists, isFalse);
-  });
 
-  test('List containers after deletion', () async {
     final list = await database.containers.list();
-    final container = list.singleOrDefault((coll) => coll.id == newContainer);
-    expect(container, isNull);
+    final deletedContainer = list.singleOrDefault((coll) => coll.id == name);
+    expect(deletedContainer, isNull);
   });
 
   test('Get containers partition key ranges - large database', () async {
-    final container = await database_20000RU.containers.create(getTempName(),
-        partitionKey: PartitionKeySpec.id,
-        throughput: CosmosDbThroughput(15000));
+    final container = await database_20000RU.containers.create(
+      getTempName(),
+      partitionKey: PartitionKeySpec.id,
+      throughput: CosmosDbThroughput(15000),
+    );
     final pkranges = await container.getPkRanges();
     expect(pkranges, isNotEmpty);
     expect(pkranges.length, greaterThanOrEqualTo(2));

@@ -1,5 +1,3 @@
-import '../_internal/_extensions.dart';
-
 /// Constants for indexing modes.
 class IndexingMode {
   const IndexingMode._(this.name);
@@ -20,9 +18,13 @@ class IndexingMode {
   static const none = IndexingMode._('none');
 
   // ignore: deprecated_member_use_from_same_package
-  static const _modes = [consistent, lazy, none];
+  static final _values = {
+    consistent.name: consistent,
+    // ignore: deprecated_member_use_from_same_package
+    lazy.name: lazy,
+    none.name: none
+  };
 
   /// Returns the [IndexingMode] constant corresponding to the specified [mode].
-  static IndexingMode? tryParse(dynamic mode) =>
-      _modes.firstOrDefault((m) => m.name == mode);
+  static IndexingMode? tryParse(String? mode) => _values[mode];
 }

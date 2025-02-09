@@ -1,13 +1,22 @@
 /// Function definition to hydrate (deserialize) CosmosDB documents.
-typedef DocumentBuilder<T extends BaseDocument> = T Function(Map json);
+typedef JSonMessage = Map<String, dynamic>;
+typedef DocumentBuilder<T extends BaseDocument> = T Function(JSonMessage json);
+
+abstract class CosmosDbDocument {
+  dynamic toJson();
+}
+
+/// Internal use: base class for query/patch/batch requests.
+abstract class SpecialDocument extends CosmosDbDocument {}
 
 /// Base class for CosmosDB documents.
-abstract class BaseDocument {
+abstract class BaseDocument extends CosmosDbDocument {
   /// The document's [id].
   Object get id;
 
   /// Serializes this instance to a JSON object.
-  dynamic toJson();
+  @override
+  JSonMessage toJson();
 }
 
 /// Base class for CosmosDB documents including the `etag` property.
@@ -23,8 +32,26 @@ mixin EtagMixin on BaseDocument {
   void setEtag(Map json) => _etag = json['_etag'];
 }
 
-/// Internal use: base class for query/patch/batch requests.
-abstract class SpecialDocument implements BaseDocument {
+/// Base class for CosmosDB documents including the `etag` property.
+class Document extends BaseDocumentWithEtag {
+  Document(this.id, JSonMessage json) {
+    _json.addAll(json);
+    _json['id'] = id;
+  }
+
   @override
-  final String id = '';
+  final String id;
+
+  final JSonMessage _json = {};
+
+  dynamic getProp(String key) => _json[key];
+
+  @override
+  JSonMessage toJson() => {
+        if (_etag?.isNotEmpty ?? false) '_etag': _etag,
+        ..._json,
+      };
+
+  static Document fromJson(JSonMessage json) =>
+      Document(json['id'], json)..setEtag(json);
 }

@@ -1,38 +1,31 @@
+import 'dart:async';
+
 import 'package:meta/meta.dart';
 
+import '../azure_cosmosdb.dart';
 import '_internal/_extensions.dart';
 import '_internal/_http_header.dart';
-import 'access_control/cosmos_db_access_control.dart';
-import 'access_control/cosmos_db_authorization.dart';
-import 'access_control/cosmos_db_permission.dart';
-import 'base_document.dart';
-import 'batch/batch.dart';
-import 'batch/batch_response.dart';
-import 'batch/cross_partition_batch.dart';
-import 'batch/transactional_batch.dart';
 import 'client/_client.dart';
 import 'client/_context.dart';
 import 'cosmos_db_database.dart';
-import 'cosmos_db_exceptions.dart';
-import 'cosmos_db_server.dart';
-import 'indexing/geospatial_config.dart';
-import 'indexing/indexing_policy.dart';
-import 'partition/partition_key.dart';
-import 'partition/partition_key_range.dart';
-import 'partition/partition_key_spec.dart';
-import 'patch/patch.dart';
-import 'queries/query.dart';
+import 'scripts/cosmos_db_scripts.dart';
 
 /// Class representing a CosmosDB container.
 class CosmosDbContainer extends BaseDocument {
   CosmosDbContainer(this.database, this.id,
       {PartitionKeySpec? partitionKeySpec,
       IndexingPolicy? indexingPolicy,
-      GeospatialConfig? geospatialConfig})
+      GeospatialConfig? geospatialConfig,
+      ConflictResolutionPolicy? conflictResolutionPolicy,
+      int? defaultTtl,
+      int? analyticalStorageTtl})
       : url = buildUrl(database.url, 'colls', id),
         partitionKeySpec = partitionKeySpec ?? PartitionKeySpec.id,
         _indexingPolicy = indexingPolicy,
-        _geospatialConfig = geospatialConfig;
+        _geospatialConfig = geospatialConfig,
+        _conflictResolutionPolicy = conflictResolutionPolicy,
+        _defaultTtl = defaultTtl,
+        _analyticalStorageTtl = analyticalStorageTtl;
 
   /// The container's parent [CosmosDbDatabase].
   final CosmosDbDatabase database;
@@ -60,15 +53,47 @@ class CosmosDbContainer extends BaseDocument {
       _geospatialConfig ?? GeospatialConfig.forPolicy(_indexingPolicy);
   GeospatialConfig? _geospatialConfig;
 
+  /// The container's conflict resolution policy.
+  ConflictResolutionPolicy? get conflictResolutionPolicy =>
+      _conflictResolutionPolicy;
+  ConflictResolutionPolicy? _conflictResolutionPolicy;
+
+  /// The container's analytical storage time-to-live setting for Azure
+  /// Synapse Link.
+  int? get analyticalStorageTtl => _analyticalStorageTtl;
+  int? _analyticalStorageTtl;
+
+  /// The container's default time-to-live setting.
+  int? get defaultTtl => _defaultTtl;
+  int? _defaultTtl;
+
   @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'partitionKey': partitionKeySpec.toJson(),
-        if (_indexingPolicy != null)
-          'indexingPolicy': _indexingPolicy!.toJson(),
-        if (geospatialConfig != null)
-          'geospatialConfig': geospatialConfig!.toJson(),
-      };
+  JSonMessage toJson() {
+    final geoConfig = geospatialConfig;
+    return {
+      'id': id,
+      'partitionKey': partitionKeySpec.toJson(),
+      if (_indexingPolicy != null) 'indexingPolicy': _indexingPolicy!.toJson(),
+      if (geoConfig != null) 'geospatialConfig': geoConfig.toJson(),
+      if (_conflictResolutionPolicy != null)
+        'conflictResolutionPolicy': conflictResolutionPolicy!.toJson(),
+      if (_defaultTtl != null) 'defaultTtl': _defaultTtl,
+      if (_analyticalStorageTtl != null)
+        'analyticalStorageTtl': _analyticalStorageTtl,
+    };
+  }
+
+  /// Stored procedures.
+  CosmosDbSprocs get sprocs => (_sprocs ??= CosmosDbSprocs(this));
+  CosmosDbSprocs? _sprocs;
+
+  /// User defined functions.
+  CosmosDbFunctions get udfs => (_udfs ??= CosmosDbFunctions(this));
+  CosmosDbFunctions? _udfs;
+
+  /// Triggers.
+  CosmosDbTriggers get triggers => (_triggers ??= CosmosDbTriggers(this));
+  CosmosDbTriggers? _triggers;
 
   /// Use this [CosmosDbPermission] when invoking the CosmosDB API. Using
   /// [CosmosDbPermission] is a way to avoid disclosing the master key in
@@ -196,7 +221,8 @@ class CosmosDbContainer extends BaseDocument {
     return _pkRanges;
   }
 
-  /// Gets information for this [CosmosDbContainer].
+  /// Sets this [CosmosDbContainer]'s [indexingPolicy] and [geospatialConfig]
+  /// if provided.
   Future<void> setIndexingPolicy(IndexingPolicy indexingPolicy,
       {GeospatialConfig? geospatialConfig,
       CosmosDbAccessControl? accessControl}) async {
@@ -219,6 +245,70 @@ class CosmosDbContainer extends BaseDocument {
     } catch (ex) {
       _indexingPolicy = prevIndexingPolicy;
       _geospatialConfig = prevGeospatialConfig;
+      rethrow;
+    }
+  }
+
+  /// Sets this [CosmosDbContainer]'s [conflictResolutionPolicy].
+  Future<void> setConflictResolutionPolicy(
+      ConflictResolutionPolicy conflictResolutionPolicy,
+      {CosmosDbAccessControl? accessControl}) async {
+    final prevConflictResolutionPolicy = _conflictResolutionPolicy;
+    _conflictResolutionPolicy = conflictResolutionPolicy;
+    try {
+      await client.put<CosmosDbContainer>(
+          url,
+          this,
+          Context(
+            type: 'colls',
+            accessControl: accessControl ?? _accessControl,
+            builder: database.containers.fromJson,
+            refreshAccessControl: _refreshAccessControl,
+          ));
+    } catch (ex) {
+      _conflictResolutionPolicy = prevConflictResolutionPolicy;
+      rethrow;
+    }
+  }
+
+  /// Sets this [CosmosDbContainer]'s [defaultTtl].
+  Future<void> setDefaultTtl(int defaultTtl,
+      {CosmosDbAccessControl? accessControl}) async {
+    final prevDefaultTtl = _defaultTtl;
+    _defaultTtl = defaultTtl;
+    try {
+      await client.put<CosmosDbContainer>(
+          url,
+          this,
+          Context(
+            type: 'colls',
+            accessControl: accessControl ?? _accessControl,
+            builder: database.containers.fromJson,
+            refreshAccessControl: _refreshAccessControl,
+          ));
+    } catch (ex) {
+      _defaultTtl = prevDefaultTtl;
+      rethrow;
+    }
+  }
+
+  /// Sets this [CosmosDbContainer]'s [analyticalStorageTtl].
+  Future<void> setAnalyticalStorageTtl(int analyticalStorageTtl,
+      {CosmosDbAccessControl? accessControl}) async {
+    final prevAnalyticalStorageTtl = _analyticalStorageTtl;
+    _analyticalStorageTtl = analyticalStorageTtl;
+    try {
+      await client.put<CosmosDbContainer>(
+          url,
+          this,
+          Context(
+            type: 'colls',
+            accessControl: accessControl ?? _accessControl,
+            builder: database.containers.fromJson,
+            refreshAccessControl: _refreshAccessControl,
+          ));
+    } catch (ex) {
+      _analyticalStorageTtl = prevAnalyticalStorageTtl;
       rethrow;
     }
   }
@@ -312,9 +402,97 @@ class CosmosDbContainer extends BaseDocument {
         ),
       );
 
+  /// Execute stored procedure [proc] with [arguments].
+  Future<T> exec<T extends BaseDocument>(
+    CosmosDbSproc proc, {
+    List<dynamic> arguments = const [],
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+  }) async {
+    final sprocUrl = buildUrl(url, 'sprocs', proc.id);
+    try {
+      return await client.post(
+        sprocUrl,
+        SprocArguments(arguments),
+        Context(
+          type: 'sprocs',
+          resId: sprocUrl,
+          partitionKey: partitionKey,
+          builders: _builders,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
+        ),
+      );
+    } on BadRequestException catch (ex) {
+      final sprocEx = ex.asSprocException();
+      if (sprocEx != null) throw sprocEx;
+      rethrow;
+    }
+  }
+
+  /// Execute stored procedure [proc] with [arguments].
+  Future<Iterable<T>> execMany<T extends BaseDocument>(
+    CosmosDbSproc proc, {
+    List<dynamic> arguments = const [],
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+  }) async {
+    final sprocUrl = buildUrl(url, 'sprocs', proc.id);
+    try {
+      return await client.postMany(
+        sprocUrl,
+        SprocArguments(arguments),
+        Context(
+          type: 'sprocs',
+          resId: sprocUrl,
+          partitionKey: partitionKey,
+          builders: _builders,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
+        ),
+      );
+    } on BadRequestException catch (ex) {
+      final sprocEx = ex.asSprocException();
+      if (sprocEx != null) throw sprocEx;
+      rethrow;
+    }
+  }
+
+  /// Execute stored procedure [proc] with [arguments].
+  Future<dynamic> rawExec(
+    CosmosDbSproc proc, {
+    List<dynamic> arguments = const [],
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+  }) async {
+    final sprocUrl = buildUrl(url, 'sprocs', proc.id);
+    try {
+      return await client.rawPost(
+        sprocUrl,
+        SprocArguments(arguments),
+        Context(
+          type: 'sprocs',
+          resId: sprocUrl,
+          partitionKey: partitionKey,
+          builders: _builders,
+          accessControl: accessControl ?? _accessControl,
+          refreshAccessControl: _refreshAccessControl,
+        ),
+      );
+    } on BadRequestException catch (ex) {
+      final sprocEx = ex.asSprocException();
+      if (sprocEx != null) throw sprocEx;
+      rethrow;
+    }
+  }
+
   /// Adds a new [document] to this container.
-  Future<T> add<T extends BaseDocument>(T document,
-          {PartitionKey? partitionKey, CosmosDbAccessControl? accessControl}) =>
+  Future<T> add<T extends BaseDocument>(
+    T document, {
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+    TriggerOption? triggerOptions,
+  }) =>
       client.post(
         buildUrl(url, 'docs'),
         document,
@@ -322,6 +500,7 @@ class CosmosDbContainer extends BaseDocument {
           type: 'docs',
           resId: url,
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
+          headers: null.addTriggerOptions(triggerOptions),
           builders: _builders,
           accessControl: accessControl ?? _accessControl,
           refreshAccessControl: _refreshAccessControl,
@@ -329,15 +508,19 @@ class CosmosDbContainer extends BaseDocument {
       );
 
   /// Adds or updates (replaces) a [document] in this container.
-  Future<T> upsert<T extends BaseDocument>(T document,
-          {PartitionKey? partitionKey, CosmosDbAccessControl? accessControl}) =>
+  Future<T> upsert<T extends BaseDocument>(
+    T document, {
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+    TriggerOption? triggerOptions,
+  }) =>
       client.post(
         buildUrl(url, 'docs'),
         document,
         Context(
           type: 'docs',
           resId: url,
-          headers: HttpHeader.isUpsert,
+          headers: HttpHeader.isUpsert.addTriggerOptions(triggerOptions),
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
           builders: _builders,
           accessControl: accessControl ?? _accessControl,
@@ -347,18 +530,22 @@ class CosmosDbContainer extends BaseDocument {
 
   /// Updates (replaces) a [document] in this container. If the [document] has
   /// [EtagMixin], its [EtagMixin.etag] must be known.
-  Future<T> replace<T extends BaseDocument>(T document,
-          {bool checkEtag = true,
-          PartitionKey? partitionKey,
-          CosmosDbAccessControl? accessControl}) =>
+  Future<T> replace<T extends BaseDocument>(
+    T document, {
+    bool checkEtag = true,
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+    TriggerOption? triggerOptions,
+  }) =>
       client.put(
         buildUrl(url, 'docs', document.id.toString()),
         document,
         Context(
           type: 'docs',
-          headers: (document is EtagMixin && checkEtag)
-              ? {HttpHeader.ifMatch: document.etag}
-              : null,
+          headers: ((document is EtagMixin && checkEtag)
+                  ? {HttpHeader.ifMatch: document.etag}
+                  : null)
+              .addTriggerOptions(triggerOptions),
           partitionKey: partitionKey ?? partitionKeySpec.from(document),
           builders: _builders,
           accessControl: accessControl ?? _accessControl,
@@ -368,14 +555,19 @@ class CosmosDbContainer extends BaseDocument {
 
   /// Updates (patches) a [document] in this container by applying the [patch]
   /// operations.
-  Future<T> patch<T extends BaseDocument>(T document, Patch patch,
-          {PartitionKey? partitionKey, CosmosDbAccessControl? accessControl}) =>
+  Future<T> patch<T extends BaseDocument>(
+    T document,
+    Patch patch, {
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+    TriggerOption? triggerOptions,
+  }) =>
       client.patch(
         buildUrl(url, 'docs', document.id.toString()),
         patch,
         Context(
           type: 'docs',
-          headers: HttpHeader.patchPayload,
+          headers: HttpHeader.patchPayload.addTriggerOptions(triggerOptions),
           partitionKey: partitionKey ??
               partitionKeySpec.from(document) ??
               PartitionKey.all,
@@ -390,13 +582,15 @@ class CosmosDbContainer extends BaseDocument {
   /// `true`, it will instead throw a [NotFoundException]. If the [document] is
   /// provided, its attributes take over the [id] value. If it has [EtagMixin],
   /// its [EtagMixin.etag] must be known.
-  Future<bool> delete<T extends BaseDocument>(
-      {Object? id,
-      T? document,
-      bool throwOnNotFound = false,
-      bool checkEtag = true,
-      PartitionKey? partitionKey,
-      CosmosDbAccessControl? accessControl}) {
+  Future<bool> delete<T extends BaseDocument>({
+    Object? id,
+    T? document,
+    bool throwOnNotFound = false,
+    bool checkEtag = true,
+    PartitionKey? partitionKey,
+    CosmosDbAccessControl? accessControl,
+    TriggerOption? triggerOptions,
+  }) {
     if (document == null && id == null) {
       throw ApplicationException('Missing document and document id.');
     }
@@ -409,9 +603,10 @@ class CosmosDbContainer extends BaseDocument {
       Context(
         type: 'docs',
         throwOnNotFound: throwOnNotFound,
-        headers: (document is EtagMixin && checkEtag)
-            ? {HttpHeader.ifMatch: document.etag}
-            : null,
+        headers: ((document is EtagMixin && checkEtag)
+                ? {HttpHeader.ifMatch: document.etag}
+                : null)
+            .addTriggerOptions(triggerOptions),
         partitionKey: partitionKey ??
             (document == null
                 ? PartitionKey.all
@@ -437,7 +632,7 @@ class CosmosDbContainer extends BaseDocument {
       CrossPartitionBatch(this, partitionKey: partitionKey);
 
   /// Executes the batch in this container.
-  Future<BatchResponse> execute(TransactionalBatch batch,
+  Future<BatchResponse> run(TransactionalBatch batch,
       {CosmosDbAccessControl? accessControl}) async {
     if (batch.operations.isEmpty) {
       return BatchResponse();

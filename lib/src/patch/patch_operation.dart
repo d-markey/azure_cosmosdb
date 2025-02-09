@@ -1,3 +1,4 @@
+import '../base_document.dart';
 import 'patch_operation_type.dart';
 
 /// Class representing a patch operation.
@@ -39,7 +40,7 @@ class PatchOperation {
       : this._(PatchOperationType.remove, path, null);
 
   /// Serializes this instance to a JSON object.
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'op': type.name,
         'path': path,
         if (type != PatchOperationType.remove) 'value': value,

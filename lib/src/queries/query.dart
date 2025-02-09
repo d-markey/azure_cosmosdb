@@ -6,18 +6,15 @@ import 'paging.dart';
 class Query extends Paging implements SpecialDocument {
   /// Builds a new CosmosDB SQL query with [command] and [params].
   Query(this.command,
-      {int? maxCount, PartitionKey? partitionKey, Map<String, dynamic>? params})
+      {int? maxCount, PartitionKey? partitionKey, JSonMessage? params})
       : _partitionKey = partitionKey,
         _params = (params == null) ? null : {...params},
         super(maxCount);
 
-  @override
-  String get id => '';
-
   /// The query's SQL [command].
   final String command;
 
-  late final Map<String, dynamic>? _params;
+  late final JSonMessage? _params;
 
   /// The partition where the query should be executed; by default, the query
   /// will be executed against all partitions.
@@ -35,7 +32,7 @@ class Query extends Paging implements SpecialDocument {
       (_params ??= <String, dynamic>{})[name] = value;
 
   @override
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'query': command,
         if (_params != null)
           'parameters': _params!.entries

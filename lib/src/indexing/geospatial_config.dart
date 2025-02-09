@@ -1,3 +1,4 @@
+import '../base_document.dart';
 import 'indexing_policy.dart';
 
 /// Constants for geo spatial config.
@@ -8,10 +9,10 @@ class GeospatialConfig {
   final String name;
 
   /// Geometry type.
-  static const geometry = GeospatialConfig._('Geometry');
+  static const geometry = GeospatialConfig._(Geometry);
 
   /// Geography type.
-  static const geography = GeospatialConfig._('Geography');
+  static const geography = GeospatialConfig._(Geography);
 
   /// Find proper geospatial config for the [indexingPolicy] if provided. `null`
   /// if [indexingPolicy] or [IndexingPolicy.spatialIndexes] is `null`.
@@ -26,5 +27,10 @@ class GeospatialConfig {
   }
 
   /// Serializes this instance to a JSON object.
-  Map<String, dynamic> toJson() => {'type': name};
+  JSonMessage toJson() => {'type': name};
+
+  // ignore: constant_identifier_names
+  static const Geography = 'Geography';
+  // ignore: constant_identifier_names
+  static const Geometry = 'Geometry';
 }

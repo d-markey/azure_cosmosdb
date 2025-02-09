@@ -24,7 +24,7 @@ class ArrayIndex extends PathComponent {
   final int index;
 
   @override
-  dynamic extract(dynamic json) => (json as List)[index];
+  dynamic extract(dynamic json) => (json as List<dynamic>)[index];
 
   @override
   int get hashCode => index;

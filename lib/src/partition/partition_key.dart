@@ -32,10 +32,8 @@ class PartitionKey {
   bool operator ==(Object other) =>
       (other is PartitionKey) && _areListsEqual(values, other.values);
 
-  static bool _areListsEqual(List a, List b) {
-    if (a.length != b.length) {
-      return false;
-    }
+  static bool _areListsEqual(List<dynamic> a, List<dynamic> b) {
+    if (a.length != b.length) return false;
     for (var i = 0; i < a.length; i++) {
       if (!_areEqual(a[i], b[i])) {
         return false;

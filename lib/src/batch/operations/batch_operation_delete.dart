@@ -1,3 +1,4 @@
+import '../../base_document.dart';
 import '../../partition/partition_key.dart';
 import '../batch_operation.dart';
 import '../batch_operation_type.dart';
@@ -15,7 +16,7 @@ class BatchOperationDelete extends BatchOperation {
   final String id;
 
   @override
-  Map<String, dynamic> toJson() => super.toJson()
+  JSonMessage toJson() => super.toJson()
     ..addAll({
       'id': id,
     });

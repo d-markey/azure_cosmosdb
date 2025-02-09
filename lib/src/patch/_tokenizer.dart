@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../base_document.dart';
 import '../cosmos_db_exceptions.dart';
 import '_token.dart';
 
@@ -120,7 +121,7 @@ class Tokenizer {
     return p;
   }
 
-  Iterable<Token> getTokens([Map<String, dynamic>? parameters]) sync* {
+  Iterable<Token> getTokens([JSonMessage? parameters]) sync* {
     var pos = 0;
     var len = _chars.length;
     while (pos < len) {

@@ -109,7 +109,7 @@ class TransactionalBatch extends Batch {
   @override
   Future<BatchResponse> execute({CosmosDbAccessControl? accessControl}) async {
     if (_ops.length <= 100) {
-      return await container.execute(this, accessControl: accessControl);
+      return await container.run(this, accessControl: accessControl);
     } else {
       final resp = BatchResponse();
       final batch = clone();

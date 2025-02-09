@@ -1,5 +1,3 @@
-import '../_internal/_extensions.dart';
-
 /// Constants for index ordering.
 class IndexOrder {
   const IndexOrder._(this.name);
@@ -12,9 +10,11 @@ class IndexOrder {
   /// Descending order.
   static const descending = IndexOrder._('descending');
 
-  static const _orders = [ascending, descending];
+  static final _values = {
+    ascending.name: ascending,
+    descending.name: descending
+  };
 
   /// Returns the [IndexOrder] constant corresponding to the specified [order].
-  static IndexOrder? tryParse(dynamic order) =>
-      _orders.firstOrDefault((m) => m.name == order);
+  static IndexOrder? tryParse(String? order) => _values[order];
 }

@@ -1,3 +1,4 @@
+import '../base_document.dart';
 import 'index_order.dart';
 
 /// Class representing an index.
@@ -11,7 +12,7 @@ class IndexPath {
   final IndexOrder? order;
 
   /// Serializes this instance to a JSON object.
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'path': path,
         if (order != null) 'order': order!.name,
       };

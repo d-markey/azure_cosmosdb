@@ -25,7 +25,7 @@ class CosmosDbPermission extends BaseDocument
   final String? token;
 
   @override
-  Map<String, dynamic> toJson() => {
+  JSonMessage toJson() => {
         'id': id,
         'permissionMode': mode.name,
         'resource': resource,

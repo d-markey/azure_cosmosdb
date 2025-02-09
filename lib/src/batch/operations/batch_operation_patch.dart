@@ -15,7 +15,6 @@ class BatchOperationPatch<T extends BaseDocument>
   final BatchOperationType type = BatchOperationType.patch;
 
   /// The target document [id].
-  @override
   final String id;
 
   final Patch _patch = Patch();
@@ -45,7 +44,7 @@ class BatchOperationPatch<T extends BaseDocument>
   void withParam(String name, value) => _patch.withParam(name, value);
 
   @override
-  Map<String, dynamic> toJson() => super.toJson()
+  JSonMessage toJson() => super.toJson()
     ..addAll({
       'id': id,
       'resourceBody': _patch.toJson(),

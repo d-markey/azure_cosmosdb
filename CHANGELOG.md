@@ -1,3 +1,10 @@
+## 3.0.0
+
+- Add support for stored procedures, user-defined functions and triggers. See accessors `sprocs`, `udfs` and `triggers` in `CosmosDbContainer`. Please refer to unit tests for examples calling custom scripts.
+- Add support for `conflictResolutionPolicy` on containers.
+- Add support for `defaultTtl` on containers.
+- Add support for `analyticalStorageTtl` on containers (experimental, untested).
+
 ## 2.3.1
 
 - BREAKING CHANGE: reworked the access-control classes and methods. `useAuthorization()`/`usePermission()` are deprecated in favor of `grantAccess()`, and `clearAuthorization()`/`clearPermission()` in favor of `revokeAccess()`. Optional arguments `authorization` and `permission` are replaced by `accessControl`.
