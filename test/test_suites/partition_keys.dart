@@ -145,7 +145,7 @@ void run() {
     test('double', () {
       // skip(1): the first byte is the PartitionKeyComponentType
       final bytes = PartitionKeyHashV2.getBytes(374.0).skip(1);
-      final hash32 = murmur3a(bytes);
+      final hash32 = murmur3.murmur3aSync(bytes);
       expect(hash32, equals(3717946798));
     });
 
@@ -153,7 +153,7 @@ void run() {
       final bytes = PartitionKeyHashV2.getBytes('afdgdd').toList();
       // skip(1): the first byte is the PartitionKeyComponentType
       // take(bytes.length - 2): the last byte is 0xFF for strings
-      final hash32 = murmur3a(bytes.skip(1).take(bytes.length - 2));
+      final hash32 = murmur3.murmur3aSync(bytes.skip(1).take(bytes.length - 2));
       expect(hash32, equals(1099701186));
     });
   });

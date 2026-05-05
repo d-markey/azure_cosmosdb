@@ -1,3 +1,7 @@
+## 4.0.0
+
+- Bump `murmur3` to `^3.0.0`.
+
 ## 3.0.0
 
 - Add support for stored procedures, user-defined functions and triggers. See accessors `sprocs`, `udfs` and `triggers` in `CosmosDbContainer`. Please refer to unit tests for examples calling custom scripts.
